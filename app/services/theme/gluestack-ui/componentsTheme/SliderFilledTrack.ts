@@ -1,8 +1,8 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SliderFilledTrack = createStyle({
-  'bg': '$primary500',
-  '_dark': {
+  bg: '$primary500',
+  _dark: {
     bg: '$primary400',
   },
   ':focus': {
@@ -23,4 +23,4 @@ export const SliderFilledTrack = createStyle({
       bg: '$primary300',
     },
   },
-});
+})

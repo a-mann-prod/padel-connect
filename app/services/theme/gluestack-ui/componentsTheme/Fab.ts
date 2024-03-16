@@ -1,15 +1,15 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Fab = createStyle({
-  'bg': '$primary500',
-  'rounded': '$full',
-  'zIndex': 20,
-  'p': 16,
-  'flexDirection': 'row',
+  bg: '$primary500',
+  rounded: '$full',
+  zIndex: 20,
+  p: 16,
+  flexDirection: 'row',
 
-  'alignItems': 'center',
-  'justifyContent': 'center',
-  'position': 'absolute',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'absolute',
   ':hover': {
     bg: '$primary600',
   },
@@ -27,7 +27,7 @@ export const Fab = createStyle({
     },
   },
 
-  '_text': {
+  _text: {
     color: '$textLight50',
     fontWeight: '$normal',
     _dark: {
@@ -37,17 +37,17 @@ export const Fab = createStyle({
     },
   },
 
-  '_icon': {
-    'color': '$textLight50',
+  _icon: {
+    color: '$textLight50',
     ':hover': {
       color: '$textLight0',
     },
     ':active': {
       color: '$textLight0',
     },
-    '_dark': {
+    _dark: {
       _icon: {
-        'color': '$textDark0',
+        color: '$textDark0',
         ':hover': {
           color: '$textDark0',
         },
@@ -58,8 +58,8 @@ export const Fab = createStyle({
     },
   },
 
-  '_dark': {
-    'bg': '$primary400',
+  _dark: {
+    bg: '$primary400',
     ':hover': {
       bg: '$primary500',
     },
@@ -74,7 +74,7 @@ export const Fab = createStyle({
     },
   },
 
-  '_web': {
+  _web: {
     ':focusVisible': {
       outlineWidth: 2,
       outlineColor: '$primary700',
@@ -85,7 +85,7 @@ export const Fab = createStyle({
     },
   },
 
-  'variants': {
+  variants: {
     size: {
       sm: {
         px: '$2.5',
@@ -173,9 +173,9 @@ export const Fab = createStyle({
       },
     },
   },
-  'defaultProps': {
+  defaultProps: {
     placement: 'bottom right',
     size: 'md',
     hardShadow: '2',
   },
-});
+})

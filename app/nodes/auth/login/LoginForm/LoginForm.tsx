@@ -1,14 +1,16 @@
-import { FormInputControlled } from '@/components'
-import { Button } from '@/designSystem'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useLogin } from '@/services/api'
-import { useTranslate } from '@/services/i18n'
 import { LinkText, VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, router, useLocalSearchParams } from 'expo-router'
 import { Fragment } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+
 import { LoginFormValues, loginFormServices } from './LoginForm.services'
+
+import { FormInputControlled } from '@/components'
+import { Button } from '@/designSystem'
+import { useHandleError } from '@/hooks/useHandleError'
+import { useLogin } from '@/services/api'
+import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = loginFormServices
 
@@ -35,7 +37,7 @@ export const LoginForm = () => {
   const onSubmit = (d: LoginFormValues) => login(d)
 
   return (
-    <Fragment>
+    <>
       <VStack space="md">
         <FormProvider {...methods}>
           <FormInputControlled
@@ -62,6 +64,6 @@ export const LoginForm = () => {
         onPress={handleSubmit(onSubmit)}
         isLoading={isPending}
       />
-    </Fragment>
+    </>
   )
 }

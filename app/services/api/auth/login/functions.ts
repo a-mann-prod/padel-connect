@@ -1,9 +1,11 @@
-import { supabase } from '@/services/supabase'
 import * as AuthSession from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
-import { handleSupabaseAuthError, handleUnverifiedUser } from '../shared'
+
 import { LoginResponse } from './entities'
 import { LoginParams, LoginWithOAuthParams } from './params'
+import { handleSupabaseAuthError, handleUnverifiedUser } from '../shared'
+
+import { supabase } from '@/services/supabase'
 
 export const loginFn = async (params: LoginParams): Promise<LoginResponse> => {
   const { data, error } = await supabase.auth.signInWithPassword(params)

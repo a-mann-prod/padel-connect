@@ -2,6 +2,7 @@ import i18next from 'i18next'
 import ICU from 'i18next-icu'
 import { useEffect, useState } from 'react'
 import { initReactI18next } from 'react-i18next'
+
 import { resources } from '../resources'
 import { getDefaultNS, getDevicePreferenceLanguage } from '../utils'
 

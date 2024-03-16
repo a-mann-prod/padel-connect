@@ -2,9 +2,10 @@ import {
   useFileUrl,
   useUpload,
 } from '@supabase-cache-helpers/storage-react-query'
-import { UseFileUrlProps, UseUploadProps } from '../types'
+
 import { getStorageFn } from './functions'
 import { GetImageParams } from './params'
+import { UseFileUrlProps, UseUploadProps } from '../types'
 
 export const useImage = ({
   params,

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SelectActionsheetContent = createStyle({
   alignItems: 'center',
@@ -24,4 +24,4 @@ export const SelectActionsheetContent = createStyle({
   defaultProps: {
     hardShadow: '5',
   },
-});
+})

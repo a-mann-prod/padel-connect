@@ -1,8 +1,9 @@
+import { SafeAreaView, Text, VStack } from '@gluestack-ui/themed'
+import { Link } from 'expo-router'
+
 import { WithoutAuth } from '@/components'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
-import { SafeAreaView, Text, VStack } from '@gluestack-ui/themed'
-import { Link } from 'expo-router'
 
 export default WithoutAuth(() => {
   const t = useTranslate('auth')

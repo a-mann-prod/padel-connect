@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SelectActionsheetIcon = createStyle({
   w: '$4',
@@ -12,4 +12,4 @@ export const SelectActionsheetIcon = createStyle({
   props: {
     size: 'md',
   },
-});
+})

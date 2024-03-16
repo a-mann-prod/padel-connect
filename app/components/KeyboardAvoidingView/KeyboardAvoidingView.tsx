@@ -1,4 +1,3 @@
-import { when } from '@/utils/when'
 import {
   KeyboardAvoidingView as GKeyboardAvoidingView,
   View,
@@ -6,6 +5,8 @@ import {
 import { PropsWithChildren, useState } from 'react'
 import { Platform, useWindowDimensions } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { when } from '@/utils/when'
 
 export type KeyboardAvoidingViewProps = {
   inModal?: boolean

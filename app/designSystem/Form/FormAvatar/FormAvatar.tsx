@@ -1,10 +1,12 @@
+import * as ImagePicker from 'expo-image-picker'
+import { useMemo, useState } from 'react'
+
+import { FormControl, FormControlProps } from '../FormControl/FormControl'
+
 import { Actionsheet } from '@/designSystem/Actionsheet/Actionsheet'
 import { ActionsheetItemProps } from '@/designSystem/Actionsheet/ActionsheetItem/ActionsheetItem'
 import { Avatar } from '@/designSystem/Avatar/Avatar'
 import { useTranslate } from '@/services/i18n'
-import * as ImagePicker from 'expo-image-picker'
-import { useMemo, useState } from 'react'
-import { FormControl, FormControlProps } from '../FormControl/FormControl'
 
 export type FormAvatarProps = {
   formControlProps: FormControlProps
@@ -23,7 +25,7 @@ export const FormAvatar = ({
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AvatarGroup = createStyle({
   flexDirection: 'row-reverse',
@@ -6,4 +6,4 @@ export const AvatarGroup = createStyle({
   _avatar: {
     ml: -10,
   },
-});
+})

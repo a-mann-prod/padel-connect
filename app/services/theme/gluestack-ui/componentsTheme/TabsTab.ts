@@ -1,12 +1,12 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const TabsTab = createStyle({
-  'bg': 'transparent',
-  '_web': {
+  bg: 'transparent',
+  _web: {
     outlineWidth: 0,
   },
 
-  'variants': {
+  variants: {
     size: {
       md: {
         px: '$4',
@@ -20,7 +20,7 @@ export const TabsTab = createStyle({
     },
   },
 
-  'defaultProps': {
+  defaultProps: {
     size: 'md',
   },
   ':hover': {
@@ -39,7 +39,7 @@ export const TabsTab = createStyle({
     opacity: 0.5,
   },
 
-  '_dark': {
+  _dark: {
     ':hover': {
       bg: '$backgroundLight500',
       borderRadius: '$full',
@@ -56,4 +56,4 @@ export const TabsTab = createStyle({
       opacity: 0.5,
     },
   },
-});
+})

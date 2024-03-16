@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const CheckboxIcon = createStyle({
   ':checked': {
@@ -7,7 +7,7 @@ export const CheckboxIcon = createStyle({
   ':disabled': {
     opacity: 0.4,
   },
-  '_dark': {
+  _dark: {
     ':checked': {
       color: '$backgroundDark0',
     },
@@ -15,4 +15,4 @@ export const CheckboxIcon = createStyle({
       opacity: 0.4,
     },
   },
-});
+})

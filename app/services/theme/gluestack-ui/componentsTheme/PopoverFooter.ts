@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const PopoverFooter = createStyle({
   p: '$4',
@@ -12,4 +12,4 @@ export const PopoverFooter = createStyle({
   _dark: {
     borderColor: '$borderDark700',
   },
-});
+})

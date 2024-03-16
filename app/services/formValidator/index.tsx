@@ -1,5 +1,6 @@
 import i18next from 'i18next'
 import { RefinementCtx, z } from 'zod'
+
 import { PASSWORD_REGEX } from './constants'
 
 const tPrefix = 'errors.form'

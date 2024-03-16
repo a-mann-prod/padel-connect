@@ -1,10 +1,10 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Badge = createStyle({
-  'flexDirection': 'row',
-  'alignItems': 'center',
-  'borderRadius': '$xs',
-  'variants': {
+  flexDirection: 'row',
+  alignItems: 'center',
+  borderRadius: '$xs',
+  variants: {
     action: {
       error: {
         bg: '$backgroundLightError',
@@ -157,9 +157,9 @@ export const Badge = createStyle({
   ':disabled': {
     opacity: 0.5,
   },
-  'defaultProps': {
+  defaultProps: {
     action: 'info',
     variant: 'solid',
     size: 'md',
   },
-});
+})

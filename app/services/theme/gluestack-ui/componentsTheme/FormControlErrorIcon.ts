@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const FormControlErrorIcon = createStyle({
   color: '$error700',
@@ -9,4 +9,4 @@ export const FormControlErrorIcon = createStyle({
   props: {
     size: 'sm',
   },
-});
+})

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const FormControlError = createStyle({
   flexDirection: 'row',
@@ -6,4 +6,4 @@ export const FormControlError = createStyle({
   alignItems: 'center',
   mt: '$1',
   gap: '$1',
-});
+})

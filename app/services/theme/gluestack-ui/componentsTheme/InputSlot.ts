@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const InputSlot = createStyle({
   justifyContent: 'center',
@@ -8,4 +8,4 @@ export const InputSlot = createStyle({
       cursor: 'not-allowed',
     },
   },
-});
+})

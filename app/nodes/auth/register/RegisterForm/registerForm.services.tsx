@@ -1,5 +1,6 @@
-import { refineFunctions, validators } from '@/services/formValidator'
 import { z } from 'zod'
+
+import { refineFunctions, validators } from '@/services/formValidator'
 export type RegisterFormValues = z.infer<typeof schema>
 
 const getDefaultValues = (): RegisterFormValues => ({

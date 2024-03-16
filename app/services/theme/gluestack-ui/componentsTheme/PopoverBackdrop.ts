@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const PopoverBackdrop = createStyle({
   ':initial': {
@@ -21,16 +21,16 @@ export const PopoverBackdrop = createStyle({
       delay: 50,
     },
   },
-  'position': 'absolute',
-  'left': 0,
-  'top': 0,
-  'right': 0,
-  'bottom': 0,
-  'bg': '$backgroundLight950',
-  '_dark': {
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  bg: '$backgroundLight950',
+  _dark: {
     bg: '$backgroundDark950',
   },
-  '_web': {
+  _web: {
     cursor: 'default',
   },
-});
+})

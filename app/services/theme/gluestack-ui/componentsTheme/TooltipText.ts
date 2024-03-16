@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const TooltipText = createStyle({
   color: '$red400',
@@ -6,4 +6,4 @@ export const TooltipText = createStyle({
   _web: {
     userSelect: 'none',
   },
-});
+})

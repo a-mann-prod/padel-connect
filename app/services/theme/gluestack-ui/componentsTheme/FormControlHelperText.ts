@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const FormControlHelperText = createStyle({
   props: {
@@ -8,4 +8,4 @@ export const FormControlHelperText = createStyle({
   _dark: {
     color: '$textDark400',
   },
-});
+})

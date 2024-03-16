@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const FormControl = createStyle({
   flexDirection: 'column',
@@ -52,4 +52,4 @@ export const FormControl = createStyle({
   defaultProps: {
     size: 'md',
   },
-});
+})

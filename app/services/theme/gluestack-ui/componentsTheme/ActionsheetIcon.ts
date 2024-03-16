@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ActionsheetIcon = createStyle({
   props: {
@@ -9,4 +9,4 @@ export const ActionsheetIcon = createStyle({
     //@ts-ignore
     color: '$backgroundDark400',
   },
-});
+})

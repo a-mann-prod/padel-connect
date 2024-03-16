@@ -1,10 +1,11 @@
+import { Redirect, Tabs } from 'expo-router'
+import React from 'react'
+
 import { useAuthContext } from '@/contexts'
 import { Icon } from '@/designSystem'
 import { useIsNavigationReady } from '@/hooks/useIsNavigationReady'
 import { useProfile } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
-import { Redirect, Tabs } from 'expo-router'
-import React from 'react'
 
 export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ToastDescription = createStyle({
   color: '$textLight700',
@@ -8,4 +8,4 @@ export const ToastDescription = createStyle({
   props: {
     size: 'sm',
   },
-});
+})

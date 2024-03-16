@@ -1,19 +1,29 @@
-import { useAuthContext } from '@/contexts'
-import { Button, Divider } from '@/designSystem'
-import { useLoginWithOAuth } from '@/services/api'
-import { useTranslate } from '@/services/i18n'
 import { Center, Text, VStack } from '@gluestack-ui/themed'
 import { Link } from 'expo-router'
 import { FC } from 'react'
 
+import { useAuthContext } from '@/contexts'
+import { Button, Divider } from '@/designSystem'
+import { useLoginWithOAuth } from '@/services/api'
+import { useTranslate } from '@/services/i18n'
+
+// TODO: find props type name
+const WithAuthWrapper: FC<{ Component: FC; segment: any }> = ({
+  Component,
+  segment,
+}) => {
+  const { session, user } = useAuthContext()
+
+  if (session && user) return <Component />
+
+  return <LoginMenu redirectTo={segment} />
+}
+
 export const WithAuth =
   (Component: FC) =>
-  ({ segment }: any) => {
-    // TODO: find props type name
-    const { session, user } = useAuthContext()
-    if (session && user) return <Component />
-    return <LoginMenu redirectTo={segment} />
-  }
+  ({ segment }: any) => (
+    <WithAuthWrapper Component={Component} segment={segment} />
+  )
 
 type LoginMenuProps = {
   redirectTo?: string

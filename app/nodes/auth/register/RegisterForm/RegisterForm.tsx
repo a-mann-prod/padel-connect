@@ -1,19 +1,20 @@
-import { FormInputControlled } from '@/components'
-
-import { Button } from '@/designSystem/'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useToast } from '@/hooks/useToast'
-import { useRegister } from '@/services/api'
-import { useTranslate } from '@/services/i18n'
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router, useLocalSearchParams } from 'expo-router'
 import { Fragment } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+
 import {
   RegisterFormValues,
   registerFormServices,
 } from './registerForm.services'
+
+import { FormInputControlled } from '@/components'
+import { Button } from '@/designSystem/'
+import { useHandleError } from '@/hooks/useHandleError'
+import { useToast } from '@/hooks/useToast'
+import { useRegister } from '@/services/api'
+import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = registerFormServices
 
@@ -34,7 +35,6 @@ export const RegisterForm = () => {
       if (user?.email) {
         toast.show({ title: t('emailSent'), action: 'info' })
         router.back()
-        return
       }
     },
     onError,
@@ -50,7 +50,7 @@ export const RegisterForm = () => {
   const onSubmit = (d: RegisterFormValues) => register(d)
 
   return (
-    <Fragment>
+    <>
       <VStack space="md">
         <FormProvider {...methods}>
           <FormInputControlled
@@ -89,6 +89,6 @@ export const RegisterForm = () => {
         onPress={handleSubmit(onSubmit)}
         isLoading={isPending}
       />
-    </Fragment>
+    </>
   )
 }

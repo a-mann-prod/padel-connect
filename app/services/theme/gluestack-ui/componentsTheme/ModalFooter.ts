@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ModalFooter = createStyle({
   p: '$4',
@@ -6,4 +6,4 @@ export const ModalFooter = createStyle({
   justifyContent: 'flex-end',
   alignItems: 'center',
   flexWrap: 'wrap',
-});
+})

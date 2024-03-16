@@ -1,8 +1,3 @@
-import { AuthProvider } from '@/contexts'
-import { useColorScheme } from '@/hooks/useColorScheme'
-import { date } from '@/services/date'
-import { useI18N, useInitLanguage } from '@/services/i18n'
-import { config } from '@/services/theme/gluestack-ui/gluestack-ui.config' // Relative path to your ejected theme configuration
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { DarkTheme, ThemeProvider } from '@react-navigation/native'
@@ -13,6 +8,12 @@ import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
+
+import { AuthProvider } from '@/contexts'
+import { useColorScheme } from '@/hooks/useColorScheme'
+import { date } from '@/services/date'
+import { useI18N, useInitLanguage } from '@/services/i18n'
+import { config } from '@/services/theme/gluestack-ui/gluestack-ui.config' // Relative path to your ejected theme configuration
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
 

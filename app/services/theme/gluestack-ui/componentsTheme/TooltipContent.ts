@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const TooltipContent = createStyle({
   ':initial': {
@@ -23,26 +23,26 @@ export const TooltipContent = createStyle({
     },
   },
 
-  'py': '$1',
-  'px': '$3',
-  'borderRadius': '$sm',
-  'bg': '$backgroundLight900',
+  py: '$1',
+  px: '$3',
+  borderRadius: '$sm',
+  bg: '$backgroundLight900',
 
-  '_text': {
+  _text: {
     fontSize: '$xs',
     color: '$textLight50',
   },
-  '_web': {
+  _web: {
     pointerEvents: 'auto',
   },
   // @ts-ignore
-  '_dark': {
+  _dark: {
     bg: '$backgroundDark800',
     _text: {
       color: '$textDark50',
     },
   },
-  'defaultProps': {
+  defaultProps: {
     hardShadow: '2',
   },
-});
+})

@@ -1,3 +1,3 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
-export const ImageBackground = createStyle({});
+export const ImageBackground = createStyle({})

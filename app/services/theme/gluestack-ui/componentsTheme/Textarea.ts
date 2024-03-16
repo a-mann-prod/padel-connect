@@ -1,12 +1,12 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Textarea = createStyle({
-  'w': '100%',
-  'borderWidth': 1,
-  'borderColor': '$backgroundLight300',
-  'borderRadius': '$sm',
-  'h': 100,
-  '_input': {
+  w: '100%',
+  borderWidth: 1,
+  borderColor: '$backgroundLight300',
+  borderRadius: '$sm',
+  h: 100,
+  _input: {
     p: '$3',
     _web: {
       outlineWidth: 0,
@@ -18,25 +18,25 @@ export const Textarea = createStyle({
   },
 
   ':focus': {
-    'borderColor': '$primary700',
+    borderColor: '$primary700',
     ':hover': {
       borderColor: '$primary700',
     },
   },
 
   ':disabled': {
-    'opacity': 0.4,
+    opacity: 0.4,
     ':hover': {
       borderColor: '$backgroundLight300',
     },
   },
-  '_dark': {
-    'borderColor': '$borderDark700',
+  _dark: {
+    borderColor: '$borderDark700',
     ':hover': {
       borderColor: '$borderDark600',
     },
     ':focus': {
-      'borderColor': '$primary400',
+      borderColor: '$primary400',
       ':hover': {
         borderColor: '$primary400',
       },
@@ -48,7 +48,7 @@ export const Textarea = createStyle({
     },
   },
 
-  'variants': {
+  variants: {
     size: {
       xl: {
         _input: {
@@ -74,7 +74,7 @@ export const Textarea = createStyle({
     },
     variant: {
       default: {
-        '_input': {
+        _input: {
           _web: {
             outlineWidth: '0',
             outline: 'none',
@@ -87,8 +87,8 @@ export const Textarea = createStyle({
           },
         },
         ':invalid': {
-          'borderColor': '$error700',
-          '_web': {
+          borderColor: '$error700',
+          _web: {
             boxShadow: 'inset 0 0 0 1px $error700',
           },
           ':hover': {
@@ -111,7 +111,7 @@ export const Textarea = createStyle({
             },
           },
         },
-        '_dark': {
+        _dark: {
           ':focus': {
             borderColor: '$primary400',
             _web: {
@@ -119,8 +119,8 @@ export const Textarea = createStyle({
             },
           },
           ':invalid': {
-            'borderColor': '$error400',
-            '_web': {
+            borderColor: '$error400',
+            _web: {
               boxShadow: 'inset 0 0 0 1px $error400',
             },
             ':hover': {
@@ -148,8 +148,8 @@ export const Textarea = createStyle({
     },
   },
 
-  'defaultProps': {
+  defaultProps: {
     variant: 'default',
     size: 'md',
   },
-});
+})

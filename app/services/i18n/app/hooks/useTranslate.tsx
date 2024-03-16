@@ -1,4 +1,5 @@
 import { UseTranslationOptions, useTranslation } from 'react-i18next'
+
 import { Namespace } from '../resources'
 
 export const useTranslate = (

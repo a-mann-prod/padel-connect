@@ -1,3 +1,12 @@
+import { VStack } from '@gluestack-ui/themed'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { router } from 'expo-router'
+import { Fragment, useEffect } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { v4 as uuid } from 'uuid'
+
+import { AvatarFormValues, avatarFormServices } from './AvatarForm.services'
+
 import { FormAvatarControlled } from '@/components/FormAvatarControlled/FormInputControlled'
 import { useAuthContext, useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'
@@ -6,13 +15,6 @@ import { useUpdateProfile } from '@/services/api'
 import { useSaveImage } from '@/services/api/image'
 import { useTranslate } from '@/services/i18n'
 import { FileExtension, MimeType, getFileExtension } from '@/utils/file'
-import { VStack } from '@gluestack-ui/themed'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { router } from 'expo-router'
-import { Fragment, useEffect } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { v4 as uuid } from 'uuid'
-import { AvatarFormValues, avatarFormServices } from './AvatarForm.services'
 
 const { getDefaultValues, schema } = avatarFormServices
 
@@ -76,7 +78,7 @@ export const AvatarForm = () => {
   }
 
   return (
-    <Fragment>
+    <>
       <VStack space="md">
         <FormProvider {...methods}>
           <FormAvatarControlled
@@ -92,7 +94,7 @@ export const AvatarForm = () => {
         onPress={handleSubmit(onSubmit)}
         isLoading={isPending || isPendingAvatar}
       />
-      <Button title={'test'} onPress={() => onFinish()} isLoading={isPending} />
-    </Fragment>
+      <Button title="test" onPress={() => onFinish()} isLoading={isPending} />
+    </>
   )
 }

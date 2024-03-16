@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const FormControlLabelText = createStyle({
   fontWeight: '$medium',
@@ -6,4 +6,4 @@ export const FormControlLabelText = createStyle({
   _dark: {
     color: '$textDark50',
   },
-});
+})

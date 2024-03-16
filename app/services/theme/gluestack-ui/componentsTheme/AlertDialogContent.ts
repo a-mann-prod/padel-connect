@@ -1,9 +1,9 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AlertDialogContent = createStyle({
-  'bg': '$backgroundLight50',
-  'rounded': '$lg',
-  'overflow': 'hidden',
+  bg: '$backgroundLight50',
+  rounded: '$lg',
+  overflow: 'hidden',
   //@ts-ignore
   ':initial': {
     scale: 0.9,
@@ -28,10 +28,10 @@ export const AlertDialogContent = createStyle({
   },
 
   // @ts-ignore
-  '_dark': {
+  _dark: {
     bg: '$backgroundDark900',
   },
-  'defaultProps': {
+  defaultProps: {
     softShadow: '3',
   },
-});
+})

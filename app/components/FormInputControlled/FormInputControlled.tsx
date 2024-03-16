@@ -1,5 +1,6 @@
-import { FormInput, FormInputProps } from '@/designSystem/Form'
 import { useController } from 'react-hook-form'
+
+import { FormInput, FormInputProps } from '@/designSystem/Form'
 
 export type FormInputControlledProps = {
   name: string

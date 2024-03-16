@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const InputField = createStyle({
   flex: 1,
@@ -13,7 +13,7 @@ export const InputField = createStyle({
     },
   },
   _web: {
-    'cursor': 'text',
+    cursor: 'text',
     ':disabled': {
       cursor: 'not-allowed',
     },
@@ -23,23 +23,23 @@ export const InputField = createStyle({
       '2xs': {
         fontSize: '$2xs',
       },
-      'xs': {
+      xs: {
         fontSize: '$xs',
       },
 
-      'sm': {
+      sm: {
         fontSize: '$sm',
       },
 
-      'md': {
+      md: {
         fontSize: '$md',
       },
 
-      'lg': {
+      lg: {
         fontSize: '$lg',
       },
 
-      'xl': {
+      xl: {
         fontSize: '$xl',
       },
 
@@ -64,4 +64,4 @@ export const InputField = createStyle({
       },
     },
   },
-});
+})

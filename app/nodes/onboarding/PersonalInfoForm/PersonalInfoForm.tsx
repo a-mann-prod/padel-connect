@@ -1,16 +1,18 @@
-import { FormInputControlled } from '@/components'
-import { useOnboardingContext } from '@/contexts'
-import { Button } from '@/designSystem'
-import { useTranslate } from '@/services/i18n'
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
 import { Fragment } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+
 import {
   PersonalInfoFormValues,
   personalInfoFormServices,
 } from './PersonalInfoForm.services'
+
+import { FormInputControlled } from '@/components'
+import { useOnboardingContext } from '@/contexts'
+import { Button } from '@/designSystem'
+import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = personalInfoFormServices
 
@@ -31,7 +33,7 @@ export const PersonalInfoForm = () => {
   }
 
   return (
-    <Fragment>
+    <>
       <VStack space="md">
         <FormProvider {...methods}>
           <FormInputControlled
@@ -60,6 +62,6 @@ export const PersonalInfoForm = () => {
         </FormProvider>
       </VStack>
       <Button title={tGlobal('next')} onPress={handleSubmit(onSubmit)} />
-    </Fragment>
+    </>
   )
 }

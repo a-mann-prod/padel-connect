@@ -1,12 +1,12 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SelectTrigger = createStyle({
-  'borderWidth': 1,
-  'borderColor': '$backgroundLight300',
-  'borderRadius': '$sm',
-  'flexDirection': 'row',
-  'overflow': 'hidden',
-  'alignItems': 'center',
+  borderWidth: 1,
+  borderColor: '$backgroundLight300',
+  borderRadius: '$sm',
+  flexDirection: 'row',
+  overflow: 'hidden',
+  alignItems: 'center',
 
   ':hover': {
     borderColor: '$borderLight400',
@@ -17,26 +17,26 @@ export const SelectTrigger = createStyle({
   },
 
   ':disabled': {
-    'opacity': 0.4,
+    opacity: 0.4,
     ':hover': {
       borderColor: '$backgroundLight300',
     },
   },
 
-  '_input': {
+  _input: {
     py: 'auto',
     px: '$3',
   },
 
-  '_icon': {
+  _icon: {
     color: '$backgroundLight500',
     _dark: {
       color: '$backgroundLight500',
     },
   },
 
-  '_dark': {
-    'borderColor': '$borderDark700',
+  _dark: {
+    borderColor: '$borderDark700',
     ':hover': {
       borderColor: '$borderDark400',
     },
@@ -50,7 +50,7 @@ export const SelectTrigger = createStyle({
     },
   },
 
-  'variants': {
+  variants: {
     size: {
       xl: {
         h: '$12',
@@ -95,19 +95,19 @@ export const SelectTrigger = createStyle({
     },
     variant: {
       underlined: {
-        '_input': {
+        _input: {
           _web: {
             outlineWidth: 0,
             outline: 'none',
           },
           px: '$0',
         },
-        'borderWidth': 0,
-        'borderRadius': 0,
-        'borderBottomWidth': '$1',
+        borderWidth: 0,
+        borderRadius: 0,
+        borderBottomWidth: '$1',
         ':focus': {
-          'borderColor': '$primary700',
-          '_web': {
+          borderColor: '$primary700',
+          _web: {
             boxShadow: 'inset 0 -1px 0 0 $primary700',
           },
           ':hover': {
@@ -118,16 +118,16 @@ export const SelectTrigger = createStyle({
           },
         },
         ':invalid': {
-          'borderBottomWidth': 2,
-          'borderBottomColor': '$error700',
-          '_web': {
+          borderBottomWidth: 2,
+          borderBottomColor: '$error700',
+          _web: {
             boxShadow: 'inset 0 -1px 0 0 $error700',
           },
           ':hover': {
             borderBottomColor: '$error700',
           },
           ':focus': {
-            'borderBottomColor': '$error700',
+            borderBottomColor: '$error700',
             ':hover': {
               borderBottomColor: '$error700',
               _web: {
@@ -144,7 +144,7 @@ export const SelectTrigger = createStyle({
             },
           },
         },
-        '_dark': {
+        _dark: {
           ':focus': {
             borderColor: '$primary400',
             _web: {
@@ -152,15 +152,15 @@ export const SelectTrigger = createStyle({
             },
           },
           ':invalid': {
-            'borderColor': '$error400',
-            '_web': {
+            borderColor: '$error400',
+            _web: {
               boxShadow: 'inset 0 -1px 0 0 $error400',
             },
             ':hover': {
               borderBottomColor: '$error400',
             },
             ':focus': {
-              'borderBottomColor': '$error400',
+              borderBottomColor: '$error400',
               ':hover': {
                 borderBottomColor: '$error400',
                 _web: {
@@ -181,15 +181,15 @@ export const SelectTrigger = createStyle({
         },
       },
       outline: {
-        '_input': {
+        _input: {
           _web: {
             outlineWidth: 0,
             outline: 'none',
           },
         },
         ':focus': {
-          'borderColor': '$primary700',
-          '_web': {
+          borderColor: '$primary700',
+          _web: {
             boxShadow: 'inset 0 0 0 1px $primary700',
           },
           ':hover': {
@@ -200,15 +200,15 @@ export const SelectTrigger = createStyle({
           },
         },
         ':invalid': {
-          'borderColor': '$error700',
-          '_web': {
+          borderColor: '$error700',
+          _web: {
             boxShadow: 'inset 0 0 0 1px $error700',
           },
           ':hover': {
             borderColor: '$error700',
           },
           ':focus': {
-            'borderColor': '$error700',
+            borderColor: '$error700',
             ':hover': {
               borderColor: '$error700',
               _web: {
@@ -225,7 +225,7 @@ export const SelectTrigger = createStyle({
             },
           },
         },
-        '_dark': {
+        _dark: {
           ':focus': {
             borderColor: '$primary400',
             _web: {
@@ -233,15 +233,15 @@ export const SelectTrigger = createStyle({
             },
           },
           ':invalid': {
-            'borderColor': '$error400',
-            '_web': {
+            borderColor: '$error400',
+            _web: {
               boxShadow: 'inset 0 0 0 1px $error400',
             },
             ':hover': {
               borderColor: '$error400',
             },
             ':focus': {
-              'borderColor': '$error400',
+              borderColor: '$error400',
               ':hover': {
                 borderColor: '$error400',
                 _web: {
@@ -261,8 +261,8 @@ export const SelectTrigger = createStyle({
         },
       },
       rounded: {
-        'borderRadius': 999,
-        '_input': {
+        borderRadius: 999,
+        _input: {
           px: '$4',
           _web: {
             outlineWidth: 0,
@@ -270,8 +270,8 @@ export const SelectTrigger = createStyle({
           },
         },
         ':focus': {
-          'borderColor': '$primary700',
-          '_web': {
+          borderColor: '$primary700',
+          _web: {
             boxShadow: 'inset 0 0 0 1px $primary700',
           },
           ':hover': {
@@ -282,15 +282,15 @@ export const SelectTrigger = createStyle({
           },
         },
         ':invalid': {
-          'borderColor': '$error700',
-          '_web': {
+          borderColor: '$error700',
+          _web: {
             boxShadow: 'inset 0 0 0 1px $error700',
           },
           ':hover': {
             borderColor: '$error700',
           },
           ':focus': {
-            'borderColor': '$error700',
+            borderColor: '$error700',
             ':hover': {
               borderColor: '$error700',
               _web: {
@@ -308,7 +308,7 @@ export const SelectTrigger = createStyle({
           },
         },
 
-        '_dark': {
+        _dark: {
           ':focus': {
             borderColor: '$primary400',
             _web: {
@@ -316,15 +316,15 @@ export const SelectTrigger = createStyle({
             },
           },
           ':invalid': {
-            'borderColor': '$error400',
-            '_web': {
+            borderColor: '$error400',
+            _web: {
               boxShadow: 'inset 0 0 0 1px $error400',
             },
             ':hover': {
               borderColor: '$error400',
             },
             ':focus': {
-              'borderColor': '$error400',
+              borderColor: '$error400',
               ':hover': {
                 borderColor: '$error400',
                 _web: {
@@ -346,8 +346,8 @@ export const SelectTrigger = createStyle({
     },
   },
 
-  'defaultProps': {
+  defaultProps: {
     size: 'md',
     variant: 'outline',
   },
-});
+})

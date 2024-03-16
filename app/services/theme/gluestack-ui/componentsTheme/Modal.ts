@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Modal = createStyle({
   width: '$full',
@@ -20,4 +20,4 @@ export const Modal = createStyle({
   _web: {
     pointerEvents: 'box-none',
   },
-});
+})

@@ -1,3 +1,3 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
-export const CheckboxGroup = createStyle({});
+export const CheckboxGroup = createStyle({})

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Checkbox = createStyle({
   flexDirection: 'row',
@@ -71,9 +71,9 @@ export const Checkbox = createStyle({
   },
 
   _web: {
-    'cursor': 'pointer',
+    cursor: 'pointer',
     ':disabled': {
       cursor: 'not-allowed',
     },
   },
-});
+})

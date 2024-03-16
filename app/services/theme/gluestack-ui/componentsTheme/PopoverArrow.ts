@@ -1,15 +1,15 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const PopoverArrow = createStyle({
-  'bg': '$backgroundLight50',
-  'zIndex': 1,
-  'position': 'absolute',
-  'overflow': 'hidden',
-  '_dark': {
+  bg: '$backgroundLight50',
+  zIndex: 1,
+  position: 'absolute',
+  overflow: 'hidden',
+  _dark: {
     bg: '$backgroundDark900',
   },
-  'h': '$3.5',
-  'w': '$3.5',
+  h: '$3.5',
+  w: '$3.5',
   ':transition': {
     type: 'spring',
     damping: 18,
@@ -21,7 +21,7 @@ export const PopoverArrow = createStyle({
       delay: 50,
     },
   },
-  'props': {
+  props: {
     softShadow: '3',
   },
-});
+})

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const PopoverHeader = createStyle({
   p: '$4',
@@ -6,4 +6,4 @@ export const PopoverHeader = createStyle({
   justifyContent: 'space-between',
   alignItems: 'center',
   flexDirection: 'row',
-});
+})

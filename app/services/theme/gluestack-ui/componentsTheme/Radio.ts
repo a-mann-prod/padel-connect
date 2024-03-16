@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Radio = createStyle({
   flexDirection: 'row',
@@ -65,9 +65,9 @@ export const Radio = createStyle({
     size: 'md',
   },
   _web: {
-    'cursor': 'pointer',
+    cursor: 'pointer',
     ':disabled': {
       cursor: 'not-allowed',
     },
   },
-});
+})

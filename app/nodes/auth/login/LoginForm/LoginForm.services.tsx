@@ -1,5 +1,6 @@
-import { validators } from '@/services/formValidator'
 import { z } from 'zod'
+
+import { validators } from '@/services/formValidator'
 
 export type LoginFormValues = z.infer<typeof schema>
 

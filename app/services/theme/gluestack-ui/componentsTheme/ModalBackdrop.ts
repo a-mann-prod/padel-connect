@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ModalBackdrop = createStyle({
   ':initial': {
@@ -19,18 +19,18 @@ export const ModalBackdrop = createStyle({
       duration: 250,
     },
   },
-  'position': 'absolute',
-  'left': 0,
-  'top': 0,
-  'right': 0,
-  'bottom': 0,
-  'bg': '$backgroundLight950',
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  bg: '$backgroundLight950',
   // @ts-ignore
-  '_dark': {
+  _dark: {
     bg: '$backgroundDark950',
   },
   // @ts-ignore
-  '_web': {
+  _web: {
     cursor: 'default',
   },
-});
+})

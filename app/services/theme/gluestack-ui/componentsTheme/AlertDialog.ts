@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AlertDialog = createStyle({
   w: '$full',
@@ -20,4 +20,4 @@ export const AlertDialog = createStyle({
   _web: {
     pointerEvents: 'box-none',
   },
-});
+})

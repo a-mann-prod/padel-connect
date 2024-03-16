@@ -1,8 +1,10 @@
-import { useAuthContext } from '@/contexts'
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
+
 import { LoginResponse } from './entities'
 import { loginFn, loginWithOAuthFn } from './functions'
 import { LoginParams, LoginWithOAuthParams } from './params'
+
+import { useAuthContext } from '@/contexts'
 
 // login with email / password
 export const useLogin = (
@@ -24,7 +26,7 @@ export const useLogin = (
 export const useLoginWithOAuth = (
   options: UseMutationOptions<void, Error, LoginWithOAuthParams> = {}
 ) => {
-  const { signIn } = useAuthContext()
+  // const { signIn } = useAuthContext()
 
   return useMutation({
     ...options,

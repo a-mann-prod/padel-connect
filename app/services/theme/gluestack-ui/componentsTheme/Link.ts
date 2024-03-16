@@ -1,8 +1,8 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Link = createStyle({
   _web: {
-    'outlineWidth': 0,
+    outlineWidth: 0,
     ':disabled': {
       cursor: 'not-allowed',
     },
@@ -26,7 +26,7 @@ export const Link = createStyle({
     ':disabled': {
       opacity: 0.4,
     },
-    '_dark': {
+    _dark: {
       ':hover': {
         color: '$info400',
       },
@@ -35,4 +35,4 @@ export const Link = createStyle({
       },
     },
   },
-});
+})

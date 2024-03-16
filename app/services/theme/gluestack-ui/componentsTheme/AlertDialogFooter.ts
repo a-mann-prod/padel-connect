@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AlertDialogFooter = createStyle({
   p: '$4',
@@ -10,4 +10,4 @@ export const AlertDialogFooter = createStyle({
   _dark: {
     borderColor: '$borderDark700',
   },
-});
+})

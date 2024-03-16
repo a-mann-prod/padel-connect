@@ -1,6 +1,8 @@
-import { when } from '@/utils/when'
 import { Input, InputField } from '@gluestack-ui/themed'
+
 import { FormControl, FormControlProps } from '../FormControl/FormControl'
+
+import { when } from '@/utils/when'
 
 export type FormInputProps = {
   displayPlaceHolder?: boolean

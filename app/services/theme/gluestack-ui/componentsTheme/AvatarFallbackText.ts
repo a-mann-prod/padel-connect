@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AvatarFallbackText = createStyle({
   color: '$textLight0',
@@ -11,4 +11,4 @@ export const AvatarFallbackText = createStyle({
   _web: {
     cursor: 'default',
   },
-});
+})

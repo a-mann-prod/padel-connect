@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const LinkText = createStyle({
   textDecorationLine: 'underline',
@@ -6,4 +6,4 @@ export const LinkText = createStyle({
   _dark: {
     color: '$info300',
   },
-});
+})

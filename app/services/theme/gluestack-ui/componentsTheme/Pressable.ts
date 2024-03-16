@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Pressable = createStyle({
   _web: {
@@ -11,4 +11,4 @@ export const Pressable = createStyle({
       },
     },
   },
-});
+})

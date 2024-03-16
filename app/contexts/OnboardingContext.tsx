@@ -1,7 +1,8 @@
+import { Dispatch, ReactNode, SetStateAction, useState } from 'react'
+
 import { AvatarFormValues } from '@/nodes/onboarding/AvatarForm/AvatarForm.services'
 import { PersonalInfoFormValues } from '@/nodes/onboarding/PersonalInfoForm/PersonalInfoForm.services'
 import { buildContext } from '@/services/buildContext'
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react'
 
 type OnboardingContextProps = {
   personalInfo: PersonalInfoFormValues | undefined

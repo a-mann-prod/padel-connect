@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Toast = createStyle({
   px: '$4',
@@ -103,4 +103,4 @@ export const Toast = createStyle({
     variant: 'solid',
     action: 'attention',
   },
-});
+})

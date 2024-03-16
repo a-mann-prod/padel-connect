@@ -1,1 +1,1 @@
-export type ResetPasswordResponse = {} | null
+export type ResetPasswordResponse = object | null

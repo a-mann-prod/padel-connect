@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Alert = createStyle({
   alignItems: 'center',
@@ -98,4 +98,4 @@ export const Alert = createStyle({
     variant: 'solid',
     action: 'info',
   },
-});
+})

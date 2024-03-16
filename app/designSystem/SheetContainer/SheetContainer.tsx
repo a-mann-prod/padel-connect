@@ -1,7 +1,7 @@
 import { SafeAreaView, ScrollView, VStack } from '@gluestack-ui/themed'
 import { PropsWithChildren } from 'react'
 
-export type SheetContainerProps = {}
+export type SheetContainerProps = object
 
 export const SheetContainer = ({
   children,

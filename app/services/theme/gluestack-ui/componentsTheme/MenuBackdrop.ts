@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const MenuBackdrop = createStyle({
   position: 'absolute',
@@ -12,4 +12,4 @@ export const MenuBackdrop = createStyle({
   _web: {
     cursor: 'default',
   },
-});
+})

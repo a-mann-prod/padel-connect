@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SelectActionsheetSectionHeaderText = createStyle({
   color: '$textLight500',
@@ -11,4 +11,4 @@ export const SelectActionsheetSectionHeaderText = createStyle({
   _dark: {
     color: '$textDark400',
   },
-});
+})

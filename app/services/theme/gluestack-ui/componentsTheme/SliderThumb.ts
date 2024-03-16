@@ -1,12 +1,12 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SliderThumb = createStyle({
-  'bg': '$primary500',
-  '_dark': {
+  bg: '$primary500',
+  _dark: {
     bg: '$primary400',
   },
-  'position': 'absolute',
-  'borderRadius': '$full',
+  position: 'absolute',
+  borderRadius: '$full',
   ':focus': {
     bg: '$primary600',
     _dark: {
@@ -31,9 +31,9 @@ export const SliderThumb = createStyle({
       bg: '$primary500',
     },
   },
-  '_web': {
+  _web: {
     //@ts-ignore
-    'cursor': 'pointer',
+    cursor: 'pointer',
     ':active': {
       outlineWidth: 4,
       outlineStyle: 'solid',
@@ -51,7 +51,7 @@ export const SliderThumb = createStyle({
       },
     },
   },
-  'defaultProps': {
+  defaultProps: {
     hardShadow: '1',
   },
-});
+})

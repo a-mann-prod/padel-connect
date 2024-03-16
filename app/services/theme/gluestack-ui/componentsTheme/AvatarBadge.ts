@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AvatarBadge = createStyle({
   w: '$5',
@@ -10,4 +10,4 @@ export const AvatarBadge = createStyle({
   bottom: 0,
   borderColor: 'white',
   borderWidth: 2,
-});
+})

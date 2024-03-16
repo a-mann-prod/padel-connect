@@ -1,13 +1,13 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ModalCloseButton = createStyle({
-  'zIndex': 1,
-  'p': '$2',
-  'rounded': '$sm',
-  '_icon': {
+  zIndex: 1,
+  p: '$2',
+  rounded: '$sm',
+  _icon: {
     color: '$backgroundLight400',
   },
-  '_text': {
+  _text: {
     color: '$backgroundLight400',
   },
 
@@ -29,11 +29,11 @@ export const ModalCloseButton = createStyle({
     },
   },
 
-  '_dark': {
-    '_icon': {
+  _dark: {
+    _icon: {
       color: '$backgroundDark400',
     },
-    '_text': {
+    _text: {
       color: '$backgroundDark400',
     },
     ':hover': {
@@ -73,8 +73,8 @@ export const ModalCloseButton = createStyle({
     },
   },
 
-  '_web': {
+  _web: {
     outlineWidth: 0,
     cursor: 'pointer',
   },
-});
+})

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ButtonGroup = createStyle({
   variants: {
@@ -42,19 +42,19 @@ export const ButtonGroup = createStyle({
       },
     },
     space: {
-      'xs': {
+      xs: {
         gap: '$1',
       },
-      'sm': {
+      sm: {
         gap: '$2',
       },
-      'md': {
+      md: {
         gap: '$3',
       },
-      'lg': {
+      lg: {
         gap: '$4',
       },
-      'xl': {
+      xl: {
         gap: '$5',
       },
       '2xl': {
@@ -77,4 +77,4 @@ export const ButtonGroup = createStyle({
     size: 'md',
     space: 'sm',
   },
-});
+})

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ButtonGroupHSpacer = createStyle({
   variants: {
@@ -20,4 +20,4 @@ export const ButtonGroupHSpacer = createStyle({
       },
     },
   },
-});
+})

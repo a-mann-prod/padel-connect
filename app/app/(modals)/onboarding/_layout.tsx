@@ -1,10 +1,11 @@
+import { HeaderBackButtonProps } from '@react-navigation/elements'
+import { Stack, router } from 'expo-router'
+import { Platform } from 'react-native'
+
 import { OnboardingProvider } from '@/contexts'
 import { IconButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { when } from '@/utils/when'
-import { HeaderBackButtonProps } from '@react-navigation/elements'
-import { Stack, router } from 'expo-router'
-import { Platform } from 'react-native'
 
 const displayCloseButton = ({
   tintColor,

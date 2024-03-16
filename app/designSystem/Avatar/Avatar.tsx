@@ -9,6 +9,7 @@ import {
 import { useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
+
 import { Icon } from '../Icon/Icon'
 
 export type AvatarProps = {

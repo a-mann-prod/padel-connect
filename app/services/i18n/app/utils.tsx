@@ -1,4 +1,5 @@
 import { getLocales } from 'expo-localization'
+
 import { Namespace } from './resources'
 import { Language } from './types'
 

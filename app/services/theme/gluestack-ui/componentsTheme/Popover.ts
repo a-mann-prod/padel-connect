@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Popover = createStyle({
   width: '$full',
@@ -20,4 +20,4 @@ export const Popover = createStyle({
   _web: {
     pointerEvents: 'box-none',
   },
-});
+})

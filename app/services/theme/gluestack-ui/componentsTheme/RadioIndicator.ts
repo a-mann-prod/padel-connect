@@ -1,13 +1,13 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const RadioIndicator = createStyle({
-  'justifyContent': 'center',
-  'alignItems': 'center',
-  'bg': 'transparent',
-  'borderColor': '$borderLight400',
-  'borderWidth': 2,
-  'borderRadius': 999,
-  '_web': {
+  justifyContent: 'center',
+  alignItems: 'center',
+  bg: 'transparent',
+  borderColor: '$borderLight400',
+  borderWidth: 2,
+  borderRadius: 999,
+  _web: {
     ':focusVisible': {
       outlineWidth: 2,
       outlineColor: '$primary700',
@@ -24,8 +24,8 @@ export const RadioIndicator = createStyle({
   },
 
   ':hover': {
-    'borderColor': '$borderLight500',
-    'bg': 'transparent',
+    borderColor: '$borderLight500',
+    bg: 'transparent',
 
     ':checked': {
       bg: 'transparent',
@@ -39,8 +39,8 @@ export const RadioIndicator = createStyle({
         borderColor: '$error400',
         opacity: 0.4,
       },
-      'borderColor': '$borderLight400',
-      'opacity': 0.4,
+      borderColor: '$borderLight400',
+      opacity: 0.4,
     },
   },
 
@@ -49,13 +49,13 @@ export const RadioIndicator = createStyle({
     borderColor: '$primary800',
   },
 
-  '_dark': {
-    'borderColor': '$borderDark500',
-    'bg': '$transparent',
+  _dark: {
+    borderColor: '$borderDark500',
+    bg: '$transparent',
 
     ':hover': {
-      'borderColor': '$borderDark400',
-      'bg': 'transparent',
+      borderColor: '$borderDark400',
+      bg: 'transparent',
 
       ':checked': {
         bg: 'transparent',
@@ -65,8 +65,8 @@ export const RadioIndicator = createStyle({
         borderColor: '$error400',
       },
       ':disabled': {
-        'borderColor': '$borderDark500',
-        'opacity': 0.4,
+        borderColor: '$borderDark500',
+        opacity: 0.4,
         ':checked': {
           bg: 'transparent',
           borderColor: '$primary500',
@@ -95,7 +95,7 @@ export const RadioIndicator = createStyle({
   },
 
   ':disabled': {
-    'opacity': 0.4,
+    opacity: 0.4,
     ':checked': {
       borderColor: '$borderLight400',
       bg: 'transparent',
@@ -104,4 +104,4 @@ export const RadioIndicator = createStyle({
       borderColor: '$error400',
     },
   },
-});
+})

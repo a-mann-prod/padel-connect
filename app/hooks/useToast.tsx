@@ -1,5 +1,6 @@
-import { Toast, ToastProps } from '@/designSystem'
 import { useToast as useGToast } from '@gluestack-ui/themed'
+
+import { Toast, ToastProps } from '@/designSystem'
 
 const DURATION = 5
 

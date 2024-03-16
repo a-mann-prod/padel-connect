@@ -1,5 +1,6 @@
-import { PersonalInfoForm } from '@/nodes'
 import { KeyboardAvoidingView, ScrollView, VStack } from '@gluestack-ui/themed'
+
+import { PersonalInfoForm } from '@/nodes'
 
 export default () => (
   <KeyboardAvoidingView>

@@ -1,8 +1,10 @@
-import { supabase } from '@/services/supabase'
 import * as AuthSession from 'expo-auth-session'
-import { handleSupabaseAuthError } from '../shared'
+
 import { RegisterResponse } from './entities'
 import { RegisterParams } from './params'
+import { handleSupabaseAuthError } from '../shared'
+
+import { supabase } from '@/services/supabase'
 
 export const registerFn = async ({
   email,

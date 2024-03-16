@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SelectActionsheetItemText = createStyle({
   mx: '$2',
@@ -10,4 +10,4 @@ export const SelectActionsheetItemText = createStyle({
   _dark: {
     color: '$textDark200',
   },
-});
+})

@@ -1,9 +1,9 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const PopoverContent = createStyle({
-  'bg': '$backgroundLight50',
-  'rounded': '$lg',
-  'overflow': 'hidden',
+  bg: '$backgroundLight50',
+  rounded: '$lg',
+  overflow: 'hidden',
   ':transition': {
     type: 'spring',
     damping: 18,
@@ -15,11 +15,11 @@ export const PopoverContent = createStyle({
       delay: 50,
     },
   },
-  '_dark': {
+  _dark: {
     bg: '$backgroundDark900',
   },
 
-  'defaultProps': {
+  defaultProps: {
     softShadow: '3',
   },
-});
+})

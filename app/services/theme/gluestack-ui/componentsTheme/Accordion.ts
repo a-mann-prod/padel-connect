@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Accordion = createStyle({
   width: '$full',
@@ -109,4 +109,4 @@ export const Accordion = createStyle({
     size: 'md',
     variant: 'filled',
   },
-});
+})

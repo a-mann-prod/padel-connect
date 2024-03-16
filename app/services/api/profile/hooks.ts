@@ -2,10 +2,11 @@ import {
   useQuery,
   useUpdateMutation,
 } from '@supabase-cache-helpers/postgrest-react-query'
-import { UseMutationProps, UseQueryProps } from '../types'
+
 import { ProfileResponse, queryCols } from './entities'
 import { getProfileFn, setProfileFn } from './functions'
 import { GetProfileParams, SetProfileParams } from './params'
+import { UseMutationProps, UseQueryProps } from '../types'
 
 export const useProfile = ({
   params,

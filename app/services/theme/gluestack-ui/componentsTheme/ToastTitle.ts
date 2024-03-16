@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ToastTitle = createStyle({
   fontWeight: '$medium',
@@ -9,4 +9,4 @@ export const ToastTitle = createStyle({
   _dark: {
     color: '$textDark50',
   },
-});
+})

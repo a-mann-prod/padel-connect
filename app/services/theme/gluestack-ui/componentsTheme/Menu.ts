@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Menu = createStyle({
   ':initial': {
@@ -19,14 +19,14 @@ export const Menu = createStyle({
       duration: 200,
     },
   },
-  'minWidth': 200,
-  'py': '$2',
-  'rounded': '$sm',
-  'bg': '$backgroundLight0',
-  '_dark': {
+  minWidth: 200,
+  py: '$2',
+  rounded: '$sm',
+  bg: '$backgroundLight0',
+  _dark: {
     bg: '$backgroundDark900',
   },
-  'defaultProps': {
+  defaultProps: {
     softShadow: '3',
   },
-});
+})

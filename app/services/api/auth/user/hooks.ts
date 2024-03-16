@@ -1,4 +1,5 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
+
 import { UserResponse } from './entities'
 import { updateUserFn } from './functions'
 import { UpdateUserParams } from './params'

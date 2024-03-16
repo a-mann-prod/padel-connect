@@ -1,13 +1,13 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AlertDialogCloseButton = createStyle({
-  'zIndex': 1,
-  'rounded': '$sm',
-  'p': '$2',
-  '_icon': {
+  zIndex: 1,
+  rounded: '$sm',
+  p: '$2',
+  _icon: {
     color: '$backgroundLight400',
   },
-  '_text': {
+  _text: {
     color: '$backgroundLight400',
   },
   ':hover': {
@@ -28,11 +28,11 @@ export const AlertDialogCloseButton = createStyle({
     },
   },
 
-  '_dark': {
-    '_icon': {
+  _dark: {
+    _icon: {
       color: '$backgroundLight400',
     },
-    '_text': {
+    _text: {
       color: '$backgroundLight400',
     },
     ':hover': {
@@ -70,8 +70,8 @@ export const AlertDialogCloseButton = createStyle({
     },
   },
 
-  '_web': {
+  _web: {
     outlineWidth: 0,
     cursor: 'pointer',
   },
-});
+})

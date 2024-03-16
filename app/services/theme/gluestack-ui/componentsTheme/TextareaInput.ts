@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const TextareaInput = createStyle({
   p: '$2',
@@ -17,9 +17,9 @@ export const TextareaInput = createStyle({
     },
   },
   _web: {
-    'cursor': 'text',
+    cursor: 'text',
     ':disabled': {
       cursor: 'not-allowed',
     },
   },
-});
+})

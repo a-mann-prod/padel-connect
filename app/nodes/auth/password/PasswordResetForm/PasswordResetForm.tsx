@@ -1,18 +1,19 @@
-import { FormInputControlled } from '@/components'
+import { Text, VStack } from '@gluestack-ui/themed'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { router } from 'expo-router'
+import { FormProvider, useForm } from 'react-hook-form'
 
+import {
+  PasswordResetFormValues,
+  passwordResetFormServices,
+} from './passwordResetForm.services'
+
+import { FormInputControlled } from '@/components'
 import { Button } from '@/designSystem/'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useToast } from '@/hooks/useToast'
 import { useUpdateUser } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
-import { Text, VStack } from '@gluestack-ui/themed'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { router } from 'expo-router'
-import { FormProvider, useForm } from 'react-hook-form'
-import {
-  PasswordResetFormValues,
-  passwordResetFormServices,
-} from './passwordResetForm.services'
 
 const { getDefaultValues, schema } = passwordResetFormServices
 

@@ -1,3 +1,3 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
-export const AccordionContentText = createStyle({});
+export const AccordionContentText = createStyle({})

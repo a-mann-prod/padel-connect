@@ -1,5 +1,6 @@
-import { FormAvatar, FormAvatarProps } from '@/designSystem/Form'
 import { useController } from 'react-hook-form'
+
+import { FormAvatar, FormAvatarProps } from '@/designSystem/Form'
 
 export type FormAvatarControlledProps = {
   name: string

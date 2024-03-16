@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SelectActionsheetDragIndicator = createStyle({
   height: '$1',
@@ -8,4 +8,4 @@ export const SelectActionsheetDragIndicator = createStyle({
   _dark: {
     bg: '$backgroundDark500',
   },
-});
+})

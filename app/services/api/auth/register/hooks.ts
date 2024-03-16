@@ -1,4 +1,5 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
+
 import { RegisterResponse } from './entities'
 import { registerFn } from './functions'
 import { RegisterParams } from './params'

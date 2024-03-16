@@ -5,6 +5,7 @@ import {
   ButtonText as GButtonText,
 } from '@gluestack-ui/themed'
 import { forwardRef } from 'react'
+
 import { Icon, IconName } from '../Icon/Icon'
 
 export type ButtonProps = {

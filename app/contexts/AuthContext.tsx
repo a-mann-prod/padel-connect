@@ -1,7 +1,8 @@
-import { buildContext } from '@/services/buildContext'
-import { supabase } from '@/services/supabase'
 import { AuthSession, AuthUser } from '@supabase/supabase-js'
 import { ReactNode, useEffect, useState } from 'react'
+
+import { buildContext } from '@/services/buildContext'
+import { supabase } from '@/services/supabase'
 
 type AuthContextProps = {
   session: AuthSession | null

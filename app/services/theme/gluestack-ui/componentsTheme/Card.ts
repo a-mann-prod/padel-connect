@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const Card = createStyle({
   variants: {
@@ -54,4 +54,4 @@ export const Card = createStyle({
     size: 'md',
     variant: 'elevated',
   },
-});
+})

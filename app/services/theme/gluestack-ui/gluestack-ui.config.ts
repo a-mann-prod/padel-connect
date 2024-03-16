@@ -1,6 +1,7 @@
 import { AnimationResolver } from '@gluestack-style/animation-resolver'
 import { MotionAnimationDriver } from '@gluestack-style/legend-motion-animation-driver'
 import { createComponents, createConfig } from '@gluestack-style/react'
+
 import * as componentsTheme from './componentsTheme'
 
 export const gluestackUIConfig = createConfig({

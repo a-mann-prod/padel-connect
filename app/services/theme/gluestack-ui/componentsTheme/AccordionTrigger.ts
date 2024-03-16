@@ -1,13 +1,13 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const AccordionTrigger = createStyle({
-  'width': '$full',
-  'py': '$5',
-  'px': '$5',
-  'flexDirection': 'row',
-  'justifyContent': 'space-between',
-  'alignItems': 'center',
-  '_web': {
+  width: '$full',
+  py: '$5',
+  px: '$5',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  _web: {
     outlineWidth: 0,
   },
   ':disabled': {
@@ -24,4 +24,4 @@ export const AccordionTrigger = createStyle({
       bg: '$backgroundDark900',
     },
   },
-});
+})

@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const ModalHeader = createStyle({
   px: '$4',
@@ -7,4 +7,4 @@ export const ModalHeader = createStyle({
   justifyContent: 'space-between',
   alignItems: 'center',
   flexDirection: 'row',
-});
+})

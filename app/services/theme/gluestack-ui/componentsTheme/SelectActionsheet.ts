@@ -1,4 +1,4 @@
-import { createStyle } from '@gluestack-style/react';
+import { createStyle } from '@gluestack-style/react'
 
 export const SelectActionsheet = createStyle({
   width: '$full',
@@ -8,4 +8,4 @@ export const SelectActionsheet = createStyle({
   _web: {
     pointerEvents: 'none',
   },
-});
+})

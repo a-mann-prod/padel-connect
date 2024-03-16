@@ -1,7 +1,8 @@
-import { supabase } from '@/services/supabase'
-import { handleSupabaseAuthError } from '../shared'
 import { UserResponse } from './entities'
 import { UpdateUserParams } from './params'
+import { handleSupabaseAuthError } from '../shared'
+
+import { supabase } from '@/services/supabase'
 
 export const updateUserFn = async (
   params: UpdateUserParams
