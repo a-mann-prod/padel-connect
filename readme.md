@@ -21,4 +21,4 @@
 
 - The repository consists of two main folders:
   - **supabase**: Contains configurations and scripts related to Supabase.
-  - **apps**: Contains the application code. Currently, it only includes the application itself.
+  - **app**: Contains the application code.
