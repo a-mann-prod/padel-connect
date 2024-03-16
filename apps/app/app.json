@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Padel Family",
+    "slug": "padel-family",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "com.padel-family",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      },
+      "bundleIdentifier": "com.anonymous.padelfamily"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.anonymous.padelfamily"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single", // static make asyncstorage failing
+      "favicon": "./assets/images/favicon.png"
+    },
+    "jsEngine": "hermes",
+    "plugins": ["expo-router", "expo-localization"],
+    "locales": {
+      "en": "./services/i18n/metadata/en.json",
+      "fr": "./services/i18n/metadata/fr.json"
+    },
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

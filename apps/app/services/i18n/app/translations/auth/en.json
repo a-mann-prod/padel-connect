@@ -1,0 +1,20 @@
+{
+  "appleLogin": "Continue with Apple",
+  "emailSent": "Email sent",
+  "emailVerified": {
+    "subTitle": "Done! 🎉 Your email address is confirmed. You can now log in! 🚀",
+    "title": "Verification successful"
+  },
+  "forgotPassword": "Forgot password",
+  "googleLogin": "Continue with Google",
+  "login": "Log in",
+  "loginNeeded": "You must be logged in to continue",
+  "passwordResetForm": {
+    "subtitle": "Almost there! 🎉 It's time to set your new password to complete the reset!",
+    "success": "Password saved"
+  },
+  "passwordResetRequest": {
+    "subtitle": "Ready to regain access to your account? Simply enter your email address below and we'll send you a magic link to reset your password! Make sure to check your spam folder! 🚀"
+  },
+  "register": "Sign up"
+}

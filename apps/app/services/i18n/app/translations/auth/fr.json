@@ -1,0 +1,20 @@
+{
+  "appleLogin": "Continuer avec Apple",
+  "emailSent": "Email envoyé",
+  "emailVerified": {
+    "subTitle": "C'est fait ! 🎉 Votre adresse e-mail est confirmée. Vous pouvez maintenant vous connecter ! 🚀",
+    "title": "Vérification réussie"
+  },
+  "forgotPassword": "Mot de passe oublié",
+  "googleLogin": "Continuer avec Google",
+  "login": "Se connecter",
+  "loginNeeded": "Vous devez être connecté pour continuer",
+  "passwordResetForm": {
+    "subtitle": "Vous y êtes presque ! 🎉 Il est temps de définir votre nouveau mot de passe pour terminer la réinitialisation !",
+    "success": "Mot de passe enregistré"
+  },
+  "passwordResetRequest": {
+    "subtitle": "Prêt à retrouver l'accès à votre compte ? Entrez simplement votre adresse e-mail ci-dessous et nous vous enverrons un lien magique pour réinitialiser votre mot de passe ! Attention à bien vérifier dans les spams ! 🚀"
+  },
+  "register": "S'inscrire"
+}

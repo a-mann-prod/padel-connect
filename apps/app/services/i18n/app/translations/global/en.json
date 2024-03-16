@@ -1,0 +1,43 @@
+{
+  "confirmPassword": "Confirm password",
+  "continue": "Continue",
+  "email": "Email",
+  "errors": {
+    "api": {
+      "default": "An error occurred",
+      "email_not_confirmed": {
+        "message": "To log in, please confirm your email address",
+        "title": "Email not verified"
+      },
+      "invalid_login_credentials": {
+        "message": "Incorrect email and/or password",
+        "title": "Incorrect credentials"
+      }
+    },
+    "form": {
+      "string": {
+        "invalidEmail": "Invalid email",
+        "invalidPassword": "Password must be at least 8 characters long, with at least 1 uppercase letter, 1 number, and 1 special character",
+        "passwordsNotMatch": "Passwords do not match",
+        "required": "This field is required"
+      }
+    }
+  },
+  "firstname": "Firstname",
+  "lastname": "Lastname",
+  "navigation": {
+    "avatar": "Avatar",
+    "home": "Home",
+    "login": "Login",
+    "passwordReset": "New password",
+    "personalInformation": "Personal information",
+    "profile": "Profile",
+    "register": "Register"
+  },
+  "next": "Next",
+  "or": "or",
+  "password": "Password",
+  "resend": "Resend",
+  "save": "Save",
+  "send": "Send"
+}
