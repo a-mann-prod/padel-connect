@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Padel Family",
-    "slug": "padel-family",
+    "name": "Expo supabase boilerplate",
+    "slug": "expo-supabase-boilerplate",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

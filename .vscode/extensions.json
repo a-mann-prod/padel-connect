@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "yoavbls.pretty-ts-errors",
+    "tamasfe.even-better-toml",
+    "ofhumanbondage.react-proptypes-intellisense",
+    "msjsdiag.vscode-react-native",
+    "esbenp.prettier-vscode",
+    "mhutchie.git-graph",
+    "expo.vscode-expo-tools",
+    "dbaeumer.vscode-eslint",
+    "mikestead.dotenv",
+    "formulahendry.auto-rename-tag"
+  ]
+}
