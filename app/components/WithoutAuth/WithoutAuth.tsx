@@ -11,7 +11,6 @@ const WithoutAuthWrapper: FC<{ Component: FC }> = ({ Component }) => {
   return <Component />
 }
 
-// Use the new wrapper component instead of the original function
 export const WithoutAuth = (Component: FC) => () => (
   <WithoutAuthWrapper Component={Component} />
 )

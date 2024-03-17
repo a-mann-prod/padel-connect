@@ -29,8 +29,10 @@
   "firstname": "Prénom",
   "lastname": "Nom",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
+  "letsGo": "C'est parti ! 🚀",
   "navigation": {
     "avatar": "Avatar",
+    "getStarted": "Prêt à démarrer ?",
     "home": "Accueil",
     "login": "Connexion",
     "passwordReset": "Nouveau mot de passe",

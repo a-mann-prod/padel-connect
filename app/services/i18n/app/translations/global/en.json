@@ -1,6 +1,9 @@
 {
+  "add": "Add",
   "confirmPassword": "Confirm password",
   "continue": "Continue",
+  "delete": "Delete",
+  "edit": "Edit",
   "email": "Email",
   "errors": {
     "api": {
@@ -25,8 +28,11 @@
   },
   "firstname": "Firstname",
   "lastname": "Lastname",
+  "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
+  "letsGo": "Let's go! 🚀",
   "navigation": {
     "avatar": "Avatar",
+    "getStarted": "Ready to start?",
     "home": "Home",
     "login": "Login",
     "passwordReset": "New password",

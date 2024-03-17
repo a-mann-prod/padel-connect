@@ -41,6 +41,12 @@ export default () => {
             title: t('avatar'),
           }}
         />
+        <Stack.Screen
+          name="get-started"
+          options={{
+            title: t('getStarted'),
+          }}
+        />
       </Stack>
     </OnboardingProvider>
   )

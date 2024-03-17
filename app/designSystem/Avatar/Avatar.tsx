@@ -22,7 +22,7 @@ export type AvatarProps = {
 export const Avatar = ({
   imageUrl,
   completeName,
-  status = 'offline',
+  status = 'hidden',
   onPress,
   ...props
 }: AvatarProps) => {
