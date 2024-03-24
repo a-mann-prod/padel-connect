@@ -1,11 +1,21 @@
-import { Redirect, Tabs } from 'expo-router'
+import { HeaderBackButtonProps } from '@react-navigation/elements'
+import { Redirect, Tabs, router } from 'expo-router'
 import React from 'react'
 
 import { useAuthContext } from '@/contexts'
-import { Icon } from '@/designSystem'
+import { Icon, IconButton } from '@/designSystem'
 import { useIsNavigationReady } from '@/hooks/useIsNavigationReady'
 import { useProfile } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
+
+const displayEditButton = ({ tintColor }: HeaderBackButtonProps) => (
+  <IconButton
+    variant="headerIcon"
+    name="times-circle"
+    iconProps={{ color: tintColor, size: 'lg' }}
+    onPress={() => router.navigate('/(modals)/settings')}
+  />
+)
 
 export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
@@ -13,7 +23,7 @@ export default () => {
 
   const { user } = useAuthContext()
   const { data, isLoading } = useProfile({
-    params: { id: user?.id },
+    params: { id: user?.id || '-1' },
     options: { enabled: !!user?.id },
   })
 
@@ -41,6 +51,7 @@ export default () => {
           tabBarIcon: ({ color, size }) => (
             <Icon size={size} name="user" color={color} />
           ),
+          headerRight: displayEditButton,
         }}
       />
     </Tabs>

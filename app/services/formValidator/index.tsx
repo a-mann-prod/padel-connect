@@ -1,25 +1,19 @@
-import i18next from 'i18next'
 import { RefinementCtx, z } from 'zod'
 
 import { PASSWORD_REGEX } from './constants'
 
-const tPrefix = 'errors.form'
-
-const stringRequired = z
-  .string()
-  .trim()
-  .min(1, { message: i18next.t(`${tPrefix}.string.required`) })
+const stringRequired = z.string().trim().min(1, { message: 'string.required' })
 
 export const validators = {
   string: {
     required: () => stringRequired,
     email: () =>
       stringRequired.email({
-        message: i18next.t(`${tPrefix}.string.invalidEmail`),
+        message: 'string.invalidEmail',
       }),
     password: () =>
       stringRequired.regex(PASSWORD_REGEX, {
-        message: i18next.t(`${tPrefix}.string.invalidPassword`),
+        message: 'string.invalidPassword',
       }),
   },
 }
@@ -33,7 +27,7 @@ export const refineFunctions = {
       ctx.addIssue({
         path: ['confirmPassword'],
         code: z.ZodIssueCode.custom,
-        message: i18next.t(`${tPrefix}.string.passwordsNotMatch`),
+        message: 'string.passwordsNotMatch',
       })
     }
   },

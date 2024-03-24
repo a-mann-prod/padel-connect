@@ -1,12 +1,12 @@
 import { useHandleError } from './useHandleError'
 
 import { useAuthContext } from '@/contexts'
-import { SetProfileParams, useUpdateProfile } from '@/services/api'
+import { GetProfileParams, useUpdateProfile } from '@/services/api'
 import { useSaveImage } from '@/services/api/image'
 import { UseMutationProps } from '@/services/api/types'
 
 export const useUpdateProfileWithAvatar = (
-  options?: UseMutationProps<any, SetProfileParams, any>
+  options?: UseMutationProps<any, GetProfileParams, any>
 ) => {
   const onError = useHandleError()
   const { user } = useAuthContext()

@@ -8,22 +8,28 @@ import {
   FormControlLabelText,
   FormControl as GFormControl,
 } from '@gluestack-ui/themed'
+import { FieldError } from 'react-hook-form'
 
 import { Icon } from '../../Icon/Icon'
+
+import { useTranslate } from '@/services/i18n'
 
 export type FormControlProps = {
   title: string
   helpMessage?: string
-  errorMessage?: string
+  error?: FieldError
 } & typeof GFormControl.defaultProps
 
 export const FormControl = ({
   title,
   helpMessage,
-  errorMessage,
+  error,
   children,
   ...props
 }: FormControlProps) => {
+  const t = useTranslate('zod', { keyPrefix: 'errors' })
+  const errorMessage = t(error?.message || '')
+
   return (
     <GFormControl isInvalid={!!errorMessage} {...props}>
       <FormControlLabel>

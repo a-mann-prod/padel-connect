@@ -1,9 +1,8 @@
-export type GetProfileParams = Partial<{
-  id: string
-}>
+import { Database } from '@/services/supabase/database.types'
 
-export type SetProfileParams = Partial<{
-  last_name?: string
-  first_name?: string
-  avatar_url?: string
-}>
+export type GetProfileParams = {
+  id: string
+}
+
+export type UpdateProfileParams =
+  Database['public']['Tables']['profiles']['Update']

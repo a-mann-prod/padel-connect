@@ -6,7 +6,7 @@ import { LoginForm } from '@/nodes'
 export default () => (
   <KeyboardAvoidingView>
     <ScrollView>
-      <VStack space="md" m="$5">
+      <VStack gap="$5" mx="$5">
         <LoginForm />
       </VStack>
     </ScrollView>

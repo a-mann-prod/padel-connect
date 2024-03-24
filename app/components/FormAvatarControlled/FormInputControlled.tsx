@@ -18,7 +18,7 @@ export const FormAvatarControlled = ({
 
   return (
     <FormAvatar
-      formControlProps={{ ...formControlProps, errorMessage: error?.message }}
+      formControlProps={{ ...formControlProps, error }}
       onChange={onChange}
       value={value}
       {...props}

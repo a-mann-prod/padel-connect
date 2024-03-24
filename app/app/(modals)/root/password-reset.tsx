@@ -4,7 +4,7 @@ import { PasswordResetForm } from '@/nodes'
 
 export default () => {
   return (
-    <VStack space="md" m="$5">
+    <VStack gap="$5" mx="$5">
       <PasswordResetForm />
     </VStack>
   )

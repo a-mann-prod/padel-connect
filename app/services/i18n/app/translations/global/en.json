@@ -1,31 +1,21 @@
 {
   "add": "Add",
+  "api": {
+    "default": "An error occurred",
+    "email_not_confirmed": {
+      "message": "To log in, please confirm your email address",
+      "title": "Email not verified"
+    },
+    "invalid_login_credentials": {
+      "message": "Incorrect email and/or password",
+      "title": "Incorrect credentials"
+    }
+  },
   "confirmPassword": "Confirm password",
   "continue": "Continue",
   "delete": "Delete",
   "edit": "Edit",
   "email": "Email",
-  "errors": {
-    "api": {
-      "default": "An error occurred",
-      "email_not_confirmed": {
-        "message": "To log in, please confirm your email address",
-        "title": "Email not verified"
-      },
-      "invalid_login_credentials": {
-        "message": "Incorrect email and/or password",
-        "title": "Incorrect credentials"
-      }
-    },
-    "form": {
-      "string": {
-        "invalidEmail": "Invalid email",
-        "invalidPassword": "Password must be at least 8 characters long, with at least 1 uppercase letter, 1 number, and 1 special character",
-        "passwordsNotMatch": "Passwords do not match",
-        "required": "This field is required"
-      }
-    }
-  },
   "firstname": "Firstname",
   "lastname": "Lastname",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",

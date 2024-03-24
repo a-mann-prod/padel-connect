@@ -37,8 +37,6 @@ export const FormAvatar = ({
     }
   }
 
-  console.log(value)
-
   const items = useMemo<ActionsheetItemProps[]>(
     () => [
       {

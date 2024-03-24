@@ -30,7 +30,7 @@ export const AvatarForm = () => {
 
   return (
     <>
-      <VStack space="md">
+      <VStack gap="$3">
         <FormProvider {...methods}>
           <FormAvatarControlled
             name="avatar"

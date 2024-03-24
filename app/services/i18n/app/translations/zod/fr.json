@@ -1,0 +1,10 @@
+{
+  "errors": {
+    "string": {
+      "invalidEmail": "Email incorrect",
+      "invalidPassword": "Le mot de passe doit contenir au moins 8 caractères, avec au minimum 1 majuscule, 1 chiffre et 1 caractères spécial",
+      "passwordsNotMatch": "Les mots de passes ne correspondent pas",
+      "required": "Ce champ est requis"
+    }
+  }
+}

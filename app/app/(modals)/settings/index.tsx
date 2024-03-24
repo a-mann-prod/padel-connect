@@ -1,21 +1,23 @@
 import { Text, VStack } from '@gluestack-ui/themed'
-import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native'
 
-import { WithoutAuth } from '@/components'
+import { WithAuth } from '@/components'
+import { useAuthContext } from '@/contexts'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 
-export default WithoutAuth(() => {
+export default WithAuth(() => {
   const t = useTranslate('auth')
+  const { signOut, isLoadingSignOut } = useAuthContext()
 
   return (
     <SafeAreaView>
       <VStack gap="$2" mx="$5">
-        <Text>{t('emailVerified.subTitle')}</Text>
+        <Text>Welcome dans les reglages</Text>
         <Button
-          title={t('login')}
-          onPress={() => router.replace('/(modals)/auth/login')}
+          title="Log out"
+          onPress={signOut}
+          isLoading={isLoadingSignOut}
         />
       </VStack>
     </SafeAreaView>

@@ -18,7 +18,7 @@ export const FormInputControlled = ({
 
   return (
     <FormInput
-      formControlProps={{ ...formControlProps, errorMessage: error?.message }}
+      formControlProps={{ ...formControlProps, error }}
       onChangeText={onChange}
       value={value}
       {...props}

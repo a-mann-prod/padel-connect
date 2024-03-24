@@ -1,11 +1,12 @@
-import { KeyboardAvoidingView, ScrollView, VStack } from '@gluestack-ui/themed'
+import { ScrollView, VStack } from '@gluestack-ui/themed'
 
+import { KeyboardAvoidingView } from '@/components'
 import { PersonalInfoForm } from '@/nodes'
 
 export default () => (
   <KeyboardAvoidingView>
     <ScrollView>
-      <VStack space="md" m="$5">
+      <VStack gap="$5" mx="$5">
         <PersonalInfoForm />
       </VStack>
     </ScrollView>

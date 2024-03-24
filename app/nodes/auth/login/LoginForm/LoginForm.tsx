@@ -1,7 +1,6 @@
-import { LinkText, VStack } from '@gluestack-ui/themed'
+import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, router, useLocalSearchParams } from 'expo-router'
-import { Fragment } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { LoginFormValues, loginFormServices } from './LoginForm.services'
@@ -38,7 +37,7 @@ export const LoginForm = () => {
 
   return (
     <>
-      <VStack space="md">
+      <VStack gap="$2">
         <FormProvider {...methods}>
           <FormInputControlled
             name="email"
@@ -52,11 +51,15 @@ export const LoginForm = () => {
             name="password"
             formControlProps={{ title: tGlobal('password') }}
             displayPlaceHolder
-            type="password"
+            secureTextEntry
           />
         </FormProvider>
         <Link href="/(modals)/auth/password-reset-request" asChild>
-          <LinkText alignSelf="flex-end">{t('forgotPassword')}</LinkText>
+          <Button
+            alignSelf="flex-end"
+            title={t('forgotPassword')}
+            variant="link"
+          />
         </Link>
       </VStack>
       <Button

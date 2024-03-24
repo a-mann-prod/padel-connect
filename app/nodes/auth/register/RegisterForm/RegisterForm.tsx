@@ -1,7 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router, useLocalSearchParams } from 'expo-router'
-import { Fragment } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import {
@@ -51,13 +50,12 @@ export const RegisterForm = () => {
 
   return (
     <>
-      <VStack space="md">
+      <VStack gap="$2">
         <FormProvider {...methods}>
           <FormInputControlled
             name="email"
             formControlProps={{
               title: tGlobal('email'),
-              isRequired: true,
             }}
             displayPlaceHolder
             autoCapitalize="none"
@@ -68,7 +66,6 @@ export const RegisterForm = () => {
             name="password"
             formControlProps={{
               title: tGlobal('password'),
-              isRequired: true,
             }}
             displayPlaceHolder
             type="password"
@@ -77,7 +74,6 @@ export const RegisterForm = () => {
             name="confirmPassword"
             formControlProps={{
               title: tGlobal('confirmPassword'),
-              isRequired: true,
             }}
             displayPlaceHolder
             type="password"

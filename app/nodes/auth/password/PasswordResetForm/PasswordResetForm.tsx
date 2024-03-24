@@ -43,14 +43,13 @@ export const PasswordResetForm = () => {
     updateUser({ password })
 
   return (
-    <VStack space="md">
+    <VStack gap="$2">
       <Text>{t('subtitle')}</Text>
       <FormProvider {...methods}>
         <FormInputControlled
           name="password"
           formControlProps={{
             title: tGlobal('password'),
-            isRequired: true,
           }}
           displayPlaceHolder
           type="password"
@@ -59,7 +58,6 @@ export const PasswordResetForm = () => {
           name="confirmPassword"
           formControlProps={{
             title: tGlobal('confirmPassword'),
-            isRequired: true,
           }}
           displayPlaceHolder
           type="password"

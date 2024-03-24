@@ -1,31 +1,21 @@
 {
   "add": "Ajouter",
+  "api": {
+    "default": "Une erreur est survenue",
+    "email_not_confirmed": {
+      "message": "Pour vous connecter, veuillez confirmer votre adresse email",
+      "title": "Email non vérifié"
+    },
+    "invalid_login_credentials": {
+      "message": "Email et/ou mot de passe incorrect(s)",
+      "title": "Identifiants incorrects"
+    }
+  },
   "confirmPassword": "Confirmer le mot de passe",
   "continue": "Continuer",
   "delete": "Supprimer",
   "edit": "Modifier",
   "email": "Email",
-  "errors": {
-    "api": {
-      "default": "Une erreur est survenue",
-      "email_not_confirmed": {
-        "message": "Pour vous connecter, veuillez confirmer votre adresse email",
-        "title": "Email non vérifié"
-      },
-      "invalid_login_credentials": {
-        "message": "Email et/ou mot de passe incorrect(s)",
-        "title": "Identifiants incorrects"
-      }
-    },
-    "form": {
-      "string": {
-        "invalidEmail": "Email incorrect",
-        "invalidPassword": "Le mot de passe doit contenir au moins 8 caractères, avec au minimum 1 majuscule, 1 chiffre et 1 caractères spécial",
-        "passwordsNotMatch": "Les mots de passes ne correspondent pas",
-        "required": "Ce champ est requis"
-      }
-    }
-  },
   "firstname": "Prénom",
   "lastname": "Nom",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",

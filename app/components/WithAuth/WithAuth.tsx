@@ -40,9 +40,9 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
 
   return (
     <Center alignItems="stretch" flex={1}>
-      <VStack space="md" m="$5">
+      <VStack gap="$3" m="$5">
         <Text>{t('loginNeeded')}</Text>
-        <Link asChild href={{ pathname: '/(modals)/auth/login', params }}>
+        <Link href={{ pathname: '/(modals)/auth/login', params }} asChild>
           <Button title={t('login')} />
         </Link>
         <Button

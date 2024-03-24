@@ -1,5 +1,4 @@
 import {
-  AvatarBadge,
   AvatarFallbackText,
   AvatarImage,
   Avatar as GAvatar,
@@ -12,32 +11,41 @@ import { isEmpty } from 'remeda'
 
 import { Icon } from '../Icon/Icon'
 
+import { getInitials, getUserName } from '@/utils/user'
+
 export type AvatarProps = {
   imageUrl?: string
-  completeName?: string
+  firstname?: string | null
+  lastname?: string | null
   status?: 'online' | 'offline' | 'hidden'
   onPress?: TouchableOpacityProps['onPress']
 } & typeof GAvatar.defaultProps
 
 export const Avatar = ({
   imageUrl,
-  completeName,
   status = 'hidden',
   onPress,
+  firstname,
+  lastname,
   ...props
 }: AvatarProps) => {
   const [isLoading, setIsLoading] = useState(!!imageUrl)
+  const completeName = getUserName(firstname, lastname)
 
   const displayFallback = () => {
-    if (!isEmpty(completeName))
-      return <AvatarFallbackText>{completeName}</AvatarFallbackText>
+    if (completeName && !isEmpty(completeName))
+      return (
+        <AvatarFallbackText>
+          {getInitials(firstname, lastname)}
+        </AvatarFallbackText>
+      )
 
     return <Icon name="user" color="white" size={48} />
   }
 
   return (
-    <VStack alignItems="center">
-      <TouchableOpacity onPress={onPress} disabled={!onPress}>
+    <TouchableOpacity onPress={onPress} disabled={!onPress}>
+      <VStack alignItems="center" gap="$3">
         <GAvatar size="2xl" {...props}>
           {imageUrl ? (
             <AvatarImage
@@ -48,19 +56,9 @@ export const Avatar = ({
           ) : (
             displayFallback()
           )}
-          {status !== 'hidden' && <AvatarBadge />}
-          {onPress && (
-            <AvatarBadge
-              justifyContent="center"
-              alignItems="center"
-              bgColor="$secondary400"
-            >
-              <Icon name="cogs" color="white" />
-            </AvatarBadge>
-          )}
         </GAvatar>
         <Heading size="lg">{completeName}</Heading>
-      </TouchableOpacity>
-    </VStack>
+      </VStack>
+    </TouchableOpacity>
   )
 }

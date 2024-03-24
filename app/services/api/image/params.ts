@@ -1,7 +1,7 @@
-export type GetImageParams = Partial<{
+export type GetImageParams = {
   path: string
   storageType: StorageType
-}>
+}
 
 export type PostImageParams = Partial<{
   path: string

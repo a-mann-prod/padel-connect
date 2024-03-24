@@ -1,0 +1,10 @@
+{
+  "errors": {
+    "string": {
+      "invalidEmail": "Invalid email",
+      "invalidPassword": "Password must be at least 8 characters long, with at least 1 uppercase letter, 1 number, and 1 special character",
+      "passwordsNotMatch": "Passwords do not match",
+      "required": "This field is required"
+    }
+  }
+}

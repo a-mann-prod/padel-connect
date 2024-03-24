@@ -18,14 +18,14 @@
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       },
-      "bundleIdentifier": "com.anonymous.padelfamily"
+      "bundleIdentifier": "com.anonymous.boilerplate"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.padelfamily"
+      "package": "com.anonymous.boilerplate"
     },
     "web": {
       "bundler": "metro",

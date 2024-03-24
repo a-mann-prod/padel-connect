@@ -1,10 +1,10 @@
-import { StorageError } from '@supabase/storage-js'
-import { PostgrestError, PostgrestSingleResponse } from '@supabase/supabase-js'
 import {
   UploadFetcherConfig,
   UploadFileResponse,
   UseUploadInput,
 } from '@supabase-cache-helpers/storage-react-query'
+import { StorageError } from '@supabase/storage-js'
+import { PostgrestError, PostgrestSingleResponse } from '@supabase/supabase-js'
 import {
   QueryKey,
   UseMutationOptions,
@@ -48,23 +48,19 @@ export type UploadOptions = UploadFetcherConfig &
   >
 
 // Hooks props from Supa cache helper
-export type UseQueryProps<
-  TResponse,
-  TParams,
-  TError = PostgrestError,
-> = Partial<{
+export type UseQueryProps<TResponse, TParams, TError = PostgrestError> = {
   params: TParams
-  options: QueryOptions<TResponse, TError>
-}>
+  options?: QueryOptions<TResponse, TError>
+}
 
 export type UseMutationProps<TResponse, TParams, TError> = Partial<
   MutationOptions<TResponse, Partial<TParams>, TError>
 >
 
-export type UseFileUrlProps<TParams> = Partial<{
+export type UseFileUrlProps<TParams> = {
   params: TParams
-  options: FileUrlOptions
-}>
+  options?: FileUrlOptions
+}
 
 export type UseUploadProps = {
   storageType: StorageType

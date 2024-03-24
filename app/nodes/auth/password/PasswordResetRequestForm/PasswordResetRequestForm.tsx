@@ -1,7 +1,7 @@
 import { Text, VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
-import { Fragment, useEffect } from 'react'
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import {
@@ -50,14 +50,13 @@ export const PasswordResetRequestForm = () => {
 
   return (
     <>
-      <VStack space="md">
+      <VStack gap="$2">
         <Text>{t('passwordResetRequest.subtitle')}</Text>
         <FormProvider {...methods}>
           <FormInputControlled
             name="email"
             formControlProps={{
               title: tGlobal('email'),
-              isRequired: true,
             }}
             displayPlaceHolder
             autoCapitalize="none"

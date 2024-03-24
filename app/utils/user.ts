@@ -1,6 +1,6 @@
 import { isEmpty } from 'remeda'
 
-export const getUserName = (...args: (string | undefined)[]) =>
+export const getUserName = (...args: (string | null | undefined)[]) =>
   args.reduce((acc, curr, index) => {
     if (!curr || isEmpty(curr)) return acc
 
@@ -11,3 +11,9 @@ export const getUserName = (...args: (string | undefined)[]) =>
 
     return [acc, newItem].join(' ')
   }, '')
+
+export const getInitials = (...args: (string | null | undefined)[]) =>
+  args.reduce(
+    (acc, curr) => (curr ? `${acc}${curr[0].toUpperCase()}` : acc),
+    ''
+  )

@@ -1,7 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
-import { Fragment } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import {
@@ -34,13 +33,12 @@ export const PersonalInfoForm = () => {
 
   return (
     <>
-      <VStack space="md">
+      <VStack gap="$2">
         <FormProvider {...methods}>
           <FormInputControlled
             name="first_name"
             formControlProps={{
               title: tGlobal('firstname'),
-              isRequired: true,
             }}
             displayPlaceHolder
             autoCapitalize="words"
@@ -51,7 +49,6 @@ export const PersonalInfoForm = () => {
             name="last_name"
             formControlProps={{
               title: tGlobal('lastname'),
-              isRequired: true,
               helpMessage: tGlobal('lastnameHelpMessage'),
             }}
             displayPlaceHolder
