@@ -10,9 +10,9 @@ import {
 } from '@gluestack-ui/themed'
 import { FieldError } from 'react-hook-form'
 
-import { Icon } from '../../Icon/Icon'
-
+import { Icon } from '@/designSystem/Icon/Icon'
 import { useTranslate } from '@/services/i18n'
+import { isNilOrEmpty } from '@/utils/global'
 
 export type FormControlProps = {
   title: string
@@ -28,7 +28,7 @@ export const FormControl = ({
   ...props
 }: FormControlProps) => {
   const t = useTranslate('zod', { keyPrefix: 'errors' })
-  const errorMessage = t(error?.message || '')
+  const errorMessage = error?.message ? t(error.message) : undefined
 
   return (
     <GFormControl isInvalid={!!errorMessage} {...props}>
@@ -41,14 +41,14 @@ export const FormControl = ({
           <FormControlHelperText>{helpMessage}</FormControlHelperText>
         </FormControlHelper>
       )}
-      {errorMessage && (
+      {!isNilOrEmpty(errorMessage) && (
         <FormControlError>
           <FormControlErrorIcon
             color="$error700"
             w="$3.5"
             h="$3.5"
             size="xs"
-            as={(props: any) => <Icon {...props} name="warning" />}
+            as={(props: any) => <Icon {...props} name="circle-exclamation" />}
           />
           <FormControlErrorText>{errorMessage}</FormControlErrorText>
         </FormControlError>

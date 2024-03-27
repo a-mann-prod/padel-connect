@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   extends: ['universe/native'],
+  plugins: ['react-hooks'],
   overrides: [
     {
       files: ['*.ts', '*.tsx', '*.js'],
@@ -12,6 +13,7 @@ module.exports = {
         'no-undef': 'off',
         'react/react-in-jsx-scope': 'off',
         semi: ['error', 'never'],
+        'react-hooks/exhaustive-deps': ['warn'],
       },
     },
   ],

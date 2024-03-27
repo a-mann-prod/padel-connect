@@ -4,7 +4,7 @@ import { useTranslate } from '@/services/i18n'
 
 export const useHandleError = () => {
   const toast = useToast()
-  const t = useTranslate(undefined, { keyPrefix: 'errors.api' })
+  const t = useTranslate(undefined, { keyPrefix: 'api.errors' })
 
   return (e: Error) =>
     toast.show({

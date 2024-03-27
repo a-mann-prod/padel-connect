@@ -2,14 +2,14 @@ import { Text, VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
 import { useEffect } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import {
   PasswordResetRequestFormValues,
   passwordResetRequestFormServices,
 } from './passwordResetRequestForm.services'
 
-import { FormInputControlled } from '@/components'
+import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem/'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useToast } from '@/hooks/useToast'
@@ -46,7 +46,7 @@ export const PasswordResetRequestForm = () => {
       toast.show({ title: t('emailSent'), action: 'info' })
       router.back()
     }
-  }, [isSuccess])
+  }, [isSuccess, t, toast])
 
   return (
     <>

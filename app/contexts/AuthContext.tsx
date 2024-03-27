@@ -16,6 +16,7 @@ type AuthContextProps = {
   }) => void
   signOut: () => void
   isLoadingSignOut: boolean
+  isLoadingSignIn: boolean
 }
 
 const [_, Provider, useAuthContext] =
@@ -28,6 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
 
   const [isLoadingSignOut, setIsLoadingSignOut] = useState(false)
+  const [isLoadingSignIn, setIsLoadingSignIn] = useState(false)
 
   const signIn = async ({
     session,
@@ -53,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const getSession = async () => {
+    setIsLoadingSignIn(true)
     const { data, error } = await supabase.auth.getSession()
 
     if (error) {
@@ -61,9 +64,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } else {
       setSession(data.session)
     }
+    setIsLoadingSignIn(false)
   }
 
   const getUser = async () => {
+    setIsLoadingSignIn(true)
+
     if (session) {
       const { data, error } = await supabase.auth.getUser()
 
@@ -74,6 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user)
       }
     }
+    setIsLoadingSignIn(false)
   }
 
   useEffect(() => {
@@ -89,6 +96,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signIn,
         signOut,
         isLoadingSignOut,
+        isLoadingSignIn,
       }}
     >
       {children}

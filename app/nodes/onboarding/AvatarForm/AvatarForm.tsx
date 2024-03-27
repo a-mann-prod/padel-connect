@@ -1,10 +1,11 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { AvatarFormValues, avatarFormServices } from './AvatarForm.services'
 
+import { FormProvider } from '@/components'
 import { FormAvatarControlled } from '@/components/FormAvatarControlled/FormInputControlled'
 import { useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'

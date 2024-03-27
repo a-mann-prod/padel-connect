@@ -1,6 +1,8 @@
 import {
+  AvatarBadge,
   AvatarFallbackText,
   AvatarImage,
+  Center,
   Avatar as GAvatar,
   Heading,
   VStack,
@@ -9,9 +11,8 @@ import { useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
 
-import { Icon } from '../Icon/Icon'
-
 import { getInitials, getUserName } from '@/utils/user'
+import { Icon } from '../Icon/Icon'
 
 export type AvatarProps = {
   imageUrl?: string
@@ -40,12 +41,12 @@ export const Avatar = ({
         </AvatarFallbackText>
       )
 
-    return <Icon name="user" color="white" size={48} />
+    return <Icon name="user" color="white" size="lg" />
   }
 
   return (
-    <TouchableOpacity onPress={onPress} disabled={!onPress}>
-      <VStack alignItems="center" gap="$3">
+    <VStack alignItems="center" gap="$3">
+      <TouchableOpacity onPress={onPress} disabled={!onPress}>
         <GAvatar size="2xl" {...props}>
           {imageUrl ? (
             <AvatarImage
@@ -56,9 +57,17 @@ export const Avatar = ({
           ) : (
             displayFallback()
           )}
+          {onPress && (
+            <AvatarBadge bgColor="$blueGray500">
+              <Center flex={1}>
+                <Icon name="pen" color="$white" size="xs" />
+              </Center>
+            </AvatarBadge>
+          )}
         </GAvatar>
-        <Heading size="lg">{completeName}</Heading>
-      </VStack>
-    </TouchableOpacity>
+      </TouchableOpacity>
+
+      <Heading size="lg">{completeName}</Heading>
+    </VStack>
   )
 }

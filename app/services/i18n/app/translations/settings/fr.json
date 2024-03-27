@@ -1,0 +1,25 @@
+{
+  "emailSent": "Un email a été envoyé à votre nouvelle adresse, merci de cliquer sur le lien pour le valider",
+  "general": {
+    "biometricAuth": "Authentification biométrique",
+    "emailChange": "Modifier mon email",
+    "passwordChange": "Changer mon mot de passe",
+    "title": "Général"
+  },
+  "legalInformation": {
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfUse": "Conditions d'utilisation",
+    "title": "Informations légales"
+  },
+  "logout": "Se déconnecter",
+
+  "support": {
+    "coffee": "Un p'tit café ?",
+    "sendMessage": "Une question ?",
+    "title": "Support"
+  },
+  "tech": {
+    "title": "Tech",
+    "version": "Version"
+  }
+}

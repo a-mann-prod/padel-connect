@@ -48,7 +48,7 @@ export default () => {
   }
 
   return (
-    <VStack gap="$2" mx="$5">
+    <VStack gap="$2" m="$5">
       <Text>{t('subtitle')}</Text>
       <Button
         title={tGlobal('letsGo')}

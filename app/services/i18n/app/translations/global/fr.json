@@ -1,18 +1,25 @@
 {
   "add": "Ajouter",
   "api": {
-    "default": "Une erreur est survenue",
-    "email_not_confirmed": {
-      "message": "Pour vous connecter, veuillez confirmer votre adresse email",
-      "title": "Email non vérifié"
+    "errors": {
+      "default": "Une erreur est survenue",
+      "email_not_confirmed": {
+        "message": "Pour vous connecter, veuillez confirmer votre adresse email",
+        "title": "Email non vérifié"
+      },
+      "invalid_login_credentials": {
+        "message": "Email et/ou mot de passe incorrect(s)",
+        "title": "Identifiants incorrects"
+      }
     },
-    "invalid_login_credentials": {
-      "message": "Email et/ou mot de passe incorrect(s)",
-      "title": "Identifiants incorrects"
+    "success": {
+      "default": "Enregistrement réussi"
     }
   },
+  "confirmNewPassword": "Confirmation nouveau mot de passe",
   "confirmPassword": "Confirmer le mot de passe",
   "continue": "Continuer",
+  "defaultSuccess": "",
   "delete": "Supprimer",
   "edit": "Modifier",
   "email": "Email",
@@ -22,14 +29,22 @@
   "letsGo": "C'est parti ! 🚀",
   "navigation": {
     "avatar": "Avatar",
+    "emailChange": "Changement email",
     "getStarted": "Prêt à démarrer ?",
     "home": "Accueil",
     "login": "Connexion",
+    "passwordChange": "Changement mot de passe",
     "passwordReset": "Nouveau mot de passe",
     "personalInformation": "Informations personnelles",
+    "privacyPolicy": "Politique de confidentialité",
     "profile": "Profile",
-    "register": "Inscription"
+    "register": "Inscription",
+    "settings": "Réglages",
+    "termsOfUse": "Conditions d'utilisation",
+    "updatePersonalInformation": "Informations personnelles"
   },
+  "newEmail": "Nouvel email",
+  "newPassword": "Nouveau mot de passe",
   "next": "Suivant",
   "or": "ou",
   "password": "Mot de passe",

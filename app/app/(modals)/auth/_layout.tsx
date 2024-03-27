@@ -15,7 +15,7 @@ const displayCloseButton = ({
   return (
     <IconButton
       variant="headerIcon"
-      name="times-circle"
+      icon="circle-xmark"
       iconProps={{ color: tintColor, size: 'lg' }}
       onPress={router.back}
     />

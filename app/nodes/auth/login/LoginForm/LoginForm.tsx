@@ -1,11 +1,11 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, router, useLocalSearchParams } from 'expo-router'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { LoginFormValues, loginFormServices } from './LoginForm.services'
 
-import { FormInputControlled } from '@/components'
+import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useLogin } from '@/services/api'

@@ -40,6 +40,7 @@ export const FormAvatar = ({
   const items = useMemo<ActionsheetItemProps[]>(
     () => [
       {
+        id: 'add',
         title: t('add'),
         isDisabled: !!value,
         icon: 'plus-square',
@@ -49,6 +50,7 @@ export const FormAvatar = ({
         },
       },
       {
+        id: 'edit',
         title: t('edit'),
         isDisabled: !value,
         icon: 'pencil-square',
@@ -58,6 +60,7 @@ export const FormAvatar = ({
         },
       },
       {
+        id: 'delete',
         title: t('delete'),
         isDisabled: !value,
         icon: 'minus-square',

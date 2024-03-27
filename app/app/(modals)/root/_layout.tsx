@@ -9,7 +9,7 @@ import { when } from '@/utils/when'
 const displayCloseButton = ({ tintColor }: HeaderBackButtonProps) => (
   <IconButton
     variant="headerIcon"
-    name="times-circle"
+    icon="circle-xmark"
     iconProps={{ color: tintColor, size: 'lg' }}
     onPress={() => router.navigate('/')}
   />

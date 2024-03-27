@@ -1,14 +1,14 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router } from 'expo-router'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import {
   PersonalInfoFormValues,
   personalInfoFormServices,
 } from './PersonalInfoForm.services'
 
-import { FormInputControlled } from '@/components'
+import { FormInputControlled, FormProvider } from '@/components'
 import { useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'

@@ -2,16 +2,15 @@ import { HeaderBackButtonProps } from '@react-navigation/elements'
 import { Redirect, Tabs, router } from 'expo-router'
 import React from 'react'
 
-import { useAuthContext } from '@/contexts'
 import { Icon, IconButton } from '@/designSystem'
 import { useIsNavigationReady } from '@/hooks/useIsNavigationReady'
-import { useProfile } from '@/services/api'
+import { useMe } from '@/hooks/useMe'
 import { useTranslate } from '@/services/i18n'
 
 const displayEditButton = ({ tintColor }: HeaderBackButtonProps) => (
   <IconButton
     variant="headerIcon"
-    name="times-circle"
+    icon="gear"
     iconProps={{ color: tintColor, size: 'lg' }}
     onPress={() => router.navigate('/(modals)/settings')}
   />
@@ -21,16 +20,12 @@ export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
   const isNavigationReady = useIsNavigationReady()
 
-  const { user } = useAuthContext()
-  const { data, isLoading } = useProfile({
-    params: { id: user?.id || '-1' },
-    options: { enabled: !!user?.id },
-  })
+  const { data: me, isLoading } = useMe()
 
   if (!isNavigationReady || isLoading) return
 
   // redirect to onboarding if user connected and not completed
-  if (data && !data.is_onboarding_completed)
+  if (me && !me.is_onboarding_completed)
     return <Redirect href="/(modals)/onboarding/personal-information" />
 
   return (
@@ -39,8 +34,8 @@ export default () => {
         name="index"
         options={{
           title: t('home'),
-          tabBarIcon: ({ color, size }) => (
-            <Icon size={size} name="home" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="house" size="md" color={color} />
           ),
         }}
       />
@@ -48,10 +43,10 @@ export default () => {
         name="profile"
         options={{
           title: t('profile'),
-          tabBarIcon: ({ color, size }) => (
-            <Icon size={size} name="user" color={color} />
+          tabBarIcon: ({ color }) => (
+            <Icon name="user" size="md" color={color} />
           ),
-          headerRight: displayEditButton,
+          headerRight: (props) => me && displayEditButton(props),
         }}
       />
     </Tabs>

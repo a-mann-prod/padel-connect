@@ -2,6 +2,7 @@ import auth from './auth'
 import global from './global'
 import onboarding from './onboarding'
 import profile from './profile'
+import settings from './settings'
 import zod from './zod'
 
 export const translations = {
@@ -10,4 +11,5 @@ export const translations = {
   profile,
   onboarding,
   zod,
+  settings,
 }

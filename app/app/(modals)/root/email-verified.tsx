@@ -11,7 +11,7 @@ export default WithoutAuth(() => {
 
   return (
     <SafeAreaView>
-      <VStack gap="$2" mx="$5">
+      <VStack gap="$2" m="$5">
         <Text>{t('emailVerified.subTitle')}</Text>
         <Button
           title={t('login')}

@@ -11,6 +11,7 @@
       "title": "Incorrect credentials"
     }
   },
+  "confirmNewPassword": "Confirm new password",
   "confirmPassword": "Confirm password",
   "continue": "Continue",
   "delete": "Delete",
@@ -22,14 +23,21 @@
   "letsGo": "Let's go! 🚀",
   "navigation": {
     "avatar": "Avatar",
+    "emailChange": "Change email",
     "getStarted": "Ready to start?",
     "home": "Home",
     "login": "Login",
+    "passwordChange": "Change password",
     "passwordReset": "New password",
     "personalInformation": "Personal information",
+    "privacyPolicy": "Privacy policy",
     "profile": "Profile",
-    "register": "Register"
+    "register": "Register",
+    "settings": "Settings",
+    "termsOfUse": "Terms of use"
   },
+  "newEmail": "New email",
+  "newPassword": "New password",
   "next": "Next",
   "or": "or",
   "password": "Password",

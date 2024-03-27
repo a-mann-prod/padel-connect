@@ -5,6 +5,7 @@ import { GetProfileParams, useUpdateProfile } from '@/services/api'
 import { useSaveImage } from '@/services/api/image'
 import { UseMutationProps } from '@/services/api/types'
 
+// TODO useUpdateMe instead ?
 export const useUpdateProfileWithAvatar = (
   options?: UseMutationProps<any, GetProfileParams, any>
 ) => {
