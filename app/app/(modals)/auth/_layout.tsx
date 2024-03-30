@@ -1,26 +1,7 @@
-import { HeaderBackButtonProps } from '@react-navigation/elements'
-import { Stack, router } from 'expo-router'
-import { Platform } from 'react-native'
+import { Stack } from 'expo-router'
 
-import { IconButton } from '@/designSystem'
+import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
-import { when } from '@/utils/when'
-
-const displayCloseButton = ({
-  canGoBack,
-  tintColor,
-}: HeaderBackButtonProps) => {
-  if (!canGoBack) return undefined
-
-  return (
-    <IconButton
-      variant="headerIcon"
-      icon="circle-xmark"
-      iconProps={{ color: tintColor, size: 'lg' }}
-      onPress={router.back}
-    />
-  )
-}
 
 export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
@@ -30,14 +11,14 @@ export default () => {
         name="login"
         options={{
           title: t('login'),
-          headerLeft: when(Platform.OS === 'ios', displayCloseButton),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
         name="register"
         options={{
           title: t('register'),
-          headerLeft: when(Platform.OS === 'ios', displayCloseButton),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen name="password-reset-request" options={{ title: '' }} />

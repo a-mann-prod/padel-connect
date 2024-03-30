@@ -1,9 +1,11 @@
 import {
   ButtonSpinner,
   Button as GButton,
+  ButtonIcon as GButtonIcon,
   ButtonText as GButtonText,
 } from '@gluestack-ui/themed'
 import { ReactNode, forwardRef } from 'react'
+import { Icon } from '../Icon/Icon'
 
 export type ButtonProps = {
   title: string
@@ -31,7 +33,19 @@ export const Button = forwardRef(
         disabled={isLoading || isDisabled}
         {...props}
       >
-        {isLoading ? <ButtonSpinner /> : <GButtonText>{title}</GButtonText>}
+        {isLoading ? (
+          <ButtonSpinner />
+        ) : (
+          <>
+            {icon && (
+              <GButtonIcon
+                px="$6"
+                as={(iconProps: any) => <Icon name={icon} {...iconProps} />}
+              />
+            )}
+            <GButtonText>{title}</GButtonText>
+          </>
+        )}
       </GButton>
     )
   }

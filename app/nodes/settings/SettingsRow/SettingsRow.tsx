@@ -1,8 +1,15 @@
-import { Box, HStack, Pressable, Text } from '@gluestack-ui/themed'
+import { Box, HStack, Text } from '@gluestack-ui/themed'
 import { ReactNode, useState } from 'react'
 import { GestureResponderEvent } from 'react-native'
 
-import { Actionsheet, ActionsheetProps, Icon, IconProps } from '@/designSystem'
+import {
+  Actionsheet,
+  ActionsheetProps,
+  Icon,
+  IconProps,
+  Pressable,
+  PressableProps,
+} from '@/designSystem'
 import { Config } from '@/services/theme/gluestack-ui/gluestack-ui.config'
 import { when } from '@/utils/when'
 
@@ -10,7 +17,7 @@ export type SettingsRowProps = {
   title: string
   icon: IconProps['name']
   iconColor?: keyof Config['tokens']['colors']
-  onPress?: typeof Pressable.defaultProps.onPress
+  onPress?: PressableProps['onPress']
   rightComponent?: () => ReactNode
   isDisabled?: boolean
   isHidden?: boolean
@@ -41,7 +48,7 @@ export const SettingsRow = ({
   if (isHidden) return
 
   return (
-    <Pressable disabled={!isActive} onPress={handleOnPress} bgColor="amber.400">
+    <Pressable disabled={!isActive} onPress={handleOnPress}>
       <HStack h="$10" alignItems="center" opacity={when(isDisabled, 0.5)}>
         <HStack flexGrow={1} alignItems="center">
           <Box w="$8" backgroundColor="">

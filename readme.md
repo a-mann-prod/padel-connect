@@ -22,3 +22,10 @@
 - The repository consists of two main folders:
   - **supabase**: Contains configurations and scripts related to Supabase.
   - **app**: Contains the application code.
+
+## build app
+
+`eas login`
+`eas build:configure`
+
+`eas build --platform ios|android`

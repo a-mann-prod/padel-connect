@@ -1,1 +1,26 @@
-{}
+{
+  "dangerZone": "Danger zone",
+  "emailSent": "An email has been sent to your new address, please click on the link to validate it",
+  "general": {
+    "biometricAuth": "Biometric authentication",
+    "deleteAccount": "Delete my account",
+    "emailChange": "Change my email",
+    "passwordChange": "Change my password",
+    "title": "General"
+  },
+  "legalInformation": {
+    "privacyPolicy": "Privacy policyé",
+    "termsOfUse": "Terms of use",
+    "title": "Legal information"
+  },
+  "logout": "Log out",
+  "support": {
+    "coffee": "Un little coffee ?",
+    "sendMessage": "A question ?",
+    "title": "Support"
+  },
+  "tech": {
+    "title": "Tech"
+  },
+  "version": "Version {version}"
+}

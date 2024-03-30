@@ -1,14 +1,19 @@
 {
   "add": "Add",
   "api": {
-    "default": "An error occurred",
-    "email_not_confirmed": {
-      "message": "To log in, please confirm your email address",
-      "title": "Email not verified"
+    "errors": {
+      "default": "An error occurred",
+      "email_not_confirmed": {
+        "message": "To log in, please confirm your email address",
+        "title": "Email not verified"
+      },
+      "invalid_login_credentials": {
+        "message": "Incorrect email and/or password",
+        "title": "Incorrect credentials"
+      }
     },
-    "invalid_login_credentials": {
-      "message": "Incorrect email and/or password",
-      "title": "Incorrect credentials"
+    "success": {
+      "default": "Recording completed"
     }
   },
   "confirmNewPassword": "Confirm new password",
@@ -23,6 +28,7 @@
   "letsGo": "Let's go! 🚀",
   "navigation": {
     "avatar": "Avatar",
+    "dangerZone": "Danger zone",
     "emailChange": "Change email",
     "getStarted": "Ready to start?",
     "home": "Home",
@@ -34,7 +40,8 @@
     "profile": "Profile",
     "register": "Register",
     "settings": "Settings",
-    "termsOfUse": "Terms of use"
+    "termsOfUse": "Terms of use",
+    "updatePersonalInformation": "Personal information"
   },
   "newEmail": "New email",
   "newPassword": "New password",

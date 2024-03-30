@@ -1,27 +1,9 @@
-import { HeaderBackButtonProps } from '@react-navigation/elements'
-import { Stack, router } from 'expo-router'
+import { Stack } from 'expo-router'
 import { Platform } from 'react-native'
 
 import { OnboardingProvider } from '@/contexts'
-import { IconButton } from '@/designSystem'
+import { HeaderCloseButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
-import { when } from '@/utils/when'
-
-const displayCloseButton = ({
-  tintColor,
-  canGoBack,
-}: HeaderBackButtonProps) => {
-  if (!canGoBack) return
-
-  return (
-    <IconButton
-      variant="headerIcon"
-      icon="circle-xmark"
-      iconProps={{ color: tintColor, size: 'lg' }}
-      onPress={() => router.navigate('/')}
-    />
-  )
-}
 
 export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
@@ -32,7 +14,10 @@ export default () => {
           name="personal-information"
           options={{
             title: t('personalInformation'),
-            headerLeft: when(Platform.OS === 'ios', displayCloseButton),
+            headerLeft: (props) =>
+              Platform.OS === 'ios' && (
+                <HeaderCloseButton {...props} isInModal />
+              ),
           }}
         />
         <Stack.Screen

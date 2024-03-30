@@ -3,18 +3,27 @@ import { Redirect, Tabs, router } from 'expo-router'
 import React from 'react'
 
 import { Icon, IconButton } from '@/designSystem'
+import { HeaderButtonContainer } from '@/designSystem/HeaderButtonContainer/HeaderButtonContainer'
 import { useIsNavigationReady } from '@/hooks/useIsNavigationReady'
 import { useMe } from '@/hooks/useMe'
 import { useTranslate } from '@/services/i18n'
 
-const displayEditButton = ({ tintColor }: HeaderBackButtonProps) => (
-  <IconButton
-    variant="headerIcon"
-    icon="gear"
-    iconProps={{ color: tintColor, size: 'lg' }}
-    onPress={() => router.navigate('/(modals)/settings')}
-  />
-)
+const HeaderEditButton = ({ tintColor }: HeaderBackButtonProps) => {
+  const { data: me } = useMe()
+
+  if (!me) return
+
+  return (
+    <HeaderButtonContainer>
+      <IconButton
+        variant="headerIcon"
+        icon="gear"
+        iconProps={{ color: tintColor, size: 'lg' }}
+        onPress={() => router.navigate('/(modals)/settings')}
+      />
+    </HeaderButtonContainer>
+  )
+}
 
 export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
@@ -34,7 +43,7 @@ export default () => {
         name="index"
         options={{
           title: t('home'),
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }) => (
             <Icon name="house" size="md" color={color} />
           ),
         }}
@@ -46,7 +55,7 @@ export default () => {
           tabBarIcon: ({ color }) => (
             <Icon name="user" size="md" color={color} />
           ),
-          headerRight: (props) => me && displayEditButton(props),
+          headerRight: HeaderEditButton,
         }}
       />
     </Tabs>

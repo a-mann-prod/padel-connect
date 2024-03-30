@@ -27,21 +27,22 @@ export type IconName =
   | 'at'
   | 'gear'
   | 'gears'
+  | 'trash'
+  | 'radiation'
 
 export type IconProps = typeof GIcon.defaultProps & {
   name: IconName
   color?: any
 }
 
-export const Icon = ({ name, ...props }: IconProps) => {
-  const color = useToken('colors', props?.color)
+export const Icon = ({ name, color, ...props }: IconProps) => {
+  const colorToken = useToken('colors', color)
 
   return (
     <GIcon
       {...props}
-      as={(innerProps: any) => (
-        <FontAwesome name={name} {...innerProps} color={color} />
-      )}
+      color={colorToken}
+      as={(innerProps: any) => <FontAwesome name={name} {...innerProps} />}
     />
   )
 }

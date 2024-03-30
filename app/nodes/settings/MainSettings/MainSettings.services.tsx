@@ -1,5 +1,4 @@
-import { Switch, Text } from '@gluestack-ui/themed'
-import Constants from 'expo-constants'
+import { Switch } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import { useMemo } from 'react'
 import { Platform } from 'react-native'
@@ -95,12 +94,13 @@ export const useSettingsItems = () => {
         ],
       },
       {
-        title: t('tech.title'),
         rows: [
           {
-            title: t('tech.version'),
-            icon: 'code-merge',
-            rightComponent: () => <Text>{Constants.expoGoConfig.version}</Text>,
+            title: t('dangerZone'),
+            icon: 'radiation',
+            iconColor: 'yellow500',
+            onPress: () => router.navigate(`${SETTINGS_RACINE}/danger-zone`),
+            rightComponent: () => <Icon name="chevron-right" size="md" />,
           },
         ],
       },
@@ -110,7 +110,10 @@ export const useSettingsItems = () => {
             title: t('logout'),
             icon: 'power-off',
             iconColor: 'red500',
-            onPress: signOut,
+            onPress: () => {
+              signOut()
+              router.replace('/')
+            },
           },
         ],
       },

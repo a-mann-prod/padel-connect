@@ -19,7 +19,6 @@
   "confirmNewPassword": "Confirmation nouveau mot de passe",
   "confirmPassword": "Confirmer le mot de passe",
   "continue": "Continuer",
-  "defaultSuccess": "",
   "delete": "Supprimer",
   "edit": "Modifier",
   "email": "Email",
@@ -29,6 +28,7 @@
   "letsGo": "C'est parti ! 🚀",
   "navigation": {
     "avatar": "Avatar",
+    "dangerZone": "Zone à risques",
     "emailChange": "Changement email",
     "getStarted": "Prêt à démarrer ?",
     "home": "Accueil",

@@ -5,7 +5,7 @@ import { useAuthContext } from '@/contexts'
 import { ProfileResponse, useProfile } from '@/services/api'
 
 export type UseMe = {
-  data: Partial<ProfileResponse & Pick<User, 'id' | 'created_at'>>
+  data?: Partial<ProfileResponse & Pick<User, 'id' | 'created_at'>>
   isLoading: boolean
 }
 
@@ -17,10 +17,11 @@ export const useMe = (): UseMe => {
     options: { enabled: !!user?.id },
   })
 
-  const data = useMemo(
-    () => ({ id: user?.id, created_at: user?.created_at, ...profile }),
-    [profile, user]
-  )
+  const data = useMemo(() => {
+    if (!user) return
+
+    return { id: user.id, created_at: user.created_at, ...profile }
+  }, [profile, user])
 
   return {
     data,

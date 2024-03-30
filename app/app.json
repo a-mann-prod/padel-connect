@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -29,17 +31,28 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "single", // static make asyncstorage failing
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "jsEngine": "hermes",
-    "plugins": ["expo-router", "expo-localization"],
+    "plugins": [
+      "expo-router",
+      "expo-localization"
+    ],
     "locales": {
       "en": "./services/i18n/metadata/en.json",
       "fr": "./services/i18n/metadata/fr.json"
     },
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "6dcc7c36-e7ac-4604-94c1-2771dfe0b7db"
+      }
     }
   }
 }
