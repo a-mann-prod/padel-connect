@@ -1,4 +1,5 @@
 export * from './Actionsheet/Actionsheet'
+export * from './Alert/Alert'
 export * from './Avatar/Avatar'
 export * from './Button/Button'
 export * from './Divider/Divider'

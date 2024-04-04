@@ -1,9 +1,10 @@
 import { Stack } from 'expo-router'
 
+import { WithoutAuth } from '@/components'
 import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 
-export default () => {
+export default WithoutAuth(() => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
   return (
     <Stack>
@@ -24,4 +25,4 @@ export default () => {
       <Stack.Screen name="password-reset-request" options={{ title: '' }} />
     </Stack>
   )
-}
+})

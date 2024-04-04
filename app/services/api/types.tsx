@@ -3,7 +3,9 @@ import {
   UploadFileResponse,
   UseUploadInput,
 } from '@supabase-cache-helpers/storage-react-query'
-import { StorageError } from '@supabase/storage-js'
+
+import { FileObject, StorageError } from '@supabase/storage-js'
+
 import { PostgrestError, PostgrestSingleResponse } from '@supabase/supabase-js'
 import {
   QueryKey,
@@ -65,3 +67,7 @@ export type UseFileUrlProps<TParams> = {
 export type UseUploadProps = {
   storageType: StorageType
 } & Partial<UploadOptions>
+
+export type UseRemoveFilesProps = {
+  storageType: StorageType
+} & Partial<MutationOptions<FileObject[], string[], StorageError>>

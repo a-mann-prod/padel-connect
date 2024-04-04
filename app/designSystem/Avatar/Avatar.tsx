@@ -41,7 +41,7 @@ export const Avatar = ({
         </AvatarFallbackText>
       )
 
-    return <Icon name="user" color="white" size="lg" />
+    return <Icon name="FAS-user" color="white" size="lg" />
   }
 
   return (
@@ -60,7 +60,7 @@ export const Avatar = ({
           {onPress && (
             <AvatarBadge bgColor="$blueGray500">
               <Center flex={1}>
-                <Icon name="pen" color="$white" size="xs" />
+                <Icon name="FAS-pen" color="$white" size="xs" />
               </Center>
             </AvatarBadge>
           )}

@@ -54,3 +54,13 @@ export const updateEmailFn = async (
 
   return data
 }
+
+export const selfDeleteFn = async () => {
+  const { data, error } = await supabase.functions.invoke('user-self-deletion')
+
+  if (error) {
+    handleSupabaseAuthError(error)
+  }
+
+  return data
+}

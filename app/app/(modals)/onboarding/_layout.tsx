@@ -1,8 +1,6 @@
 import { Stack } from 'expo-router'
-import { Platform } from 'react-native'
 
 import { OnboardingProvider } from '@/contexts'
-import { HeaderCloseButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 
 export default () => {
@@ -14,10 +12,6 @@ export default () => {
           name="personal-information"
           options={{
             title: t('personalInformation'),
-            headerLeft: (props) =>
-              Platform.OS === 'ios' && (
-                <HeaderCloseButton {...props} isInModal />
-              ),
           }}
         />
         <Stack.Screen

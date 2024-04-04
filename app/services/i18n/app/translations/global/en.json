@@ -16,6 +16,8 @@
       "default": "Recording completed"
     }
   },
+  "cancel": "Cancel",
+
   "confirmNewPassword": "Confirm new password",
   "confirmPassword": "Confirm password",
   "continue": "Continue",
@@ -50,5 +52,6 @@
   "password": "Password",
   "resend": "Resend",
   "save": "Save",
-  "send": "Send"
+  "send": "Send",
+  "warning": "Warning"
 }

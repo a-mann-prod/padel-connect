@@ -14,7 +14,7 @@ type AuthContextProps = {
     session: AuthSession | null
     user: AuthUser | null
   }) => void
-  signOut: () => void
+  signOut: (isDeleted?: boolean) => void
   isLoadingSignOut: boolean
   isLoadingSignIn: boolean
 }
@@ -42,9 +42,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(user)
   }
 
-  const signOut = async () => {
+  const signOut = async (isDeleted = false) => {
     setIsLoadingSignOut(true)
-    const { error } = await supabase.auth.signOut()
+    let error
+    if (!isDeleted) {
+      error = (await supabase.auth.signOut()).error
+    }
     setSession(null)
     setUser(null)
 

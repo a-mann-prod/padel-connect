@@ -1,4 +1,3 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { DarkTheme, ThemeProvider } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -10,6 +9,7 @@ import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
 import { AuthProvider } from '@/contexts'
+import { Alert } from '@/designSystem'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { date } from '@/services/date'
 import { useI18N, useInitLanguage } from '@/services/i18n'
@@ -34,7 +34,8 @@ export default () => {
   const [langLoaded] = useInitLanguage()
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
+    FontAwesome6Solid: require('../assets/fonts/FontAwesome6-solid.ttf'),
+    FontAwesome6Regular: require('../assets/fonts/FontAwesome6-regular.ttf'),
   })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -92,6 +93,7 @@ const RootLayoutNav = () => {
             {Platform.OS === 'web' && (
               <ReactQueryDevtools initialIsOpen={false} />
             )}
+            <Alert />
           </AuthProvider>
         </QueryClientProvider>
       </GluestackUIProvider>

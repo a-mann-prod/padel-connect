@@ -6,5 +6,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "deno.enable": true,
+  "deno.importMap": "./supabase/functions/import_map.json"
 }

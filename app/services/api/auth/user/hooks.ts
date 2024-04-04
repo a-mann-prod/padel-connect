@@ -1,7 +1,12 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
 
 import { UserResponse } from './entities'
-import { updateEmailFn, updatePasswordFn, updateUserFn } from './functions'
+import {
+  selfDeleteFn,
+  updateEmailFn,
+  updatePasswordFn,
+  updateUserFn,
+} from './functions'
 import {
   UpdateEmailParams,
   UpdatePasswordParams,
@@ -34,3 +39,7 @@ export const useUpdateEmail = (
     mutationFn: updateEmailFn,
   })
 }
+
+export const useSelfDelete = (
+  options: UseMutationOptions<void, Error, void> = {}
+) => useMutation({ ...options, mutationFn: selfDeleteFn })

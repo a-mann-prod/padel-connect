@@ -4,7 +4,7 @@
     "errors": {
       "default": "Une erreur est survenue",
       "email_not_confirmed": {
-        "message": "Pour vous connecter, veuillez confirmer votre adresse email",
+        "message": "Pour te connecter, confirme ton adresse email",
         "title": "Email non vérifié"
       },
       "invalid_login_credentials": {
@@ -16,6 +16,7 @@
       "default": "Enregistrement réussi"
     }
   },
+  "cancel": "Annuler",
   "confirmNewPassword": "Confirmation nouveau mot de passe",
   "confirmPassword": "Confirmer le mot de passe",
   "continue": "Continuer",
@@ -24,7 +25,7 @@
   "email": "Email",
   "firstname": "Prénom",
   "lastname": "Nom",
-  "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
+  "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée.",
   "letsGo": "C'est parti ! 🚀",
   "navigation": {
     "avatar": "Avatar",
@@ -50,5 +51,6 @@
   "password": "Mot de passe",
   "resend": "Renvoyer",
   "save": "Enregistrer",
-  "send": "Envoyer"
+  "send": "Envoyer",
+  "warning": "Attention"
 }

@@ -1,15 +1,16 @@
 import { HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed'
 import Constants from 'expo-constants'
-import { router } from 'expo-router'
 
 import { SettingsRow } from '../SettingsRow/SettingsRow'
 import { SettingsSection } from '../SettingsSection/SettingsSection'
-import { SETTINGS_RACINE, useSettingsItems } from './MainSettings.services'
+import { useSettingsItems } from './MainSettings.services'
 
-import { Avatar } from '@/designSystem'
+import { FormAvatar, ImageAsset } from '@/designSystem/Form'
 import { useMe } from '@/hooks/useMe'
-import { useImage } from '@/services/api/image'
+import { useUpdateAvatarMe } from '@/hooks/useUpdateAvatarMe'
+import { useSaveImage } from '@/services/api/image'
 import { useTranslate } from '@/services/i18n'
+import { prepareFile } from '@/utils/file'
 
 export const MainSettings = () => {
   const t = useTranslate('settings')
@@ -17,23 +18,36 @@ export const MainSettings = () => {
 
   const { data: me } = useMe()
 
-  const { data: avatar } = useImage({
-    params: { path: me?.avatar_url || '-1', storageType: 'avatars' },
-    options: { enabled: !!me?.avatar_url },
+  const { mutate: saveImage } = useSaveImage({
+    storageType: 'avatars',
+    onSuccess: (data) => {
+      updateMe({ avatar_url: data[0]?.data?.path })
+    },
   })
+
+  const { mutate: updateAvatarMe, isPending: isPendingUpdateAvatarMe } =
+    useUpdateAvatarMe()
+
+  const handleAvatarChange = async (value: ImageAsset | null) => {
+    if (!value) {
+      updateAvatarMe()
+      return
+    }
+
+    const file = await prepareFile(value)
+    updateAvatarMe(file)
+  }
 
   if (!me) return
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <VStack p="$3" gap="$3">
-        <Avatar
-          firstname={me?.first_name}
-          lastname={me?.last_name}
-          imageUrl={avatar}
-          onPress={() =>
-            router.navigate(`${SETTINGS_RACINE}/update-personal-information`)
-          }
+        <FormAvatar
+          firstname={me.first_name}
+          lastname={me.last_name}
+          value={me.avatar ? { uri: me.avatar } : undefined}
+          onChange={handleAvatarChange}
         />
         {settings.map(({ rows, ...sectionProps }, index) => (
           <SettingsSection key={index} {...sectionProps}>

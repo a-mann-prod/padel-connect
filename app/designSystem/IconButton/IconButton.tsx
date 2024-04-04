@@ -1,12 +1,15 @@
-import { Button } from '@gluestack-ui/themed'
+import {
+  Button as GButton,
+  ButtonIcon as GButtonIcon,
+} from '@gluestack-ui/themed'
 
-import { Icon, IconProps } from '../Icon/Icon'
+import { FontAwesome, FontAwesomeProps } from '../Icon/FontAwesome/FontAwesome'
 
 export type IconButtonProps = {
-  icon: IconProps['name']
-  iconProps: Omit<IconProps, 'name'>
+  icon: FontAwesomeProps['name']
+  iconProps: FontAwesomeProps
   isLoading?: boolean
-} & typeof Button.defaultProps
+} & typeof GButton.defaultProps
 
 export const IconButton = ({
   icon,
@@ -14,7 +17,9 @@ export const IconButton = ({
   iconProps,
   ...props
 }: IconButtonProps) => (
-  <Button {...props}>
-    <Icon name={icon} {...iconProps} />
-  </Button>
+  <GButton {...props}>
+    <GButtonIcon
+      as={(iconProps: any) => <FontAwesome {...iconProps} name={icon} />}
+    />
+  </GButton>
 )

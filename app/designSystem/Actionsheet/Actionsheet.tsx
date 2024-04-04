@@ -5,6 +5,7 @@ import {
   ActionsheetDragIndicatorWrapper,
   Actionsheet as GActionsheet,
 } from '@gluestack-ui/themed'
+import { SafeAreaView } from 'react-native'
 
 import {
   ActionsheetItem,
@@ -28,20 +29,23 @@ export const Actionsheet = ({
   return (
     <GActionsheet {...props}>
       <ActionsheetBackdrop />
-      <ActionsheetContent>
-        <ActionsheetDragIndicatorWrapper>
-          <ActionsheetDragIndicator />
-        </ActionsheetDragIndicatorWrapper>
-        {items.map((item) => (
-          <ActionsheetItem
-            key={item.title}
-            onPress={(e) => {
-              handleOnChange(item)
-              item.onPress?.(e)
-            }}
-            {...item}
-          />
-        ))}
+
+      <ActionsheetContent h="auto" pb="$0">
+        <SafeAreaView style={{ width: '100%' }}>
+          <ActionsheetDragIndicatorWrapper>
+            <ActionsheetDragIndicator />
+          </ActionsheetDragIndicatorWrapper>
+          {items.map((item) => (
+            <ActionsheetItem
+              key={item.title}
+              onPress={(e) => {
+                handleOnChange(item)
+                item.onPress?.(e)
+              }}
+              {...item}
+            />
+          ))}
+        </SafeAreaView>
       </ActionsheetContent>
     </GActionsheet>
   )

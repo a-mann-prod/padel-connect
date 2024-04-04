@@ -12,7 +12,7 @@ export const HeaderButtonContainer = ({
   isInModal,
   children,
 }: PropsWithChildren<HeaderButtonContainerProps>) => {
-  if (!isInModal) return <Box mx="$3">{children}</Box>
+  if (!isInModal && Platform.OS !== 'web') return <Box mx="$3">{children}</Box>
 
   return (
     <Box

@@ -1,13 +1,16 @@
 import {
+  ActionsheetIcon,
   ActionsheetItemText,
   ActionsheetItem as GActionsheetItem,
-  Icon,
 } from '@gluestack-ui/themed'
-import { ReactNode } from 'react'
+
+import { Icon, IconProps } from '../../Icon/Icon'
+
+import { isNilOrEmpty } from '@/utils/global'
 
 export type ActionsheetItemProps = typeof GActionsheetItem.defaultProps & {
   id: string
-  icon?: ReactNode
+  icon?: IconProps['name']
   title: string
 }
 
@@ -17,7 +20,9 @@ export const ActionsheetItem = ({
   ...props
 }: ActionsheetItemProps) => (
   <GActionsheetItem {...props}>
-    {icon && <Icon as={icon} size="md" />}
+    {!isNilOrEmpty(icon) && (
+      <ActionsheetIcon as={(props: any) => <Icon name={icon} {...props} />} />
+    )}
     <ActionsheetItemText>{title}</ActionsheetItemText>
   </GActionsheetItem>
 )

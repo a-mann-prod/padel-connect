@@ -47,7 +47,7 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
         </Link>
         <Button
           title={t('appleLogin')}
-          icon="apple"
+          icon="FAS-apple"
           variant="outline"
           onPress={() => loginWithOAuth('apple')}
           isLoading={isPendingOAuth}
@@ -55,7 +55,7 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
         />
         <Button
           title={t('googleLogin')}
-          icon="google"
+          icon="FAS-google"
           variant="outline"
           onPress={() => loginWithOAuth('google')}
           isLoading={isPendingOAuth}

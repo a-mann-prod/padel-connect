@@ -17,7 +17,7 @@ const HeaderEditButton = ({ tintColor }: HeaderBackButtonProps) => {
     <HeaderButtonContainer>
       <IconButton
         variant="headerIcon"
-        icon="gear"
+        icon="FAS-gear"
         iconProps={{ color: tintColor, size: 'lg' }}
         onPress={() => router.navigate('/(modals)/settings')}
       />
@@ -43,8 +43,8 @@ export default () => {
         name="index"
         options={{
           title: t('home'),
-          tabBarIcon: ({ color }) => (
-            <Icon name="house" size="md" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="FAS-house" size="md" color={color} />
           ),
         }}
       />
@@ -52,8 +52,12 @@ export default () => {
         name="profile"
         options={{
           title: t('profile'),
-          tabBarIcon: ({ color }) => (
-            <Icon name="user" size="md" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Icon
+              name={`${focused ? 'FAS' : 'FAR'}-user`}
+              size="md"
+              color={color}
+            />
           ),
           headerRight: HeaderEditButton,
         }}

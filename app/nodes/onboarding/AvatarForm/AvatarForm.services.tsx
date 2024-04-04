@@ -9,8 +9,8 @@ const getDefaultValues = (props?: AvatarFormValues): AvatarFormValues => ({
 const schema = z.object({
   avatar: z
     .object({
-      fileName: z.string().optional(),
-      mimeType: z.string().optional(),
+      fileName: z.string().optional().nullable(),
+      mimeType: z.string().optional().nullable(),
       uri: z.string(),
     })
     .optional(),

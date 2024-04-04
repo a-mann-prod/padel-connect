@@ -1,12 +1,14 @@
 {
   "dangerZone": "Zone à risques",
+  "deleteAccountWarningMessage": "Tu es sur le point de supprimer ton compte de manière permanente. Cette action est irréversible et toutes les données associées seront définitivement perdues. Es tu sûr de vouloir continuer ?",
   "emailSent": "Un email a été envoyé à votre nouvelle adresse, merci de cliquer sur le lien pour le valider",
   "general": {
     "biometricAuth": "Authentification biométrique",
     "deleteAccount": "Supprimer mon compte",
     "emailChange": "Modifier mon email",
     "passwordChange": "Changer mon mot de passe",
-    "title": "Général"
+    "title": "Général",
+    "updatePersonalInformation": "Modifier mes infos"
   },
   "legalInformation": {
     "privacyPolicy": "Politique de confidentialité",

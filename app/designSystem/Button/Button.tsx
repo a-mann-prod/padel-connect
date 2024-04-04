@@ -4,12 +4,15 @@ import {
   ButtonIcon as GButtonIcon,
   ButtonText as GButtonText,
 } from '@gluestack-ui/themed'
-import { ReactNode, forwardRef } from 'react'
-import { Icon } from '../Icon/Icon'
+import { forwardRef } from 'react'
+
+import { FontAwesome, FontAwesomeProps } from '../Icon/FontAwesome/FontAwesome'
+
+import { isNilOrEmpty } from '@/utils/global'
 
 export type ButtonProps = {
   title: string
-  icon?: ReactNode
+  icon?: FontAwesomeProps['name']
   iconRight?: boolean
   isLoading?: boolean
 } & typeof GButton.defaultProps
@@ -37,10 +40,12 @@ export const Button = forwardRef(
           <ButtonSpinner />
         ) : (
           <>
-            {icon && (
+            {!isNilOrEmpty(icon) && (
               <GButtonIcon
                 px="$6"
-                as={(iconProps: any) => <Icon name={icon} {...iconProps} />}
+                as={(iconProps: any) => (
+                  <FontAwesome {...iconProps} name={icon} />
+                )}
               />
             )}
             <GButtonText>{title}</GButtonText>

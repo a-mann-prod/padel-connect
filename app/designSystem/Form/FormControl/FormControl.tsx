@@ -15,7 +15,7 @@ import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
 
 export type FormControlProps = {
-  title: string
+  title?: string
   helpMessage?: string
   error?: FieldError
 } & typeof GFormControl.defaultProps
@@ -32,9 +32,11 @@ export const FormControl = ({
 
   return (
     <GFormControl isInvalid={!!errorMessage} {...props}>
-      <FormControlLabel>
-        <FormControlLabelText>{title}</FormControlLabelText>
-      </FormControlLabel>
+      {!isNilOrEmpty(title) && (
+        <FormControlLabel>
+          <FormControlLabelText>{title}</FormControlLabelText>
+        </FormControlLabel>
+      )}
       {children}
       {helpMessage && (
         <FormControlHelper>
@@ -48,7 +50,9 @@ export const FormControl = ({
             w="$3.5"
             h="$3.5"
             size="xs"
-            as={(props: any) => <Icon {...props} name="circle-exclamation" />}
+            as={(props: any) => (
+              <Icon {...props} name="FAS-circle-exclamation" />
+            )}
           />
           <FormControlErrorText>{errorMessage}</FormControlErrorText>
         </FormControlError>
