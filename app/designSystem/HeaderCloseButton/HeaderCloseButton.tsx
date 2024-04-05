@@ -18,7 +18,7 @@ export const HeaderCloseButton = ({
     <IconButton
       variant="headerIcon"
       icon="FAR-circle-xmark"
-      iconProps={{ color: tintColor, size: 'lg' }}
+      iconProps={{ color: tintColor, size: 16 }}
       onPress={() => router.navigate('/')}
     />
   </HeaderButtonContainer>
