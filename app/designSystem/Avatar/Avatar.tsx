@@ -11,8 +11,10 @@ import { useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
 
-import { getInitials, getUserName } from '@/utils/user'
 import { Icon } from '../Icon/Icon'
+import { Skeleton } from '../Skeleton/Skeleton'
+
+import { getInitials, getUserName } from '@/utils/user'
 
 export type AvatarProps = {
   imageUrl?: string
@@ -20,6 +22,7 @@ export type AvatarProps = {
   lastname?: string | null
   status?: 'online' | 'offline' | 'hidden'
   onPress?: TouchableOpacityProps['onPress']
+  isLoading?: boolean
 } & typeof GAvatar.defaultProps
 
 export const Avatar = ({
@@ -28,9 +31,10 @@ export const Avatar = ({
   onPress,
   firstname,
   lastname,
+  isLoading,
   ...props
 }: AvatarProps) => {
-  const [isLoading, setIsLoading] = useState(!!imageUrl)
+  const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
   const completeName = getUserName(firstname, lastname)
 
   const displayFallback = () => {
@@ -47,24 +51,26 @@ export const Avatar = ({
   return (
     <VStack alignItems="center" gap="$3">
       <TouchableOpacity onPress={onPress} disabled={!onPress}>
-        <GAvatar size="2xl" {...props}>
-          {imageUrl ? (
-            <AvatarImage
-              alt="avatar"
-              source={{ uri: imageUrl }}
-              onLoad={() => setIsLoading(false)}
-            />
-          ) : (
-            displayFallback()
-          )}
-          {onPress && (
-            <AvatarBadge bgColor="$blueGray500">
-              <Center flex={1}>
-                <Icon name="FAS-pen" color="$white" size="xs" />
-              </Center>
-            </AvatarBadge>
-          )}
-        </GAvatar>
+        <Skeleton radius="round" show={isLoading || isImageLoading}>
+          <GAvatar size="2xl" {...props}>
+            {imageUrl ? (
+              <AvatarImage
+                alt="avatar"
+                source={{ uri: imageUrl }}
+                onLoad={() => setIsImageLoading(false)}
+              />
+            ) : (
+              displayFallback()
+            )}
+            {onPress && (
+              <AvatarBadge bgColor="$blueGray500">
+                <Center flex={1}>
+                  <Icon name="FAS-pen" color="$white" size="xs" />
+                </Center>
+              </AvatarBadge>
+            )}
+          </GAvatar>
+        </Skeleton>
       </TouchableOpacity>
 
       <Heading size="lg">{completeName}</Heading>

@@ -1,15 +1,24 @@
+import { UseMutationOptions } from '@tanstack/react-query'
+
 import { useHandleError } from './useHandleError'
 
 import { useAuthContext } from '@/contexts'
-import { useSelfDelete } from '@/services/api'
+import { SelfDeleteParams, useSelfDelete } from '@/services/api'
 
-export const useDeleteMe = () => {
+export const useDeleteMe = ({
+  onSuccess,
+  ...options
+}: UseMutationOptions<void, Error, SelfDeleteParams> = {}) => {
   const onError = useHandleError()
   const { signOut, isLoadingSignOut } = useAuthContext()
 
   const { isPending, ...rest } = useSelfDelete({
-    onSuccess: () => signOut(true),
+    onSuccess: (data: void, variables: SelfDeleteParams, context: unknown) => {
+      onSuccess?.(data, variables, context)
+      signOut(true)
+    },
     onError,
+    ...options,
   })
 
   return {

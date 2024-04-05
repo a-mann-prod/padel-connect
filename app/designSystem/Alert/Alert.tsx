@@ -9,53 +9,56 @@ import {
   Heading,
   Text,
 } from '@gluestack-ui/themed'
+import { PropsWithChildren } from 'react'
 
 import { Button } from '../Button/Button'
 
-import { OverlayWrapper } from '@/components/OverlayWrapper/OverlayWrapper'
 import { useTranslate } from '@/services/i18n'
 
 export type AlertProps = {
-  message: string
+  message?: string
   onContinueCallback: () => void
-}
+  onCancel: () => void
+  isLoading?: boolean
+} & typeof AlertDialog.defaultProps
 
-export const Alert = () => {
+export const Alert = ({
+  message,
+  onContinueCallback,
+  onCancel,
+  children,
+  isLoading,
+  ...props
+}: PropsWithChildren<AlertProps>) => {
   const t = useTranslate()
 
   return (
-    <OverlayWrapper overlayId="alert">
-      {({ hide, props, isOpen }) => (
-        <AlertDialog isOpen={isOpen} onClose={hide}>
-          <AlertDialogBackdrop />
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <Heading size="lg">{t('warning')}</Heading>
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              <Text size="sm">{props?.message}</Text>
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <ButtonGroup space="lg">
-                <Button
-                  variant="outline"
-                  action="secondary"
-                  onPress={hide}
-                  title={t('cancel')}
-                />
-                <Button
-                  action="negative"
-                  onPress={() => {
-                    props?.onContinueCallback()
-                    hide()
-                  }}
-                  title={t('continue')}
-                />
-              </ButtonGroup>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
-    </OverlayWrapper>
+    <AlertDialog {...props}>
+      <AlertDialogBackdrop />
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <Heading size="lg">{t('warning')}</Heading>
+        </AlertDialogHeader>
+        <AlertDialogBody>
+          {children || <Text size="sm">{message}</Text>}
+        </AlertDialogBody>
+        <AlertDialogFooter>
+          <ButtonGroup space="lg">
+            <Button
+              variant="outline"
+              action="secondary"
+              onPress={onCancel}
+              title={t('cancel')}
+            />
+            <Button
+              isLoading={isLoading}
+              action="negative"
+              onPress={onContinueCallback}
+              title={t('continue')}
+            />
+          </ButtonGroup>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }

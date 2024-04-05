@@ -8,8 +8,8 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
+import { SelfDeleteAlert } from '@/components'
 import { AuthProvider } from '@/contexts'
-import { Alert } from '@/designSystem'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { date } from '@/services/date'
 import { useI18N, useInitLanguage } from '@/services/i18n'
@@ -93,7 +93,7 @@ const RootLayoutNav = () => {
             {Platform.OS === 'web' && (
               <ReactQueryDevtools initialIsOpen={false} />
             )}
-            <Alert />
+            <SelfDeleteAlert />
           </AuthProvider>
         </QueryClientProvider>
       </GluestackUIProvider>

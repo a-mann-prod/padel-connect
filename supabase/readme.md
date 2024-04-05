@@ -24,7 +24,7 @@
 
 ### Deploy to prod
 
-`supabase migration new <migration_name>` Create local migration
+`supabase db diff | supabase migration new <migration_name>` Create local migration
 
 `supabase db push` Push migration to prod
 

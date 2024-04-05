@@ -1,9 +1,10 @@
-import { AlertProps } from '@/designSystem'
 import { omit } from 'remeda'
 import { create } from 'zustand'
 
+import { SelfDeleteContentAlertProps } from '@/components'
+
 export type OverlaysStored = Partial<{
-  alert: AlertProps
+  selfDeleteAlert: SelfDeleteContentAlertProps
 }>
 
 export type OverlayStore = {

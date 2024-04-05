@@ -12,6 +12,9 @@
         "title": "Incorrect credentials"
       }
     },
+    "invalid_password": {
+      "title": "Incorrect password"
+    },
     "success": {
       "default": "Recording completed"
     }

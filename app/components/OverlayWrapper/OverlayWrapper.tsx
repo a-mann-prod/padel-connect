@@ -1,14 +1,17 @@
 import { ReactElement } from 'react'
+import { keys } from 'remeda'
 
 import { OverlaysStored, useOverlayStore } from '@/app/store'
 
+export type OverlayWrapperChildrenProps<T extends keyof OverlaysStored> = {
+  props: OverlaysStored[T]
+  hide: () => void
+  isOpen: boolean
+}
+
 export type OverlayWrapperProps<T extends keyof OverlaysStored> = {
   overlayId: T
-  children: (_: {
-    props: OverlaysStored[T]
-    hide: () => void
-    isOpen: boolean
-  }) => ReactElement
+  children: (_: OverlayWrapperChildrenProps<T>) => ReactElement
 }
 
 export const OverlayWrapper = <T extends keyof OverlaysStored>({
@@ -19,8 +22,10 @@ export const OverlayWrapper = <T extends keyof OverlaysStored>({
 
   const currentOverlayProps = overlays[overlayId]
 
+  const isOpen = keys(overlays).some((id) => id === overlayId)
+
   const props = {
-    isOpen: !!currentOverlayProps,
+    isOpen,
     hide: () => hide(overlayId),
     props: currentOverlayProps,
   }

@@ -7,3 +7,6 @@ export type UpdatePasswordParams = { password: string }
 export type UpdateEmailParams = {
   email: string
 }
+export type SelfDeleteParams = {
+  password: string
+}

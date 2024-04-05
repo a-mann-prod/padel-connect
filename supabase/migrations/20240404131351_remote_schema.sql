@@ -8,4 +8,4 @@ using (((bucket_id = 'avatars'::text) AND (name = ( SELECT profiles.avatar_url
   WHERE (profiles.id = auth.uid())))));
 
 
-
+  

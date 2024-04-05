@@ -3,12 +3,11 @@ import Constants from 'expo-constants'
 
 import { SettingsRow } from '../SettingsRow/SettingsRow'
 import { SettingsSection } from '../SettingsSection/SettingsSection'
-import { useSettingsItems } from './MainSettings.services'
+import { useSettingsItems } from './mainSettings.services'
 
 import { FormAvatar, ImageAsset } from '@/designSystem/Form'
 import { useMe } from '@/hooks/useMe'
 import { useUpdateAvatarMe } from '@/hooks/useUpdateAvatarMe'
-import { useSaveImage } from '@/services/api/image'
 import { useTranslate } from '@/services/i18n'
 import { prepareFile } from '@/utils/file'
 
@@ -17,13 +16,6 @@ export const MainSettings = () => {
   const { items: settings } = useSettingsItems()
 
   const { data: me } = useMe()
-
-  const { mutate: saveImage } = useSaveImage({
-    storageType: 'avatars',
-    onSuccess: (data) => {
-      updateMe({ avatar_url: data[0]?.data?.path })
-    },
-  })
 
   const { mutate: updateAvatarMe, isPending: isPendingUpdateAvatarMe } =
     useUpdateAvatarMe()
@@ -48,6 +40,7 @@ export const MainSettings = () => {
           lastname={me.last_name}
           value={me.avatar ? { uri: me.avatar } : undefined}
           onChange={handleAvatarChange}
+          isLoading={isPendingUpdateAvatarMe}
         />
         {settings.map(({ rows, ...sectionProps }, index) => (
           <SettingsSection key={index} {...sectionProps}>

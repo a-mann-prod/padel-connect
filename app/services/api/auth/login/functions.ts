@@ -1,9 +1,9 @@
 import * as AuthSession from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
 
+import { handleSupabaseAuthError, handleUnverifiedUser } from '../shared'
 import { LoginResponse } from './entities'
 import { LoginParams, LoginWithOAuthParams } from './params'
-import { handleSupabaseAuthError, handleUnverifiedUser } from '../shared'
 
 import { supabase } from '@/services/supabase'
 
@@ -40,6 +40,5 @@ export const loginWithOAuthFn = async (params: LoginWithOAuthParams) => {
   const res = await WebBrowser.openAuthSessionAsync(data?.url ?? '', redirectTo)
 
   if (res.type === 'success') {
-    console.log('youpi')
   }
 }

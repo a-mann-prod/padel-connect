@@ -14,6 +14,15 @@ Deno.serve(async (req) => {
   handledByBrowser(req);
 
   try {
+    const bodyContent = await req.json();
+
+    if (!bodyContent.password) {
+      return new Response(JSON.stringify({ errorCode: "invalid_password" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
+    }
+
     // Create a Supabase client with the Auth context of the logged in user.
     const client = supabaseClient({
       // Create client with Auth context of the user that called the function.
@@ -35,6 +44,19 @@ Deno.serve(async (req) => {
     const user_avatar = profiles[0].avatar_url;
 
     const clientAdmin = supabaseAdmin();
+
+    // verify password
+    const { data, error } = await client.rpc("verify_user_password", {
+      password: bodyContent.password,
+    });
+
+    if (!data || error) {
+      return new Response(JSON.stringify({ errorCode: "invalid_password" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
+    }
+
     // Delete avatar if found
     if (user_avatar) {
       const { data: avatar_deletion, error: avatar_error } =
@@ -60,7 +82,8 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.log(error);
+    return new Response(JSON.stringify({ errorCode: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
     });

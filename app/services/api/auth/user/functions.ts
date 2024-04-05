@@ -1,8 +1,12 @@
 import * as AuthSession from 'expo-auth-session'
 
-import { handleSupabaseAuthError } from '../shared'
+import {
+  handleSupabaseAuthError,
+  handleSupabaseEdgeFunctionError,
+} from '../shared'
 import { UserResponse } from './entities'
 import {
+  SelfDeleteParams,
   UpdateEmailParams,
   UpdatePasswordParams,
   UpdateUserParams,
@@ -55,11 +59,14 @@ export const updateEmailFn = async (
   return data
 }
 
-export const selfDeleteFn = async () => {
-  const { data, error } = await supabase.functions.invoke('user-self-deletion')
+export const selfDeleteFn = async (params: SelfDeleteParams) => {
+  const { data, error } = await supabase.functions.invoke(
+    'user-self-deletion',
+    { body: params }
+  )
 
   if (error) {
-    handleSupabaseAuthError(error)
+    await handleSupabaseEdgeFunctionError(error)
   }
 
   return data

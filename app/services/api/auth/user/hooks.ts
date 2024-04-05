@@ -8,6 +8,7 @@ import {
   updateUserFn,
 } from './functions'
 import {
+  SelfDeleteParams,
   UpdateEmailParams,
   UpdatePasswordParams,
   UpdateUserParams,
@@ -41,5 +42,5 @@ export const useUpdateEmail = (
 }
 
 export const useSelfDelete = (
-  options: UseMutationOptions<void, Error, void> = {}
+  options: UseMutationOptions<void, Error, SelfDeleteParams> = {}
 ) => useMutation({ ...options, mutationFn: selfDeleteFn })

@@ -10,6 +10,9 @@
       "invalid_login_credentials": {
         "message": "Email et/ou mot de passe incorrect(s)",
         "title": "Identifiants incorrects"
+      },
+      "invalid_password": {
+        "title": "Mot de passe incorrect"
       }
     },
     "success": {
