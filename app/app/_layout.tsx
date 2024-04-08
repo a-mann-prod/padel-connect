@@ -1,8 +1,8 @@
 import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { DarkTheme, ThemeProvider } from '@react-navigation/native'
+import * as Sentry from '@sentry/react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
@@ -11,8 +11,7 @@ import { Platform } from 'react-native'
 import { SelfDeleteAlert } from '@/components'
 import { AuthProvider } from '@/contexts'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import { date } from '@/services/date'
-import { useI18N, useInitLanguage } from '@/services/i18n'
+import { useInit } from '@/hooks/useInit'
 import { config } from '@/services/theme/gluestack-ui/gluestack-ui.config' // Relative path to your ejected theme configuration
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
@@ -30,37 +29,24 @@ export const unstable_settings = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
-export default () => {
-  const [langLoaded] = useInitLanguage()
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    FontAwesome6Solid: require('../assets/fonts/FontAwesome6-solid.ttf'),
-    FontAwesome6Regular: require('../assets/fonts/FontAwesome6-regular.ttf'),
-  })
-
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error
-  }, [error])
+export default Sentry.wrap(() => {
+  const { isLoading } = useInit()
 
   useEffect(() => {
-    if (loaded) {
+    if (!isLoading) {
       SplashScreen.hideAsync()
     }
-  }, [loaded])
+  }, [isLoading])
 
-  if (!loaded || !langLoaded) {
+  if (isLoading) {
     return null
   }
 
   return <RootLayoutNav />
-}
+})
 
 const RootLayoutNav = () => {
-  const { language } = useI18N()
-  date.setLocale(language)
-
-  const colorScheme = useColorScheme() || 'light'
+  const colorScheme = useColorScheme()
 
   const queryClient = new QueryClient({
     defaultOptions: {

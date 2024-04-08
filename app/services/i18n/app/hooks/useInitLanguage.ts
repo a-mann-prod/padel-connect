@@ -24,7 +24,7 @@ export const useInitLanguage = () => {
           },
           initImmediate: false,
           parseMissingKeyHandler: () => '',
-          debug: true, // TODO: remove in prod
+          debug: process.env.EXPO_PUBLIC_ENV === 'locale',
         },
         () => setLoaded(true)
       )
