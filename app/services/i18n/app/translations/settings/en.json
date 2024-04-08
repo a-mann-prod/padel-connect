@@ -11,13 +11,13 @@
     "updatePersonalInformation": "Change my info"
   },
   "legalInformation": {
-    "privacyPolicy": "Privacy policyé",
+    "privacyPolicy": "Privacy policy",
     "termsOfUse": "Terms of use",
     "title": "Legal information"
   },
   "logout": "Log out",
   "support": {
-    "coffee": "Un little coffee ?",
+    "coffee": "A little coffee ?",
     "sendMessage": "A question ?",
     "title": "Support"
   },
