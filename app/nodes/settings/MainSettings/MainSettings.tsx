@@ -1,5 +1,4 @@
 import { HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed'
-import Constants from 'expo-constants'
 
 import { SettingsRow } from '../SettingsRow/SettingsRow'
 import { SettingsSection } from '../SettingsSection/SettingsSection'
@@ -8,6 +7,7 @@ import { useSettingsItems } from './mainSettings.services'
 import { FormAvatar, ImageAsset } from '@/designSystem/Form'
 import { useMe } from '@/hooks/useMe'
 import { useUpdateAvatarMe } from '@/hooks/useUpdateAvatarMe'
+import { config } from '@/services/config'
 import { useTranslate } from '@/services/i18n'
 import { prepareFile } from '@/utils/file'
 
@@ -50,9 +50,7 @@ export const MainSettings = () => {
           </SettingsSection>
         ))}
         <HStack mb="$3" justifyContent="center">
-          <Text>
-            {t('version', { version: Constants.expoConfig?.version })}
-          </Text>
+          <Text>{t('version', { version: config.version })}</Text>
         </HStack>
       </VStack>
     </ScrollView>

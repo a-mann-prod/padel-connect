@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import 'react-native-url-polyfill/auto'
 
+import { config } from '../config'
 import { storage } from '../storage'
 import { Database } from './database.types'
 
@@ -11,9 +12,8 @@ const corsHeaders = {
 }
 
 export const supabase = createClient<Database>(
-  // todo: remove cast
-  process.env.EXPO_PUBLIC_SUPABASE_URL as string,
-  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY as string,
+  config.supabaseUrl,
+  config.supabaseAnonKey,
   {
     auth: {
       storage,

@@ -1,9 +1,9 @@
 import * as Sentry from '@sentry/react-native'
-import Constants from 'expo-constants'
 import { useFonts } from 'expo-font'
 import { useNavigationContainerRef } from 'expo-router'
 import { useEffect } from 'react'
 
+import { config } from '@/services/config'
 import { date } from '@/services/date'
 import { i18n, useInitLanguage } from '@/services/i18n'
 
@@ -12,11 +12,11 @@ export const useInit = () => {
   const ref = useNavigationContainerRef()
 
   Sentry.init({
-    enabled: process.env.EXPO_PUBLIC_ENV === 'production',
-    dsn: process.env.EXPO_PUBLIC_SENTRY_URL,
-    debug: process.env.EXPO_PUBLIC_ENV === 'locale',
-    dist: Constants.expoConfig?.version,
-    environment: process.env.EXPO_PUBLIC_ENV,
+    enabled: config.env === 'production',
+    dsn: config.sentryUrl,
+    debug: config.env === 'local',
+    dist: config.version,
+    environment: config.env,
     integrations: [
       new Sentry.ReactNativeTracing({
         routingInstrumentation,

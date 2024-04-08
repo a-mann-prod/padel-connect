@@ -6,6 +6,8 @@ import { initReactI18next } from 'react-i18next'
 import { resources } from '../resources'
 import { getDefaultNS, getDevicePreferenceLanguage } from '../utils'
 
+import { config } from '@/services/config'
+
 export const useInitLanguage = () => {
   const [loaded, setLoaded] = useState(false)
 
@@ -24,7 +26,7 @@ export const useInitLanguage = () => {
           },
           initImmediate: false,
           parseMissingKeyHandler: () => '',
-          debug: process.env.EXPO_PUBLIC_ENV === 'locale',
+          debug: config.env === 'local',
         },
         () => setLoaded(true)
       )
