@@ -1,6 +1,6 @@
-import { ConfigContext, ExpoGoConfig } from 'expo/config'
+import { ConfigContext } from 'expo/config'
 
-export default ({ config }: ConfigContext): ExpoGoConfig => ({
+export default ({ config }: ConfigContext) => ({
   ...config,
   name: 'Expo supabase boilerplate',
   slug: 'expo-supabase-boilerplate',
