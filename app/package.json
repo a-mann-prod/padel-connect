@@ -8,12 +8,16 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
+    "test-ci": "jest --ci",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prettier": "prettier --check \"./**/*.{ts,tsx,js,jsx,json,yaml,yml}\"",
     "type-check": "tsc  --noemit"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+    ]
   },
   "dependencies": {
     "@expo/html-elements": "^0.9.1",
@@ -72,8 +76,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@jest/globals": "^29.7.0",
     "@tanstack/eslint-plugin-query": "~5.20.1",
     "@tsconfig/react-native": "2.0.2",
+    "@types/jest": "^29.5.12",
     "@types/react": "~18.2.45",
     "@types/uuid": "~9.0.8",
     "eslint": "^8.57.0",

@@ -7,10 +7,6 @@ on:
 
   pull_request:
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   linters:
     name: Linters
@@ -18,11 +14,11 @@ jobs:
 
     steps:
       - name: 📦 Checkout project repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: "app"
 
@@ -40,4 +36,8 @@ jobs:
 
       - name: 🏃‍♂️ Run TypeCheck
         run: yarn run type-check
+        working-directory: app
+
+      - name: 🏃‍♂️ Run tests
+        run: yarn run test-ci
         working-directory: app
