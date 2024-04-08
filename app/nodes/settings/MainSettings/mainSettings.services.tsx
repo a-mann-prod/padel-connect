@@ -117,10 +117,7 @@ export const useSettingsItems = () => {
             title: t('logout'),
             icon: 'FAS-power-off',
             iconColor: 'red500',
-            onPress: () => {
-              signOut()
-              router.replace('/')
-            },
+            onPress: () => signOut(),
           },
         ],
       },

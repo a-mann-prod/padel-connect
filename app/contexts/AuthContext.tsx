@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from 'react'
 
 import { buildContext } from '@/services/buildContext'
 import { supabase } from '@/services/supabase'
+import { router } from 'expo-router'
 
 type AuthContextProps = {
   session: AuthSession | null
@@ -55,6 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error(error)
     }
     setIsLoadingSignOut(false)
+    router.replace('/')
   }
 
   const getSession = async () => {
