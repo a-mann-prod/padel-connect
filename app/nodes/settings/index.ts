@@ -1,6 +1,4 @@
 export * from './EmailChangeForm/EmailChangeForm'
 export * from './MainSettings/MainSettings'
 export * from './PasswordChangeForm/PasswordChangeForm'
-export * from './Section/Section'
-export * from './SectionRow/SectionRow'
 export * from './SettingsPersonalInfoForm/SettingsPersonalInfoForm'
