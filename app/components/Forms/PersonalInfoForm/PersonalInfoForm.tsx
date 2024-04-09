@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { router } from 'expo-router'
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -9,27 +9,42 @@ import {
 } from './PersonalInfoForm.services'
 
 import { FormInputControlled, FormProvider } from '@/components'
-import { useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { Nillable } from '@/types/nillable'
 
 const { getDefaultValues, schema } = personalInfoFormServices
 
-export const PersonalInfoForm = () => {
+export type PersonalInfoFormProps = {
+  onSubmit: (values: PersonalInfoFormValues) => void
+  defaultValues?: Nillable<PersonalInfoFormValues>
+  isLoading?: boolean
+  buttonTitle?: string
+}
+
+export const PersonalInfoForm = ({
+  onSubmit,
+  defaultValues,
+  isLoading,
+  buttonTitle,
+}: PersonalInfoFormProps) => {
   const tGlobal = useTranslate()
-  const { setPersonalInfo } = useOnboardingContext()
+
+  const defaultValuesMemo = useMemo(
+    () => getDefaultValues(defaultValues),
+    [defaultValues]
+  )
 
   const methods = useForm<PersonalInfoFormValues>({
-    defaultValues: getDefaultValues(),
+    defaultValues: defaultValuesMemo,
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit } = methods
+  const { handleSubmit, reset } = methods
 
-  const onSubmit = (d: PersonalInfoFormValues) => {
-    setPersonalInfo(d)
-    router.navigate('/(modals)/onboarding/avatar')
-  }
+  useEffect(() => {
+    reset(defaultValuesMemo)
+  }, [defaultValuesMemo, reset])
 
   return (
     <>
@@ -58,7 +73,11 @@ export const PersonalInfoForm = () => {
           />
         </FormProvider>
       </VStack>
-      <Button title={tGlobal('next')} onPress={handleSubmit(onSubmit)} />
+      <Button
+        title={buttonTitle || tGlobal('save')}
+        onPress={handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      />
     </>
   )
 }

@@ -8,7 +8,8 @@
     "emailChange": "Modifier mon email",
     "passwordChange": "Changer mon mot de passe",
     "title": "Général",
-    "updatePersonalInformation": "Modifier mes infos"
+    "updatePersonalInformation": "Modifier mes infos",
+    "updatePreferences": "Modifier mes préférences"
   },
   "legalInformation": {
     "privacyPolicy": "Politique de confidentialité",

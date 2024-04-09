@@ -52,7 +52,8 @@
     "register": "Inscription",
     "settings": "Réglages",
     "termsOfUse": "Conditions d'utilisation",
-    "updatePersonalInformation": "Informations personnelles"
+    "updatePersonalInformation": "Informations personnelles",
+    "updatePreferences": "Préférences"
   },
   "newEmail": "Nouvel email",
   "newPassword": "Nouveau mot de passe",

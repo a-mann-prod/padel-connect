@@ -45,6 +45,13 @@ export const useSettingsItems = () => {
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
+            title: t('general.updatePreferences'),
+            icon: 'FAR-lightbulb',
+            onPress: () =>
+              router.navigate(`${SETTINGS_RACINE}/update-preferences`),
+            rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
+          },
+          {
             title: t('general.biometricAuth'),
             icon: 'FAS-fingerprint',
             rightComponent: () => <Switch isDisabled />,

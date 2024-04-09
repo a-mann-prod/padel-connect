@@ -4,17 +4,18 @@ import { z } from 'zod'
 import { validators } from '@/services/formValidator'
 import { useTranslate } from '@/services/i18n'
 import { Database } from '@/services/supabase/database.types'
+import { Nillable } from '@/types'
 
 export type PreferencesFormValues = {
-  manual_preference: ManualPreference | null
-  side_preference: SidePreference | null
+  manual_preference: ManualPreference | null | undefined
+  side_preference: SidePreference | null | undefined
 }
 
 type ManualPreference = Database['public']['Enums']['manual_preference']
 type SidePreference = Database['public']['Enums']['side_preference']
 
 const getDefaultValues = (
-  props?: PreferencesFormValues
+  props?: Nillable<PreferencesFormValues>
 ): PreferencesFormValues => ({
   manual_preference: props?.manual_preference || null,
   side_preference: props?.side_preference || null,

@@ -2,8 +2,8 @@ import { ScrollView, VStack } from '@gluestack-ui/themed'
 
 import {
   KeyboardAvoidingView,
-  PersonalInfoForm,
-  PersonalInfoFormValues,
+  PreferencesForm,
+  PreferencesFormValues,
 } from '@/components'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
@@ -21,13 +21,13 @@ export default () => {
     onError,
   })
 
-  const handleOnSubmit = (values: PersonalInfoFormValues) => updateMe(values)
+  const handleOnSubmit = (values: PreferencesFormValues) => updateMe(values)
 
   return (
     <KeyboardAvoidingView>
       <ScrollView>
         <VStack gap="$5" m="$5">
-          <PersonalInfoForm
+          <PreferencesForm
             onSubmit={handleOnSubmit}
             isLoading={isPending}
             defaultValues={data}

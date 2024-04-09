@@ -3,7 +3,7 @@ import { HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed'
 import { useSettingsItems } from './mainSettings.services'
 
 import { Section, SectionRow } from '@/designSystem'
-import { FormAvatar, ImageAsset } from '@/designSystem/Form'
+import { FormAvatar, ImageAsset } from '@/designSystem/Forms'
 import { useMe } from '@/hooks/useMe'
 import { useUpdateAvatarMe } from '@/hooks/useUpdateAvatarMe'
 import { config } from '@/services/config'

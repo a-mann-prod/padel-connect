@@ -2,8 +2,8 @@ import { Text, VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { FormInputControlled } from '../../FormInputControlled/FormInputControlled'
 import { FormProvider } from '../../FormProvider/FormProvider'
+import { FormInputControlled } from '../../FormsControlled/FormInputControlled/FormInputControlled'
 import { OverlayWrapperChildrenProps } from '../../OverlayWrapper/OverlayWrapper'
 import {
   SelfDeleteFormValues,

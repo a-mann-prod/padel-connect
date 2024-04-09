@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { router } from 'expo-router'
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -11,27 +11,41 @@ import {
 } from './PreferencesForm.services'
 
 import { FormChoiceButtonControlled, FormProvider } from '@/components'
-import { useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { Nillable } from '@/types'
 
 const { getDefaultValues, schema } = preferencesFormServices
 
-export const PreferencesForm = () => {
+export type PreferencesFormProps = {
+  defaultValues?: Nillable<PreferencesFormValues>
+  onSubmit: (values: PreferencesFormValues) => void
+  isLoading?: boolean
+  buttonTitle?: string
+}
+
+export const PreferencesForm = ({
+  onSubmit,
+  defaultValues,
+  buttonTitle,
+}: PreferencesFormProps) => {
   const tGlobal = useTranslate()
-  const { preferences, setPreferences } = useOnboardingContext()
+
+  const defaultValuesMemo = useMemo(
+    () => getDefaultValues(defaultValues),
+    [defaultValues]
+  )
 
   const methods = useForm<PreferencesFormValues>({
-    defaultValues: getDefaultValues(preferences),
+    defaultValues: defaultValuesMemo,
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit } = methods
+  const { handleSubmit, reset } = methods
 
-  const onSubmit = (preferences: PreferencesFormValues) => {
-    setPreferences(preferences)
-    router.navigate('/(modals)/onboarding/get-started')
-  }
+  useEffect(() => {
+    reset(defaultValuesMemo)
+  }, [defaultValuesMemo, reset])
 
   return (
     <>
@@ -52,7 +66,11 @@ export const PreferencesForm = () => {
           />
         </VStack>
       </FormProvider>
-      <Button title={tGlobal('next')} onPress={handleSubmit(onSubmit)} />
+      <Button
+        title={buttonTitle || tGlobal('save')}
+        onPress={handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      />
     </>
   )
 }

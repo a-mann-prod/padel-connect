@@ -1,6 +1,6 @@
 import { useController } from 'react-hook-form'
 
-import { FormChoiceButton, FormChoiceButtonProps } from '@/designSystem/Form'
+import { FormChoiceButton, FormChoiceButtonProps } from '@/designSystem/Forms'
 
 export type FormChoiceButtonControlledProps<TSingle extends boolean> = {
   name: string

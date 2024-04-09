@@ -1,25 +1,25 @@
 import { useController } from 'react-hook-form'
 
-import { FormInput, FormInputProps } from '@/designSystem/Form'
+import { FormAvatar, FormAvatarProps } from '@/designSystem/Forms'
 
-export type FormInputControlledProps = {
+export type FormAvatarControlledProps = {
   name: string
-} & Omit<FormInputProps, 'value' | 'onChangeText'>
+} & Omit<FormAvatarProps, 'value' | 'onChange'>
 
-export const FormInputControlled = ({
+export const FormAvatarControlled = ({
   name,
   formControlProps,
   ...props
-}: FormInputControlledProps) => {
+}: FormAvatarControlledProps) => {
   const {
     field: { onChange, value },
     fieldState: { error },
   } = useController({ name })
 
   return (
-    <FormInput
+    <FormAvatar
       formControlProps={{ ...formControlProps, error }}
-      onChangeText={onChange}
+      onChange={onChange}
       value={value}
       {...props}
     />
