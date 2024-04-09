@@ -26,7 +26,7 @@ export const AvatarForm = () => {
 
   const onSubmit = (avatar: AvatarFormValues) => {
     setAvatar(avatar)
-    router.navigate('/(modals)/onboarding/get-started')
+    router.navigate('/(modals)/onboarding/preferences')
   }
 
   return (

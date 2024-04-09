@@ -1,9 +1,8 @@
 import { HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed'
 
-import { SettingsRow } from '../SettingsRow/SettingsRow'
-import { SettingsSection } from '../SettingsSection/SettingsSection'
 import { useSettingsItems } from './mainSettings.services'
 
+import { Section, SectionRow } from '@/designSystem'
 import { FormAvatar, ImageAsset } from '@/designSystem/Form'
 import { useMe } from '@/hooks/useMe'
 import { useUpdateAvatarMe } from '@/hooks/useUpdateAvatarMe'
@@ -43,11 +42,11 @@ export const MainSettings = () => {
           isLoading={isPendingUpdateAvatarMe}
         />
         {settings.map(({ rows, ...sectionProps }, index) => (
-          <SettingsSection key={index} {...sectionProps}>
+          <Section key={index} {...sectionProps}>
             {rows.map((rowProps, index) => (
-              <SettingsRow key={index} {...rowProps} />
+              <SectionRow key={index} {...rowProps} />
             ))}
-          </SettingsSection>
+          </Section>
         ))}
         <HStack mb="$3" justifyContent="center">
           <Text>{t('version', { version: config.version })}</Text>

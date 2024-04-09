@@ -3,18 +3,15 @@ import { router } from 'expo-router'
 import { useMemo } from 'react'
 import { Platform } from 'react-native'
 
-import { SettingsRowProps } from '../SettingsRow/SettingsRow'
-import { SettingsSectionProps } from '../SettingsSection/SettingsSection'
-
 import { useAuthContext } from '@/contexts'
-import { Icon } from '@/designSystem'
+import { Icon, SectionProps, SectionRowProps } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { openUrl } from '@/utils/url'
 
 export const SETTINGS_RACINE = '/(modals)/settings'
 
-type SettingsSection = SettingsSectionProps & {
-  rows: SettingsRowProps[]
+type SettingsSection = SectionProps & {
+  rows: SectionRowProps[]
 }
 
 export const useSettingsItems = () => {

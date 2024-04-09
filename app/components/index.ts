@@ -1,4 +1,5 @@
 export * from './Alerts'
+export * from './FormChoiceButtonControlled/FormChoiceButtonControlled'
 export * from './FormInputControlled/FormInputControlled'
 export * from './FormProvider/FormProvider'
 export * from './KeyboardAvoidingView/KeyboardAvoidingView'

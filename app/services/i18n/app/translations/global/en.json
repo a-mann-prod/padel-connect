@@ -20,7 +20,6 @@
     }
   },
   "cancel": "Cancel",
-
   "confirmNewPassword": "Confirm new password",
   "confirmPassword": "Confirm password",
   "continue": "Continue",
@@ -31,6 +30,12 @@
   "lastname": "Lastname",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
   "letsGo": "Let's go! 🚀",
+  "manualPreference": {
+    "ambidextrous": "Ambidextrous",
+    "left_handed": "Left handed",
+    "right_handed": "Right handed",
+    "title": "Manual preference"
+  },
   "navigation": {
     "avatar": "Avatar",
     "dangerZone": "Danger zone",
@@ -41,6 +46,7 @@
     "passwordChange": "Change password",
     "passwordReset": "New password",
     "personalInformation": "Personal information",
+    "preferences": "Preferences",
     "privacyPolicy": "Privacy policy",
     "profile": "Profile",
     "register": "Register",
@@ -53,6 +59,12 @@
   "next": "Next",
   "or": "or",
   "password": "Password",
+  "preferredSide": {
+    "both": "Both",
+    "left": "Left",
+    "right": "Right",
+    "title": "Preferred side"
+  },
   "resend": "Resend",
   "save": "Save",
   "send": "Send",

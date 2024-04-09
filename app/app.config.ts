@@ -2,12 +2,12 @@ import { ConfigContext } from 'expo/config'
 
 export default ({ config }: ConfigContext) => ({
   ...config,
-  name: 'Expo supabase boilerplate',
-  slug: 'expo-supabase-boilerplate',
+  name: 'Padel Connect',
+  slug: 'padel-connect',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
-  scheme: 'com.padel-family',
+  scheme: 'com.padel-connect.app',
   userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/images/splash.png',

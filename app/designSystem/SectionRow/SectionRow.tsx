@@ -2,18 +2,14 @@ import { Box, HStack, Text } from '@gluestack-ui/themed'
 import { ReactNode, useState } from 'react'
 import { GestureResponderEvent } from 'react-native'
 
-import {
-  Actionsheet,
-  ActionsheetProps,
-  Icon,
-  IconProps,
-  Pressable,
-  PressableProps,
-} from '@/designSystem'
+import { Actionsheet, ActionsheetProps } from '../Actionsheet/Actionsheet'
+import { Icon, IconProps } from '../Icon/Icon'
+import { Pressable, PressableProps } from '../Pressable/Pressable'
+
 import { Config } from '@/services/theme/gluestack-ui/gluestack-ui.config'
 import { when } from '@/utils/when'
 
-export type SettingsRowProps = {
+export type SectionRowProps = {
   title: string
   icon: IconProps['name']
   iconColor?: keyof Config['tokens']['colors']
@@ -26,7 +22,7 @@ export type SettingsRowProps = {
   items?: ActionsheetProps['items']
 }
 
-export const SettingsRow = ({
+export const SectionRow = ({
   title,
   icon,
   iconColor,
@@ -37,7 +33,7 @@ export const SettingsRow = ({
 
   onChange,
   items,
-}: SettingsRowProps) => {
+}: SectionRowProps) => {
   const [showActionsheet, setShowActionsheet] = useState(false)
 
   const handleOnPress = (event: GestureResponderEvent) =>

@@ -34,6 +34,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      favorite_users: {
+        Row: {
+          created_at: string
+          favorite_user_id: string | null
+          id: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          favorite_user_id?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          favorite_user_id?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_favorite_users_favorite_user_id_fkey"
+            columns: ["favorite_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_favorite_users_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -41,6 +77,10 @@ export type Database = {
           id: string
           is_onboarding_completed: boolean
           last_name: string | null
+          manual_preference:
+            | Database["public"]["Enums"]["manual_preference"]
+            | null
+          side_preference: Database["public"]["Enums"]["side_preference"] | null
           updated_at: string | null
         }
         Insert: {
@@ -49,6 +89,12 @@ export type Database = {
           id: string
           is_onboarding_completed?: boolean
           last_name?: string | null
+          manual_preference?:
+            | Database["public"]["Enums"]["manual_preference"]
+            | null
+          side_preference?:
+            | Database["public"]["Enums"]["side_preference"]
+            | null
           updated_at?: string | null
         }
         Update: {
@@ -57,6 +103,12 @@ export type Database = {
           id?: string
           is_onboarding_completed?: boolean
           last_name?: string | null
+          manual_preference?:
+            | Database["public"]["Enums"]["manual_preference"]
+            | null
+          side_preference?:
+            | Database["public"]["Enums"]["side_preference"]
+            | null
           updated_at?: string | null
         }
         Relationships: [
@@ -74,10 +126,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      verify_user_password: {
+        Args: {
+          password: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      manual_preference: "LEFT_HANDED" | "RIGHT_HANDED" | "AMBIDEXTROUS"
+      side_preference: "LEFT" | "RIGHT" | "BOTH"
     }
     CompositeTypes: {
       [_ in never]: never

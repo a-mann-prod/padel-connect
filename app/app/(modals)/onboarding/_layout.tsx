@@ -26,6 +26,12 @@ export default () => {
             title: t('getStarted'),
           }}
         />
+        <Stack.Screen
+          name="preferences"
+          options={{
+            title: t('preferences'),
+          }}
+        />
       </Stack>
     </OnboardingProvider>
   )

@@ -12,7 +12,7 @@ export default () => {
   const t = useTranslate('onboarding', { keyPrefix: 'getStarted' })
   const tGlobal = useTranslate()
 
-  const { personalInfo, avatar } = useOnboardingContext()
+  const { personalInfo, avatar, preferences } = useOnboardingContext()
 
   const { mutate: updateAvatarMe, isPending: isPendingUpdateAvatarMe } =
     useUpdateAvatarMe()
@@ -27,7 +27,7 @@ export default () => {
   })
 
   const onSubmit = async () =>
-    updateMe({ ...personalInfo, is_onboarding_completed: true })
+    updateMe({ ...personalInfo, ...preferences, is_onboarding_completed: true })
 
   return (
     <VStack gap="$2" m="$5">

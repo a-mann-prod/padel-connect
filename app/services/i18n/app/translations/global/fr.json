@@ -30,6 +30,12 @@
   "lastname": "Nom",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée.",
   "letsGo": "C'est parti ! 🚀",
+  "manualPreference": {
+    "ambidextrous": "Ambidextre",
+    "left_handed": "Gaucher",
+    "right_handed": "Droitier",
+    "title": "Préférence manuelle"
+  },
   "navigation": {
     "avatar": "Avatar",
     "dangerZone": "Zone à risques",
@@ -40,6 +46,7 @@
     "passwordChange": "Changement mot de passe",
     "passwordReset": "Nouveau mot de passe",
     "personalInformation": "Informations personnelles",
+    "preferences": "Préférences",
     "privacyPolicy": "Politique de confidentialité",
     "profile": "Profile",
     "register": "Inscription",
@@ -52,6 +59,12 @@
   "next": "Suivant",
   "or": "ou",
   "password": "Mot de passe",
+  "preferredSide": {
+    "both": "Les deux",
+    "left": "Gauche",
+    "right": "Droit",
+    "title": "Côté favoris"
+  },
   "resend": "Renvoyer",
   "save": "Enregistrer",
   "send": "Envoyer",
