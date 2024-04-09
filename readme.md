@@ -23,7 +23,17 @@
   - **supabase**: Contains configurations and scripts related to Supabase.
   - **app**: Contains the application code.
 
-## build app
+## Get started
+
+Update Application name and slug in `app.config.ts`
+
+Update env token in `eas.json`
+
+Create a `.env` in app racine from `.env.dist` (in general : supabase, contact email, privacy policy & terms of use)
+
+Update `project_id` in `supabase:config.toml`
+
+## Build app
 
 `eas login`
 `eas build:configure`
