@@ -27,6 +27,7 @@ export type PreferencesFormProps = {
 export const PreferencesForm = ({
   onSubmit,
   defaultValues,
+  isLoading,
   buttonTitle,
 }: PreferencesFormProps) => {
   const tGlobal = useTranslate()
