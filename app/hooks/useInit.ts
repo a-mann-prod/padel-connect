@@ -44,7 +44,7 @@ export const useInit = () => {
 
   useEffect(() => {
     if (langLoaded) {
-      date.setLocale(i18n.language)
+      date.setLocale(i18n().language)
     }
   }, [langLoaded])
 
