@@ -40,9 +40,9 @@ export default () => {
   return (
     <Tabs screenOptions={{ tabBarShowLabel: false }}>
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
-          title: t('home'),
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Icon name="FAS-house" size="md" color={color} />
           ),

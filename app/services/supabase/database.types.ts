@@ -73,6 +73,7 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          created_at: string
           first_name: string | null
           id: string
           is_onboarding_completed: boolean
@@ -85,6 +86,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          created_at?: string
           first_name?: string | null
           id: string
           is_onboarding_completed?: boolean
@@ -99,6 +101,7 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          created_at?: string
           first_name?: string | null
           id?: string
           is_onboarding_completed?: boolean

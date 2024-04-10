@@ -1,26 +1,25 @@
 import { ScrollView, Text, VStack } from '@gluestack-ui/themed'
 
-import { WithAuth } from '@/components'
 import { Avatar, Section, SectionRow } from '@/designSystem'
-import { useMe } from '@/hooks/useMe'
+import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 
-export default WithAuth(() => {
+export type ProfileProps = {
+  user: ProfileWithAvatar
+}
+
+export const Profile = ({ user }: ProfileProps) => {
   const t = useTranslate('profile')
   const tGlobal = useTranslate()
-
-  const { data: me } = useMe()
-
-  if (!me) return
 
   return (
     <ScrollView>
       <VStack p="$3" gap="$3">
         <Avatar
-          firstname={me.first_name}
-          lastname={me.last_name}
-          imageUrl={me.avatar}
+          firstname={user.first_name}
+          lastname={user.last_name}
+          imageUrl={user.avatar}
         />
         <Section>
           <SectionRow
@@ -29,7 +28,7 @@ export default WithAuth(() => {
             rightComponent={() => (
               <Text>
                 {tGlobal(
-                  `manualPreference.${me.manual_preference?.toLowerCase()}`
+                  `manualPreference.${user.manual_preference?.toLowerCase()}`
                 )}
               </Text>
             )}
@@ -39,7 +38,9 @@ export default WithAuth(() => {
             icon="FAS-arrows-left-right"
             rightComponent={() => (
               <Text>
-                {tGlobal(`preferredSide.${me.side_preference?.toLowerCase()}`)}
+                {tGlobal(
+                  `preferredSide.${user.side_preference?.toLowerCase()}`
+                )}
               </Text>
             )}
           />
@@ -47,11 +48,11 @@ export default WithAuth(() => {
             title={t('joined')}
             icon="FAS-signature"
             rightComponent={() =>
-              me.created_at && <Text>{date.fromNow(me.created_at)}</Text>
+              user.created_at && <Text>{date.fromNow(user.created_at)}</Text>
             }
           />
         </Section>
       </VStack>
     </ScrollView>
   )
-})
+}
