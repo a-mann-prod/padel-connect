@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "avatar_url" "text",
     "last_name" "text",
     "is_onboarding_completed" boolean DEFAULT false NOT NULL
+    "created_at" timestamp with time zone default now()
 );
 
 ALTER TABLE "public"."profiles" OWNER TO "postgres";

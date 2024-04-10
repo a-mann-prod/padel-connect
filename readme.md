@@ -1,4 +1,4 @@
-# Expo-Supabase boilerplate
+# Padel-connect boilerplate
 
 ## Included Libraries
 
