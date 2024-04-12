@@ -45,7 +45,7 @@ export const useManualPreferenceOptions = () => {
 }
 
 export const useSidePreferenceOptions = () => {
-  const tGlobal = useTranslate(undefined, { keyPrefix: 'preferredSide' })
+  const tGlobal = useTranslate(undefined, { keyPrefix: 'sidePreference' })
 
   return useMemo<
     {

@@ -106,6 +106,17 @@ export const Text = createStyle({
         lineHeight: '$7xl',
       },
     },
+
+    variant: {
+      subtitle: {
+        fontSize: '$sm',
+        lineHeight: '$sm',
+        color: '$textLight600',
+        _dark: {
+          color: '$textDark300',
+        },
+      },
+    },
   },
 
   defaultProps: {

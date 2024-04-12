@@ -62,7 +62,7 @@ export const PreferencesForm = ({
           <FormChoiceButtonControlled
             name="side_preference"
             single
-            formControlProps={{ title: tGlobal('preferredSide.title') }}
+            formControlProps={{ title: tGlobal('sidePreference.title') }}
             options={useSidePreferenceOptions()}
           />
         </VStack>

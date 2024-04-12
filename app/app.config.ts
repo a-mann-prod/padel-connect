@@ -58,7 +58,7 @@ export default ({ config }: ConfigContext) => ({
       origin: false,
     },
     eas: {
-      projectId: '6dcc7c36-e7ac-4604-94c1-2771dfe0b7db',
+      projectId: 'e57567a8-f956-4548-aefe-67c0990d02ea',
     },
   },
 })

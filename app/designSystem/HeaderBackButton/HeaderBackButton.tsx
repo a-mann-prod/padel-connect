@@ -9,6 +9,8 @@ import {
   HeaderButtonContainerProps,
 } from '../HeaderButtonContainer/HeaderButtonContainer'
 
+import { useTranslate } from '@/services/i18n'
+
 export type HeaderBackButtonProps = RNHeaderBackButtonProps &
   HeaderButtonContainerProps
 
@@ -16,11 +18,12 @@ export const HeaderBackButton = ({
   canGoBack,
   isInModal,
 }: HeaderBackButtonProps) => {
+  const t = useTranslate()
   if (!canGoBack) return undefined
 
   return (
     <HeaderButtonContainer isInModal={isInModal}>
-      <RNHeaderBackButton onPress={router.back} />
+      <RNHeaderBackButton onPress={router.back} label={t('back')} />
     </HeaderButtonContainer>
   )
 }

@@ -1,17 +1,30 @@
-import { ScrollView, Text, VStack } from '@gluestack-ui/themed'
+import { HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed'
 
-import { Avatar, Section, SectionRow } from '@/designSystem'
+import { Avatar, IconButton, Loader, Section, SectionRow } from '@/designSystem'
+import { useManageFavoriteUser } from '@/hooks/useManageFavoriteUser'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 
 export type ProfileProps = {
-  user: ProfileWithAvatar
+  user?: ProfileWithAvatar
+  isLoading?: boolean
+  external?: boolean
 }
 
-export const Profile = ({ user }: ProfileProps) => {
+export const Profile = ({ user, isLoading, external }: ProfileProps) => {
   const t = useTranslate('profile')
   const tGlobal = useTranslate()
+
+  const {
+    isFavorite,
+    toggleFavorite,
+    isLoading: isLoadingFavorite,
+  } = useManageFavoriteUser(user?.id)
+
+  if (isLoading) return <Loader />
+
+  if (!user) return
 
   return (
     <ScrollView>
@@ -21,6 +34,16 @@ export const Profile = ({ user }: ProfileProps) => {
           lastname={user.last_name}
           imageUrl={user.avatar}
         />
+        {external && (
+          <HStack gap="$3" justifyContent="center">
+            <IconButton
+              icon={isFavorite ? 'FAS-star' : 'FAR-star'}
+              iconProps={{}}
+              onPress={() => toggleFavorite()}
+              isLoading={isLoadingFavorite}
+            />
+          </HStack>
+        )}
         <Section>
           <SectionRow
             title={tGlobal('manualPreference.title')}
@@ -34,12 +57,12 @@ export const Profile = ({ user }: ProfileProps) => {
             )}
           />
           <SectionRow
-            title={tGlobal('preferredSide.title')}
+            title={tGlobal('sidePreference.title')}
             icon="FAS-arrows-left-right"
             rightComponent={() => (
               <Text>
                 {tGlobal(
-                  `preferredSide.${user.side_preference?.toLowerCase()}`
+                  `sidePreference.${user.side_preference?.toLowerCase()}`
                 )}
               </Text>
             )}

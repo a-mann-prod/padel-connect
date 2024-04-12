@@ -9,7 +9,7 @@ export const getFavoriteUserFn = (params: GetFavoriteUserParams) =>
     .select(favoriteUsersqueryCols)
     .eq('user_id', params.user_id)
     .eq('favorite_user_id', params.favorite_user_id)
-    .single()
+    .limit(1)
 
 export const getFavoriteUsersFn = (params: GetFavoriteUsersParams) =>
   supabase

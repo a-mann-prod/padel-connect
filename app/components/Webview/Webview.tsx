@@ -1,4 +1,4 @@
-import { Spinner, View } from '@gluestack-ui/themed'
+import { Loader } from '@/designSystem'
 import { useState } from 'react'
 import { Platform } from 'react-native'
 import { WebView as EWebView } from 'react-native-webview'
@@ -23,11 +23,7 @@ export const Webview = ({ url }: WebviewProps) => {
       ) : (
         <EWebView source={{ uri: url }} onLoad={() => setIsLoading(false)} />
       )}
-      {isLoading && (
-        <View position="absolute" justifyContent="center" h="$full" w="$full">
-          <Spinner />
-        </View>
-      )}
+      {isLoading && <Loader />}
     </>
   )
 }

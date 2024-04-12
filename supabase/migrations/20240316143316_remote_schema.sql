@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "first_name" "text",
     "avatar_url" "text",
     "last_name" "text",
-    "is_onboarding_completed" boolean DEFAULT false NOT NULL
+    "is_onboarding_completed" boolean DEFAULT false NOT NULL,
     "created_at" timestamp with time zone default now()
 );
 

@@ -19,6 +19,8 @@
       "default": "Recording completed"
     }
   },
+  "back": "Retour",
+
   "cancel": "Cancel",
   "confirmNewPassword": "Confirm new password",
   "confirmPassword": "Confirm password",
@@ -40,6 +42,7 @@
     "avatar": "Avatar",
     "dangerZone": "Danger zone",
     "emailChange": "Change email",
+    "findPlayer": "Find a player",
     "getStarted": "Ready to start?",
     "home": "Home",
     "login": "Login",
@@ -60,14 +63,15 @@
   "next": "Next",
   "or": "or",
   "password": "Password",
-  "preferredSide": {
+  "resend": "Resend",
+  "save": "Save",
+  "search": "Search",
+  "send": "Send",
+  "sidePreference": {
     "both": "Both",
     "left": "Left",
     "right": "Right",
     "title": "Preferred side"
   },
-  "resend": "Resend",
-  "save": "Save",
-  "send": "Send",
   "warning": "Warning"
 }

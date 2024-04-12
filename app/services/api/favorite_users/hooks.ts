@@ -5,11 +5,7 @@ import {
 } from '@supabase-cache-helpers/postgrest-react-query'
 
 import { UseMutationProps, UseQueryProps } from '../types'
-import {
-  FavoriteUserResponse,
-  FavoriteUsersResponse,
-  favoriteUsersqueryCols,
-} from './entities'
+import { FavoriteUsersResponse, favoriteUsersqueryCols } from './entities'
 import {
   getFavoriteUserFn,
   getFavoriteUsersFn,
@@ -24,8 +20,17 @@ import {
 export const useFavoriteUser = ({
   params,
   options,
-}: UseQueryProps<FavoriteUserResponse, GetFavoriteUserParams>) =>
-  useQuery<FavoriteUserResponse>(getFavoriteUserFn(params), options)
+}: UseQueryProps<FavoriteUsersResponse, GetFavoriteUserParams>) => {
+  const { data, ...rest } = useQuery<FavoriteUsersResponse>(
+    getFavoriteUserFn(params),
+    options
+  )
+
+  return {
+    data: data?.[0],
+    ...rest,
+  }
+}
 
 export const useFavoriteUsers = ({
   params,
@@ -38,7 +43,7 @@ export const useInsertFavoriteUser = (
 ) =>
   useInsertMutation(
     setFavoriteUserFn(),
-    ['id'],
+    ['user_id', 'favorite_user_id'],
     favoriteUsersqueryCols,
     options
   )
@@ -48,7 +53,7 @@ export const useDeleteFavoriteUser = (
 ) =>
   useDeleteMutation(
     setFavoriteUserFn(),
-    ['id'],
+    ['user_id', 'favorite_user_id'],
     favoriteUsersqueryCols,
     options
   )

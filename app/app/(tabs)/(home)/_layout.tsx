@@ -9,6 +9,7 @@ export default () => {
     <Stack>
       <Stack.Screen name="index" options={{ title: t('home') }} />
       <Stack.Screen name="[user]" options={{ title: '' }} />
+      <Stack.Screen name="find-player" options={{ title: t('findPlayer') }} />
     </Stack>
   )
 }

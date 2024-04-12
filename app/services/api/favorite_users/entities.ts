@@ -4,5 +4,4 @@ export type FavoriteUserResponse = Tables<'favorite_users'>
 
 export type FavoriteUsersResponse = Tables<'favorite_users'>[]
 
-export const favoriteUsersqueryCols =
-  'id, user_id, favorite_user_id, created_at'
+export const favoriteUsersqueryCols = 'user_id, favorite_user_id, created_at'

@@ -14,6 +14,7 @@ import { isEmpty } from 'remeda'
 import { Icon } from '../Icon/Icon'
 import { Skeleton } from '../Skeleton/Skeleton'
 
+import { isNilOrEmpty } from '@/utils/global'
 import { getInitials, getUserName } from '@/utils/user'
 
 export type AvatarProps = {
@@ -73,7 +74,9 @@ export const Avatar = ({
         </Skeleton>
       </TouchableOpacity>
 
-      <Heading size="lg">{completeName}</Heading>
+      {!isNilOrEmpty(completeName) && (
+        <Heading size="lg">{completeName}</Heading>
+      )}
     </VStack>
   )
 }

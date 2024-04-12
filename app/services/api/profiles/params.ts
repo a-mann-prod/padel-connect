@@ -5,7 +5,8 @@ export type GetProfileParams = {
 }
 
 export type GetProfilesParams = {
-  current_user_id: string
+  current_user_id?: string
+  search?: string
 }
 
 export type UpdateProfileParams =

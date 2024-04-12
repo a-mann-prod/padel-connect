@@ -6,12 +6,10 @@ import { useProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 export default () => {
   const local = useLocalSearchParams()
 
-  const { data: user } = useProfileWithAvatar({
+  const { data: user, isLoading } = useProfileWithAvatar({
     params: { id: local?.user as string },
     options: { enabled: !!local?.user },
   })
 
-  if (!user) return
-
-  return <Profile user={user} />
+  return <Profile user={user} isLoading={isLoading} external />
 }

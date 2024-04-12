@@ -2,9 +2,7 @@ import { Profile } from '@/components'
 import { useMe } from '@/hooks/useMe'
 
 export default () => {
-  const { data: me } = useMe()
+  const { data: me, isLoading } = useMe()
 
-  if (!me) return
-
-  return <Profile user={me} />
+  return <Profile user={me} isLoading={isLoading} />
 }

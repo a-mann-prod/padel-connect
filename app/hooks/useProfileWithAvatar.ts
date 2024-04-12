@@ -2,9 +2,11 @@ import { GetProfileParams, ProfileResponse, useProfile } from '@/services/api'
 import { useImage } from '@/services/api/image'
 import { UseQueryProps } from '@/services/api/types'
 
-export type ProfileWithAvatar = Partial<ProfileResponse> & {
-  avatar?: string
-}
+export type ProfileWithAvatar = Partial<
+  ProfileResponse & {
+    avatar: string
+  }
+>
 
 export type UseProfileWithAvatar = {
   data?: ProfileWithAvatar

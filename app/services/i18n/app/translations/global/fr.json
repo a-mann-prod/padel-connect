@@ -19,6 +19,7 @@
       "default": "Enregistrement réussi"
     }
   },
+  "back": "Retour",
   "cancel": "Annuler",
   "confirmNewPassword": "Confirmation nouveau mot de passe",
   "confirmPassword": "Confirmer le mot de passe",
@@ -33,13 +34,14 @@
   "manualPreference": {
     "ambidextrous": "Ambidextre",
     "left_handed": "Gaucher",
-    "right_handed": "Droitier",
+    "right_handed": "Droitier(e)",
     "title": "Préférence manuelle"
   },
   "navigation": {
     "avatar": "Avatar",
     "dangerZone": "Zone à risques",
     "emailChange": "Changement email",
+    "findPlayer": "Rechercher un joueur",
     "getStarted": "Prêt à démarrer ?",
     "home": "Accueil",
     "login": "Connexion",
@@ -60,14 +62,15 @@
   "next": "Suivant",
   "or": "ou",
   "password": "Mot de passe",
-  "preferredSide": {
+  "resend": "Renvoyer",
+  "save": "Enregistrer",
+  "search": "Rechercher",
+  "send": "Envoyer",
+  "sidePreference": {
     "both": "Les deux",
     "left": "Gauche",
     "right": "Droit",
     "title": "Côté favoris"
   },
-  "resend": "Renvoyer",
-  "save": "Enregistrer",
-  "send": "Envoyer",
   "warning": "Attention"
 }
