@@ -7,7 +7,7 @@ export default ({ config }: ConfigContext) => ({
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
-  scheme: 'com.padel-connect.app',
+  scheme: 'amannprodpadelconnect',
   userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/images/splash.png',
@@ -20,14 +20,14 @@ export default ({ config }: ConfigContext) => ({
     infoPlist: {
       CFBundleAllowMixedLocalizations: true,
     },
-    bundleIdentifier: 'com.anonymous.boilerplate',
+    bundleIdentifier: 'com.a-mann-prod.padel-connect',
   },
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
-    package: 'com.anonymous.boilerplate',
+    package: 'com.a-mann-prod.padel-connect',
   },
   web: {
     bundler: 'metro',
@@ -61,4 +61,5 @@ export default ({ config }: ConfigContext) => ({
       projectId: 'e57567a8-f956-4548-aefe-67c0990d02ea',
     },
   },
+  owner: 'a-mann-prod',
 })

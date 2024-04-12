@@ -15,7 +15,7 @@
       }
     },
     "preview": {
-      "developmentClient": true,
+      "developmentClient": false,
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_ENV": "development",

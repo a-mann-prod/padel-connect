@@ -1,8 +1,8 @@
 import * as AuthSession from 'expo-auth-session'
 
+import { handleSupabaseAuthError } from '../shared'
 import { RegisterResponse } from './entities'
 import { RegisterParams } from './params'
-import { handleSupabaseAuthError } from '../shared'
 
 import { supabase } from '@/services/supabase'
 
