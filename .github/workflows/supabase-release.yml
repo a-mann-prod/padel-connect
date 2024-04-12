@@ -1,0 +1,33 @@
+name: Supabase Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Supabase Release
+    runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+
+    steps:
+      - name: 📦 Checkout project repo
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup SUPABASE-CLI
+        uses: supabase/setup-cli@v1
+
+      - name: 📢 Link project
+        run: supabase link --project-ref $PROJECT_ID
+        working-directory: supabase
+
+      - name: 📢 Update database
+        run: supabase db push
+        working-directory: supabase
+
+      - name: 📢 Deploy edge functions
+        run: supabase functions deploy
+        working-directory: supabase
