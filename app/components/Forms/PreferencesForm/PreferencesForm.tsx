@@ -10,7 +10,8 @@ import {
   useSidePreferenceOptions,
 } from './PreferencesForm.services'
 
-import { FormChoiceButtonControlled, FormProvider } from '@/components'
+import { FormProvider } from '@/components/FormProvider/FormProvider'
+import { FormChoiceButtonControlled } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'

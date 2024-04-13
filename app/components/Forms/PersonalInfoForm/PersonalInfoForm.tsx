@@ -8,7 +8,8 @@ import {
   personalInfoFormServices,
 } from './PersonalInfoForm.services'
 
-import { FormInputControlled, FormProvider } from '@/components'
+import { FormProvider } from '@/components/FormProvider/FormProvider'
+import { FormInputControlled } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types/nillable'
