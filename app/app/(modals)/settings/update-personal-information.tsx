@@ -1,10 +1,11 @@
-import { ScrollView, VStack } from '@gluestack-ui/themed'
+import { VStack } from '@gluestack-ui/themed'
 
 import {
   KeyboardAvoidingView,
   PersonalInfoForm,
   PersonalInfoFormValues,
 } from '@/components'
+import { ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useMe } from '@/hooks/useMe'

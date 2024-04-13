@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "build-ios": "export $(cat .env) && eas build --local -e preview -p ios --non-interactive --no-wait",
+    "build-android": "export $(cat .env) && eas build --local -e preview -platform android --non-interactive --no-waiteas",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",

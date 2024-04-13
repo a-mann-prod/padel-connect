@@ -1,4 +1,4 @@
-import { ScrollView, VStack } from '@gluestack-ui/themed'
+import { VStack } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 
 import {
@@ -7,6 +7,7 @@ import {
   PreferencesFormValues,
 } from '@/components'
 import { useOnboardingContext } from '@/contexts'
+import { ScrollView } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 
 export default () => {

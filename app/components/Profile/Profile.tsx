@@ -1,6 +1,13 @@
-import { HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed'
+import { HStack, Text, VStack } from '@gluestack-ui/themed'
 
-import { Avatar, IconButton, Loader, Section, SectionRow } from '@/designSystem'
+import {
+  Avatar,
+  IconButton,
+  Loader,
+  ScrollView,
+  Section,
+  SectionRow,
+} from '@/designSystem'
 import { useManageFavoriteUser } from '@/hooks/useManageFavoriteUser'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { date } from '@/services/date'

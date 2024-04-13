@@ -18,7 +18,7 @@ const HeaderEditButton = ({ tintColor }: HeaderBackButtonProps) => {
       <IconButton
         variant="headerIcon"
         icon="FAS-gear"
-        iconProps={{ color: tintColor, size: 16 }}
+        iconProps={{ size: 16 }}
         onPress={() => router.navigate('/(modals)/settings')}
       />
     </HeaderButtonContainer>
