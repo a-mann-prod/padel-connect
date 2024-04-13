@@ -1,8 +1,13 @@
 import { ConfigContext } from 'expo/config'
 
+const name =
+  process.env.EXPO_PUBLIC_ENV === 'production'
+    ? 'Padel Connect'
+    : `Padel Connect (${process.env.EXPO_PUBLIC_ENV})`
+
 export default ({ config }: ConfigContext) => ({
   ...config,
-  name: 'Padel Connect',
+  name,
   slug: 'padel-connect',
   version: '1.0.0',
   orientation: 'portrait',

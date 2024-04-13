@@ -18,7 +18,7 @@
       "developmentClient": false,
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_ENV": "development",
+        "EXPO_PUBLIC_ENV": "preview",
         "EXPO_PUBLIC_KOFI_URL": "https://ko-fi.com/gregamann",
         "EXPO_PUBLIC_CONTACT_EMAIL_URL": "mailto:gregoire.amann@gmail.com",
         "EXPO_PUBLIC_PRIVACY_POLICY_URL": "https://expo.dev",
