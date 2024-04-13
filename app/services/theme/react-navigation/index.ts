@@ -10,12 +10,12 @@ export const useNavigationTheme = (colorScheme: ColorScheme) => {
   const lightTheme: Theme = {
     dark: false,
     colors: {
-      background: useToken('colors', 'white'),
+      background: useToken('colors', 'backgroundLight50'),
       border: useToken('colors', 'backgroundLight100'),
-      card: useToken('colors', 'backgroundLight50'),
+      card: useToken('colors', 'white'),
       notification,
       primary,
-      text: useToken('colors', 'textLight600'),
+      text: useToken('colors', 'textLight700'),
     },
   }
 
@@ -27,7 +27,7 @@ export const useNavigationTheme = (colorScheme: ColorScheme) => {
       card: useToken('colors', 'backgroundDark950'),
       notification,
       primary,
-      text: useToken('colors', 'textDark300'),
+      text: useToken('colors', 'textDark200'),
     },
   }
 

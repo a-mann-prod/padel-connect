@@ -36,7 +36,7 @@ export const HStack = createStyle({
     },
     variant: {
       colored: {
-        backgroundColor: '$backgroundLight50',
+        backgroundColor: '$white',
         _dark: {
           backgroundColor: '$backgroundDark950',
         },

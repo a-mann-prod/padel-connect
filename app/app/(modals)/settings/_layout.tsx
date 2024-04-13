@@ -19,6 +19,10 @@ export default WithAuth(() => {
         name="update-personal-information"
         options={{ title: t('updatePersonalInformation') }}
       />
+      <Stack.Screen
+        name="update-preferences"
+        options={{ title: t('updatePreferences') }}
+      />
       <Stack.Screen name="email-change" options={{ title: t('emailChange') }} />
       <Stack.Screen
         name="password-change"
