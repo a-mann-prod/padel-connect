@@ -18,7 +18,7 @@ export const PlayerListItem = ({
 }: PlayerlistItemProps) => {
   return (
     <Pressable onPress={() => router.navigate(`/(home)/${id}`)}>
-      <HStack key={id} gap="$5" bgColor="$white" rounded="$lg" p="$3">
+      <HStack key={id} gap="$5" variant="colored" rounded="$lg" p="$3">
         <Avatar size="md" imageUrl={avatar} />
         <VStack gap="$2">
           <Text>{getUserName(first_name, last_name)}</Text>

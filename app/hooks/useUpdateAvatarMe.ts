@@ -19,15 +19,18 @@ export const useUpdateAvatarMe = (
   const { data: me, isLoading: isLoadingMe } = useMe()
   const { mutate: updateMe, isPending: isPendingUpdateMe } = useUpdateMe()
 
-  const { mutate: deleteImages } = useDeleteImages({ storageType: 'avatars' })
+  const { mutateAsync: deleteImagesAsync, isPending: isPendingDeleteImages } =
+    useDeleteImages({
+      storageType: 'avatars',
+    })
 
   const { isPending, mutate: saveImage } = useSaveImage({
     ...options,
     storageType: 'avatars',
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       // delete old image if necessary
       if (me?.avatar_url) {
-        deleteImages([me.avatar_url])
+        await deleteImagesAsync([me.avatar_url])
       }
 
       const avatar_url = data[0]?.data?.path
@@ -44,13 +47,14 @@ export const useUpdateAvatarMe = (
 
     // delete
     if (me?.avatar_url) {
-      deleteImages([me.avatar_url])
+      deleteImagesAsync([me.avatar_url])
       updateMe({ avatar_url: null })
     }
   }
 
   return {
     mutate,
-    isPending: isPending || isLoadingMe || isPendingUpdateMe,
+    isPending:
+      isPending || isLoadingMe || isPendingUpdateMe || isPendingDeleteImages,
   }
 }

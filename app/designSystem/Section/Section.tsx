@@ -16,7 +16,7 @@ export const Section = ({
     p="$3"
     gap="$1"
     dark-bgColor="$backgroundDark50"
-    bgColor="$light50"
+    variant="colored"
     rounded="$lg"
   >
     {!isNilOrEmpty(title) && <Heading>{title}</Heading>}

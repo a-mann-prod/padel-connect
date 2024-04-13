@@ -34,5 +34,13 @@ export const HStack = createStyle({
         flexDirection: 'row-reverse',
       },
     },
+    variant: {
+      colored: {
+        backgroundColor: '$backgroundLight50',
+        _dark: {
+          backgroundColor: '$backgroundDark950',
+        },
+      },
+    },
   },
 })

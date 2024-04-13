@@ -1,5 +1,3 @@
-import { GluestackUIProvider } from '@gluestack-ui/themed'
-import { DarkTheme, ThemeProvider } from '@react-navigation/native'
 import * as Sentry from '@sentry/react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -9,10 +7,8 @@ import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
 import { SelfDeleteAlert } from '@/components'
-import { AuthProvider } from '@/contexts'
-import { useColorScheme } from '@/hooks/useColorScheme'
+import { AuthProvider, ThemeProvider } from '@/contexts'
 import { useInit } from '@/hooks/useInit'
-import { config } from '@/services/theme/gluestack-ui/gluestack-ui.config' // Relative path to your ejected theme configuration
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
 
@@ -46,8 +42,6 @@ export default Sentry.wrap(() => {
 })
 
 const RootLayoutNav = () => {
-  const colorScheme = useColorScheme()
-
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -62,27 +56,25 @@ const RootLayoutNav = () => {
   })
 
   return (
-    <ThemeProvider value={DarkTheme}>
-      <GluestackUIProvider config={config} colorMode={colorScheme}>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <Stack initialRouteName={unstable_settings.initialRouteName}>
-              <Stack.Screen
-                name="(modals)"
-                options={{
-                  presentation: 'containedModal',
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-            {Platform.OS === 'web' && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
-            <SelfDeleteAlert />
-          </AuthProvider>
-        </QueryClientProvider>
-      </GluestackUIProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <Stack initialRouteName={unstable_settings.initialRouteName}>
+            <Stack.Screen
+              name="(modals)"
+              options={{
+                presentation: 'containedModal',
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+          {Platform.OS === 'web' && (
+            <ReactQueryDevtools initialIsOpen={false} />
+          )}
+          <SelfDeleteAlert />
+        </AuthProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }

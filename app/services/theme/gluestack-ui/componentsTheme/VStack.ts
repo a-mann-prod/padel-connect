@@ -34,8 +34,13 @@ export const VStack = createStyle({
         flexDirection: 'column-reverse',
       },
     },
-    test: {
-      bgColor: 'red',
+    variant: {
+      colored: {
+        backgroundColor: '$backgroundLight50',
+        _dark: {
+          backgroundColor: '$backgroundDark950',
+        },
+      },
     },
   },
 })
