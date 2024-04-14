@@ -19,6 +19,8 @@ export const IconButton = ({
 }: IconButtonProps) => (
   <GButton {...props}>
     <GButtonIcon
+      w={'unset' as any}
+      h={'unset' as any}
       as={(iconProps: any) => <FontAwesome {...iconProps} name={icon} />}
     />
   </GButton>

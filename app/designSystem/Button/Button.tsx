@@ -42,7 +42,9 @@ export const Button = forwardRef(
           <>
             {!isNilOrEmpty(icon) && (
               <GButtonIcon
-                px="$6"
+                px="$2"
+                w={'unset' as any}
+                h={'unset' as any}
                 as={(iconProps: any) => (
                   <FontAwesome {...iconProps} name={icon} />
                 )}
