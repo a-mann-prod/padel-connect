@@ -1,12 +1,20 @@
 import { HStack, Text, VStack } from '@gluestack-ui/themed'
-import { router } from 'expo-router'
 
-import { Avatar, Icon, IconProps, Pressable } from '@/designSystem'
+import {
+  Avatar,
+  Icon,
+  IconProps,
+  Pressable,
+  PressableProps,
+} from '@/designSystem'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { useTranslate } from '@/services/i18n'
 import { getUserName } from '@/utils/user'
 
-export type PlayerlistItemProps = ProfileWithAvatar
+export type PlayerlistItemProps = ProfileWithAvatar & {
+  onPress: PressableProps['onPress']
+  isFavorite: boolean
+}
 
 export const PlayerListItem = ({
   id,
@@ -15,13 +23,18 @@ export const PlayerListItem = ({
   manual_preference,
   side_preference,
   avatar,
+  onPress,
+  isFavorite,
 }: PlayerlistItemProps) => {
   return (
-    <Pressable onPress={() => router.navigate(`/(home)/${id}`)}>
+    <Pressable onPress={onPress}>
       <HStack key={id} gap="$5" variant="colored" rounded="$lg" p="$3">
         <Avatar size="md" imageUrl={avatar} />
-        <VStack gap="$2">
-          <Text>{getUserName(first_name, last_name)}</Text>
+        <VStack gap="$2" flex={1}>
+          <HStack alignItems="center">
+            <Text flex={1}>{getUserName(first_name, last_name)}</Text>
+            {isFavorite && <Icon name="FAS-star" size="xs" />}
+          </HStack>
           <HStack gap="$3">
             <SubItem
               i18nParentKey="manualPreference"

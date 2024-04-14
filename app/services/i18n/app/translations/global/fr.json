@@ -39,6 +39,7 @@
   },
   "navigation": {
     "avatar": "Avatar",
+    "community": "Communauté",
     "dangerZone": "Zone à risques",
     "emailChange": "Changement email",
     "findPlayer": "Rechercher un joueur",
@@ -48,6 +49,7 @@
     "passwordChange": "Changement mot de passe",
     "passwordReset": "Nouveau mot de passe",
     "personalInformation": "Informations personnelles",
+    "play": "Jouer",
     "preferences": "Préférences",
     "privacyPolicy": "Politique de confidentialité",
     "profile": "Profile",

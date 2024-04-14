@@ -1,4 +1,5 @@
 import { Box, VStack } from '@gluestack-ui/themed'
+import { router } from 'expo-router'
 import { useState } from 'react'
 import { ListRenderItemInfo, VirtualizedList } from 'react-native'
 
@@ -9,21 +10,33 @@ import { useDebounce } from '@/hooks/useDebounce'
 import { useMe } from '@/hooks/useMe'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
-import { ProfileResponse } from '@/services/api'
+import { ProfileResponse, useFavoriteUsers } from '@/services/api'
 
 export default () => {
   const [search, setSearch] = useState<string | undefined>(undefined)
-  const setSearchDebounced = useDebounce(setSearch)
+  const { isDebouncing, debouncedCallback: setSearchDebounced } =
+    useDebounce(setSearch)
+
+  const enableSearch = !!search
 
   const { data: me } = useMe()
 
   const { data: users, isLoading } = useProfilesWithAvatar({
     params: { current_user_id: me?.id, search },
-    options: { enabled: !!search },
+    options: { enabled: enableSearch },
+  })
+
+  const { data: favUsers } = useFavoriteUsers({
+    params: { user_id: me?.id as string },
+    options: { enabled: enableSearch && !!me?.id },
   })
 
   const renderItem = ({ item }: ListRenderItemInfo<ProfileWithAvatar>) => (
-    <PlayerListItem {...item} />
+    <PlayerListItem
+      {...item}
+      onPress={() => router.navigate(`/community/${item.id}`)}
+      isFavorite={!!favUsers?.some((u) => u.favorite_user_id === item.id)}
+    />
   )
 
   const ItemSeparatorComponent = () => <Box pt="$3" />
@@ -31,11 +44,12 @@ export default () => {
   return (
     <VStack gap="$3" m="$3">
       <SearchInput onChangeText={setSearchDebounced} />
-      {isLoading ? (
+      {isLoading || isDebouncing ? (
         <Loader />
       ) : (
         users && (
           <VirtualizedList<ProfileResponse>
+            keyboardShouldPersistTaps="handled"
             style={{ height: '100%' }}
             data={users}
             getItem={(data, index) => data[index]}

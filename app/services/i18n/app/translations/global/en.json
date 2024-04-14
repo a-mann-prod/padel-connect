@@ -40,6 +40,7 @@
   },
   "navigation": {
     "avatar": "Avatar",
+    "community": "Community",
     "dangerZone": "Danger zone",
     "emailChange": "Change email",
     "findPlayer": "Find a player",
@@ -49,6 +50,7 @@
     "passwordChange": "Change password",
     "passwordReset": "New password",
     "personalInformation": "Personal information",
+    "play": "Play",
     "preferences": "Preferences",
     "privacyPolicy": "Privacy policy",
     "profile": "Profile",

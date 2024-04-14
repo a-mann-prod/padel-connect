@@ -7,7 +7,8 @@ export default () => {
 
   return (
     <Stack>
-      <Stack.Screen name="index" options={{ title: t('home') }} />
+      <Stack.Screen name="index" options={{ title: t('community') }} />
+      <Stack.Screen name="[user]" options={{ title: '' }} />
     </Stack>
   )
 }

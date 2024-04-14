@@ -43,8 +43,26 @@ export default () => {
         name="(home)"
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }) => (
             <Icon name="FAS-house" size="md" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="play"
+        options={{
+          title: t('play'),
+          tabBarIcon: ({ color }) => (
+            <Icon name="FAS-baseball" size="md" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="community"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Icon name="FAS-users" size="md" color={color} />
           ),
         }}
       />
@@ -52,12 +70,8 @@ export default () => {
         name="profile"
         options={{
           title: t('profile'),
-          tabBarIcon: ({ color, focused }) => (
-            <Icon
-              name={`${focused ? 'FAS' : 'FAR'}-user`}
-              size="md"
-              color={color}
-            />
+          tabBarIcon: ({ color }) => (
+            <Icon name="FAS-user" size="md" color={color} />
           ),
           headerRight: HeaderEditButton,
         }}
