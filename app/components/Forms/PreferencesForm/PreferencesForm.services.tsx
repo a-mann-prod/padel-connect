@@ -38,7 +38,6 @@ export const useManualPreferenceOptions = () => {
     () => [
       { value: 'LEFT_HANDED', label: tGlobal('left_handed') },
       { value: 'RIGHT_HANDED', label: tGlobal('right_handed') },
-      { value: 'AMBIDEXTROUS', label: tGlobal('ambidextrous') },
     ],
     [tGlobal]
   )

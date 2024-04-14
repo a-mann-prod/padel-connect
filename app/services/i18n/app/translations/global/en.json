@@ -33,7 +33,6 @@
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
   "letsGo": "Let's go! 🚀",
   "manualPreference": {
-    "ambidextrous": "Ambidextrous",
     "left_handed": "Left handed",
     "right_handed": "Right handed",
     "title": "Manual preference"

@@ -32,7 +32,6 @@
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée.",
   "letsGo": "C'est parti ! 🚀",
   "manualPreference": {
-    "ambidextrous": "Ambidextre",
     "left_handed": "Gaucher",
     "right_handed": "Droitier(e)",
     "title": "Préférence manuelle"

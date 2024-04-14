@@ -1,4 +1,4 @@
-create type "public"."manual_preference" as enum ('LEFT_HANDED', 'RIGHT_HANDED', 'AMBIDEXTROUS');
+create type "public"."manual_preference" as enum ('LEFT_HANDED', 'RIGHT_HANDED');
 
 create type "public"."side_preference" as enum ('LEFT', 'RIGHT', 'BOTH');
 

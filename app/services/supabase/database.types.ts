@@ -134,7 +134,7 @@ export type Database = {
       }
     }
     Enums: {
-      manual_preference: "LEFT_HANDED" | "RIGHT_HANDED" | "AMBIDEXTROUS"
+      manual_preference: "LEFT_HANDED" | "RIGHT_HANDED"
       side_preference: "LEFT" | "RIGHT" | "BOTH"
     }
     CompositeTypes: {
