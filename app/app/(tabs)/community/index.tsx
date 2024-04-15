@@ -1,10 +1,10 @@
 import { Box, VStack } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import { useState } from 'react'
-import { ListRenderItemInfo, VirtualizedList } from 'react-native'
+import { ListRenderItemInfo } from 'react-native'
 
 import { PlayerListItem } from '@/components'
-import { Loader } from '@/designSystem'
+import { Loader, VirtualizedList } from '@/designSystem'
 import { SearchInput } from '@/designSystem/SearchInput/SearchInput'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useMe } from '@/hooks/useMe'
@@ -49,8 +49,6 @@ export default () => {
       ) : (
         users && (
           <VirtualizedList<ProfileResponse>
-            keyboardShouldPersistTaps="handled"
-            style={{ height: '100%' }}
             data={users}
             getItem={(data, index) => data[index]}
             getItemCount={(data) => data.length}
