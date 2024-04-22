@@ -7,6 +7,7 @@ import {
 } from '@gluestack-ui/themed'
 import { SafeAreaView } from 'react-native'
 
+import { PropsWithChildren } from 'react'
 import {
   ActionsheetItem,
   ActionsheetItemProps,
@@ -14,14 +15,15 @@ import {
 
 export type ActionsheetProps = typeof GActionsheet.defaultProps & {
   onChange?: (_: ActionsheetItemProps) => void
-  items: ActionsheetItemProps[]
+  items?: ActionsheetItemProps[]
 }
 
 export const Actionsheet = ({
   items,
   onChange,
+  children,
   ...props
-}: ActionsheetProps) => {
+}: PropsWithChildren<ActionsheetProps>) => {
   const handleOnChange = (item: ActionsheetItemProps) => {
     onChange?.(item)
   }
@@ -35,16 +37,18 @@ export const Actionsheet = ({
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator />
           </ActionsheetDragIndicatorWrapper>
-          {items.map((item) => (
-            <ActionsheetItem
-              key={item.title}
-              onPress={(e) => {
-                handleOnChange(item)
-                item.onPress?.(e)
-              }}
-              {...item}
-            />
-          ))}
+          {items?.length
+            ? items.map((item) => (
+                <ActionsheetItem
+                  key={item.title}
+                  onPress={(e) => {
+                    handleOnChange(item)
+                    item.onPress?.(e)
+                  }}
+                  {...item}
+                />
+              ))
+            : children}
         </SafeAreaView>
       </ActionsheetContent>
     </GActionsheet>

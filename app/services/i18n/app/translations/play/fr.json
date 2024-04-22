@@ -1,0 +1,12 @@
+{
+  "booked": "Réservé",
+  "bookedUrl": "Lien réservation",
+  "complex": "Complexe",
+  "createNewMatch": "Créer une nouvelle partie",
+  "date": "Date",
+  "datetime": "Date et heure",
+  "duration": "Durée",
+  "leave": "Quitter",
+  "pay": "Payer sa part",
+  "price": "Prix"
+}

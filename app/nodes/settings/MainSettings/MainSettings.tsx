@@ -32,7 +32,7 @@ export const MainSettings = () => {
   if (!me) return
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView>
       <VStack p="$3" gap="$3">
         <FormAvatar
           firstname={me.first_name}

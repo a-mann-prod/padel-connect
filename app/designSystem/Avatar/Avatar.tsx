@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
 
-import { Icon } from '../Icon/Icon'
+import { Icon, IconProps } from '../Icon/Icon'
 import { Skeleton } from '../Skeleton/Skeleton'
 
 import { isNilOrEmpty } from '@/utils/global'
@@ -24,6 +24,7 @@ export type AvatarProps = {
   status?: 'online' | 'offline' | 'hidden'
   onPress?: TouchableOpacityProps['onPress']
   isLoading?: boolean
+  fallBackIcon?: IconProps['name']
 } & typeof GAvatar.defaultProps
 
 export const Avatar = ({
@@ -33,6 +34,7 @@ export const Avatar = ({
   firstname,
   lastname,
   isLoading,
+  fallBackIcon,
   ...props
 }: AvatarProps) => {
   const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
@@ -46,7 +48,7 @@ export const Avatar = ({
         </AvatarFallbackText>
       )
 
-    return <Icon name="FAS-user" color="white" size="lg" />
+    return <Icon name={fallBackIcon || 'FAS-user'} color="white" size="lg" />
   }
 
   return (
@@ -75,7 +77,7 @@ export const Avatar = ({
       </TouchableOpacity>
 
       {!isNilOrEmpty(completeName) && (
-        <Heading size="lg">{completeName}</Heading>
+        <Heading size="xs">{completeName}</Heading>
       )}
     </VStack>
   )

@@ -34,6 +34,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      complexes: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
       favorite_users: {
         Row: {
           created_at: string
@@ -61,6 +79,60 @@ export type Database = {
           {
             foreignKeyName: "public_favorite_users_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          booked_url: string | null
+          complex_id: number
+          created_at: string
+          datetime: string
+          duration: number
+          id: number
+          level: number
+          owner_id: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          booked_url?: string | null
+          complex_id: number
+          created_at?: string
+          datetime: string
+          duration: number
+          id?: number
+          level: number
+          owner_id: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          booked_url?: string | null
+          complex_id?: number
+          created_at?: string
+          datetime?: string
+          duration?: number
+          id?: number
+          level?: number
+          owner_id?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_matches_complex_id_fkey"
+            columns: ["complex_id"]
+            isOneToOne: false
+            referencedRelation: "complexes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_matches_owner_id_fkey"
+            columns: ["owner_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]

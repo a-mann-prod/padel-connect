@@ -1,5 +1,4 @@
 import i18next from 'i18next'
-import ICU from 'i18next-icu'
 import { useEffect, useState } from 'react'
 import { initReactI18next } from 'react-i18next'
 
@@ -12,24 +11,21 @@ export const useInitLanguage = () => {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    i18next
-      .use(ICU)
-      .use(initReactI18next)
-      .init(
-        {
-          compatibilityJSON: 'v3',
-          resources,
-          fallbackLng: getDevicePreferenceLanguage(),
-          defaultNS: getDefaultNS('global'),
-          interpolation: {
-            escapeValue: false,
-          },
-          initImmediate: false,
-          parseMissingKeyHandler: () => '',
-          debug: config.env === 'local',
+    i18next.use(initReactI18next).init(
+      {
+        compatibilityJSON: 'v3',
+        resources,
+        fallbackLng: getDevicePreferenceLanguage(),
+        defaultNS: getDefaultNS('global'),
+        interpolation: {
+          escapeValue: false,
         },
-        () => setLoaded(true)
-      )
+        initImmediate: false,
+        parseMissingKeyHandler: () => '',
+        debug: config.env === 'local',
+      },
+      () => setLoaded(true)
+    )
   }, [])
 
   return [loaded]

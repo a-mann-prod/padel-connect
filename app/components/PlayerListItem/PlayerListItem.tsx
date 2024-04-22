@@ -17,7 +17,6 @@ export type PlayerlistItemProps = ProfileWithAvatar & {
 }
 
 export const PlayerListItem = ({
-  id,
   first_name,
   last_name,
   manual_preference,
@@ -28,7 +27,7 @@ export const PlayerListItem = ({
 }: PlayerlistItemProps) => {
   return (
     <Pressable onPress={onPress}>
-      <HStack key={id} gap="$5" variant="colored" rounded="$lg" p="$3">
+      <HStack gap="$5" variant="colored" rounded="$lg" p="$3">
         <Avatar size="md" imageUrl={avatar} />
         <VStack gap="$2" flex={1}>
           <HStack alignItems="center">

@@ -1,32 +1,11 @@
-import { HeaderBackButtonProps } from '@react-navigation/elements'
-import { Redirect, Tabs, router } from 'expo-router'
+import { Redirect, Tabs } from 'expo-router'
 import React from 'react'
 
-import { Icon, IconButton } from '@/designSystem'
-import { HeaderButtonContainer } from '@/designSystem/HeaderButtonContainer/HeaderButtonContainer'
+import { Icon } from '@/designSystem'
 import { useIsNavigationReady } from '@/hooks/useIsNavigationReady'
 import { useMe } from '@/hooks/useMe'
-import { useTranslate } from '@/services/i18n'
-
-const HeaderEditButton = ({ tintColor }: HeaderBackButtonProps) => {
-  const { data: me } = useMe()
-
-  if (!me) return
-
-  return (
-    <HeaderButtonContainer>
-      <IconButton
-        variant="headerIcon"
-        icon="FAS-gear"
-        iconProps={{ size: 16 }}
-        onPress={() => router.navigate('/(modals)/settings')}
-      />
-    </HeaderButtonContainer>
-  )
-}
 
 export default () => {
-  const t = useTranslate(undefined, { keyPrefix: 'navigation' })
   const isNavigationReady = useIsNavigationReady()
 
   const { data: me, isLoading } = useMe()
@@ -51,7 +30,7 @@ export default () => {
       <Tabs.Screen
         name="play"
         options={{
-          title: t('play'),
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name="FAS-baseball" size="md" color={color} />
           ),
@@ -69,11 +48,10 @@ export default () => {
       <Tabs.Screen
         name="profile"
         options={{
-          title: t('profile'),
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name="FAS-user" size="md" color={color} />
           ),
-          headerRight: HeaderEditButton,
         }}
       />
     </Tabs>

@@ -1,3 +1,5 @@
 export * from './auth'
+export * from './complexes'
 export * from './favorite_users'
+export * from './matches'
 export * from './profiles'

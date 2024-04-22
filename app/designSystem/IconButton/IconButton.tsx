@@ -7,7 +7,7 @@ import { FontAwesome, FontAwesomeProps } from '../Icon/FontAwesome/FontAwesome'
 
 export type IconButtonProps = {
   icon: FontAwesomeProps['name']
-  iconProps: Omit<FontAwesomeProps, 'name'>
+  iconProps?: Omit<FontAwesomeProps, 'name'>
   isLoading?: boolean
 } & typeof GButton.defaultProps
 

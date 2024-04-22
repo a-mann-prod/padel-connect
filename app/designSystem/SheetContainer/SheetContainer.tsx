@@ -10,11 +10,7 @@ export const SheetContainer = ({
 }: PropsWithChildren<SheetContainerProps>) => {
   return (
     <SafeAreaView borderTopLeftRadius="$3xl" borderTopRightRadius="$3xl">
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        alwaysBounceVertical={false}
-      >
+      <ScrollView alwaysBounceVertical={false}>
         <VStack space="2xl" p="$6">
           {children}
         </VStack>

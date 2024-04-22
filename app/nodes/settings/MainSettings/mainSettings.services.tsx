@@ -8,7 +8,7 @@ import { Icon, SectionProps, SectionRowProps } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { openUrl } from '@/utils/url'
 
-export const SETTINGS_RACINE = '/(modals)/settings'
+export const SETTINGS_RACINE = '/(tabs)/profile/settings'
 
 type SettingsSection = SectionProps & {
   rows: SectionRowProps[]

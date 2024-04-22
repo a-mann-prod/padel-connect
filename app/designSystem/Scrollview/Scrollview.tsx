@@ -7,7 +7,12 @@ export const ScrollView = ({
   children,
   ...props
 }: PropsWithChildren<ScrollViewProps>) => (
-  <GScrollView keyboardShouldPersistTaps="handled" {...props}>
+  <GScrollView
+    keyboardShouldPersistTaps="handled"
+    showsHorizontalScrollIndicator={false}
+    showsVerticalScrollIndicator={false}
+    {...props}
+  >
     {children}
   </GScrollView>
 )

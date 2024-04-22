@@ -22,9 +22,15 @@
   "back": "Retour",
 
   "cancel": "Cancel",
+  "captain": "Captain",
   "confirmNewPassword": "Confirm new password",
   "confirmPassword": "Confirm password",
   "continue": "Continue",
+  "create": "Create",
+  "datetime": {
+    "minute": "{{count}} minute",
+    "minute_plural": "{{count}} minutes"
+  },
   "delete": "Delete",
   "edit": "Edit",
   "email": "Email",
@@ -32,13 +38,20 @@
   "lastname": "Lastname",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
   "letsGo": "Let's go! 🚀",
+  "level": "Level",
   "manualPreference": {
     "left_handed": "Left handed",
     "right_handed": "Right handed",
     "title": "Manual preference"
   },
+  "matchType": {
+    "competitive": "Competitive",
+    "friendly": "Friendly"
+  },
+  "me": "Me",
   "navigation": {
     "avatar": "Avatar",
+    "bookingDetails": "Booking details",
     "community": "Community",
     "dangerZone": "Danger zone",
     "emailChange": "Change email",
@@ -46,6 +59,7 @@
     "getStarted": "Ready to start?",
     "home": "Home",
     "login": "Login",
+    "matchCreation": "New match",
     "passwordChange": "Change password",
     "passwordReset": "New password",
     "personalInformation": "Personal information",
@@ -62,6 +76,7 @@
   "newEmail": "New email",
   "newPassword": "New password",
   "next": "Next",
+  "noData": "No data found",
   "or": "or",
   "password": "Password",
   "resend": "Resend",

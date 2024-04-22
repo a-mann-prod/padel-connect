@@ -21,9 +21,15 @@
   },
   "back": "Retour",
   "cancel": "Annuler",
+  "captain": "Capitaine",
   "confirmNewPassword": "Confirmation nouveau mot de passe",
   "confirmPassword": "Confirmer le mot de passe",
   "continue": "Continuer",
+  "create": "Créer",
+  "datetime": {
+    "minute": "{{count}} minute",
+    "minute_plural": "{{count}} minutes"
+  },
   "delete": "Supprimer",
   "edit": "Modifier",
   "email": "Email",
@@ -31,13 +37,20 @@
   "lastname": "Nom",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée.",
   "letsGo": "C'est parti ! 🚀",
+  "level": "Niveau",
   "manualPreference": {
     "left_handed": "Gaucher",
     "right_handed": "Droitier(e)",
     "title": "Préférence manuelle"
   },
+  "matchType": {
+    "competitive": "Compétition",
+    "friendly": "Amical"
+  },
+  "me": "Moi",
   "navigation": {
     "avatar": "Avatar",
+    "bookingDetails": "Détails réservation",
     "community": "Communauté",
     "dangerZone": "Zone à risques",
     "emailChange": "Changement email",
@@ -45,6 +58,7 @@
     "getStarted": "Prêt à démarrer ?",
     "home": "Accueil",
     "login": "Connexion",
+    "matchCreation": "Nouvelle partie",
     "passwordChange": "Changement mot de passe",
     "passwordReset": "Nouveau mot de passe",
     "personalInformation": "Informations personnelles",
@@ -61,6 +75,7 @@
   "newEmail": "Nouvel email",
   "newPassword": "Nouveau mot de passe",
   "next": "Suivant",
+  "noData": "Aucune donnée trouvée",
   "or": "ou",
   "password": "Mot de passe",
   "resend": "Renvoyer",
