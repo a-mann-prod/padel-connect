@@ -2,4 +2,4 @@ export type GetComplexParams = {
   id: string
 }
 
-export type GetComplexesParams = {}
+export type GetComplexesParams = object

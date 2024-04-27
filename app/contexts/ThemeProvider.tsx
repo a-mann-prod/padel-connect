@@ -6,7 +6,7 @@ import { ColorScheme, useColorScheme } from '@/hooks/useColorScheme'
 import { config } from '@/services/theme/gluestack-ui/gluestack-ui.config' // Relative path to your ejected theme configuration
 import { useNavigationTheme } from '@/services/theme/react-navigation'
 
-export type ThemeProps = {}
+export type ThemeProps = object
 
 export const ThemeProvider = ({ children }: PropsWithChildren<ThemeProps>) => {
   const colorScheme = useColorScheme()
