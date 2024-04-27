@@ -3,6 +3,7 @@ import { HStack, Text, VStack } from '@gluestack-ui/themed'
 import {
   Avatar,
   Icon,
+  IconButton,
   IconProps,
   Pressable,
   PressableProps,
@@ -13,23 +14,30 @@ import { getUserName } from '@/utils/user'
 
 export type PlayerlistItemProps = ProfileWithAvatar & {
   onPress: PressableProps['onPress']
-  isFavorite: boolean
+  isFavorite?: boolean
+  matchRequest?: {
+    isLoading: boolean
+    onAcceptPress: (id: string | undefined) => void
+    onRefusePress: (id: string | undefined) => void
+  }
 }
 
 export const PlayerListItem = ({
+  id,
   first_name,
   last_name,
   manual_preference,
   side_preference,
   avatar,
   onPress,
-  isFavorite,
+  isFavorite = false,
+  matchRequest,
 }: PlayerlistItemProps) => {
   return (
     <Pressable onPress={onPress}>
       <HStack gap="$5" variant="colored" rounded="$lg" p="$3">
         <Avatar size="md" imageUrl={avatar} />
-        <VStack gap="$2" flex={1}>
+        <VStack flex={1} gap="$2">
           <HStack alignItems="center">
             <Text flex={1}>{getUserName(first_name, last_name)}</Text>
             {isFavorite && <Icon name="FAS-star" size="xs" />}
@@ -47,6 +55,27 @@ export const PlayerListItem = ({
             />
           </HStack>
         </VStack>
+
+        {matchRequest && (
+          <HStack gap="$3" alignItems="center">
+            <IconButton
+              icon="FAR-circle-check"
+              action="positive"
+              onPress={() => matchRequest.onAcceptPress(id)}
+              iconProps={{ size: 'lg' }}
+              variant="link"
+              isLoading={matchRequest.isLoading}
+            />
+            <IconButton
+              icon="FAR-circle-xmark"
+              action="negative"
+              onPress={() => matchRequest.onRefusePress(id)}
+              iconProps={{ size: 'lg' }}
+              variant="link"
+              isLoading={matchRequest.isLoading}
+            />
+          </HStack>
+        )}
       </HStack>
     </Pressable>
   )

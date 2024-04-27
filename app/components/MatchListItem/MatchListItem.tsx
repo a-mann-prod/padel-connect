@@ -1,14 +1,16 @@
 import { HStack, Heading, Text, VStack } from '@gluestack-ui/themed'
 
-import { Avatar, Icon, Pressable, PressableProps } from '@/designSystem'
-import { MatchResponse } from '@/services/api'
+import { Icon, Pressable, PressableProps } from '@/designSystem'
+import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
+import { PlayersAvatars } from '@/nodes/play'
+import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
 
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']
-} & MatchResponse
+} & MatchesResponse[number]
 
 export const MatchListItem = ({
   onPress,
@@ -17,10 +19,19 @@ export const MatchListItem = ({
   // type,
   datetime,
   complex,
-  price,
   duration,
+  owner_id,
+  players,
 }: MatchlistItemProps) => {
   const tGlobal = useTranslate()
+
+  const userIds = [owner_id, ...players.map(({ id }) => id)]
+
+  // TODO do not call this hook here
+  const { data } = useProfilesWithAvatar({
+    params: { ids: userIds },
+    options: { enabled: !!userIds.length },
+  })
 
   return (
     <Pressable onPress={onPress}>
@@ -30,7 +41,7 @@ export const MatchListItem = ({
             <DateFlag isoDate={datetime} />
             <VStack flex={1}>
               <Heading size="sm" lineHeight="$xs">
-                {complex.name}
+                {complex?.name}
               </Heading>
               <Text variant="subtitle">
                 {/* {tGlobal(`matchType.${type.toLowerCase()}`)} -{' '} */}
@@ -41,33 +52,8 @@ export const MatchListItem = ({
           <BookedStatus isBooked={!isNilOrEmpty(booked_url)} />
         </HStack>
         <HStack>
-          <HStack flex={1} gap="$4">
-            <Avatar
-              size="md"
-              fallBackIcon="FAS-plus"
-              bgColor="$secondary300"
-              $dark-bgColor="$secondary400"
-            />
-            <Avatar
-              size="md"
-              fallBackIcon="FAS-plus"
-              bgColor="$secondary300"
-              $dark-bgColor="$secondary400"
-            />
-            <Avatar
-              size="md"
-              fallBackIcon="FAS-plus"
-              bgColor="$secondary300"
-              $dark-bgColor="$secondary400"
-            />
-            <Avatar
-              size="md"
-              fallBackIcon="FAS-plus"
-              bgColor="$secondary300"
-              $dark-bgColor="$secondary400"
-            />
-          </HStack>
-          <PriceFlag price={price} duration={duration} />
+          <PlayersAvatars data={data} />
+          <DurationFlag value={duration} />
         </HStack>
       </VStack>
     </Pressable>
@@ -101,11 +87,10 @@ const DateFlag = ({ isoDate }: DateFlagProps) => {
   )
 }
 
-type PriceFlagProps = {
-  price: number
-  duration: number
+type DurationFlagProps = {
+  value: number
 }
-const PriceFlag = ({ price, duration }: PriceFlagProps) => {
+const DurationFlag = ({ value }: DurationFlagProps) => {
   return (
     <VStack
       alignItems="center"
@@ -118,11 +103,8 @@ const PriceFlag = ({ price, duration }: PriceFlagProps) => {
       gap="$0.5"
     >
       <Heading size="sm" color="$white">
-        {price} €
+        {value} mn
       </Heading>
-      <Text size="sm" color="$white">
-        {duration} mn
-      </Text>
     </VStack>
   )
 }

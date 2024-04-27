@@ -5,8 +5,8 @@ import {
   ProfilesResponse,
   useProfiles,
 } from '@/services/api'
-import { getStorageFn } from '@/services/api/image'
 import { UseQueryProps } from '@/services/api/types'
+import { getPublicAvatarUrl } from '@/utils/avatar'
 
 export type ProfilesWithAvatar = ProfileWithAvatar[]
 
@@ -24,11 +24,7 @@ export const useProfilesWithAvatar = (
     data: data?.map((d) => {
       if (!d.avatar_url) return d
 
-      const { data: avatar } = getStorageFn('avatars').getPublicUrl(
-        d.avatar_url
-      )
-
-      return { ...d, avatar: avatar.publicUrl }
+      return { ...d, avatar: getPublicAvatarUrl(d.avatar_url) }
     }),
     isLoading: isLoadingProfile,
   }

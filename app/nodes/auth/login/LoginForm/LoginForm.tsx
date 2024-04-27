@@ -21,8 +21,10 @@ export const LoginForm = () => {
   const onError = useHandleError()
 
   const { mutate: login, isPending } = useLogin({
-    onSuccess: () =>
-      router.replace((redirectTo ? `/${redirectTo}` : '/') as any),
+    onSuccess: () => {
+      router.dismissAll()
+      router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
+    },
     onError,
   })
 

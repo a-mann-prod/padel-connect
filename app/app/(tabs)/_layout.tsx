@@ -1,20 +1,17 @@
-import { Redirect, Tabs } from 'expo-router'
-import React from 'react'
+import { Tabs, router } from 'expo-router'
+import React, { useEffect } from 'react'
 
 import { Icon } from '@/designSystem'
-import { useIsNavigationReady } from '@/hooks/useIsNavigationReady'
 import { useMe } from '@/hooks/useMe'
 
 export default () => {
-  const isNavigationReady = useIsNavigationReady()
-
   const { data: me, isLoading } = useMe()
 
-  if (!isNavigationReady || isLoading) return
-
-  // redirect to onboarding if user connected and not completed
-  if (me && !me.is_onboarding_completed)
-    return <Redirect href="/(modals)/onboarding/personal-information" />
+  useEffect(() => {
+    if (!isLoading && me && !me.is_onboarding_completed) {
+      router.replace('/(modals)/onboarding/personal-information')
+    }
+  }, [isLoading, me])
 
   return (
     <Tabs screenOptions={{ tabBarShowLabel: false }}>

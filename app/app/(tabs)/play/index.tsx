@@ -1,11 +1,12 @@
 import { Box, HStack, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
-import { Link, router } from 'expo-router'
+import { router } from 'expo-router'
 import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { DateCarouselFilter, MatchListItem } from '@/components'
 import { Button, IconButton, VirtualizedList } from '@/designSystem'
+import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { MatchResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
@@ -23,12 +24,16 @@ export default () => {
     },
   })
 
-  console.log(matches)
+  useHeaderButton({
+    side: 'headerRight',
+    icon: 'FAS-sliders',
+    onPress: () => console.log('open filters'),
+  })
 
   const renderItem = ({ item }: ListRenderItemInfo<MatchResponse>) => (
     <MatchListItem
       {...item}
-      onPress={() => router.navigate(`/play/${item.id}`)}
+      onPress={() => router.push(`/(tabs)/play/match/${item.id}`)}
     />
   )
 
@@ -49,9 +54,12 @@ export default () => {
         isLoading={isLoading}
       />
       <Box w="100%" position="absolute" bottom={0} alignItems="center" mb="$6">
-        <Link asChild href="/(tabs)/play/(modals)/match-creation">
-          <Button title={t('createNewMatch')} rounded="$full" icon="FAS-plus" />
-        </Link>
+        <Button
+          title={t('createNewMatch')}
+          rounded="$full"
+          icon="FAS-plus"
+          onPress={() => router.navigate('/(tabs)/play/match/create')}
+        />
       </Box>
     </VStack>
   )

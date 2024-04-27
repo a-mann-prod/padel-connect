@@ -25,6 +25,8 @@ export type AvatarProps = {
   onPress?: TouchableOpacityProps['onPress']
   isLoading?: boolean
   fallBackIcon?: IconProps['name']
+  containerProps?: typeof VStack.defaultProps
+  displayBadge?: boolean
 } & typeof GAvatar.defaultProps
 
 export const Avatar = ({
@@ -35,6 +37,8 @@ export const Avatar = ({
   lastname,
   isLoading,
   fallBackIcon,
+  containerProps,
+  displayBadge,
   ...props
 }: AvatarProps) => {
   const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
@@ -52,7 +56,7 @@ export const Avatar = ({
   }
 
   return (
-    <VStack alignItems="center" gap="$3">
+    <VStack alignItems="center" gap="$3" {...containerProps}>
       <TouchableOpacity onPress={onPress} disabled={!onPress}>
         <Skeleton radius="round" show={isLoading || isImageLoading}>
           <GAvatar size="2xl" {...props}>
@@ -65,7 +69,7 @@ export const Avatar = ({
             ) : (
               displayFallback()
             )}
-            {onPress && (
+            {onPress && displayBadge && (
               <AvatarBadge bgColor="$blueGray500">
                 <Center flex={1}>
                   <Icon name="FAS-pen" color="$white" size="xs" />

@@ -13,7 +13,7 @@ export const validators = {
       stringRequired.email({
         message: 'string.invalidEmail',
       }),
-    optional: () => z.string().optional(),
+    optional: () => z.string().nullable().optional(),
     password: () =>
       stringRequired.regex(PASSWORD_REGEX, {
         message: 'string.invalidPassword',

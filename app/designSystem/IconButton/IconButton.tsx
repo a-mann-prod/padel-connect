@@ -7,7 +7,7 @@ import { FontAwesome, FontAwesomeProps } from '../Icon/FontAwesome/FontAwesome'
 
 export type IconButtonProps = {
   icon: FontAwesomeProps['name']
-  iconProps?: Omit<FontAwesomeProps, 'name'>
+  iconProps?: typeof GButtonIcon.defaultProps
   isLoading?: boolean
 } & typeof GButton.defaultProps
 
@@ -21,7 +21,8 @@ export const IconButton = ({
     <GButtonIcon
       w={'unset' as any}
       h={'unset' as any}
-      as={(iconProps: any) => <FontAwesome {...iconProps} name={icon} />}
+      {...iconProps}
+      as={(innerProps: any) => <FontAwesome name={icon} {...innerProps} />}
     />
   </GButton>
 )

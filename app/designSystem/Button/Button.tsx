@@ -34,6 +34,7 @@ export const Button = forwardRef(
         ref={ref}
         flexDirection={iconRight ? 'row-reverse' : 'row'}
         disabled={isLoading || isDisabled}
+        isDisabled={isLoading || isDisabled}
         {...props}
       >
         {isLoading ? (

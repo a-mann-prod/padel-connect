@@ -15,7 +15,7 @@ export const HeaderCloseButton = ({ isInModal }: HeaderCloseButtonProps) => (
     <IconButton
       variant="headerIcon"
       icon="FAR-circle-xmark"
-      iconProps={{ size: 16 }}
+      iconProps={{ size: 'md' }}
       onPress={() => router.navigate('/')}
     />
   </HeaderButtonContainer>

@@ -1,12 +1,16 @@
 import { Icon as GIcon, useToken } from '@gluestack-ui/themed'
+import { ComponentProps } from 'react'
 
 import { FontAwesome, FontAwesomeProps } from './FontAwesome/FontAwesome'
 
-export type IconProps = typeof GIcon.defaultProps & {
+type GIconProps = ComponentProps<typeof GIcon> & {
+  color?: any
+}
+
+export type IconProps = GIconProps & {
   name: FontAwesomeProps['name']
 }
 
-// @ts-ignore
 export const Icon = ({ name, color, ...props }: IconProps) => {
   const colorToken = useToken('colors', color)
 

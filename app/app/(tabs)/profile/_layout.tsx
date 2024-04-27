@@ -1,8 +1,7 @@
 import { Stack, router } from 'expo-router'
 
 import { WithAuth } from '@/components'
-import { HeaderBackButtonProps, IconButton } from '@/designSystem'
-import { HeaderButtonContainer } from '@/designSystem/HeaderButtonContainer/HeaderButtonContainer'
+import { HeaderBackButtonProps, HeaderButton } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { useTranslate } from '@/services/i18n'
 
@@ -12,14 +11,10 @@ const HeaderEditButton = ({ tintColor }: HeaderBackButtonProps) => {
   if (!me) return
 
   return (
-    <HeaderButtonContainer>
-      <IconButton
-        variant="headerIcon"
-        icon="FAS-gear"
-        iconProps={{ size: 16 }}
-        onPress={() => router.navigate('/(tabs)/profile/settings')}
-      />
-    </HeaderButtonContainer>
+    <HeaderButton
+      icon="FAS-gear"
+      onPress={() => router.navigate('/(tabs)/profile/settings')}
+    />
   )
 }
 

@@ -13,6 +13,9 @@
       },
       "invalid_password": {
         "title": "Mot de passe incorrect"
+      },
+      "match_full": {
+        "title": "Partie complète"
       }
     },
     "success": {
@@ -39,9 +42,9 @@
   "letsGo": "C'est parti ! 🚀",
   "level": "Niveau",
   "manualPreference": {
-    "left_handed": "Gaucher",
-    "right_handed": "Droitier(e)",
-    "title": "Préférence manuelle"
+    "left_handed": "Main gauche",
+    "right_handed": "Main droite",
+    "title": "Main forte"
   },
   "matchType": {
     "competitive": "Compétition",
@@ -58,11 +61,12 @@
     "getStarted": "Prêt à démarrer ?",
     "home": "Accueil",
     "login": "Connexion",
-    "matchCreation": "Nouvelle partie",
+    "matchCreate": "Nouvelle partie",
     "passwordChange": "Changement mot de passe",
     "passwordReset": "Nouveau mot de passe",
     "personalInformation": "Informations personnelles",
     "play": "Jouer",
+    "playersManage": "Gestion des joueurs",
     "preferences": "Préférences",
     "privacyPolicy": "Politique de confidentialité",
     "profile": "Profile",

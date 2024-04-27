@@ -7,10 +7,11 @@ export const useHandleError = () => {
   const t = useTranslate(undefined, { keyPrefix: 'api.errors' })
 
   return (e: Error) => {
+    const message = e.message.toLowerCase()
     console.error(e)
     toast.show({
-      title: t([`${e.message}.title`, 'default']),
-      message: t(`${e.message}.message`),
+      title: t([`${message}.title`, 'default']),
+      message: t(`${message}.message`),
       action: 'error',
     })
   }

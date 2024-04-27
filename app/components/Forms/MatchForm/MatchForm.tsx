@@ -95,13 +95,6 @@ export const MatchForm = ({
           />
           <FormInputControlled
             displayPlaceHolder
-            formControlProps={{ title: t('price') }}
-            name="price"
-            keyboardType="numeric"
-            type="number"
-          />
-          <FormInputControlled
-            displayPlaceHolder
             formControlProps={{ title: t('bookedUrl') }}
             name="booked_url"
           />

@@ -5,8 +5,11 @@
   "createNewMatch": "Create new match",
   "date": "Date",
   "datetime": "Date and time",
+  "deleteMatch": "Delete match",
   "duration": "Duration",
+  "joinRequest": "Join request",
+  "joinRequestSent": "Join request sent",
   "leave": "Leave",
   "pay": "Pay your share",
-  "price": "Price"
+  "playersManage": "Manager players"
 }

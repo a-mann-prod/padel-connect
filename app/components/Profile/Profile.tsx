@@ -45,7 +45,6 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
           <HStack gap="$3" justifyContent="center">
             <IconButton
               icon={isFavorite ? 'FAS-star' : 'FAR-star'}
-              iconProps={{}}
               onPress={() => toggleFavorite()}
               isLoading={isLoadingFavorite}
             />

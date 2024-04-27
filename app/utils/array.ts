@@ -12,3 +12,9 @@ export const insertIfNotExists = <T extends { [key: string]: any }>(
 
   return array.concat(notExists)
 }
+
+export const chunk = <T>(array: T[], size: number): T[][] => {
+  return Array.from({ length: Math.ceil(array.length / size) }, (_, index) =>
+    array.slice(index * size, index * size + size)
+  )
+}

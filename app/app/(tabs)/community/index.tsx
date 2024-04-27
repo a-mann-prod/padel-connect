@@ -35,6 +35,7 @@ export default () => {
     <PlayerListItem
       {...item}
       onPress={() => router.navigate(`/community/${item.id}`)}
+      // TODO: A REGLER
       isFavorite={!!favUsers?.some((u) => u.favorite_user_id === item.id)}
     />
   )

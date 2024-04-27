@@ -19,7 +19,13 @@ export const getProfilesFn = (params: GetProfilesParams) => {
   }
 
   if (params.search) {
-    query = query.like('first_name', formatSearch(params.search))
+    query = query.or(
+      `first_name.ilike.${formatSearch(params.search)}, last_name.ilike.${formatSearch(params.search)}`
+    )
+  }
+
+  if (params.ids) {
+    query = query.in('id', params.ids)
   }
 
   return query

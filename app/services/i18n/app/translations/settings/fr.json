@@ -25,5 +25,5 @@
   "tech": {
     "title": "Tech"
   },
-  "version": "Version {version}"
+  "version": "Version {{version}}"
 }

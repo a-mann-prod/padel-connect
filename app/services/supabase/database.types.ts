@@ -85,6 +85,42 @@ export type Database = {
           },
         ]
       }
+      match_requests: {
+        Row: {
+          created_at: string
+          match_id: number
+          status: Database["public"]["Enums"]["match_request_status"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          match_id: number
+          status?: Database["public"]["Enums"]["match_request_status"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          match_id?: number
+          status?: Database["public"]["Enums"]["match_request_status"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_match_requests_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_match_requests_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       matches: {
         Row: {
           booked_url: string | null
@@ -95,7 +131,6 @@ export type Database = {
           id: number
           level: number
           owner_id: string
-          price: number
           updated_at: string
         }
         Insert: {
@@ -107,7 +142,6 @@ export type Database = {
           id?: number
           level: number
           owner_id: string
-          price: number
           updated_at?: string
         }
         Update: {
@@ -119,7 +153,6 @@ export type Database = {
           id?: number
           level?: number
           owner_id?: string
-          price?: number
           updated_at?: string
         }
         Relationships: [
@@ -134,7 +167,7 @@ export type Database = {
             foreignKeyName: "public_matches_owner_id_fkey"
             columns: ["owner_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -207,6 +240,7 @@ export type Database = {
     }
     Enums: {
       manual_preference: "LEFT_HANDED" | "RIGHT_HANDED"
+      match_request_status: "ACCEPTED" | "REFUSED" | "PENDING"
       side_preference: "LEFT" | "RIGHT" | "BOTH"
     }
     CompositeTypes: {

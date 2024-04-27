@@ -39,6 +39,7 @@ export const MainSettings = () => {
           lastname={me.last_name}
           value={me.avatar ? { uri: me.avatar } : undefined}
           onChange={handleAvatarChange}
+          displayBadge
           isLoading={isPendingUpdateAvatarMe}
         />
         {settings.map(({ rows, ...sectionProps }, index) => (

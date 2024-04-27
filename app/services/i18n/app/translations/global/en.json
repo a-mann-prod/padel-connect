@@ -15,6 +15,9 @@
     "invalid_password": {
       "title": "Incorrect password"
     },
+    "match_full": {
+      "title": "Match full"
+    },
     "success": {
       "default": "Recording completed"
     }
@@ -40,9 +43,9 @@
   "letsGo": "Let's go! 🚀",
   "level": "Level",
   "manualPreference": {
-    "left_handed": "Left handed",
-    "right_handed": "Right handed",
-    "title": "Manual preference"
+    "left_handed": "Left hand",
+    "right_handed": "Right hand",
+    "title": "Strong hand"
   },
   "matchType": {
     "competitive": "Competitive",
@@ -59,11 +62,12 @@
     "getStarted": "Ready to start?",
     "home": "Home",
     "login": "Login",
-    "matchCreation": "New match",
+    "matchCreate": "New match",
     "passwordChange": "Change password",
     "passwordReset": "New password",
     "personalInformation": "Personal information",
     "play": "Play",
+    "playersManage": "Players management",
     "preferences": "Preferences",
     "privacyPolicy": "Privacy policy",
     "profile": "Profile",

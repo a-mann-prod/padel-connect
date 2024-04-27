@@ -5,7 +5,7 @@ import { Icon, IconProps } from '../Icon/Icon'
 export type TileProps = {
   title: string
   icon?: IconProps['name']
-  color?: any
+  color?: IconProps['color']
   iconRight?: boolean
 } & typeof HStack.defaultProps
 
@@ -24,7 +24,7 @@ export const Tile = ({
       p="$3"
       {...props}
     >
-      <Icon size="xl" name={icon} color={color} />
+      {icon && <Icon size="xl" name={icon} color={color} />}
 
       <Heading size="md" maxWidth="70%" color={color}>
         {title}
