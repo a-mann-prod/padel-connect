@@ -5,9 +5,9 @@ import {
   ActionsheetDragIndicatorWrapper,
   Actionsheet as GActionsheet,
 } from '@gluestack-ui/themed'
+import { PropsWithChildren } from 'react'
 import { SafeAreaView } from 'react-native'
 
-import { PropsWithChildren } from 'react'
 import {
   ActionsheetItem,
   ActionsheetItemProps,

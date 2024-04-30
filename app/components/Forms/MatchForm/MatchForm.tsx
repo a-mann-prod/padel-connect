@@ -95,7 +95,10 @@ export const MatchForm = ({
           />
           <FormInputControlled
             displayPlaceHolder
-            formControlProps={{ title: t('bookedUrl') }}
+            formControlProps={{
+              title: t('bookedUrl'),
+              helpMessage: t('bookedUrlHelpMessage'),
+            }}
             name="booked_url"
           />
         </VStack>

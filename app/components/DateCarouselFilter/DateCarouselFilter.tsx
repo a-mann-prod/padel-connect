@@ -16,7 +16,7 @@ export const DateCarouselFilter = ({
   value,
   onChange,
 }: DateCarouselFilterProps) => {
-  const currentDate = useMemo(() => date.now(), [])
+  const currentDate = useMemo(() => date.now().startOf('day'), [])
   const lastDate = useMemo(
     () => currentDate.add(2, 'week').endOf('day'),
     [currentDate]
@@ -72,13 +72,13 @@ const DateCarouselItem = ({
         bgColor: '$secondary300',
         '$dark-bgColor': '$secondary400',
       }
-    : {}
+    : undefined
 
   const currentTextProps = isCurrent
     ? {
         color: '$white',
       }
-    : {}
+    : undefined
 
   return (
     <Pressable onPress={onPress} position="relative">
@@ -105,7 +105,7 @@ const DateCarouselItem = ({
         <Text fontWeight="$bold" {...currentTextProps}>
           {date.format('D')}
         </Text>
-        <Text size="sm" {...currentTextProps}>
+        <Text size="sm" fontWeight="$normal" {...currentTextProps}>
           {date.format('MMM')}
         </Text>
       </VStack>

@@ -1,10 +1,10 @@
 import { VStack } from '@gluestack-ui/themed'
+import { useUpsertItem } from '@supabase-cache-helpers/postgrest-react-query'
 import { router } from 'expo-router'
 
 import { MatchForm, MatchFormValues, matchFormServices } from '@/components'
 import { ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
-import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useMe } from '@/hooks/useMe'
 import { useInsertMatch } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
@@ -14,7 +14,11 @@ const { formatToParams } = matchFormServices
 
 export default () => {
   const t = useTranslate()
-  const onSuccess = useHandleSuccess()
+  const upsert = useUpsertItem({
+    primaryKeys: ['id'],
+    schema: 'public',
+    table: 'matches',
+  })
   const onError = useHandleError()
 
   const { data: me } = useMe()
@@ -24,9 +28,12 @@ export default () => {
   }
 
   const { mutate, isPending } = useInsertMatch({
-    onSuccess: () => {
-      onSuccess()
-      router.back()
+    onSuccess: ({ data }) => {
+      const newItem = data?.[0]
+      if (newItem) {
+        upsert(newItem)
+        router.replace(`/(tabs)/play/match/${newItem.id}`)
+      }
     },
     onError,
   })
@@ -35,7 +42,7 @@ export default () => {
     <ScrollView>
       <VStack gap="$3" m="$5">
         <MatchForm
-          onSubmit={(data) => mutate([formatToParams(data)])}
+          onSubmit={(data) => mutate(formatToParams(data))}
           defaultValues={defaultValues}
           buttonTitle={t('create')}
           isLoading={isPending}

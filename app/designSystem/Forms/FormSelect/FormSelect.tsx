@@ -10,7 +10,9 @@ import {
   SelectPortal,
   SelectTrigger,
 } from '@gluestack-ui/themed'
+import { PropsWithChildren } from 'react'
 import { Platform } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { FormControl, FormControlProps } from '../FormControl/FormControl'
 
@@ -65,16 +67,34 @@ export const FormSelect = ({
         </SelectTrigger>
         <SelectPortal>
           <SelectBackdrop />
-          <SelectContent>
+          <SelectItemsContent>
             <SelectDragIndicatorWrapper>
               <SelectDragIndicator />
             </SelectDragIndicatorWrapper>
             {items.map((item) => (
               <SelectItem key={item.label} {...item} />
             ))}
-          </SelectContent>
+          </SelectItemsContent>
         </SelectPortal>
       </Select>
     </FormControl>
   )
+}
+
+const SelectItemsContent = ({ children }: PropsWithChildren) => {
+  if (Platform.OS !== 'web') {
+    return (
+      <SelectContent>
+        <SafeAreaView
+          style={{ width: '100%', paddingTop: 0 }}
+          edges={['bottom']}
+          mode="padding"
+        >
+          {children}
+        </SafeAreaView>
+      </SelectContent>
+    )
+  }
+
+  return <SelectContent>{children}</SelectContent>
 }

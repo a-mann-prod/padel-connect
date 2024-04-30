@@ -1,7 +1,8 @@
 {
   "booked": "Réservé",
   "bookedUrl": "Lien réservation",
-  "complex": "Complexe",
+  "bookedUrlHelpMessage": "If you have already booked, add the link here directly (optional)",
+  "complex": "Lieu",
   "createNewMatch": "Créer une nouvelle partie",
   "date": "Date",
   "datetime": "Date et heure",

@@ -1,4 +1,4 @@
-import { Box, HStack, VStack } from '@gluestack-ui/themed'
+import { HStack, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
 import { router } from 'expo-router'
 import { useState } from 'react'
@@ -46,21 +46,18 @@ export default () => {
       </HStack>
 
       <VirtualizedList<MatchResponse>
-        data={matches || []}
+        data={matches}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         isLoading={isLoading}
       />
-      <Box w="100%" position="absolute" bottom={0} alignItems="center" mb="$6">
-        <Button
-          title={t('createNewMatch')}
-          rounded="$full"
-          icon="FAS-plus"
-          onPress={() => router.navigate('/(tabs)/play/match/create')}
-        />
-      </Box>
+      <Button
+        title={t('createNewMatch')}
+        icon="FAS-plus"
+        onPress={() => router.navigate('/(tabs)/play/match/create')}
+      />
     </VStack>
   )
 }

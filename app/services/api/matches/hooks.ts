@@ -1,11 +1,12 @@
 import {
-  useInsertMutation,
   useQuery,
   useUpdateMutation,
 } from '@supabase-cache-helpers/postgrest-react-query'
 
+import { useMutation } from '@tanstack/react-query'
 import { UseMutationProps, UseQueryProps } from '../types'
 import {
+  DefaultMatchResponse,
   MatchResponse,
   MatchesCountResponse,
   MatchesResponse,
@@ -43,8 +44,17 @@ export const useMatchesCount = ({
   useQuery<MatchesCountResponse>(getMatchesCountFn(params), options)
 
 export const useInsertMatch = (
-  options?: UseMutationProps<any, InsertMatchParams | InsertMatchParams[], any>
-) => useInsertMutation(setMatchFn(), ['id'], undefined, options)
+  options?: UseMutationProps<
+    DefaultMatchResponse,
+    InsertMatchParams | InsertMatchParams[],
+    any
+  >
+) => {
+  const mutationFn = async (v: InsertMatchParams) =>
+    await setMatchFn().insert(v).select('*')
+
+  return useMutation({ mutationFn, ...options })
+}
 
 export const useUpdateMatch = (
   options?: UseMutationProps<any, UpdateMatchParams, any>

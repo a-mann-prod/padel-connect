@@ -1,7 +1,8 @@
 {
   "booked": "Booked",
   "bookedUrl": "Booking link",
-  "complex": "Complex",
+  "bookedUrlHelpMessage": "",
+  "complex": "Location",
   "createNewMatch": "Create new match",
   "date": "Date",
   "datetime": "Date and time",

@@ -45,7 +45,7 @@ export default () => {
       <SearchInput onChangeText={setSearchDebounced} />
 
       <VirtualizedList<ProfileResponse>
-        data={users || []}
+        data={users}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id}
