@@ -7,6 +7,7 @@ import { ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useMe } from '@/hooks/useMe'
 import { useInsertMatch } from '@/services/api'
+import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
 
@@ -25,6 +26,7 @@ export default () => {
 
   const defaultValues: Nillable<MatchFormValues> = {
     owner_id: me?.id,
+    datetime: date.now().toISOString(),
   }
 
   const { mutate, isPending } = useInsertMatch({

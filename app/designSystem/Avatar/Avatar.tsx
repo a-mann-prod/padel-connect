@@ -7,11 +7,13 @@ import {
   Heading,
   VStack,
 } from '@gluestack-ui/themed'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
 
 import { Icon, IconProps } from '../Icon/Icon'
+import { ImageViewer } from '../ImageViewer/ImageViewer'
+import { ImageWrapper } from '../ImageViewer/ImageWrapper'
 import { Skeleton } from '../Skeleton/Skeleton'
 
 import { isNilOrEmpty } from '@/utils/global'
@@ -27,6 +29,7 @@ export type AvatarProps = {
   fallBackIcon?: IconProps['name']
   containerProps?: typeof VStack.defaultProps
   displayBadge?: boolean
+  viewerEnabled?: boolean
 } & typeof GAvatar.defaultProps
 
 export const Avatar = ({
@@ -39,8 +42,11 @@ export const Avatar = ({
   fallBackIcon,
   containerProps,
   displayBadge,
+  viewerEnabled,
   ...props
 }: AvatarProps) => {
+  const imageViewerRef = useRef<any>(null)
+
   const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
   const completeName = getUserName(firstname, lastname)
 
@@ -56,33 +62,46 @@ export const Avatar = ({
   }
 
   return (
-    <VStack alignItems="center" gap="$3" {...containerProps}>
-      <TouchableOpacity onPress={onPress} disabled={!onPress}>
-        <Skeleton radius="round" show={isLoading || isImageLoading}>
-          <GAvatar size="2xl" {...props}>
-            {imageUrl ? (
-              <AvatarImage
-                alt="avatar"
-                source={{ uri: imageUrl }}
-                onLoad={() => setIsImageLoading(false)}
-              />
-            ) : (
-              displayFallback()
-            )}
-            {onPress && displayBadge && (
-              <AvatarBadge bgColor="$blueGray500">
-                <Center flex={1}>
-                  <Icon name="FAS-pen" color="$white" size="xs" />
-                </Center>
-              </AvatarBadge>
-            )}
-          </GAvatar>
-        </Skeleton>
-      </TouchableOpacity>
+    <>
+      <ImageViewer
+        ref={imageViewerRef}
+        data={[{ key: 'avatar', source: { uri: imageUrl } }]}
+      />
+      <VStack alignItems="center" gap="$3" {...containerProps}>
+        <TouchableOpacity onPress={onPress} disabled={!onPress}>
+          <Skeleton radius="round" show={isLoading || isImageLoading}>
+            <ImageWrapper
+              index={0}
+              uri={imageUrl}
+              viewerRef={imageViewerRef}
+              enabled={!onPress && viewerEnabled}
+            >
+              <GAvatar size="2xl" {...props}>
+                {imageUrl ? (
+                  <AvatarImage
+                    alt="avatar"
+                    source={{ uri: imageUrl }}
+                    onLoad={() => setIsImageLoading(false)}
+                  />
+                ) : (
+                  displayFallback()
+                )}
+                {onPress && displayBadge && (
+                  <AvatarBadge bgColor="$blueGray500">
+                    <Center flex={1}>
+                      <Icon name="FAS-pen" color="$white" size="xs" />
+                    </Center>
+                  </AvatarBadge>
+                )}
+              </GAvatar>
+            </ImageWrapper>
+          </Skeleton>
+        </TouchableOpacity>
 
-      {!isNilOrEmpty(completeName) && (
-        <Heading size="xs">{completeName}</Heading>
-      )}
-    </VStack>
+        {!isNilOrEmpty(completeName) && (
+          <Heading size="xs">{completeName}</Heading>
+        )}
+      </VStack>
+    </>
   )
 }

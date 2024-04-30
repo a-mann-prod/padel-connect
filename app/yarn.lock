@@ -10004,6 +10004,11 @@ react-hook-form@~7.50.1:
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.50.1.tgz"
   integrity sha512-3PCY82oE0WgeOgUtIr3nYNNtNvqtJ7BZjsbxh6TnYNbXButaD5WpjOmTjdxZfheuHKR68qfeFnEDVYoSSFPMTQ==
 
+react-hooks-extension@>=1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-hooks-extension/-/react-hooks-extension-1.0.2.tgz#41b7f76eadb93e990e13593731fe10751940ab13"
+  integrity sha512-fcafLOKxlc3WUbwyIljsEccgNeQdPfl76Be7FT0krP9cIheUXbTnRXCklf2J+52xmFwp600a1tFVNDEkv36vsg==
+
 react-i18next@~14.0.5:
   version "14.0.5"
   resolved "https://registry.npmjs.org/react-i18next/-/react-i18next-14.0.5.tgz"
@@ -10044,6 +10049,13 @@ react-native-get-random-values@~1.8.0:
   integrity sha512-H/zghhun0T+UIJLmig3+ZuBCvF66rdbiWUfRSNS6kv5oDSpa1ZiVyvRWtuPesQpT8dXj+Bv7WJRQOUP+5TB1sA==
   dependencies:
     fast-base64-decode "^1.0.0"
+
+react-native-reanimated-viewer@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-viewer/-/react-native-reanimated-viewer-1.4.1.tgz#afc7046da29ab09d84efb2dae979d6ee74f850de"
+  integrity sha512-g3jCDEQSDa0wBwHtzElv0GIDZ8XqKkVRp0z/zcYcnlLFyPEWptQI2ZWDaj0CSDcVuQVYM78HskmXlQiPcISuNg==
+  dependencies:
+    react-hooks-extension ">=1.0.0"
 
 react-native-reanimated@~3.6.2:
   version "3.6.3"

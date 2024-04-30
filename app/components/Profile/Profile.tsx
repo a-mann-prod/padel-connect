@@ -40,6 +40,7 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
           firstname={user.first_name}
           lastname={user.last_name}
           imageUrl={user.avatar}
+          viewerEnabled
         />
         {external && (
           <HStack gap="$3" justifyContent="center">
