@@ -1,8 +1,9 @@
 import { HStack, Input, InputField } from '@gluestack-ui/themed'
+import { forwardRef } from 'react'
+
+import { FormControl, FormControlProps } from '../FormControl/FormControl'
 
 import { date } from '@/services/date'
-import { forwardRef } from 'react'
-import { FormControl, FormControlProps } from '../FormControl/FormControl'
 
 type DateTimePickerProps = {
   locale?: string
@@ -73,6 +74,7 @@ export const FormDateTimePicker = ({
                   )
                 }
                 type="time"
+                step={15 * 60}
               />
             ))}
           />
