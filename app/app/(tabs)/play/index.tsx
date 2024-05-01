@@ -1,5 +1,4 @@
 import { HStack, VStack } from '@gluestack-ui/themed'
-import { Dayjs } from 'dayjs'
 import { router } from 'expo-router'
 import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
@@ -13,7 +12,7 @@ import { useTranslate } from '@/services/i18n'
 
 export default () => {
   const t = useTranslate('play')
-  const [dateFilter, setDateFilter] = useState<Dayjs>(date.now())
+  const [dateFilter, setDateFilter] = useState(date.now())
 
   const { data: matches, isLoading } = useMatches({
     params: {
@@ -56,7 +55,11 @@ export default () => {
       <Button
         title={t('createNewMatch')}
         icon="FAS-plus"
-        onPress={() => router.navigate('/(tabs)/play/match/create')}
+        onPress={() =>
+          router.navigate(
+            `/(tabs)/play/match/create?datetime=${dateFilter.toISOString()}`
+          )
+        }
       />
     </VStack>
   )

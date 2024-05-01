@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { useUpsertItem } from '@supabase-cache-helpers/postgrest-react-query'
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 
 import { MatchForm, MatchFormValues, matchFormServices } from '@/components'
 import { ScrollView } from '@/designSystem'
@@ -14,6 +14,9 @@ import { Nillable } from '@/types'
 const { formatToParams } = matchFormServices
 
 export default () => {
+  const local = useLocalSearchParams()
+  const datetime = local?.datetime as string | undefined
+
   const t = useTranslate()
   const upsert = useUpsertItem({
     primaryKeys: ['id'],
@@ -26,7 +29,7 @@ export default () => {
 
   const defaultValues: Nillable<MatchFormValues> = {
     owner_id: me?.id,
-    datetime: date.now().toISOString(),
+    datetime: datetime || date.now().toISOString(),
   }
 
   const { mutate, isPending } = useInsertMatch({

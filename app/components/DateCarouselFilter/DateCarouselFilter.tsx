@@ -1,8 +1,14 @@
 import { Badge, Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
-import { useMemo } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
-import { Pressable, PressableProps, ScrollView } from '@/designSystem'
+import {
+  Icon,
+  Pressable,
+  PressableProps,
+  ScrollView,
+  ScrollViewRef,
+} from '@/designSystem'
 import { useMatchesCount } from '@/services/api'
 import { date } from '@/services/date'
 import { isNilOrEmpty } from '@/utils/global'
@@ -16,25 +22,36 @@ export const DateCarouselFilter = ({
   value,
   onChange,
 }: DateCarouselFilterProps) => {
-  const currentDate = useMemo(() => date.now().startOf('day'), [])
+  const today = date.now()
+  const [startDate, setStartDate] = useState(today)
+
+  const scrollRef = useRef<ScrollViewRef>(null)
+
   const lastDate = useMemo(
-    () => currentDate.add(2, 'week').endOf('day'),
-    [currentDate]
+    () => startDate.add(2, 'week').endOf('day'),
+    [startDate]
   )
 
   const { data } = useMatchesCount({
     params: {
-      dates: { start: currentDate.toISOString(), end: lastDate.toISOString() },
+      dates: { start: startDate.toISOString(), end: lastDate.toISOString() },
     },
   })
 
-  const dates = date.getDaysBetween(currentDate, lastDate)
+  const days = date.getDaysBetween(startDate, lastDate)
+  const isAfterToday = startDate.isAfter(today, 'day')
 
   return (
     <Box mt="-$3" flex={1}>
-      <ScrollView horizontal>
+      <ScrollView ref={scrollRef} horizontal>
         <HStack gap="$3" w="$full">
-          {dates.map((d) => (
+          {isAfterToday && (
+            <ChevronItem
+              type="prev"
+              onPress={() => setStartDate((date) => date.add(-1, 'week'))}
+            />
+          )}
+          {days.map((d) => (
             <DateCarouselItem
               key={d.toISOString()}
               date={d}
@@ -48,6 +65,13 @@ export const DateCarouselFilter = ({
               }
             />
           ))}
+          <ChevronItem
+            type="next"
+            onPress={() => {
+              setStartDate((date) => date.add(1, 'week'))
+              scrollRef.current?.scrollTo({ animated: true, y: 0 })
+            }}
+          />
         </HStack>
       </ScrollView>
     </Box>
@@ -108,6 +132,31 @@ const DateCarouselItem = ({
         <Text size="sm" fontWeight="$normal" {...currentTextProps}>
           {date.format('MMM')}
         </Text>
+      </VStack>
+    </Pressable>
+  )
+}
+
+type ChevronItemProps = {
+  onPress: () => void
+  type: 'next' | 'prev'
+}
+
+const ChevronItem = ({ onPress, type }: ChevronItemProps) => {
+  return (
+    <Pressable onPress={onPress}>
+      <VStack
+        flex={1}
+        variant="colored"
+        rounded="$lg"
+        p="$3"
+        mt="$3"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Icon
+          name={`FAS-circle-chevron-${type === 'next' ? 'right' : 'left'}`}
+        />
       </VStack>
     </Pressable>
   )
