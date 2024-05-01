@@ -1,7 +1,7 @@
 import { SafeAreaView, VStack } from '@gluestack-ui/themed'
 import { PropsWithChildren } from 'react'
 
-import { ScrollView } from '../Scrollview2/Scrollview2'
+import { ScrollView } from '../ScrollView/ScrollView'
 
 export type SheetContainerProps = object
 
