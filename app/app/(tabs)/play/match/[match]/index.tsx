@@ -1,5 +1,7 @@
 import { HStack, Text, VStack } from '@gluestack-ui/themed'
-import { Link, router, useLocalSearchParams } from 'expo-router'
+import * as AuthSession from 'expo-auth-session'
+import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
+import { Share } from 'react-native'
 
 import {
   Button,
@@ -25,6 +27,7 @@ export default () => {
   const tGlobal = useTranslate()
   const t = useTranslate('play')
 
+  const pathname = usePathname()
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
@@ -37,8 +40,14 @@ export default () => {
 
   const isOwner = !isLoading && match?.owner_id === me?.id
 
-  const { isPlayer, isRequesting, requestMatch, isRequestMatchLoading } =
-    useManageMatchRequest(matchId, !isOwner)
+  const {
+    isPlayer,
+    isRequesting,
+    requestMatch,
+    cancelRequestMatch,
+    isRequestMatchPending,
+    isCancelRequestMatchPending,
+  } = useManageMatchRequest(matchId, !isOwner)
 
   const isParticipant = isOwner || isPlayer
 
@@ -50,16 +59,22 @@ export default () => {
   })
 
   const userIds = match
-    ? [match.owner_id, ...(match.players?.map(({ id }) => id) || [])]
+    ? [
+        match.owner_id,
+        ...(match.match_requests?.map(({ user_id }) => user_id) || []),
+      ]
     : []
 
-  // TODO profiles seems to be called x times
-  const { data } = useProfilesWithAvatar({
+  const { data: players } = useProfilesWithAvatar({
     params: { ids: userIds },
     options: { enabled: !!userIds.length },
   })
 
-  const owner = data?.find(({ id }) => id === match?.owner_id)
+  const owner = players?.find(({ id }) => id === match?.owner_id)
+
+  const sortedPlayers = players?.sort(
+    (a, b) => userIds.indexOf(a.id || '') - userIds.indexOf(b.id || '')
+  )
 
   if (isLoading) return <Loader />
 
@@ -131,7 +146,7 @@ export default () => {
           <PlayersAvatars
             size="lg"
             displayName
-            data={data}
+            data={sortedPlayers}
             orientation="column"
             onPress={(id) =>
               router.navigate(`/(tabs)/play/match/${matchId}/user/${id}`)
@@ -145,32 +160,46 @@ export default () => {
               <Button title={t('playersManage')} />
             </Link>
 
-            <Button title="Partager" icon="FAS-share" isDisabled />
+            <Button
+              title="Partager"
+              icon="FAS-share"
+              isDisabled
+              onPress={() =>
+                Share.share({
+                  url: AuthSession.makeRedirectUri({ path: pathname }),
+                  message:
+                    "Hey je viens de créer un match, si t'es dispo tu peux venir le rejoindre en cliquant sur le lien",
+                })
+              }
+            />
           </>
         )}
         {isPlayer && (
-          <Button
-            title={t('pay')}
-            icon="FAS-money-bill"
-            iconRight
-            onPress={() => match.booked_url && openUrl(match.booked_url)}
-            isDisabled={!isBooked}
-          />
+          <>
+            <Button
+              title={t('pay')}
+              icon="FAS-money-bill"
+              iconRight
+              onPress={() => match.booked_url && openUrl(match.booked_url)}
+              isDisabled={!isBooked}
+            />
+            <Button
+              title={t('leave')}
+              action="negative"
+              icon="FAS-person-walking-arrow-right"
+              iconRight
+              onPress={cancelRequestMatch}
+              isLoading={isCancelRequestMatchPending}
+            />
+          </>
         )}
 
-        {isParticipant ? (
-          <Button
-            title={t('leave')}
-            action="negative"
-            icon="FAS-person-walking-arrow-right"
-            iconRight
-            isDisabled
-          />
-        ) : (
+        {!isParticipant && (
           <MatchRequestButton
             isRequesting={isRequesting}
             onPress={requestMatch}
-            isLoading={isRequestMatchLoading}
+            isLoading={isRequestMatchPending || isCancelRequestMatchPending}
+            onCancelPress={cancelRequestMatch}
           />
         )}
       </VStack>

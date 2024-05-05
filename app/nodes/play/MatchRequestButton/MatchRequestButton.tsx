@@ -4,21 +4,25 @@ import { useTranslate } from '@/services/i18n'
 export type MatchRequestButtonProps = {
   isRequesting: boolean
   onPress: ButtonProps['onPress']
+  onCancelPress: ButtonProps['onPress']
 } & Pick<ButtonProps, 'isLoading'>
 
 export const MatchRequestButton = ({
   isRequesting,
   onPress,
+  onCancelPress,
+  ...props
 }: MatchRequestButtonProps) => {
   const t = useTranslate('play')
 
   return (
     <Button
-      title={t(isRequesting ? 'joinRequestSent' : 'joinRequest')}
-      icon={isRequesting ? 'FAS-check' : 'FAS-handshake'}
+      title={t(isRequesting ? 'cancelRequest' : 'joinRequest')}
+      icon={isRequesting ? 'FAS-ban' : 'FAS-handshake'}
       iconRight={isRequesting}
-      isDisabled={isRequesting}
-      onPress={onPress}
+      onPress={isRequesting ? onCancelPress : onPress}
+      action={isRequesting ? 'negative' : 'primary'}
+      {...props}
     />
   )
 }

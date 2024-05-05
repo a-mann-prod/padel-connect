@@ -20,7 +20,12 @@ export default () => {
   const { isDebouncing, debouncedCallback: setSearchDebounced } =
     useDebounce(setSearch)
 
-  const { data: matchRequests, isLoading } = useMatchRequests({
+  const {
+    data: matchRequests,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useMatchRequests({
     params: { match_id: matchId, search },
     options: { enabled: !!matchId },
   })
@@ -63,6 +68,8 @@ export default () => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         isLoading={isLoading || isDebouncing}
+        refreshing={isRefetching}
+        onRefresh={refetch}
       />
     </VStack>
   )

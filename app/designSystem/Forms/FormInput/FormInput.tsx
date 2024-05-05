@@ -34,6 +34,7 @@ export const FormInput = ({
         <InputField
           placeholder={when(displayPlaceHolder, formControlProps.title)}
           onChangeText={handleOnChangeText}
+          type={type === 'password' ? 'password' : 'text'}
           {...props}
         />
       </Input>

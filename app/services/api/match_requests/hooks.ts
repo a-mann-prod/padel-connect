@@ -1,4 +1,5 @@
 import {
+  useDeleteMutation,
   useInsertMutation,
   useQuery,
   useUpdateMutation,
@@ -12,6 +13,7 @@ import {
   setMatchRequestFn,
 } from './functions'
 import {
+  DeleteMatchRequestParams,
   GetMatchRequestParams,
   GetMatchRequestsParams,
   InsertMatchRequestParams,
@@ -56,9 +58,31 @@ export const useInsertMatchRequests = (
 export const useUpdateMatchRequest = (
   options?: UseMutationProps<any, UpdateMatchRequestParams, any>
 ) =>
-  useUpdateMutation(
-    setMatchRequestFn(),
-    ['match_id', 'user_id'],
-    undefined,
-    options
-  )
+  useUpdateMutation(setMatchRequestFn(), ['match_id', 'user_id'], undefined, {
+    ...options,
+    // TODO : better to upsert in /matches (listing)
+    revalidateRelations: [
+      {
+        fKeyColumn: 'match_id',
+        relation: 'matches',
+        relationIdColumn: 'id',
+        schema: 'public',
+      },
+    ],
+  })
+
+export const useDeleteMatchRequest = (
+  options?: UseMutationProps<any, DeleteMatchRequestParams, any>
+) =>
+  useDeleteMutation(setMatchRequestFn(), ['match_id', 'user_id'], undefined, {
+    ...options,
+    // TODO : better to upsert in /matches (listing)
+    revalidateRelations: [
+      {
+        fKeyColumn: 'match_id',
+        relation: 'matches',
+        relationIdColumn: 'id',
+        schema: 'public',
+      },
+    ],
+  })

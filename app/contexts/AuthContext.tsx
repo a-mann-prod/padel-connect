@@ -1,6 +1,6 @@
 import { AuthSession, AuthUser } from '@supabase/supabase-js'
 import { router } from 'expo-router'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 
 import { buildContext } from '@/services/buildContext'
 import { supabase } from '@/services/supabase'
@@ -28,6 +28,7 @@ export { useAuthContext }
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<AuthSession | null>(null)
   const [user, setUser] = useState<AuthUser | null>(null)
+  const [signedOut, setSignedOut] = useState(false)
 
   const [isLoadingSignOut, setIsLoadingSignOut] = useState(false)
   const [isLoadingSignIn, setIsLoadingSignIn] = useState(false)
@@ -41,6 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }) => {
     setSession(session)
     setUser(user)
+    setSignedOut(false)
   }
 
   const signOut = async (isDeleted = false) => {
@@ -51,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     setSession(null)
     setUser(null)
+    setSignedOut(true)
 
     if (error) {
       console.error(error)
@@ -59,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.replace('/')
   }
 
-  const getSession = async () => {
+  const getSession = useCallback(async () => {
     setIsLoadingSignIn(true)
     const { data, error } = await supabase.auth.getSession()
 
@@ -70,9 +73,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(data.session)
     }
     setIsLoadingSignIn(false)
-  }
+  }, [])
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     setIsLoadingSignIn(true)
 
     if (session) {
@@ -86,12 +89,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
     setIsLoadingSignIn(false)
-  }
+  }, [session])
 
   useEffect(() => {
+    // wait for sign out
+    if (isLoadingSignOut || signedOut) return
+
     if (!session) getSession()
     if (session && !user) getUser()
-  }, [session, user])
+  }, [getSession, getUser, session, user, signedOut, isLoadingSignOut])
 
   return (
     <Provider

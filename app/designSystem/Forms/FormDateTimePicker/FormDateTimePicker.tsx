@@ -5,8 +5,11 @@ import DateTimePicker, {
 import { Platform } from 'react-native'
 
 import { FormControl, FormControlProps } from '../FormControl/FormControl'
+import { formDateTimePickerServices } from './FormDateTimePicker.services'
 
 import { useI18N } from '@/services/i18n'
+
+const { formatWithMinuteInterval } = formDateTimePickerServices
 
 type DateTimePickerProps = {
   locale?: string
@@ -33,7 +36,7 @@ export const FormDateTimePicker = ({
 
   const sharedProps = {
     locale: language,
-    value,
+    value: formatWithMinuteInterval(value),
     onChange: (_: DateTimePickerEvent, value: Date | undefined) =>
       onChange(value),
   }

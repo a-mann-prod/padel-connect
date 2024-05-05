@@ -13,7 +13,6 @@ import {
 import { FormProvider } from '@/components/FormProvider/FormProvider'
 import {
   FormDateTimePickerControlled,
-  FormInputControlled,
   FormSelectControlled,
 } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
@@ -92,14 +91,6 @@ export const MatchForm = ({
             name="duration"
             formControlProps={{ title: t('duration') }}
             items={durationItems}
-          />
-          <FormInputControlled
-            displayPlaceHolder
-            formControlProps={{
-              title: t('bookedUrl'),
-              helpMessage: t('bookedUrlHelpMessage'),
-            }}
-            name="booked_url"
           />
         </VStack>
       </FormProvider>

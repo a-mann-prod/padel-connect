@@ -11,7 +11,7 @@ export type MatchRequestsResponse = (Tables<'match_requests'> & {
   > | null
 })[]
 
-export const getMatchRequestQueryCols = 'status'
+export const getMatchRequestQueryCols = 'match_id, user_id, status'
 
 export const getMatchRequestsQueryCols =
   'match_id, user_id, player:profiles!inner(id, first_name, last_name, avatar_url, side_preference, manual_preference), status, created_at'

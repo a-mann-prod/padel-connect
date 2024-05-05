@@ -1,17 +1,23 @@
 import { omit } from 'remeda'
 import { create } from 'zustand'
 
-import { SelfDeleteContentAlertProps } from '@/components'
+import {
+  DefaultAlertContentProps,
+  SelfDeleteContentAlertProps,
+} from '@/components'
 
 export type OverlaysStored = Partial<{
   selfDeleteAlert: SelfDeleteContentAlertProps
+  defaultAlert: DefaultAlertContentProps
 }>
+
+type OverlayProps<T> = Omit<T, 'hide'>
 
 export type OverlayStore = {
   overlays: OverlaysStored
   show: <
     OverlayId extends keyof OverlaysStored,
-    Props extends OverlaysStored[OverlayId],
+    Props extends OverlayProps<OverlaysStored[OverlayId]>,
   >(
     id: OverlayId,
     props?: Props
@@ -24,7 +30,7 @@ export const useOverlayStore = create<OverlayStore>((set) => ({
   overlays: {},
   show: <
     OverlayId extends keyof OverlaysStored,
-    Props extends OverlaysStored[OverlayId],
+    Props extends OverlayProps<OverlaysStored[OverlayId]>,
   >(
     overlayId: OverlayId,
     props?: Props

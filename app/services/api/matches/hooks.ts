@@ -1,15 +1,16 @@
 import {
+  useDeleteMutation,
+  useInsertMutation,
   useQuery,
   useUpdateMutation,
 } from '@supabase-cache-helpers/postgrest-react-query'
 
-import { useMutation } from '@tanstack/react-query'
 import { UseMutationProps, UseQueryProps } from '../types'
 import {
-  DefaultMatchResponse,
   MatchResponse,
   MatchesCountResponse,
   MatchesResponse,
+  getMatchQueryCols,
 } from './entities'
 import {
   getMatchFn,
@@ -18,6 +19,7 @@ import {
   setMatchFn,
 } from './functions'
 import {
+  DeleteMatchParams,
   GetMatchParams,
   GetMatchesCountParams,
   GetMatchesParams,
@@ -44,18 +46,46 @@ export const useMatchesCount = ({
   useQuery<MatchesCountResponse>(getMatchesCountFn(params), options)
 
 export const useInsertMatch = (
-  options?: UseMutationProps<
-    DefaultMatchResponse,
-    InsertMatchParams | InsertMatchParams[],
-    any
-  >
-) => {
-  const mutationFn = async (v: InsertMatchParams) =>
-    await setMatchFn().insert(v).select('*')
+  options?: UseMutationProps<any, InsertMatchParams | InsertMatchParams[], any>
+) => useInsertMutation(setMatchFn(), ['id'], 'id', options)
 
-  return useMutation({ mutationFn, ...options })
-}
+// cant use directly supabase cache hooks because of "agggregate functions not allowed"
+// export const useInsertMatch = (
+//   options?: UseMutationProps<
+//     DefaultMatchResponse,
+//     InsertMatchParams | InsertMatchParams[],
+//     any
+//   >
+// ) => {
+//   const { onSuccess, ...rest } = options || {}
+//   const upsert = useUpsertItem({
+//     primaryKeys: ['id'],
+//     schema: 'public',
+//     table: 'matches',
+//   })
+
+//   const onSuccessDefault = (data: any, variables: any, ctx: any) => {
+//     const item = data?.data?.[0]
+//     if (item) {
+//       upsert(item)
+//     }
+//     onSuccess?.(data, variables, ctx)
+//   }
+
+//   const mutationFn = async (v: InsertMatchParams) =>
+//     await setMatchFn().insert(v).select('*')
+
+//   return useMutation({ mutationFn, onSuccess: onSuccessDefault, ...rest })
+// }
 
 export const useUpdateMatch = (
   options?: UseMutationProps<any, UpdateMatchParams, any>
-) => useUpdateMutation(setMatchFn(), ['id'], undefined, options)
+) =>
+  useUpdateMutation(setMatchFn(), ['id'], getMatchQueryCols, {
+    ...options,
+    // revalidateTables: [{ table: 'matches', schema: 'public' }],
+  })
+
+export const useDeleteMatch = (
+  options?: UseMutationProps<any, DeleteMatchParams, any>
+) => useDeleteMutation(setMatchFn(), ['id'], undefined, options)

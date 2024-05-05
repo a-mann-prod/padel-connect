@@ -1,7 +1,11 @@
 import { useHandleError } from './useHandleError'
 import { useMe } from './useMe'
 
-import { useInsertMatchRequests, useMatchRequest } from '@/services/api'
+import {
+  useDeleteMatchRequest,
+  useInsertMatchRequests,
+  useMatchRequest,
+} from '@/services/api'
 
 export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
   const onError = useHandleError()
@@ -13,8 +17,13 @@ export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
     options: { enabled: !!(matchId && me?.id) && enabled },
   })
 
-  const { mutate: requestMatch, isPending: isRequestMatchLoading } =
+  const { mutate: requestMatch, isPending: isRequestMatchPending } =
     useInsertMatchRequests({
+      onError,
+    })
+
+  const { mutate: cancelRequestMatch, isPending: isCancelRequestMatchPending } =
+    useDeleteMatchRequest({
       onError,
     })
 
@@ -24,6 +33,9 @@ export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
     isLoading,
     requestMatch: () =>
       me?.id && requestMatch([{ match_id: matchId, user_id: me?.id }]),
-    isRequestMatchLoading,
+    cancelRequestMatch: () =>
+      me?.id && cancelRequestMatch({ match_id: matchId, user_id: me?.id }),
+    isRequestMatchPending,
+    isCancelRequestMatchPending,
   }
 }

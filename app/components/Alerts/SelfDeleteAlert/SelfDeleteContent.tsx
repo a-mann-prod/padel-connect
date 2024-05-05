@@ -16,8 +16,7 @@ import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = selfDeleteAlertServices
 
-export type SelfDeleteContentAlertProps =
-  OverlayWrapperChildrenProps<'selfDeleteAlert'>
+export type SelfDeleteContentAlertProps = OverlayWrapperChildrenProps
 
 export const SelfDeleteContent = ({
   hide,

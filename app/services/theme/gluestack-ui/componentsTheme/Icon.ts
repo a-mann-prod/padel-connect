@@ -55,6 +55,14 @@ export const BaseIcon = createStyle({
           size: 24,
         },
       },
+      '2xl': {
+        h: '$8',
+        w: '$8',
+        props: {
+          //@ts-ignore
+          size: 28,
+        },
+      },
     },
   },
   // defaultProps: {

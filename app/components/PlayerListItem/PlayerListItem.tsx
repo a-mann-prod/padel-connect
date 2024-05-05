@@ -57,12 +57,12 @@ export const PlayerListItem = ({
         </VStack>
 
         {matchRequest && (
-          <HStack gap="$3" alignItems="center">
+          <HStack gap="$4" alignItems="center">
             <IconButton
               icon="FAR-circle-check"
               action="positive"
               onPress={() => matchRequest.onAcceptPress(id)}
-              iconProps={{ size: 'lg' }}
+              iconProps={{ size: '2xl' }}
               variant="link"
               isLoading={matchRequest.isLoading}
             />
@@ -70,7 +70,7 @@ export const PlayerListItem = ({
               icon="FAR-circle-xmark"
               action="negative"
               onPress={() => matchRequest.onRefusePress(id)}
-              iconProps={{ size: 'lg' }}
+              iconProps={{ size: '2xl' }}
               variant="link"
               isLoading={matchRequest.isLoading}
             />

@@ -1,11 +1,12 @@
 import { HStack, Heading, Text, VStack } from '@gluestack-ui/themed'
 
 import { Icon, Pressable, PressableProps } from '@/designSystem'
-import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
+import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { PlayersAvatars } from '@/nodes/play'
 import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
+import { getPublicAvatarUrl } from '@/utils/avatar'
 import { isNilOrEmpty } from '@/utils/global'
 
 export type MatchlistItemProps = {
@@ -20,18 +21,25 @@ export const MatchListItem = ({
   datetime,
   complex,
   duration,
-  owner_id,
-  players,
+  owner,
+  match_requests,
 }: MatchlistItemProps) => {
   const tGlobal = useTranslate()
 
-  const userIds = [owner_id, ...players.map(({ id }) => id)]
-
-  // TODO do not call this hook here
-  const { data } = useProfilesWithAvatar({
-    params: { ids: userIds },
-    options: { enabled: !!userIds.length },
-  })
+  const players: ProfilesWithAvatar = [
+    {
+      id: owner?.id,
+      avatar: owner?.avatar_url
+        ? getPublicAvatarUrl(owner.avatar_url)
+        : undefined,
+    },
+    ...match_requests.map(({ user }) => ({
+      id: user?.id,
+      avatar: user?.avatar_url
+        ? getPublicAvatarUrl(user.avatar_url)
+        : undefined,
+    })),
+  ]
 
   return (
     <Pressable onPress={onPress}>
@@ -52,7 +60,7 @@ export const MatchListItem = ({
           <BookedStatus isBooked={!isNilOrEmpty(booked_url)} />
         </HStack>
         <HStack>
-          <PlayersAvatars data={data} />
+          <PlayersAvatars data={players} />
           <DurationFlag value={duration} />
         </HStack>
       </VStack>

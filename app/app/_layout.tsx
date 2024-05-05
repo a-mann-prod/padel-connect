@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
-import { SelfDeleteAlert } from '@/components'
+import { DefaultAlert, SelfDeleteAlert } from '@/components'
 import { AuthProvider, ThemeProvider } from '@/contexts'
 import { useInit } from '@/hooks/useInit'
 import 'react-native-gesture-handler'
@@ -73,6 +73,7 @@ const RootLayoutNav = () => {
             <ReactQueryDevtools initialIsOpen={false} />
           )}
           <SelfDeleteAlert />
+          <DefaultAlert />
         </AuthProvider>
       </QueryClientProvider>
     </ThemeProvider>

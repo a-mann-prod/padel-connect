@@ -1,6 +1,6 @@
 import { Badge, Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import {
   Icon,
@@ -16,11 +16,13 @@ import { isNilOrEmpty } from '@/utils/global'
 export type DateCarouselFilterProps = {
   value: Dayjs | undefined
   onChange: (date: Dayjs) => void
+  isRefetching: boolean
 }
 
 export const DateCarouselFilter = ({
   value,
   onChange,
+  isRefetching,
 }: DateCarouselFilterProps) => {
   const today = date.now()
   const [startDate, setStartDate] = useState(today)
@@ -32,14 +34,23 @@ export const DateCarouselFilter = ({
     [startDate]
   )
 
-  const { data } = useMatchesCount({
+  const { data, refetch } = useMatchesCount({
     params: {
-      dates: { start: startDate.toISOString(), end: lastDate.toISOString() },
+      dates: {
+        start: startDate.startOf('day').toISOString(),
+        end: lastDate.endOf('day').toISOString(),
+      },
     },
   })
 
   const days = date.getDaysBetween(startDate, lastDate)
   const isAfterToday = startDate.isAfter(today, 'day')
+
+  useEffect(() => {
+    if (isRefetching) {
+      refetch()
+    }
+  }, [isRefetching, refetch])
 
   return (
     <Box mt="-$3" flex={1}>
@@ -48,7 +59,11 @@ export const DateCarouselFilter = ({
           {isAfterToday && (
             <ChevronItem
               type="prev"
-              onPress={() => setStartDate((date) => date.add(-1, 'week'))}
+              onPress={() =>
+                setStartDate((date) =>
+                  date.subtract(2, 'week').subtract(1, 'day')
+                )
+              }
             />
           )}
           {days.map((d) => (
@@ -68,7 +83,7 @@ export const DateCarouselFilter = ({
           <ChevronItem
             type="next"
             onPress={() => {
-              setStartDate((date) => date.add(1, 'week'))
+              setStartDate((date) => date.add(2, 'week').add(1, 'day'))
               scrollRef.current?.scrollTo({ animated: true, y: 0 })
             }}
           />

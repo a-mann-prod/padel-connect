@@ -1,15 +1,14 @@
 {
   "booked": "Réservé",
-  "bookedUrl": "Lien réservation",
-  "bookedUrlHelpMessage": "If you have already booked, add the link here directly (optional)",
+  "cancelRequest": "Annuler la demande",
   "complex": "Lieu",
   "createNewMatch": "Créer une nouvelle partie",
   "date": "Date",
   "datetime": "Date et heure",
   "deleteMatch": "Supprimer la partie",
+  "deleteMatchMessage": "Es tu sûr de vouloir supprimer la partie ?",
   "duration": "Durée",
   "joinRequest": "Demande",
-  "joinRequestSent": "Demande envoyée",
   "leave": "Quitter",
   "pay": "Payer sa part",
   "playersManage": "Gérer les joueurs"

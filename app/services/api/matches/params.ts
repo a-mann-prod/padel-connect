@@ -22,4 +22,10 @@ export type InsertMatchParams =
   Database['public']['Tables']['matches']['Insert']
 
 export type UpdateMatchParams =
-  Database['public']['Tables']['matches']['Update']
+  Database['public']['Tables']['matches']['Update'] & {
+    id: number
+  }
+
+export type DeleteMatchParams = {
+  id: number
+}

@@ -15,3 +15,8 @@ export type InsertMatchRequestParams =
 
 export type UpdateMatchRequestParams =
   Database['public']['Tables']['match_requests']['Update']
+
+export type DeleteMatchRequestParams = {
+  match_id: number
+  user_id: string
+}

@@ -6,7 +6,7 @@ import { ListRenderItemInfo } from 'react-native'
 import { DateCarouselFilter, MatchListItem } from '@/components'
 import { Button, IconButton, VirtualizedList } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
-import { MatchResponse, useMatches } from '@/services/api'
+import { MatchesResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 
@@ -14,7 +14,12 @@ export default () => {
   const t = useTranslate('play')
   const [dateFilter, setDateFilter] = useState(date.now())
 
-  const { data: matches, isLoading } = useMatches({
+  const {
+    data: matches,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useMatches({
     params: {
       dates: {
         start: dateFilter.startOf('day').toISOString(),
@@ -29,7 +34,9 @@ export default () => {
     onPress: () => console.log('open filters'),
   })
 
-  const renderItem = ({ item }: ListRenderItemInfo<MatchResponse>) => (
+  const renderItem = ({
+    item,
+  }: ListRenderItemInfo<MatchesResponse[number]>) => (
     <MatchListItem
       {...item}
       onPress={() => router.push(`/(tabs)/play/match/${item.id}`)}
@@ -41,16 +48,22 @@ export default () => {
       {/* Filters */}
       <HStack gap="$3" pt="$3">
         <IconButton icon="FAS-street-view" h="$full" />
-        <DateCarouselFilter onChange={setDateFilter} value={dateFilter} />
+        <DateCarouselFilter
+          isRefetching={isRefetching}
+          onChange={setDateFilter}
+          value={dateFilter}
+        />
       </HStack>
 
-      <VirtualizedList<MatchResponse>
+      <VirtualizedList<MatchesResponse[number]>
         data={matches}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         isLoading={isLoading}
+        onRefresh={refetch}
+        refreshing={isRefetching}
       />
       <Button
         title={t('createNewMatch')}
