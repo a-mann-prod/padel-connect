@@ -1,6 +1,6 @@
 import { Badge, Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import {
   Icon,
@@ -9,9 +9,9 @@ import {
   ScrollView,
   ScrollViewRef,
 } from '@/designSystem'
-import { useMatchesCount } from '@/services/api'
 import { date } from '@/services/date'
 import { isNilOrEmpty } from '@/utils/global'
+import { capitalizeLetter } from '@/utils/string'
 
 export type DateCarouselFilterProps = {
   value: Dayjs | undefined
@@ -34,23 +34,23 @@ export const DateCarouselFilter = ({
     [startDate]
   )
 
-  const { data, refetch } = useMatchesCount({
-    params: {
-      dates: {
-        start: startDate.startOf('day').toISOString(),
-        end: lastDate.endOf('day').toISOString(),
-      },
-    },
-  })
+  // const { data, refetch } = useMatchesCount({
+  //   params: {
+  //     dates: {
+  //       start: startDate.startOf('day').toISOString(),
+  //       end: lastDate.endOf('day').toISOString(),
+  //     },
+  //   },
+  // })
 
   const days = date.getDaysBetween(startDate, lastDate)
   const isAfterToday = startDate.isAfter(today, 'day')
 
-  useEffect(() => {
-    if (isRefetching) {
-      refetch()
-    }
-  }, [isRefetching, refetch])
+  // useEffect(() => {
+  //   if (isRefetching) {
+  //     refetch()
+  //   }
+  // }, [isRefetching, refetch])
 
   return (
     <Box mt="-$3" flex={1}>
@@ -72,12 +72,12 @@ export const DateCarouselFilter = ({
               date={d}
               onPress={() => onChange(d)}
               isCurrent={d.isSame(value, 'day')}
-              count={
-                data?.length
-                  ? data.filter(({ datetime }) => d.isSame(datetime, 'day'))
-                      .length || undefined
-                  : undefined
-              }
+              // count={
+              //   data?.length
+              //     ? data.filter(({ datetime }) => d.isSame(datetime, 'day'))
+              //         .length || undefined
+              //     : undefined
+              // }
             />
           ))}
           <ChevronItem
@@ -136,11 +136,15 @@ const DateCarouselItem = ({
       <VStack
         variant="colored"
         rounded="$lg"
-        p="$3"
+        p="$1"
         mt="$3"
         alignItems="center"
+        w="$12"
         {...currentContainerProps}
       >
+        <Text size="sm" fontWeight="$normal" {...currentTextProps}>
+          {capitalizeLetter(date.format('ddd'))}
+        </Text>
         <Text fontWeight="$bold" {...currentTextProps}>
           {date.format('D')}
         </Text>
@@ -164,10 +168,11 @@ const ChevronItem = ({ onPress, type }: ChevronItemProps) => {
         flex={1}
         variant="colored"
         rounded="$lg"
-        p="$3"
+        p="$1"
         mt="$3"
         alignItems="center"
         justifyContent="center"
+        w="$12"
       >
         <Icon
           name={`FAS-circle-chevron-${type === 'next' ? 'right' : 'left'}`}
