@@ -1,9 +1,13 @@
-import { Switch } from '@gluestack-ui/themed'
+import { Switch, Text } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import { useMemo } from 'react'
 import { Platform } from 'react-native'
 
-import { useAuthContext } from '@/contexts'
+import {
+  DeviceColorScheme,
+  useAuthContext,
+  useColorSchemeContext,
+} from '@/contexts'
 import { Icon, SectionProps, SectionRowProps } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { openUrl } from '@/utils/url'
@@ -18,6 +22,8 @@ export const useSettingsItems = () => {
   const t = useTranslate('settings')
 
   const { signOut } = useAuthContext()
+  const { deviceColorScheme, colorScheme, setColorScheme } =
+    useColorSchemeContext()
 
   const items = useMemo<SettingsSection[]>(
     () => [
@@ -57,6 +63,35 @@ export const useSettingsItems = () => {
             rightComponent: () => <Switch isDisabled />,
             isDisabled: true,
             isHidden: Platform.OS === 'web',
+          },
+          {
+            title: t('general.darkmode.title'),
+            icon: colorScheme === 'dark' ? 'FAR-moon' : 'FAR-sun',
+            iconColor: 'amber500',
+            items: [
+              {
+                id: 'devicePreference',
+                title: t('general.darkmode.devicePreference'),
+                icon: 'FAS-microchip',
+                isDisabled: deviceColorScheme === 'devicePreference',
+              },
+              {
+                id: 'dark',
+                title: t('general.darkmode.dark'),
+                icon: 'FAR-moon',
+                isDisabled: deviceColorScheme === 'dark',
+              },
+              {
+                id: 'light',
+                title: t('general.darkmode.light'),
+                icon: 'FAR-sun',
+                isDisabled: deviceColorScheme === 'light',
+              },
+            ],
+            onChange: ({ id }) => setColorScheme(id as DeviceColorScheme),
+            rightComponent: () => (
+              <Text>{t(`general.darkmode.${deviceColorScheme}`)}</Text>
+            ),
           },
         ],
       },
@@ -126,7 +161,7 @@ export const useSettingsItems = () => {
         ],
       },
     ],
-    [signOut, t]
+    [deviceColorScheme, setColorScheme, signOut, t]
   )
   return { items }
 }

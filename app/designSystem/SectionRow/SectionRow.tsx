@@ -57,7 +57,10 @@ export const SectionRow = ({
       {onChange && items && (
         <Actionsheet
           isOpen={showActionsheet}
-          onChange={onChange}
+          onChange={(e) => {
+            onChange(e)
+            setShowActionsheet(false)
+          }}
           onClose={() => setShowActionsheet(false)}
           items={items}
         />

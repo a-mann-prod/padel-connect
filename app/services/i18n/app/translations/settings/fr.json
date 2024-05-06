@@ -4,6 +4,12 @@
   "emailSent": "Un email a été envoyé à votre nouvelle adresse, merci de cliquer sur le lien pour le valider",
   "general": {
     "biometricAuth": "Authentification biométrique",
+    "darkmode": {
+      "dark": "Sombre",
+      "devicePreference": "Préférence de l'appareil",
+      "light": "Clair",
+      "title": "Affichage"
+    },
     "deleteAccount": "Supprimer mon compte",
     "emailChange": "Modifier mon email",
     "passwordChange": "Changer mon mot de passe",

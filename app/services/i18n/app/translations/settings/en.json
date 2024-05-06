@@ -4,6 +4,12 @@
   "emailSent": "An email has been sent to your new address, please click on the link to validate it",
   "general": {
     "biometricAuth": "Biometric authentication",
+    "darkmode": {
+      "dark": "Dark",
+      "devicePreference": "Device preference",
+      "light": "Light",
+      "title": "Display"
+    },
     "deleteAccount": "Delete my account",
     "emailChange": "Change my email",
     "passwordChange": "Change my password",

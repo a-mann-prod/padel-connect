@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react'
+import { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react'
 
 import { PersonalInfoFormValues } from '@/components/Forms/PersonalInfoForm/PersonalInfoForm.services'
 import { PreferencesFormValues } from '@/components/Forms/PreferencesForm/PreferencesForm.services'
@@ -19,7 +19,7 @@ const [_, Provider, useOnboardingContext] =
 
 export { useOnboardingContext }
 
-export function OnboardingProvider({ children }: { children: ReactNode }) {
+export const OnboardingProvider = ({ children }: PropsWithChildren) => {
   const [personalInfo, setPersonalInfo] = useState<PersonalInfoFormValues>()
   const [avatar, setAvatar] = useState<AvatarFormValues>()
   const [preferences, setPreferences] = useState<PreferencesFormValues>()

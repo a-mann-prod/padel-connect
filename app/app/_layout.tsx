@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
 import { DefaultAlert, SelfDeleteAlert } from '@/components'
-import { AuthProvider, ThemeProvider } from '@/contexts'
+import { AuthProvider, ColorSchemeProvider, ThemeProvider } from '@/contexts'
 import { useInit } from '@/hooks/useInit'
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
@@ -56,26 +56,28 @@ const RootLayoutNav = () => {
   })
 
   return (
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <Stack initialRouteName={unstable_settings.initialRouteName}>
-            <Stack.Screen
-              name="(modals)"
-              options={{
-                presentation: 'containedModal',
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-          {Platform.OS === 'web' && (
-            <ReactQueryDevtools initialIsOpen={false} />
-          )}
-          <SelfDeleteAlert />
-          <DefaultAlert />
-        </AuthProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <ColorSchemeProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <Stack initialRouteName={unstable_settings.initialRouteName}>
+              <Stack.Screen
+                name="(modals)"
+                options={{
+                  presentation: 'containedModal',
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
+            {Platform.OS === 'web' && (
+              <ReactQueryDevtools initialIsOpen={false} />
+            )}
+            <SelfDeleteAlert />
+            <DefaultAlert />
+          </AuthProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </ColorSchemeProvider>
   )
 }
