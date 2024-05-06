@@ -1,7 +1,7 @@
 import { useToken } from '@gluestack-style/react'
 import { Theme } from '@react-navigation/native'
 
-import { ColorScheme } from '@/hooks/useColorScheme'
+import { ColorScheme } from '@/contexts'
 
 export const useNavigationTheme = (colorScheme: ColorScheme) => {
   const primary = useToken('colors', 'primary500')

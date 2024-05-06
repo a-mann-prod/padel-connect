@@ -1,19 +1,22 @@
-import { Heading, VStack } from '@gluestack-ui/themed'
+import { VStack } from '@gluestack-ui/themed'
+import { router } from 'expo-router'
 
 import { TileButton } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
+import { useTranslate } from '@/services/i18n'
 
 export default () => {
-  const { data: me } = useMe()
-
+  const me = useMe()
+  const t = useTranslate()
   return (
     <VStack gap="$5" m="$5">
-      {me && <Heading>Hello, {me?.first_name} !</Heading>}
       <TileButton
         color="$white"
         bgColor="$primary500"
-        title="Evenements"
-        icon="FAS-calendar-days"
+        title={t('navigation.myMatches')}
+        icon="FAS-baseball"
+        onPress={() => router.navigate('/(tabs)/(home)/my-matches')}
+        disabled={!me}
       />
     </VStack>
   )

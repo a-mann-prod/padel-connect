@@ -1,8 +1,9 @@
 import { PropsWithChildren, useCallback, useState } from 'react'
-import { useColorScheme as useRNColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 
 import { buildContext } from '@/services/buildContext'
 import { storage } from '@/services/storage'
+import { isNilOrEmpty } from '@/utils/global'
 
 const FALLBACK_COLOR_SCHEME: ColorScheme = 'light'
 const COLOR_SCHEME_PERSISTENCE_KEY = 'colorScheme'
@@ -23,13 +24,12 @@ const [_, Provider, useColorSchemeContext] =
 export { useColorSchemeContext }
 
 export const ColorSchemeProvider = ({ children }: PropsWithChildren) => {
-  const [deviceColorScheme, setDeviceColorScheme] = useState<DeviceColorScheme>(
-    FALLBACK_COLOR_SCHEME
-  )
+  const [deviceColorScheme, setDeviceColorScheme] =
+    useState<DeviceColorScheme>('devicePreference')
   const [colorScheme, setColorScheme] = useState<ColorScheme>(
     FALLBACK_COLOR_SCHEME
   )
-  const devicePreferenceColor = useRNColorScheme() || FALLBACK_COLOR_SCHEME
+  const devicePreferenceColor = useColorScheme() || FALLBACK_COLOR_SCHEME
 
   const updateColorScheme = useCallback(
     (colorScheme: DeviceColorScheme) => {
@@ -46,7 +46,10 @@ export const ColorSchemeProvider = ({ children }: PropsWithChildren) => {
 
   storage
     .getItem(COLOR_SCHEME_PERSISTENCE_KEY)
-    .then((color) => updateColorScheme(color as DeviceColorScheme))
+    .then(
+      (color) =>
+        !isNilOrEmpty(color) && updateColorScheme(color as DeviceColorScheme)
+    )
 
   return (
     <Provider

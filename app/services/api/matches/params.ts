@@ -7,7 +7,7 @@ export type GetMatchParams = {
 export type GetMatchesParams = {
   dates: {
     start: string
-    end: string
+    end?: string
   }
 }
 
