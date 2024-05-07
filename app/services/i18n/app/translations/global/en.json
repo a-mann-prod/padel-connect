@@ -22,8 +22,8 @@
       "default": "Recording completed"
     }
   },
+  "apply": "Apply",
   "back": "Retour",
-
   "cancel": "Cancel",
   "captain": "Captain",
   "confirmNewPassword": "Confirm new password",
@@ -58,6 +58,7 @@
     "community": "Community",
     "dangerZone": "Danger zone",
     "emailChange": "Change email",
+    "filters": "Filters",
     "findPlayer": "Find a player",
     "getStarted": "Ready to start?",
     "home": "Home",

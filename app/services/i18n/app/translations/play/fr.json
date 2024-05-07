@@ -10,6 +10,7 @@
   "duration": "Durée",
   "joinRequest": "Demande",
   "leave": "Quitter",
+  "notBooked": "Non réservé",
   "pay": "Payer sa part",
   "playersManage": "Gérer les joueurs"
 }

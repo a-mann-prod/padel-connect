@@ -22,6 +22,7 @@
       "default": "Enregistrement réussi"
     }
   },
+  "apply": "Appliquer",
   "back": "Retour",
   "cancel": "Annuler",
   "captain": "Capitaine",
@@ -57,6 +58,7 @@
     "community": "Communauté",
     "dangerZone": "Zone à risques",
     "emailChange": "Changement email",
+    "filters": "Filtres",
     "findPlayer": "Rechercher un joueur",
     "getStarted": "Prêt à démarrer ?",
     "home": "Accueil",

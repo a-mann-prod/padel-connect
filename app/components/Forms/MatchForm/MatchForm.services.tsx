@@ -2,33 +2,7 @@ import { z } from 'zod'
 
 import { InsertMatchParams, MatchResponse } from '@/services/api'
 import { validators } from '@/services/formValidator'
-import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
-import { iterate } from '@/utils/array'
-
-export const useLevelItems = () => {
-  const t = useTranslate()
-
-  return iterate(10).map((level) => {
-    const value = (level + 1).toString()
-    return {
-      value,
-      label: `${t('level')} ${value}`,
-    }
-  })
-}
-
-export const useDurationItems = () => {
-  const t = useTranslate(undefined, { keyPrefix: 'datetime' })
-
-  return [
-    { label: t('minute', { count: 90 }), value: '90' },
-    {
-      label: t('minute', { count: 120 }),
-      value: '120',
-    },
-  ]
-}
 
 export type MatchFormValues = z.infer<typeof schema>
 

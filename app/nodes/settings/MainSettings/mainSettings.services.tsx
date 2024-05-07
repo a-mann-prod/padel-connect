@@ -161,7 +161,7 @@ export const useSettingsItems = () => {
         ],
       },
     ],
-    [deviceColorScheme, setColorScheme, signOut, t]
+    [colorScheme, deviceColorScheme, setColorScheme, signOut, t]
   )
   return { items }
 }

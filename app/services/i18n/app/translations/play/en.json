@@ -10,6 +10,7 @@
   "duration": "Duration",
   "joinRequest": "Join request",
   "leave": "Leave",
+  "notBooked": "Not booked",
   "pay": "Pay your share",
   "playersManage": "Manager players"
 }

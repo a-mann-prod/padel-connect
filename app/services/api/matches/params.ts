@@ -9,6 +9,15 @@ export type GetMatchesParams = {
     start: string
     end?: string
   }
+  level: {
+    min: number
+    max: number
+  }
+  duration?: {
+    min?: number
+    max?: number
+  }
+  reserved?: boolean
 }
 
 export type GetMatchesCountParams = {

@@ -1,10 +1,7 @@
 import { HeaderButtonContainer } from '../HeaderButtonContainer/HeaderButtonContainer'
 import { IconButton, IconButtonProps } from '../IconButton/IconButton'
 
-export type HeaderButtonProps = {
-  onPress: IconButtonProps['onPress']
-  icon: IconButtonProps['icon']
-}
+export type HeaderButtonProps = IconButtonProps
 
 export const HeaderButton = (props: HeaderButtonProps) => (
   <HeaderButtonContainer>

@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { DateCarouselFilter, MatchListItem } from '@/components'
-import { Button, IconButton, VirtualizedList } from '@/designSystem'
+import { useMatchFiltersContext } from '@/contexts'
+import { Button, VirtualizedList } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { MatchesResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
@@ -13,6 +14,7 @@ import { useTranslate } from '@/services/i18n'
 export default () => {
   const t = useTranslate('play')
   const [dateFilter, setDateFilter] = useState(date.now())
+  const { matchFilters, defaultMatchFilters } = useMatchFiltersContext()
 
   const {
     data: matches,
@@ -25,13 +27,16 @@ export default () => {
         start: dateFilter.startOf('day').toISOString(),
         end: dateFilter.endOf('day').toISOString(),
       },
+      ...matchFilters,
     },
   })
 
   useHeaderButton({
     side: 'headerRight',
     icon: 'FAS-sliders',
-    onPress: () => console.log('open filters'),
+    onPress: () => router.navigate('/(tabs)/play/filters'),
+    hasBadge:
+      JSON.stringify(defaultMatchFilters) !== JSON.stringify(matchFilters),
   })
 
   const renderItem = ({
@@ -47,7 +52,7 @@ export default () => {
     <VStack gap="$3" mx="$3" mb="$3" h="$full" flex={1}>
       {/* Filters */}
       <HStack gap="$3" pt="$3">
-        <IconButton icon="FAS-street-view" h="$full" />
+        {/* <IconButton icon="FAS-street-view" h="$full" /> */}
         <DateCarouselFilter
           isRefetching={isRefetching}
           onChange={setDateFilter}

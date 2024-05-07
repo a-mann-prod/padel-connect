@@ -3,12 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  MatchFormValues,
-  matchFormServices,
-  useDurationItems,
-  useLevelItems,
-} from './MatchForm.services'
+import { MatchFormValues, matchFormServices } from './MatchForm.services'
 
 import { FormProvider } from '@/components/FormProvider/FormProvider'
 import {
@@ -16,6 +11,8 @@ import {
   FormSelectControlled,
 } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
+import { useDurationItems } from '@/hooks/useDurationItems'
+import { useLevelItems } from '@/hooks/useLevelItems'
 import { useComplexes } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
