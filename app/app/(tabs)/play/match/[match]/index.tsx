@@ -193,6 +193,17 @@ export default () => {
             />
           </>
         )}
+        {isParticipant && (
+          <Button
+            title="Chat"
+            icon="FAS-message"
+            iconRight
+            action="positive"
+            onPress={() =>
+              router.navigate(`/(tabs)/play/match/${matchId}/chat`)
+            }
+          />
+        )}
 
         {!isParticipant && (
           <MatchRequestButton

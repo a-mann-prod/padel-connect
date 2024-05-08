@@ -172,6 +172,45 @@ export type Database = {
           },
         ]
       }
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: number
+          match_id: number | null
+          sender_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: number
+          match_id?: number | null
+          sender_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: number
+          match_id?: number | null
+          sender_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_messages_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_messages_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

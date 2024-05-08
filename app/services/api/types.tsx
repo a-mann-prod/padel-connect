@@ -11,7 +11,9 @@ import {
   UseQueryOptions,
 } from '@tanstack/react-query'
 
+import { UseSubscriptionOpts } from '@supabase-cache-helpers/postgrest-react-query'
 import { StorageType } from './image'
+import { InfiniteQueryOptions } from './queryHooks/useInfiniteQuery'
 
 // QueryOptions from Supa cache helper
 export type QueryOptions<TResponse, TError> = Omit<
@@ -53,6 +55,15 @@ export type UseQueryProps<TResponse, TParams, TError = PostgrestError> = {
   options?: QueryOptions<TResponse, TError>
 }
 
+export type UseInfiniteQueryProps<
+  TResponse,
+  TParams,
+  TError = PostgrestError,
+> = {
+  params: TParams
+  options?: InfiniteQueryOptions<TResponse, TError>
+}
+
 export type UseMutationProps<TResponse, TParams, TError> = Partial<
   MutationOptions<TResponse, Partial<TParams>, TError>
 >
@@ -69,3 +80,7 @@ export type UseUploadProps = {
 export type UseRemoveFilesProps = {
   storageType: StorageType
 } & Partial<MutationOptions<FileObject[], string[], StorageError>>
+
+export type UseSubscriptionProps = {
+  options?: UseSubscriptionOpts<any>
+}

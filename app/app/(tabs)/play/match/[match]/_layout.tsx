@@ -34,6 +34,12 @@ export default () => {
           title: '',
         }}
       />
+      <Stack.Screen
+        name="chat"
+        options={{
+          title: '',
+        }}
+      />
     </Stack>
   )
 }

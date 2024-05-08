@@ -1,4 +1,5 @@
 import { Box, Center, Text } from '@gluestack-ui/themed'
+import { ForwardedRef, Ref, forwardRef } from 'react'
 import {
   VirtualizedList as RNVirtualizedList,
   VirtualizedListProps as RNVirtualizedListProps,
@@ -13,11 +14,12 @@ export type VirtualizedListProps<T> = RNVirtualizedListProps<T> & {
   isLoading?: boolean
 }
 
-export const VirtualizedList = <T,>({
-  isLoading,
-  data,
-  ...props
-}: VirtualizedListProps<T>) => {
+export type VirtualizedListRef<T> = RNVirtualizedList<T>
+
+const VirtualizedListInner = <T,>(
+  { isLoading, data, ...props }: VirtualizedListProps<T>,
+  ref: ForwardedRef<VirtualizedListRef<T>>
+) => {
   const t = useTranslate()
   const ItemSeparatorComponent = () => <Box pt="$3" />
 
@@ -38,6 +40,7 @@ export const VirtualizedList = <T,>({
 
   return (
     <RNVirtualizedList<T>
+      ref={ref}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
@@ -49,4 +52,17 @@ export const VirtualizedList = <T,>({
       {...props}
     />
   )
+}
+
+const VirtualizedListWithRef = forwardRef<any, any>(VirtualizedListInner)
+
+type ClickableListWithRefProps<T> = VirtualizedListProps<T> & {
+  mRef?: Ref<VirtualizedListRef<T>>
+}
+
+export function VirtualizedList<T>({
+  mRef,
+  ...props
+}: ClickableListWithRefProps<T>) {
+  return <VirtualizedListWithRef ref={mRef} {...props} />
 }

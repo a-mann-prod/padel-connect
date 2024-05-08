@@ -52,6 +52,7 @@
     "friendly": "Amical"
   },
   "me": "Moi",
+  "message": "Message",
   "navigation": {
     "avatar": "Avatar",
     "bookingDetails": "Détails réservation",
@@ -95,5 +96,6 @@
     "right": "Droit",
     "title": "Côté favoris"
   },
+  "today": "Aujourd'hui",
   "warning": "Attention"
 }

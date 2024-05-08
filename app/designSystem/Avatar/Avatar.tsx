@@ -58,7 +58,9 @@ export const Avatar = ({
         </AvatarFallbackText>
       )
 
-    return <Icon name={fallBackIcon || 'FAS-user'} color="white" size="lg" />
+    return (
+      <Icon name={fallBackIcon || 'FAS-user'} color="white" size={props.size} />
+    )
   }
 
   return (
