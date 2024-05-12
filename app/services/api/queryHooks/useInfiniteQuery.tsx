@@ -1,7 +1,7 @@
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query'
 import { PostgrestResponse } from '@supabase/supabase-js'
 import { UseQueryOptions } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { prop, uniqBy } from 'remeda'
 
 export type InfiniteQueryOptions<TResponse, TError> = Omit<
@@ -16,21 +16,40 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
     'queryKey' | 'queryFn'
   > & { limit?: number }
 ) => {
+  const isCacheUpdating = useRef(true)
   const [data, setData] = useState<T[]>()
 
   const limit = useMemo(() => config?.limit || 20, [config?.limit])
   const [page, setPage] = useState(0)
 
-  const { data: nextData, isLoading } = useQuery<T>(
+  const {
+    data: nextData,
+    isLoading,
+    status,
+  } = useQuery<T>(
     (query as any).range(page * limit, page * limit + limit - 1),
     config
   )
 
   useEffect(() => {
+    console.log('avant', status)
+
+    if (status === 'pending') isCacheUpdating.current = false
+  }, [status])
+
+  useEffect(() => {
+    // pas opti, car est appelé quand un message est rajouté.
+    // Si la liste de message est longue, c'est long avant d'insérer le message
     if (!isLoading && nextData) {
-      setData((data) => uniqBy([...nextData, ...(data || [])], prop('id')))
+      console.log('après', isCacheUpdating)
+      if (isCacheUpdating.current) {
+        setData((data) => uniqBy([...nextData, ...(data || [])], prop('id')))
+      } else {
+        setData((data) => uniqBy([...(data || []), ...nextData], prop('id')))
+        isCacheUpdating.current = true
+      }
     }
-  }, [isLoading, nextData])
+  }, [isLoading, nextData, isCacheUpdating])
 
   const fetchNext = () => {
     if (!nextData?.length) return

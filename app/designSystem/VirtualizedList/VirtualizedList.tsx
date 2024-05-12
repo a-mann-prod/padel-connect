@@ -9,6 +9,7 @@ import { Icon } from '../Icon/Icon'
 import { Loader } from '../Loader/Loader'
 
 import { useTranslate } from '@/services/i18n'
+import { when } from '@/utils/when'
 
 export type VirtualizedListProps<T> = RNVirtualizedListProps<T> & {
   isLoading?: boolean
@@ -26,7 +27,11 @@ const VirtualizedListInner = <T,>(
   const ListEmptyComponent = () => {
     if (data) {
       return (
-        <Center flex={1} gap="$3">
+        <Center
+          flex={1}
+          gap="$3"
+          transform={when(!!props?.inverted, [{ scaleY: -1 }])}
+        >
           <Text>{t('noData')}</Text>
           <Icon name="FAR-face-frown-open" size="xl" />
         </Center>

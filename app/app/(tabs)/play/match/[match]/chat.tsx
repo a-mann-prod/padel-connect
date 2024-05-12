@@ -1,4 +1,4 @@
-import { Box, Text, VStack } from '@gluestack-ui/themed'
+import { Box, VStack } from '@gluestack-ui/themed'
 import { useUpsertItem } from '@supabase-cache-helpers/postgrest-react-query'
 import { useLocalSearchParams } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
@@ -51,7 +51,7 @@ export default () => {
     options: { enabled: !!userIds.length },
   })
 
-  const { status } = useMessagesSubscription({
+  useMessagesSubscription({
     options: {
       callback: async (e) => {
         if (e.eventType === 'INSERT') {
@@ -66,10 +66,6 @@ export default () => {
   })
 
   const { mutate: addMessage } = useInsertMessages()
-
-  if (status && status !== 'SUBSCRIBED') {
-    return <Text>ERROR</Text>
-  }
 
   if (!messages) return
 
