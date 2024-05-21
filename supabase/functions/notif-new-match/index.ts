@@ -23,10 +23,14 @@ const clientAdmin = supabaseAdmin();
 const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
 const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
 
+console.log("RUN");
+
 // how lbc notifications r working ? Trigger first time then wait 15-30mn
 // (if another notific need to be fired) and send notif anyway
 Deno.serve(async (req) => {
   const payload: WebhookPayload = await req.json();
+
+  console.log("payload", payload);
 
   const record = payload.record;
 
@@ -40,7 +44,10 @@ Deno.serve(async (req) => {
     .lte("match_filters.min_level", record.level)
     .gte("match_filters.max_level", record.level);
 
+  console.log("users", users);
+
   if (!users?.length) {
+    console.log("nothing");
     return new Response(JSON.stringify({ errorCode: "user_not_found" }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
@@ -65,7 +72,10 @@ Deno.serve(async (req) => {
     });
   });
 
+  console.log("promises created");
+
   Promise.all(promises);
+  console.log("promises.all");
 
   return new Response("done", {
     headers: { "Content-Type": "application/json" },
