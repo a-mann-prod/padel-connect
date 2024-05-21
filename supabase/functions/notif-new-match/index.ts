@@ -23,8 +23,6 @@ const clientAdmin = supabaseAdmin();
 const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
 const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
 
-console.log("TOTO", expoNotifUrl, expoNotifToken);
-
 // how lbc notifications r working ? Trigger first time then wait 15-30mn
 // (if another notific need to be fired) and send notif anyway
 Deno.serve(async (req) => {
@@ -35,11 +33,12 @@ Deno.serve(async (req) => {
   // get users to be notified on match insert
   const { data: users } = await clientAdmin
     .from("profiles")
-    .select("push_token, language")
+    .select("id, push_token, language, match_filters!inner(user_id)")
+    .neq("push_token", null)
     .neq("id", record.owner_id)
     .eq("is_new_match_notification_enabled", true)
-    .gte("match_filters.min_level", record.level)
-    .lte("match_filters.max_level", record.level);
+    .lte("match_filters.min_level", record.level)
+    .gte("match_filters.max_level", record.level);
 
   if (!users?.length) {
     return new Response(JSON.stringify({ errorCode: "user_not_found" }), {
