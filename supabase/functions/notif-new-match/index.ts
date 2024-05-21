@@ -1,7 +1,6 @@
-import { Language } from "../../../app/services/i18n/app/types.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
-import { translations } from "../_shared/translations.ts";
+import { Language, translations } from "../_shared/translations.ts";
 
 interface Match {
   id: string;
