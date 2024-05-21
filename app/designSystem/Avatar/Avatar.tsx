@@ -17,7 +17,7 @@ import { ImageWrapper } from '../ImageViewer/ImageWrapper'
 import { Skeleton } from '../Skeleton/Skeleton'
 
 import { isNilOrEmpty } from '@/utils/global'
-import { getInitials } from '@/utils/user'
+import { getInitials, getUsername } from '@/utils/user'
 
 export type AvatarProps = {
   imageUrl?: string
