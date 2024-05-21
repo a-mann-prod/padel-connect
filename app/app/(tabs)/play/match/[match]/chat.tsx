@@ -1,6 +1,6 @@
 import { Box, VStack } from '@gluestack-ui/themed'
 import { useUpsertItem } from '@supabase-cache-helpers/postgrest-react-query'
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, usePathname } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
 import { uniq } from 'remeda'
 
@@ -17,6 +17,7 @@ import {
 import { date } from '@/services/date'
 
 export default () => {
+  const pathName = usePathname()
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
   const upsert = useUpsertItem({
@@ -54,10 +55,11 @@ export default () => {
   useMessagesSubscription({
     options: {
       callback: async (e) => {
+        // if user is not in the screen
+        console.log('new msg', pathName)
         if (e.eventType === 'INSERT') {
           const newMessage = e.new
           if (newMessage.sender_id !== me?.id) {
-            console.log('upserting')
             upsert(newMessage)
           }
         }
@@ -83,9 +85,9 @@ export default () => {
         sender={sender}
         createdDate={date.dayjs(created_at)}
         isFetchingOldMessages={isLoadingNext}
-        prevMessage={messages[index - 1]}
-        nextMessage={messages[index + 1]}
-        isLast={index === messages.length - 1}
+        prevMessage={messages[index + 1]} // because list is reversed
+        nextMessage={messages[index - 1]} // because list is reversed
+        isLast={index === 0} // because list is reversed
       />
     )
   }

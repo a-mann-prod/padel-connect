@@ -6,15 +6,14 @@ import { buildContext } from '@/services/buildContext'
 
 export type MatchFilters = Omit<GetMatchesParams, 'dates'>
 
-type FiltersContextProps = {
+type MatchFiltersContextProps = {
   matchFilters: MatchFilters
   setMatchFilters: Dispatch<SetStateAction<MatchFilters>>
   defaultMatchFilters: MatchFilters
 }
 
-const [_, Provider, useMatchFiltersContext] = buildContext<FiltersContextProps>(
-  'MatchFiltersContext'
-)
+const [_, Provider, useMatchFiltersContext] =
+  buildContext<MatchFiltersContextProps>('MatchFiltersContext')
 
 const defaultMatchFilters: MatchFilters = {
   level: {
@@ -26,7 +25,7 @@ const defaultMatchFilters: MatchFilters = {
 
 export { useMatchFiltersContext }
 
-export const FiltersProvider = ({ children }: PropsWithChildren) => {
+export const MatchFiltersProvider = ({ children }: PropsWithChildren) => {
   const [matchFilters, setMatchFilters] =
     useState<MatchFilters>(defaultMatchFilters)
 

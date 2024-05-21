@@ -1,4 +1,4 @@
-import { HStack, Text, VStack } from '@gluestack-ui/themed'
+import { HStack, RefreshControl, Text, VStack } from '@gluestack-ui/themed'
 import * as AuthSession from 'expo-auth-session'
 import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Share } from 'react-native'
@@ -33,7 +33,12 @@ export default () => {
 
   const { data: me } = useMe()
 
-  const { data: match, isLoading } = useMatch({
+  const {
+    data: match,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useMatch({
     params: { id: matchId },
     options: { enabled: !!local?.match },
   })
@@ -84,7 +89,11 @@ export default () => {
   const isBooked = !isNilOrEmpty(match.booked_url)
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+      }
+    >
       <VStack p="$3" gap="$3">
         {isBooked && (
           <Tile

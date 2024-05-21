@@ -85,6 +85,35 @@ export type Database = {
           },
         ]
       }
+      match_filters: {
+        Row: {
+          created_at: string
+          max_level: number | null
+          min_level: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          max_level?: number | null
+          min_level?: number | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          max_level?: number | null
+          min_level?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_match_filters_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       match_requests: {
         Row: {
           created_at: string
@@ -217,11 +246,15 @@ export type Database = {
           created_at: string
           first_name: string | null
           id: string
+          is_new_match_notification_enabled: boolean | null
+          is_new_message_notification_enabled: boolean | null
           is_onboarding_completed: boolean
+          language: string | null
           last_name: string | null
           manual_preference:
             | Database["public"]["Enums"]["manual_preference"]
             | null
+          push_token: string | null
           side_preference: Database["public"]["Enums"]["side_preference"] | null
           updated_at: string | null
         }
@@ -230,11 +263,15 @@ export type Database = {
           created_at?: string
           first_name?: string | null
           id: string
+          is_new_match_notification_enabled?: boolean | null
+          is_new_message_notification_enabled?: boolean | null
           is_onboarding_completed?: boolean
+          language?: string | null
           last_name?: string | null
           manual_preference?:
             | Database["public"]["Enums"]["manual_preference"]
             | null
+          push_token?: string | null
           side_preference?:
             | Database["public"]["Enums"]["side_preference"]
             | null
@@ -245,11 +282,15 @@ export type Database = {
           created_at?: string
           first_name?: string | null
           id?: string
+          is_new_match_notification_enabled?: boolean | null
+          is_new_message_notification_enabled?: boolean | null
           is_onboarding_completed?: boolean
+          language?: string | null
           last_name?: string | null
           manual_preference?:
             | Database["public"]["Enums"]["manual_preference"]
             | null
+          push_token?: string | null
           side_preference?:
             | Database["public"]["Enums"]["side_preference"]
             | null

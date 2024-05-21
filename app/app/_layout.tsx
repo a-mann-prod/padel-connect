@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import 'expo-dev-client'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
@@ -8,6 +9,7 @@ import { Platform } from 'react-native'
 
 import { DefaultAlert, SelfDeleteAlert } from '@/components'
 import { AuthProvider, ColorSchemeProvider, ThemeProvider } from '@/contexts'
+import { NotificationsProvider } from '@/contexts/NotificationsContext'
 import { useInit } from '@/hooks/useInit'
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
@@ -60,21 +62,23 @@ const RootLayoutNav = () => {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <Stack initialRouteName={unstable_settings.initialRouteName}>
-              <Stack.Screen
-                name="(modals)"
-                options={{
-                  presentation: 'containedModal',
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-            {Platform.OS === 'web' && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
-            <SelfDeleteAlert />
-            <DefaultAlert />
+            <NotificationsProvider>
+              <Stack initialRouteName={unstable_settings.initialRouteName}>
+                <Stack.Screen
+                  name="(modals)"
+                  options={{
+                    presentation: 'containedModal',
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              </Stack>
+              {Platform.OS === 'web' && (
+                <ReactQueryDevtools initialIsOpen={false} />
+              )}
+              <SelfDeleteAlert />
+              <DefaultAlert />
+            </NotificationsProvider>
           </AuthProvider>
         </QueryClientProvider>
       </ThemeProvider>

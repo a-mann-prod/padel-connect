@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router'
 
 import { WithAuth } from '@/components'
-import { FiltersProvider } from '@/contexts'
+import { MatchFiltersProvider } from '@/contexts'
 import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 
@@ -9,7 +9,7 @@ export default WithAuth(() => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
 
   return (
-    <FiltersProvider>
+    <MatchFiltersProvider>
       <Stack>
         <Stack.Screen name="index" options={{ title: t('play') }} />
         <Stack.Screen name="match/[match]" options={{ headerShown: false }} />
@@ -30,6 +30,6 @@ export default WithAuth(() => {
           }}
         />
       </Stack>
-    </FiltersProvider>
+    </MatchFiltersProvider>
   )
 })

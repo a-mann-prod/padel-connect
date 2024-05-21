@@ -7,6 +7,7 @@ import {
   useUpdateProfile,
 } from '@/services/api'
 import { UseMutationProps } from '@/services/api/types'
+import { useCallback } from 'react'
 
 export type UseUpdateMe = {
   data: Partial<ProfileResponse & Pick<User, 'id' | 'created_at'>>
@@ -20,8 +21,11 @@ export const useUpdateMe = (
 
   const { mutate: updateProfile, ...rest } = useUpdateProfile(options)
 
-  const mutate = (params: Omit<UpdateProfileParams, 'id'>) =>
-    updateProfile({ id: user?.id, ...params })
+  const mutate = useCallback(
+    (params: Omit<UpdateProfileParams, 'id'>) =>
+      updateProfile({ id: user?.id, ...params }),
+    [updateProfile, user?.id]
+  )
 
   return {
     mutate,

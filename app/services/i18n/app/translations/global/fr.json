@@ -43,8 +43,8 @@
   "letsGo": "C'est parti ! 🚀",
   "level": "Niveau",
   "manualPreference": {
-    "left_handed": "Main gauche",
-    "right_handed": "Main droite",
+    "left_handed": "Gaucher",
+    "right_handed": "Droiter",
     "title": "Main forte"
   },
   "matchType": {
@@ -73,7 +73,7 @@
     "playersManage": "Gestion des joueurs",
     "preferences": "Préférences",
     "privacyPolicy": "Politique de confidentialité",
-    "profile": "Profile",
+    "profile": "Profil",
     "register": "Inscription",
     "settings": "Réglages",
     "termsOfUse": "Conditions d'utilisation",

@@ -43,8 +43,8 @@
   "letsGo": "Let's go! 🚀",
   "level": "Level",
   "manualPreference": {
-    "left_handed": "Left hand",
-    "right_handed": "Right hand",
+    "left_handed": "Left-handed",
+    "right_handed": "Right-handed",
     "title": "Strong hand"
   },
   "matchType": {

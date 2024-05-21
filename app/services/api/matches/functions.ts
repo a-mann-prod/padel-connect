@@ -12,13 +12,15 @@ export const getMatchFn = (params: GetMatchParams) =>
   supabase
     .from('matches')
     .select(getMatchQueryCols)
-    // .eq('match_requests.status', 'ACCEPTED')
+    .eq('match_requests.status', 'ACCEPTED')
     .eq('id', params.id)
     .single()
 
 export const getMatchesFn = (params: GetMatchesParams) => {
-  let query = supabase.from('matches').select(getMatchesQueryCols)
-  // .eq('match_requests.status', 'ACCEPTED')
+  let query = supabase
+    .from('matches')
+    .select(getMatchesQueryCols)
+    .eq('match_requests.status', 'ACCEPTED')
 
   query = query.gte('datetime', params.dates.start)
 

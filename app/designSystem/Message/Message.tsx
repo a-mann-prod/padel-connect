@@ -37,12 +37,14 @@ export const Message = ({
 
   const isSameUser = prevMessage?.sender_id === sender?.id
 
-  const isSameDay = prevMessage
-    ? createdDate.isSame(prevMessage?.created_at, 'day')
-    : createdDate.isSame(nextMessage?.created_at, 'day')
+  // const isSameDay = prevMessage
+  //   ? createdDate.isSame(prevMessage?.created_at, 'day')
+  //   : createdDate.isSame(nextMessage?.created_at, 'day')
+
+  const isSameDay = isSameDayFn(createdDate, prevMessage, nextMessage)
 
   return (
-    <VStack gap="$3" pt={when(isLast, '$3')}>
+    <VStack gap="$3">
       {isLast && isFetchingOldMessages && <Loader />}
       {!isSameDay && (
         <Center>
@@ -55,7 +57,7 @@ export const Message = ({
       )}
 
       <HStack
-        mb={when(isSameUser, '-$2.5')}
+        mt={when(isSameUser, '-$2.5')}
         gap="$2"
         justifyContent={isMe ? 'flex-end' : 'flex-start'}
         alignItems="flex-end"
@@ -70,7 +72,7 @@ export const Message = ({
           rounded="$lg"
           bgColor={isMe ? '$primary100' : '$secondary100'}
           p="$2"
-          maxWidth="90%"
+          maxWidth="80%"
         >
           <Text variant="subtitle">
             {isMe
@@ -85,4 +87,17 @@ export const Message = ({
       </HStack>
     </VStack>
   )
+}
+
+const isSameDayFn = (
+  date: Dayjs,
+  prevMessage?: MessageResponse,
+  nextMessage?: MessageResponse
+) => {
+  // first message
+  if (!prevMessage) {
+    return false
+  }
+
+  return date.isSame(prevMessage?.created_at, 'day')
 }

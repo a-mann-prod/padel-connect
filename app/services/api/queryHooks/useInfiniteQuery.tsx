@@ -32,8 +32,6 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
   )
 
   useEffect(() => {
-    console.log('avant', status)
-
     if (status === 'pending') isCacheUpdating.current = false
   }, [status])
 
@@ -41,7 +39,6 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
     // pas opti, car est appelé quand un message est rajouté.
     // Si la liste de message est longue, c'est long avant d'insérer le message
     if (!isLoading && nextData) {
-      console.log('après', isCacheUpdating)
       if (isCacheUpdating.current) {
         setData((data) => uniqBy([...nextData, ...(data || [])], prop('id')))
       } else {

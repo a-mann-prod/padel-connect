@@ -32,7 +32,8 @@ export default ({ config }: ConfigContext) => ({
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
-    package: 'com.a-mann-prod.padel-connect',
+    package: 'com.a_mann_prod.padel_connect',
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
   },
   web: {
     bundler: 'metro',
@@ -41,6 +42,8 @@ export default ({ config }: ConfigContext) => ({
   },
   jsEngine: 'hermes',
   plugins: [
+    'expo-build-properties',
+    'expo-font',
     'expo-router',
     'expo-localization',
     [
