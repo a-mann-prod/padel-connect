@@ -1,6 +1,6 @@
 import { isNilOrEmpty } from '../global'
 
-export const getUserName = (...args: (string | null | undefined)[]) =>
+export const getUsername = (...args: (string | null | undefined)[]) =>
   args
     .reduce<string[]>((acc, curr, index) => {
       if (!curr || isNilOrEmpty(curr)) return acc

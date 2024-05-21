@@ -21,7 +21,7 @@ import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
 import { openUrl } from '@/utils/url'
-import { getUserName } from '@/utils/user'
+import { getUsername } from '@/utils/user'
 
 export default () => {
   const tGlobal = useTranslate()
@@ -137,7 +137,7 @@ export default () => {
             title={tGlobal('captain')}
             icon="FAS-crown"
             rightComponent={() => (
-              <Text>{getUserName(owner?.first_name, owner?.last_name)}</Text>
+              <Text>{getUsername(owner?.first_name, owner?.last_name)}</Text>
             )}
           />
           <SectionRow

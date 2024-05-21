@@ -10,7 +10,6 @@ import {
 } from '@/designSystem'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { useTranslate } from '@/services/i18n'
-import { getUserName } from '@/utils/user'
 
 export type PlayerlistItemProps = ProfileWithAvatar & {
   onPress: PressableProps['onPress']
@@ -39,7 +38,7 @@ export const PlayerListItem = ({
         <Avatar size="md" imageUrl={avatar} />
         <VStack flex={1} gap="$2">
           <HStack alignItems="center">
-            <Text flex={1}>{getUserName(first_name, last_name)}</Text>
+            <Text flex={1}>{getUsername(first_name, last_name)}</Text>
             {isFavorite && <Icon name="FAS-star" size="xs" />}
           </HStack>
           <HStack gap="$3">

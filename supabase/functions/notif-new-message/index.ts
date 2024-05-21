@@ -1,21 +1,20 @@
 import { corsHeaders } from "../_shared/cors.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
-import { Language, translations } from "../_shared/translations.ts";
+import { getUsername } from "../_shared/user.ts";
 
-interface Match {
+interface Message {
   id: number;
-  level: number;
-  duration: number;
-  datetime: string;
-  owner_id: string;
+  content: string;
+  sender_id: string;
+  match_id: number;
 }
 
 interface WebhookPayload {
   type: "INSERT" | "UPDATE" | "DELETE";
   table: string;
-  record: Match;
+  record: Message;
   schema: "public";
-  old_record: null | Match;
+  old_record: null | Message;
 }
 
 const clientAdmin = supabaseAdmin();
@@ -23,22 +22,31 @@ const clientAdmin = supabaseAdmin();
 const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
 const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
 
-// how lbc notifications r working ? Trigger first time then wait 15-30mn
-// (if another notific need to be fired) and send notif anyway
 Deno.serve(async (req) => {
   const payload: WebhookPayload = await req.json();
 
   const record = payload.record;
 
+  // get sender name
+  const { data: sender } = await clientAdmin
+    .from("profiles")
+    .select("id, first_name, last_name")
+    .eq("id", record.sender_id)
+    .maybeSingle();
+
+  const senderName = getUsername(sender?.first_name, sender?.last_name);
+
   // get users to be notified on match insert
   const { data: users } = await clientAdmin
     .from("profiles")
-    .select("id, push_token, language, match_filters!inner(user_id)")
+    .select(
+      "id, first_name, last_name, push_token, language, match_requests!inner(user_id)"
+    )
     .neq("push_token", null)
-    .neq("id", record.owner_id)
-    .eq("is_new_match_notification_enabled", true)
-    .lte("match_filters.min_level", record.level)
-    .gte("match_filters.max_level", record.level);
+    .neq("id", record.sender_id)
+    .eq("is_new_message_notification_enabled", true)
+    .eq("match_requests.match_id", record.match_id)
+    .eq("match_requests.status", "ACCEPTED");
 
   if (!users?.length) {
     return new Response(JSON.stringify({ errorCode: "user_not_found" }), {
@@ -48,8 +56,6 @@ Deno.serve(async (req) => {
   }
 
   const promises = users.map((u) => {
-    const language = (u.language || "en") as Language;
-
     return fetch(expoNotifUrl, {
       method: "POST",
       headers: {
@@ -59,8 +65,8 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         to: u.push_token,
         sound: "default",
-        title: translations[language].newMatch.title,
-        body: translations[language].newMatch.body,
+        title: senderName,
+        body: record.content,
       }),
     });
   });

@@ -17,7 +17,7 @@ import { ImageWrapper } from '../ImageViewer/ImageWrapper'
 import { Skeleton } from '../Skeleton/Skeleton'
 
 import { isNilOrEmpty } from '@/utils/global'
-import { getInitials, getUserName } from '@/utils/user'
+import { getInitials } from '@/utils/user'
 
 export type AvatarProps = {
   imageUrl?: string
@@ -48,7 +48,7 @@ export const Avatar = ({
   const imageViewerRef = useRef<any>(null)
 
   const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
-  const completeName = getUserName(firstname, lastname)
+  const completeName = getUsername(firstname, lastname)
 
   const displayFallback = () => {
     if (completeName && !isEmpty(completeName))

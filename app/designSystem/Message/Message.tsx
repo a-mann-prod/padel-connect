@@ -8,7 +8,7 @@ import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { MessageResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
-import { getUserName } from '@/utils/user'
+import { getUsername } from '@/utils/user'
 import { when } from '@/utils/when'
 
 export type MessageProps = {
@@ -77,7 +77,7 @@ export const Message = ({
           <Text variant="subtitle">
             {isMe
               ? t('me')
-              : getUserName(sender?.first_name, sender?.last_name)}
+              : getUsername(sender?.first_name, sender?.last_name)}
           </Text>
           <Text>{content}</Text>
           <Text pt="$1" variant="subtitle" alignSelf="flex-end">

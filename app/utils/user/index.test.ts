@@ -1,8 +1,8 @@
 import { describe, expect, it } from '@jest/globals'
 
-import { getInitials, getUserName } from './index'
+import { getInitials, getUsername } from './index'
 
-describe('getUserName', () => {
+describe('getUsername', () => {
   it('should return firstname and first letter of lastname with uppercase', () => {
     // ARRANGE
     const lastname = 'Réno'
@@ -10,14 +10,14 @@ describe('getUserName', () => {
     const expected = 'Jean R.'
 
     // ACT
-    const current = getUserName(firstname, lastname)
+    const current = getUsername(firstname, lastname)
 
     // ASSERT
     expect(current).toEqual(expected)
   })
 })
 
-describe('getUserName', () => {
+describe('getUsername', () => {
   it('should return firstName and first letter of lastname with uppercase with a composed firstname', () => {
     // ARRANGE
     const lastname = 'Goldman'
@@ -25,7 +25,7 @@ describe('getUserName', () => {
     const expected = 'Jean Jacques G.'
 
     // ACT
-    const current = getUserName(firstname, lastname)
+    const current = getUsername(firstname, lastname)
 
     // ASSERT
     expect(current).toEqual(expected)
