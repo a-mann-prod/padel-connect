@@ -1,4 +1,5 @@
 import { corsHeaders } from "../_shared/cors.ts";
+import { handledByBrowser } from "../_shared/handledByBrowser.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
 import { Language, translations } from "../_shared/translations.ts";
 
@@ -18,16 +19,16 @@ interface WebhookPayload {
   old_record: null | Match;
 }
 
-const clientAdmin = supabaseAdmin();
-
-const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
-const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
-
-console.log("RUN");
-
 // how lbc notifications r working ? Trigger first time then wait 15-30mn
 // (if another notific need to be fired) and send notif anyway
 Deno.serve(async (req) => {
+  handledByBrowser(req);
+
+  const clientAdmin = supabaseAdmin();
+
+  const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
+  const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
+
   const payload: WebhookPayload = await req.json();
 
   console.log("payload", payload);

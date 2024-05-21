@@ -1,4 +1,5 @@
 import { corsHeaders } from "../_shared/cors.ts";
+import { handledByBrowser } from "../_shared/handledByBrowser.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
 import { getUsername } from "../_shared/user.ts";
 
@@ -17,12 +18,14 @@ interface WebhookPayload {
   old_record: null | Message;
 }
 
-const clientAdmin = supabaseAdmin();
-
-const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
-const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
-
 Deno.serve(async (req) => {
+  handledByBrowser(req);
+
+  const clientAdmin = supabaseAdmin();
+
+  const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
+  const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
+
   const payload: WebhookPayload = await req.json();
 
   const record = payload.record;
