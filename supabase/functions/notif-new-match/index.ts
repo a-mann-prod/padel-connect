@@ -3,10 +3,11 @@ import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
 import { Language, translations } from "../_shared/translations.ts";
 
 interface Match {
-  id: string;
+  id: number;
   level: number;
   duration: number;
   datetime: string;
+  owner_id: string;
 }
 
 interface WebhookPayload {
@@ -33,6 +34,7 @@ Deno.serve(async (req) => {
   const { data: users } = await clientAdmin
     .from("profiles")
     .select("push_token, language")
+    .neq("id", record.owner_id)
     .eq("is_new_match_notification_enabled", true)
     .gte("match_filters.min_level", record.level)
     .lte("match_filters.max_level", record.level);
