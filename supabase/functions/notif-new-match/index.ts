@@ -23,6 +23,8 @@ const clientAdmin = supabaseAdmin();
 const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
 const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
 
+console.log("TOTO", expoNotifUrl, expoNotifToken);
+
 // how lbc notifications r working ? Trigger first time then wait 15-30mn
 // (if another notific need to be fired) and send notif anyway
 Deno.serve(async (req) => {
@@ -48,6 +50,8 @@ Deno.serve(async (req) => {
 
   const promises = users.map((u) => {
     const language = (u.language || "en") as Language;
+
+    console.log("user", u);
 
     return fetch(expoNotifUrl, {
       method: "POST",
