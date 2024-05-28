@@ -10,6 +10,7 @@ import {
   registerForPushNotificationsAsync,
   sendNotification,
 } from '@/services/notifications'
+import { isNilOrEmpty } from '@/utils/global'
 
 export type Notifications = Omit<GetMatchesParams, 'dates'>
 
@@ -63,8 +64,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
 
   // add push token and langage to backend
   useEffect(() => {
-    console.log('ici')
-    if (!me?.id) return
+    if (!me?.id || isNilOrEmpty(expoPushToken)) return
 
     mutate({ push_token: expoPushToken, language: i18n().language })
   }, [expoPushToken, me?.id, mutate])

@@ -71,7 +71,6 @@ export const registerForPushNotificationsAsync = async () => {
           projectId,
         })
       ).data
-      console.log(pushTokenString)
       return pushTokenString
     } catch (e: unknown) {
       handleRegistrationError(`${e}`)
