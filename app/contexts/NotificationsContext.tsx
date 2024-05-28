@@ -1,4 +1,5 @@
 import * as ExpoNotifications from 'expo-notifications'
+import { router } from 'expo-router'
 import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
 import { useMe } from '@/hooks/useMe'
@@ -27,10 +28,12 @@ export { useNotificationsContext }
 export const NotificationsProvider = ({ children }: PropsWithChildren) => {
   const { data: me } = useMe()
   const { mutate } = useUpdateMe()
+
   const [expoPushToken, setExpoPushToken] = useState('')
   const [notification, setNotification] = useState<
     ExpoNotifications.Notification | undefined
   >(undefined)
+
   const notificationListener = useRef<ExpoNotifications.Subscription>()
   const responseListener = useRef<ExpoNotifications.Subscription>()
 
@@ -38,17 +41,23 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token ?? '')
     )
-    // .catch((error: any) => setExpoPushToken(`${error}`))
 
     notificationListener.current =
       ExpoNotifications.addNotificationReceivedListener((notification) => {
         setNotification(notification)
       })
 
+    // notification reponse listener on notification click
     responseListener.current =
-      ExpoNotifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response)
-      })
+      ExpoNotifications.addNotificationResponseReceivedListener(
+        ({ notification }) => {
+          const data = notification.request.content.data
+
+          if (data?.url) {
+            router.navigate(data.url)
+          }
+        }
+      )
 
     return () => {
       notificationListener.current &&
