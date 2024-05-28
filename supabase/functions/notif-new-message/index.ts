@@ -70,6 +70,9 @@ Deno.serve(async (req) => {
         sound: "default",
         title: senderName,
         body: record.content,
+        data: {
+          url: `/(tabs)/play/match/${record.match_id}/chat`,
+        },
       }),
     });
   });

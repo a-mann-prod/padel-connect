@@ -64,6 +64,9 @@ Deno.serve(async (req) => {
         sound: "default",
         title: translations[language].newMatch.title,
         body: translations[language].newMatch.body,
+        data: {
+          url: "/(tabs)/play",
+        },
       }),
     });
   });
