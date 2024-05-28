@@ -1,15 +1,16 @@
 import { HStack, Input, InputField } from '@gluestack-ui/themed'
 import { ComponentProps, useState } from 'react'
+import { Platform } from 'react-native'
+
+import { IconButton } from '../IconButton/IconButton'
 
 import { useTranslate } from '@/services/i18n'
-import { Platform } from 'react-native'
-import { IconButton } from '../IconButton/IconButton'
 
 type InputFieldProps = ComponentProps<typeof InputField>
 
 export type MessageInputProps = Omit<
   InputFieldProps,
-  'onChangeText' | 'value'
+  'onChangeText' | 'value' | 'onPress'
 > & {
   onPress: (value: string) => void
 }
