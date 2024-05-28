@@ -71,6 +71,7 @@ export const Message = ({
         <VStack
           rounded="$lg"
           bgColor={isMe ? '$primary100' : '$secondary100'}
+          $dark-bgColor={isMe ? '$primary500' : '$secondary700'}
           p="$2"
           maxWidth="80%"
         >

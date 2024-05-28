@@ -1,4 +1,4 @@
-import { HStack } from '@gluestack-ui/themed'
+import { HStack, useColorMode } from '@gluestack-ui/themed'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
@@ -28,6 +28,7 @@ export const FormDateTimePicker = ({
   value,
   ...props
 }: FormDateTimePickerProps) => {
+  const colorMode = useColorMode() || 'light'
   const { language } = useI18N()
 
   const sharedStyle = {
@@ -39,6 +40,7 @@ export const FormDateTimePicker = ({
     value: formatWithMinuteInterval(value),
     onChange: (_: DateTimePickerEvent, value: Date | undefined) =>
       onChange(value),
+    themeVariant: colorMode,
   }
 
   return (
