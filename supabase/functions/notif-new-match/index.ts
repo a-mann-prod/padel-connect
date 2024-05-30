@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
     .gte("match_filters.max_level", record.level);
 
   if (!users?.length) {
-    return new Response(JSON.stringify({ errorCode: "user_not_found" }), {
+    return new Response(JSON.stringify({ errorCode: "users_not_found" }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
     });

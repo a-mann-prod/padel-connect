@@ -39,20 +39,31 @@ Deno.serve(async (req) => {
 
   const senderName = getUsername(sender?.first_name, sender?.last_name);
 
-  // get users to be notified on match insert
-  const { data: users } = await clientAdmin
+  // get players to be notified on new message
+  const { data: players } = await clientAdmin
     .from("profiles")
-    .select(
-      "id, first_name, last_name, push_token, language, match_requests!inner(user_id)"
-    )
+    .select("id, push_token, language, match_requests!inner(user_id)")
     .neq("push_token", null)
     .neq("id", record.sender_id)
     .eq("is_new_message_notification_enabled", true)
     .eq("match_requests.match_id", record.match_id)
     .eq("match_requests.status", "ACCEPTED");
 
-  if (!users?.length) {
-    return new Response(JSON.stringify({ errorCode: "user_not_found" }), {
+  // get owner to be notified on new message
+  const { data: owners, error } = await clientAdmin
+    .from("profiles")
+    .select(
+      "id, push_token, language, matches!public_matches_owner_id_fkey!inner(owner_id)"
+    )
+    .neq("push_token", null)
+    .neq("id", record.sender_id)
+    .eq("is_new_message_notification_enabled", true)
+    .eq("matches.id", record.match_id);
+
+  const users = [...(players || []), ...(owners || [])];
+
+  if (!users.length) {
+    return new Response(JSON.stringify({ errorCode: "users_not_found" }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
     });
