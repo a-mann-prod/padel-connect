@@ -73,14 +73,14 @@ export type Database = {
             foreignKeyName: "public_favorite_users_favorite_user_id_fkey"
             columns: ["favorite_user_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "public_favorite_users_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
