@@ -19,7 +19,7 @@ export const SearchInput = (props: SearchInputProps) => {
           )}
         />
       </InputSlot>
-      <InputField placeholder={t('search')} {...props} />
+      <InputField placeholder={t('search')} autoCorrect={false} {...props} />
     </Input>
   )
 }
