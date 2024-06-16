@@ -4,11 +4,20 @@ import {
   useQuery,
 } from '@supabase-cache-helpers/postgrest-react-query'
 
-import { UseMutationProps, UseQueryProps } from '../types'
-import { FavoriteUsersResponse, favoriteUsersqueryCols } from './entities'
+import { useInfiniteQuery } from '../queryHooks/useInfiniteQuery'
+import {
+  UseInfiniteQueryProps,
+  UseMutationProps,
+  UseQueryProps,
+} from '../types'
+import {
+  FavoriteUsersInfiniteResponse,
+  FavoriteUsersResponse,
+  favoriteUsersQueryCols,
+} from './entities'
 import {
   getFavoriteUserFn,
-  getFavoriteUsersFn,
+  getFavoriteUsersInfiniteFn,
   setFavoriteUserFn,
 } from './functions'
 import {
@@ -32,11 +41,17 @@ export const useFavoriteUser = ({
   }
 }
 
-export const useFavoriteUsers = ({
+export const useInfiniteFavoriteUsers = ({
   params,
   options,
-}: UseQueryProps<FavoriteUsersResponse, GetFavoriteUsersParams>) =>
-  useQuery<FavoriteUsersResponse>(getFavoriteUsersFn(params), options)
+}: UseInfiniteQueryProps<
+  FavoriteUsersInfiniteResponse,
+  GetFavoriteUsersParams
+>) =>
+  useInfiniteQuery<FavoriteUsersInfiniteResponse>(
+    getFavoriteUsersInfiniteFn(params),
+    options
+  )
 
 export const useInsertFavoriteUser = (
   options?: UseMutationProps<any, InsertFavoriteUserParams, any>
@@ -44,7 +59,7 @@ export const useInsertFavoriteUser = (
   useInsertMutation(
     setFavoriteUserFn(),
     ['user_id', 'favorite_user_id'],
-    favoriteUsersqueryCols,
+    favoriteUsersQueryCols,
     options
   )
 
@@ -54,6 +69,6 @@ export const useDeleteFavoriteUser = (
   useDeleteMutation(
     setFavoriteUserFn(),
     ['user_id', 'favorite_user_id'],
-    favoriteUsersqueryCols,
+    favoriteUsersQueryCols,
     options
   )

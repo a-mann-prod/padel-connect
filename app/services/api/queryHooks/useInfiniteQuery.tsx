@@ -55,7 +55,7 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
 
   return {
     data,
-    isLoading,
+    isLoading: !data?.length && isLoading,
     fetchNext,
     isLoadingNext: !!data?.length && isLoading,
     nextData,

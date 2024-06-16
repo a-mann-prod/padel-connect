@@ -13,12 +13,13 @@ import { when } from '@/utils/when'
 
 export type VirtualizedListProps<T> = RNVirtualizedListProps<T> & {
   isLoading?: boolean
+  isLoadingNext?: boolean
 }
 
 export type VirtualizedListRef<T> = RNVirtualizedList<T>
 
 const VirtualizedListInner = <T,>(
-  { isLoading, data, ...props }: VirtualizedListProps<T>,
+  { isLoading, isLoadingNext, data, ...props }: VirtualizedListProps<T>,
   ref: ForwardedRef<VirtualizedListRef<T>>
 ) => {
   const t = useTranslate()
@@ -44,18 +45,21 @@ const VirtualizedListInner = <T,>(
   }
 
   return (
-    <RNVirtualizedList<T>
-      ref={ref}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled"
-      style={{ height: '100%' }}
-      ItemSeparatorComponent={ItemSeparatorComponent}
-      ListEmptyComponent={ListEmptyComponent}
-      contentContainerStyle={{ flexGrow: 1 }}
-      data={data || []}
-      {...props}
-    />
+    <>
+      <RNVirtualizedList<T>
+        ref={ref}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        style={{ height: '100%' }}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        ListEmptyComponent={ListEmptyComponent}
+        contentContainerStyle={{ flexGrow: 1 }}
+        data={data || []}
+        ListFooterComponent={isLoadingNext ? <Loader p="$2" /> : undefined}
+        {...props}
+      />
+    </>
   )
 }
 

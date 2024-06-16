@@ -24,6 +24,8 @@ export default () => {
       }
       router.replace('/')
     },
+    //TODO error here
+    onError: (e) => console.log(e),
   })
 
   const onSubmit = async () =>
