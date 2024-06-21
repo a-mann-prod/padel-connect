@@ -20,7 +20,6 @@ import { useMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
-import { openUrl } from '@/utils/url'
 import { getUsername } from '@/utils/user'
 
 export default () => {
@@ -170,7 +169,7 @@ export default () => {
             </Link>
 
             <Button
-              title="Partager"
+              title={t('share')}
               icon="FAS-share"
               isDisabled
               onPress={() =>
@@ -183,15 +182,43 @@ export default () => {
             />
           </>
         )}
-        {isPlayer && (
+        {isParticipant && (
           <>
             <Button
+              title={t('chat')}
+              icon="FAS-message"
+              iconRight
+              action="positive"
+              onPress={() =>
+                router.navigate(`/(tabs)/play/match/${matchId}/chat`)
+              }
+            />
+            <Button
+              title={t('enterScore')}
+              icon="FAS-award"
+              iconRight
+              // onPress={cancelRequestMatch}
+              // isLoading={isCancelRequestMatchPending}
+            />
+          </>
+        )}
+        {!isParticipant && (
+          <MatchRequestButton
+            isRequesting={isRequesting}
+            onPress={requestMatch}
+            isLoading={isRequestMatchPending || isCancelRequestMatchPending}
+            onCancelPress={cancelRequestMatch}
+          />
+        )}
+        {isPlayer && (
+          <>
+            {/* <Button
               title={t('pay')}
               icon="FAS-money-bill"
               iconRight
               onPress={() => match.booked_url && openUrl(match.booked_url)}
               isDisabled={!isBooked}
-            />
+            /> */}
             <Button
               title={t('leave')}
               action="negative"
@@ -201,26 +228,6 @@ export default () => {
               isLoading={isCancelRequestMatchPending}
             />
           </>
-        )}
-        {isParticipant && (
-          <Button
-            title="Chat"
-            icon="FAS-message"
-            iconRight
-            action="positive"
-            onPress={() =>
-              router.navigate(`/(tabs)/play/match/${matchId}/chat`)
-            }
-          />
-        )}
-
-        {!isParticipant && (
-          <MatchRequestButton
-            isRequesting={isRequesting}
-            onPress={requestMatch}
-            isLoading={isRequestMatchPending || isCancelRequestMatchPending}
-            onCancelPress={cancelRequestMatch}
-          />
         )}
       </VStack>
     </ScrollView>

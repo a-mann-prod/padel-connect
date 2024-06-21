@@ -1,6 +1,7 @@
 {
   "booked": "Booked",
   "cancelRequest": "Cancel request",
+  "chat": "Chat",
   "complex": "Location",
   "createNewMatch": "Create new match",
   "date": "Date",
@@ -8,9 +9,11 @@
   "deleteMatch": "Delete match",
   "deleteMatchMessage": "Are you sure you want to delete the match?",
   "duration": "Duration",
+  "enterScore": "Enter score",
   "joinRequest": "Join request",
   "leave": "Leave",
   "notBooked": "Not booked",
   "pay": "Pay your share",
-  "playersManage": "Manager players"
+  "playersManage": "Manager players",
+  "share": "Share"
 }
