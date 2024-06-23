@@ -71,7 +71,7 @@ Deno.serve(async (req) => {
   }));
 
   // Insert notifications
-  clientAdmin.from("notifications").insert(rowsToInsert);
+  await clientAdmin.from("notifications").insert(rowsToInsert);
 
   return new Response("done", {
     headers: { "Content-Type": "application/json" },

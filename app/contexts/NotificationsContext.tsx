@@ -74,7 +74,9 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
 
   // add push token and langage to backend
   useEffect(() => {
-    if (!me?.id || isNilOrEmpty(expoPushToken)) return
+    if (!me?.id) return
+
+    if (isNilOrEmpty(expoPushToken)) mutate({ language: i18n().language })
 
     mutate({ push_token: expoPushToken, language: i18n().language })
   }, [expoPushToken, me?.id, mutate])

@@ -3,7 +3,7 @@ import { Database } from "../_shared/database.types.ts";
 import { handledByBrowser } from "../_shared/handledByBrowser.ts";
 import { routing } from "../_shared/routing.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
-import { translations } from "../_shared/translations.ts";
+import { Language, translations } from "../_shared/translations.ts";
 
 type MatchRequest = Database["public"]["Tables"]["match_requests"]["Row"];
 type Notification = Database["public"]["Tables"]["notifications"]["Insert"];
@@ -28,8 +28,10 @@ Deno.serve(async (req) => {
   // get owner to be notified on match request insert
   const { data: user } = await clientAdmin
     .from("profiles")
-    .select("id, language, matches!inner(user_id)")
-    .eq("matches.match_id", matchRequest.match_id)
+    .select(
+      "id, language, matches!public_matches_owner_id_fkey!inner(owner_id)"
+    )
+    .eq("matches.id", matchRequest.match_id)
     .maybeSingle();
 
   if (!user) {
@@ -38,6 +40,8 @@ Deno.serve(async (req) => {
       status: 400,
     });
   }
+
+  const language: Language = user.language || "en";
 
   const rowToInsert: Notification = {
     title: translations[language].newMatchRequest.title,
@@ -48,7 +52,7 @@ Deno.serve(async (req) => {
   };
 
   // Insert notifications
-  clientAdmin.from("notifications").insert(rowToInsert);
+  await clientAdmin.from("notifications").insert(rowToInsert);
 
   return new Response("done", {
     headers: { "Content-Type": "application/json" },

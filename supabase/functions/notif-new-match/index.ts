@@ -3,7 +3,7 @@ import { Database } from "../_shared/database.types.ts";
 import { handledByBrowser } from "../_shared/handledByBrowser.ts";
 import { routing } from "../_shared/routing.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
-import { translations } from "../_shared/translations.ts";
+import { Language, translations } from "../_shared/translations.ts";
 
 type Match = Database["public"]["Tables"]["matches"]["Row"];
 type Notification = Database["public"]["Tables"]["notifications"]["Insert"];
@@ -41,16 +41,20 @@ Deno.serve(async (req) => {
     });
   }
 
-  const rowsToInsert: Notification[] = users.map((u) => ({
-    title: translations[language].newMatch.title,
-    subtitle: translations[language].newMatch.body,
-    url: routing.play.path(),
-    user_id: u.id,
-    type: "NEW_MATCHES",
-  }));
+  const rowsToInsert: Notification[] = users.map((u) => {
+    const language: Language = u.language || "en";
+
+    return {
+      title: translations[language].newMatch.title,
+      subtitle: translations[language].newMatch.body,
+      url: routing.play.path(),
+      user_id: u.id,
+      type: "NEW_MATCHES",
+    };
+  });
 
   // Insert notifications
-  clientAdmin.from("notifications").insert(rowsToInsert);
+  await clientAdmin.from("notifications").insert(rowsToInsert);
 
   return new Response("done", {
     headers: { "Content-Type": "application/json" },

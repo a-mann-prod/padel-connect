@@ -61,7 +61,7 @@ Deno.serve(async (req) => {
     }),
   });
 
-  return new Response("Notifications sent", {
+  return new Response("Notification sent", {
     headers: { "Content-Type": "application/json" },
   });
 });
