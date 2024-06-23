@@ -1,14 +1,12 @@
 import { corsHeaders } from "../_shared/cors.ts";
+import { Database } from "../_shared/database.types.ts";
 import { handledByBrowser } from "../_shared/handledByBrowser.ts";
+import { routing } from "../_shared/routing.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
 import { getUsername } from "../_shared/user.ts";
 
-interface Message {
-  id: number;
-  content: string;
-  sender_id: string;
-  match_id: number;
-}
+type Message = Database["public"]["Tables"]["messages"]["Row"];
+type Notification = Database["public"]["Tables"]["notifications"]["Insert"];
 
 interface WebhookPayload {
   type: "INSERT" | "UPDATE" | "DELETE";
@@ -23,18 +21,15 @@ Deno.serve(async (req) => {
 
   const clientAdmin = supabaseAdmin();
 
-  const expoNotifUrl = Deno.env.get("EXPO_NOTIF_URL") || "";
-  const expoNotifToken = Deno.env.get("EXPO_NOTIF_TOKEN") || "";
-
+  // message newly added
   const payload: WebhookPayload = await req.json();
-
-  const record = payload.record;
+  const message = payload.record;
 
   // get sender name
   const { data: sender } = await clientAdmin
     .from("profiles")
     .select("id, first_name, last_name")
-    .eq("id", record.sender_id)
+    .eq("id", message.sender_id)
     .maybeSingle();
 
   const senderName = getUsername(sender?.first_name, sender?.last_name);
@@ -42,23 +37,21 @@ Deno.serve(async (req) => {
   // get players to be notified on new message
   const { data: players } = await clientAdmin
     .from("profiles")
-    .select("id, push_token, language, match_requests!inner(user_id)")
-    .neq("push_token", null)
-    .neq("id", record.sender_id)
-    .eq("is_new_message_notification_enabled", true)
-    .eq("match_requests.match_id", record.match_id)
-    .eq("match_requests.status", "ACCEPTED");
+    .select("id, language, match_requests!inner(user_id)")
+    .neq("id", message.sender_id)
+    .eq("match_requests.match_id", message.match_id)
+    .eq("match_requests.status", "ACCEPTED")
+    .eq("is_new_message_notification_enabled", true);
 
   // get owner to be notified on new message
-  const { data: owners, error } = await clientAdmin
+  const { data: owners } = await clientAdmin
     .from("profiles")
     .select(
-      "id, push_token, language, matches!public_matches_owner_id_fkey!inner(owner_id)"
+      "id, language, matches!public_matches_owner_id_fkey!inner(owner_id)"
     )
-    .neq("push_token", null)
-    .neq("id", record.sender_id)
-    .eq("is_new_message_notification_enabled", true)
-    .eq("matches.id", record.match_id);
+    .neq("id", message.sender_id)
+    .eq("matches.id", message.match_id)
+    .eq("is_new_message_notification_enabled", true);
 
   const users = [...(players || []), ...(owners || [])];
 
@@ -69,26 +62,16 @@ Deno.serve(async (req) => {
     });
   }
 
-  const promises = users.map((u) => {
-    return fetch(expoNotifUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${expoNotifToken}`,
-      },
-      body: JSON.stringify({
-        to: u.push_token,
-        sound: "default",
-        title: senderName,
-        body: record.content,
-        data: {
-          url: `/(tabs)/play/match/${record.match_id}/chat`,
-        },
-      }),
-    });
-  });
+  const rowsToInsert: Notification[] = users.map((u) => ({
+    title: senderName,
+    subtitle: message.content,
+    url: routing.matchChat.path(message.match_id as number),
+    user_id: u.id,
+    type: "NEW_MESSAGE",
+  }));
 
-  Promise.all(promises);
+  // Insert notifications
+  clientAdmin.from("notifications").insert(rowsToInsert);
 
   return new Response("done", {
     headers: { "Content-Type": "application/json" },

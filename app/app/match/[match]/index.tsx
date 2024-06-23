@@ -19,6 +19,7 @@ import { MatchRequestButton, PlayersAvatars } from '@/nodes/play'
 import { useMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 import { isNilOrEmpty } from '@/utils/global'
 import { getUsername } from '@/utils/user'
 
@@ -57,7 +58,8 @@ export default () => {
 
   useHeaderButton({
     icon: 'FAS-pencil',
-    onPress: () => router.navigate(`/(tabs)/play/match/${match?.id}/update`),
+    onPress: () =>
+      match?.id && router.navigate(routing.matchUpdate.path(match?.id)),
     side: 'headerRight',
     condition: isOwner,
   })
@@ -157,14 +159,14 @@ export default () => {
             data={sortedPlayers}
             orientation="column"
             onPress={(id) =>
-              router.navigate(`/(tabs)/play/match/${matchId}/user/${id}`)
+              router.navigate(routing.matchUser.path(matchId, id))
             }
           />
         </Section>
 
         {isOwner && (
           <>
-            <Link asChild href={`/(tabs)/play/match/${matchId}/players-manage`}>
+            <Link asChild href={routing.matchPlayersManage.path(matchId)}>
               <Button title={t('playersManage')} />
             </Link>
 
@@ -189,9 +191,7 @@ export default () => {
               icon="FAS-message"
               iconRight
               action="positive"
-              onPress={() =>
-                router.navigate(`/(tabs)/play/match/${matchId}/chat`)
-              }
+              onPress={() => router.navigate(routing.matchChat.path(matchId))}
             />
             <Button
               title={t('enterScore')}

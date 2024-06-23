@@ -10,6 +10,7 @@ import { FormAvatarControlled } from '@/components/FormsControlled/FormAvatarCon
 import { useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 const { getDefaultValues, schema } = avatarFormServices
 
@@ -26,7 +27,7 @@ export const AvatarForm = () => {
 
   const onSubmit = (avatar: AvatarFormValues) => {
     setAvatar(avatar)
-    router.navigate('/(modals)/onboarding/preferences')
+    router.navigate(routing.onboardingPreferences.path())
   }
 
   return (

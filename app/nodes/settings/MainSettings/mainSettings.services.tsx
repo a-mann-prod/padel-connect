@@ -10,9 +10,8 @@ import {
 } from '@/contexts'
 import { Icon, SectionProps, SectionRowProps } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 import { openUrl } from '@/utils/url'
-
-export const SETTINGS_RACINE = '/(tabs)/profile/settings'
 
 type SettingsSection = SectionProps & {
   rows: SectionRowProps[]
@@ -33,28 +32,31 @@ export const useSettingsItems = () => {
           {
             title: t('general.emailChange'),
             icon: 'FAS-at',
-            onPress: () => router.navigate(`${SETTINGS_RACINE}/email-change`),
+            onPress: () =>
+              router.navigate(routing.profileSettingsEmailChange.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
             title: t('general.passwordChange'),
             icon: 'FAS-key',
             onPress: () =>
-              router.navigate(`${SETTINGS_RACINE}/password-change`),
+              router.navigate(routing.profileSettingsPasswordChange.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
             title: t('general.updatePersonalInformation'),
             icon: 'FAR-id-badge',
             onPress: () =>
-              router.navigate(`${SETTINGS_RACINE}/update-personal-information`),
+              router.navigate(
+                routing.profileSettingsUpdatePersonalInformation.path()
+              ),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
             title: t('general.updatePreferences'),
             icon: 'FAR-lightbulb',
             onPress: () =>
-              router.navigate(`${SETTINGS_RACINE}/update-preferences`),
+              router.navigate(routing.profileSettingsUpdatePreferences.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
@@ -128,13 +130,15 @@ export const useSettingsItems = () => {
           {
             title: t('legalInformation.termsOfUse'),
             icon: 'FAS-file-contract',
-            onPress: () => router.navigate(`${SETTINGS_RACINE}/terms-of-use`),
+            onPress: () =>
+              router.navigate(routing.profileSettingsTermsOfUse.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
             title: t('legalInformation.privacyPolicy'),
             icon: 'FAS-shield-halved',
-            onPress: () => router.navigate(`${SETTINGS_RACINE}/privacy-policy`),
+            onPress: () =>
+              router.navigate(routing.profileSettingsPrivacyPolicy.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
         ],
@@ -145,7 +149,8 @@ export const useSettingsItems = () => {
             title: t('dangerZone'),
             icon: 'FAS-radiation',
             iconColor: 'yellow500',
-            onPress: () => router.navigate(`${SETTINGS_RACINE}/danger-zone`),
+            onPress: () =>
+              router.navigate(routing.profileSettingsDangerZone.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
         ],

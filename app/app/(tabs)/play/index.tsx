@@ -10,6 +10,7 @@ import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { MatchesResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default () => {
   const t = useTranslate('play')
@@ -34,8 +35,8 @@ export default () => {
   useHeaderButton({
     side: 'headerRight',
     icon: 'FAS-sliders',
-    onPress: () => router.navigate('/(tabs)/play/filters'),
-    hasBadge:
+    onPress: () => router.navigate(routing.playFilters.path()),
+    hasEmptyBadge:
       JSON.stringify(defaultMatchFilters) !== JSON.stringify(matchFilters),
   })
 
@@ -44,7 +45,7 @@ export default () => {
   }: ListRenderItemInfo<MatchesResponse[number]>) => (
     <MatchListItem
       {...item}
-      onPress={() => router.push(`/(tabs)/play/match/${item.id}`)}
+      onPress={() => router.push(routing.match.path(item.id))}
     />
   )
 
@@ -75,7 +76,7 @@ export default () => {
         icon="FAS-plus"
         onPress={() =>
           router.navigate(
-            `/(tabs)/play/match/create?datetime=${dateFilter.toISOString()}`
+            routing.matchCreate.path({ datetime: dateFilter.toISOString() })
           )
         }
       />

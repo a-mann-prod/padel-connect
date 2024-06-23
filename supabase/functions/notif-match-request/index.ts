@@ -5,15 +5,15 @@ import { routing } from "../_shared/routing.ts";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
 import { translations } from "../_shared/translations.ts";
 
-type Match = Database["public"]["Tables"]["matches"]["Row"];
+type MatchRequest = Database["public"]["Tables"]["match_requests"]["Row"];
 type Notification = Database["public"]["Tables"]["notifications"]["Insert"];
 
 interface WebhookPayload {
   type: "INSERT" | "UPDATE" | "DELETE";
   table: string;
-  record: Match;
+  record: MatchRequest;
   schema: "public";
-  old_record: null | Match;
+  old_record: null | MatchRequest;
 }
 
 Deno.serve(async (req) => {
@@ -21,36 +21,34 @@ Deno.serve(async (req) => {
 
   const clientAdmin = supabaseAdmin();
 
-  // match newly added
+  // match request newly added
   const payload: WebhookPayload = await req.json();
-  const match = payload.record;
+  const matchRequest = payload.record;
 
-  // get users to be notified on match insert
-  const { data: users } = await clientAdmin
+  // get owner to be notified on match request insert
+  const { data: user } = await clientAdmin
     .from("profiles")
-    .select("id, language, match_filters!inner(user_id)")
-    .neq("id", match.owner_id)
-    .eq("is_new_match_notification_enabled", true)
-    .lte("match_filters.min_level", match.level)
-    .gte("match_filters.max_level", match.level);
+    .select("id, language, matches!inner(user_id)")
+    .eq("matches.match_id", matchRequest.match_id)
+    .maybeSingle();
 
-  if (!users?.length) {
-    return new Response(JSON.stringify({ errorCode: "users_not_found" }), {
+  if (!user) {
+    return new Response(JSON.stringify({ errorCode: "user_not_found" }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
     });
   }
 
-  const rowsToInsert: Notification[] = users.map((u) => ({
-    title: translations[language].newMatch.title,
-    subtitle: translations[language].newMatch.body,
-    url: routing.play.path(),
-    user_id: u.id,
-    type: "NEW_MATCHES",
-  }));
+  const rowToInsert: Notification = {
+    title: translations[language].newMatchRequest.title,
+    subtitle: translations[language].newMatchRequest.body,
+    url: routing.matchPlayersManage.path(matchRequest.match_id),
+    user_id: user.id,
+    type: "NEW_MATCH_REQUEST",
+  };
 
   // Insert notifications
-  clientAdmin.from("notifications").insert(rowsToInsert);
+  clientAdmin.from("notifications").insert(rowToInsert);
 
   return new Response("done", {
     headers: { "Content-Type": "application/json" },

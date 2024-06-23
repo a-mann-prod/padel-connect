@@ -1,4 +1,4 @@
-import { Box, VStack } from '@gluestack-ui/themed'
+import { Box, SafeAreaView, VStack } from '@gluestack-ui/themed'
 import { useUpsertItem } from '@supabase-cache-helpers/postgrest-react-query'
 import { useLocalSearchParams, usePathname } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
@@ -93,28 +93,30 @@ export default () => {
   }
 
   return (
-    <KeyboardAvoidingView>
-      <VStack px="$3" pb="$3" gap="$3" flex={1}>
-        <VirtualizedList<MessageResponse>
-          data={messages}
-          getItem={(data, index) => data[index]}
-          getItemCount={(data) => data.length}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-          isLoading={!messages.length && isLoading}
-          onEndReached={fetchNext}
-          inverted
-        />
-        <Box>
-          <MessageInput
-            onPress={(content) => {
-              addMessage([
-                { content, sender_id: me?.id as string, match_id: matchId },
-              ])
-            }}
+    <SafeAreaView flex={1}>
+      <KeyboardAvoidingView>
+        <VStack px="$3" pb="$3" gap="$3" flex={1}>
+          <VirtualizedList<MessageResponse>
+            data={messages}
+            getItem={(data, index) => data[index]}
+            getItemCount={(data) => data.length}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+            isLoading={!messages.length && isLoading}
+            onEndReached={fetchNext}
+            inverted
           />
-        </Box>
-      </VStack>
-    </KeyboardAvoidingView>
+          <Box>
+            <MessageInput
+              onPress={(content) => {
+                addMessage([
+                  { content, sender_id: me?.id as string, match_id: matchId },
+                ])
+              }}
+            />
+          </Box>
+        </VStack>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }

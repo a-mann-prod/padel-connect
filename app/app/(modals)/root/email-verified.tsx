@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native'
 import { WithoutAuth } from '@/components'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default WithoutAuth(() => {
   const t = useTranslate('auth')
@@ -15,7 +16,7 @@ export default WithoutAuth(() => {
         <Text>{t('emailVerified.subTitle')}</Text>
         <Button
           title={t('login')}
-          onPress={() => router.replace('/(modals)/auth/login')}
+          onPress={() => router.replace(routing.authLogin.path())}
         />
       </VStack>
     </SafeAreaView>

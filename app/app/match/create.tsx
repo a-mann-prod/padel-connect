@@ -9,6 +9,7 @@ import { useMe } from '@/hooks/useMe'
 import { useInsertMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 import { Nillable } from '@/types'
 
 const { formatToParams } = matchFormServices
@@ -34,7 +35,7 @@ export default () => {
   const { mutate, isPending } = useInsertMatch({
     onSuccess: (data) => {
       const newItem = data?.[0]
-      router.replace(`/(tabs)/play/match/${newItem?.id}`)
+      router.replace(routing.match.path(newItem?.id))
     },
     onError,
   })

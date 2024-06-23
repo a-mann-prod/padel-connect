@@ -6,6 +6,8 @@
 
 `supabase stop` (--no-backup to clear db)
 
+`supabase functions serve`
+
 `supabase gen types typescript --local  > app/services/supabase/database.types.ts` to generate supabase types from local
 
 ### Link local & prod

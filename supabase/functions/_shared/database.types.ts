@@ -1,0 +1,1 @@
+/Users/macbook/git/padel-connect/app/services/supabase/database.types.ts

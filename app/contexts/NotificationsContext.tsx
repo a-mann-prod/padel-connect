@@ -4,7 +4,7 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
 import { useMe } from '@/hooks/useMe'
 import { useUpdateMe } from '@/hooks/useUpdateMe'
-import { GetMatchesParams } from '@/services/api'
+import { GetMatchesParams, useUpdateNotification } from '@/services/api'
 import { buildContext } from '@/services/buildContext'
 import { i18n } from '@/services/i18n'
 import {
@@ -28,6 +28,8 @@ export { useNotificationsContext }
 export const NotificationsProvider = ({ children }: PropsWithChildren) => {
   const { data: me } = useMe()
   const { mutate } = useUpdateMe()
+
+  const { mutate: mutateNotification } = useUpdateNotification()
 
   const [expoPushToken, setExpoPushToken] = useState('')
   const [notification, setNotification] = useState<
@@ -53,9 +55,8 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
         ({ notification }) => {
           const data = notification.request.content.data
 
-          if (data?.url) {
-            router.navigate(data.url)
-          }
+          if (data?.id) mutateNotification({ id: data.id, is_read: true })
+          if (data?.url) router.navigate(data.url)
         }
       )
 

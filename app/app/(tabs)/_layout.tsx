@@ -1,22 +1,32 @@
+import { useToken } from '@gluestack-style/react'
 import { Tabs, router } from 'expo-router'
 import React, { useEffect } from 'react'
 
 import { Icon } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
+import { routing } from '@/services/routing'
 
 export default () => {
   const { data: me, isLoading } = useMe()
 
   useEffect(() => {
     if (!isLoading && me && !me.is_onboarding_completed) {
-      router.replace('/(modals)/onboarding/personal-information')
+      router.replace(routing.onboardingPersonalInformation.path())
     }
   }, [isLoading, me])
 
   return (
-    <Tabs screenOptions={{ tabBarShowLabel: false }}>
+    <Tabs
+      initialRouteName={routing.home.name}
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarBadgeStyle: {
+          backgroundColor: useToken('colors', 'red500'),
+        },
+      }}
+    >
       <Tabs.Screen
-        name="(home)"
+        name={routing.home.name}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -25,7 +35,7 @@ export default () => {
         }}
       />
       <Tabs.Screen
-        name="play"
+        name={routing.play.name}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -34,7 +44,7 @@ export default () => {
         }}
       />
       <Tabs.Screen
-        name="community"
+        name={routing.community.name}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -43,7 +53,7 @@ export default () => {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name={routing.profile.name}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (

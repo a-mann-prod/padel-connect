@@ -7,7 +7,7 @@ export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
   return (
     <OnboardingProvider>
-      <Stack>
+      <Stack initialRouteName="personal-information">
         <Stack.Screen
           name="personal-information"
           options={{

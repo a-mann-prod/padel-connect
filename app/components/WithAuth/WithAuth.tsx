@@ -6,6 +6,7 @@ import { useAuthContext } from '@/contexts'
 import { Button, Divider } from '@/designSystem'
 import { useLoginWithOAuth } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 // TODO: find props type name
 const WithAuthWrapper: FC<{ Component: FC; segment: any }> = ({
@@ -42,7 +43,7 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
     <Center alignItems="stretch" flex={1}>
       <VStack gap="$3" m="$5">
         <Text>{t('loginNeeded')}</Text>
-        <Link href={{ pathname: '/(modals)/auth/login', params }} asChild>
+        <Link href={{ pathname: routing.authLogin.path(), params }} asChild>
           <Button title={t('login')} />
         </Link>
         <Button
@@ -62,7 +63,7 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
           isDisabled
         />
         <Divider title={tGlobal('or')} />
-        <Link href={{ pathname: '/(modals)/auth/register', params }} asChild>
+        <Link href={{ pathname: routing.authRegister.path(), params }} asChild>
           <Button title={t('register')} variant="outline" />
         </Link>
       </VStack>

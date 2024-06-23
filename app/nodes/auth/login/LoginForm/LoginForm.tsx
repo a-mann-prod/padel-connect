@@ -10,6 +10,7 @@ import { Button } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useLogin } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 const { getDefaultValues, schema } = loginFormServices
 
@@ -56,7 +57,7 @@ export const LoginForm = () => {
             secureTextEntry
           />
         </FormProvider>
-        <Link href="/(modals)/auth/password-reset-request" asChild>
+        <Link href={routing.authPasswordResetRequest.path()} asChild>
           <Button
             alignSelf="flex-end"
             title={t('forgotPassword')}

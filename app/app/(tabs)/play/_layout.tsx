@@ -4,25 +4,17 @@ import { WithAuth } from '@/components'
 import { MatchFiltersProvider } from '@/contexts'
 import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default WithAuth(() => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
 
   return (
     <MatchFiltersProvider>
-      <Stack>
+      <Stack initialRouteName="index">
         <Stack.Screen name="index" options={{ title: t('play') }} />
-        <Stack.Screen name="match/[match]" options={{ headerShown: false }} />
         <Stack.Screen
-          name="match/create"
-          options={{
-            title: t('matchCreate'),
-            headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
-            presentation: 'containedModal',
-          }}
-        />
-        <Stack.Screen
-          name="filters"
+          name={routing.playFilters.name}
           options={{
             title: t('filters'),
             headerLeft: (props) => <HeaderBackButton {...props} isInModal />,

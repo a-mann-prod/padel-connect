@@ -11,6 +11,7 @@ import { useMe } from '@/hooks/useMe'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { ProfileResponse } from '@/services/api'
+import { routing } from '@/services/routing'
 
 export default () => {
   const [search, setSearch] = useState<string | undefined>(undefined)
@@ -29,7 +30,9 @@ export default () => {
   const renderItem = ({ item }: ListRenderItemInfo<ProfileWithAvatar>) => (
     <PlayerListItem
       {...item}
-      onPress={() => router.navigate(`/community/${item.id}`)}
+      onPress={() =>
+        item.id && router.navigate(routing.communityUser.path(item.id))
+      }
     />
   )
 

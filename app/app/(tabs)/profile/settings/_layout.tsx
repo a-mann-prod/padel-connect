@@ -3,11 +3,12 @@ import { Stack } from 'expo-router'
 import { WithAuth } from '@/components'
 import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default WithAuth(() => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
   return (
-    <Stack>
+    <Stack initialRouteName="index">
       <Stack.Screen
         name="index"
         options={{
@@ -16,24 +17,33 @@ export default WithAuth(() => {
         }}
       />
       <Stack.Screen
-        name="update-personal-information"
+        name={routing.profileSettingsUpdatePersonalInformation.name}
         options={{ title: t('updatePersonalInformation') }}
       />
       <Stack.Screen
-        name="update-preferences"
+        name={routing.profileSettingsUpdatePreferences.name}
         options={{ title: t('updatePreferences') }}
       />
-      <Stack.Screen name="email-change" options={{ title: t('emailChange') }} />
       <Stack.Screen
-        name="password-change"
+        name={routing.profileSettingsEmailChange.name}
+        options={{ title: t('emailChange') }}
+      />
+      <Stack.Screen
+        name={routing.profileSettingsPasswordChange.name}
         options={{ title: t('passwordChange') }}
       />
       <Stack.Screen
-        name="privacy-policy"
+        name={routing.profileSettingsPrivacyPolicy.name}
         options={{ title: t('privacyPolicy') }}
       />
-      <Stack.Screen name="terms-of-use" options={{ title: t('termsOfUse') }} />
-      <Stack.Screen name="danger-zone" options={{ title: t('dangerZone') }} />
+      <Stack.Screen
+        name={routing.profileSettingsTermsOfUse.name}
+        options={{ title: t('termsOfUse') }}
+      />
+      <Stack.Screen
+        name={routing.profileSettingsDangerZone.name}
+        options={{ title: t('dangerZone') }}
+      />
     </Stack>
   )
 })

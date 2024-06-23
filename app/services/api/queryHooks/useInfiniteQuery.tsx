@@ -26,6 +26,7 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
     data: nextData,
     isLoading,
     status,
+    ...rest
   } = useQuery<T>(
     (query as any).range(page * limit, page * limit + limit - 1),
     config
@@ -38,10 +39,13 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
   useEffect(() => {
     // pas opti, car est appelé quand un message est rajouté.
     // Si la liste de message est longue, c'est long avant d'insérer le message
+    // a revoir pour chat et notifications
     if (!isLoading && nextData) {
       if (isCacheUpdating.current) {
+        console.log('ici')
         setData((data) => uniqBy([...nextData, ...(data || [])], prop('id')))
       } else {
+        console.log('oula')
         setData((data) => uniqBy([...(data || []), ...nextData], prop('id')))
         isCacheUpdating.current = true
       }
@@ -59,5 +63,6 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
     fetchNext,
     isLoadingNext: !!data?.length && isLoading,
     nextData,
+    ...rest,
   }
 }

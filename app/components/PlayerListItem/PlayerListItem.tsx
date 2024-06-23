@@ -12,7 +12,7 @@ import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { useTranslate } from '@/services/i18n'
 import { getUsername } from '@/utils/user'
 
-export type PlayerlistItemProps = ProfileWithAvatar & {
+export type PlayerListItemProps = ProfileWithAvatar & {
   onPress: PressableProps['onPress']
   isFavorite?: boolean
   matchRequest?: {

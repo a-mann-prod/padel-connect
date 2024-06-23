@@ -9,6 +9,7 @@ import {
 import { useOnboardingContext } from '@/contexts'
 import { ScrollView } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default () => {
   const tGlobal = useTranslate()
@@ -16,7 +17,7 @@ export default () => {
 
   const handleOnSubmit = (preferences: PreferencesFormValues) => {
     setPreferences(preferences)
-    router.navigate('/(modals)/onboarding/get-started')
+    router.navigate(routing.onboardingGetStarted.path())
   }
 
   return (

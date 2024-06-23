@@ -8,6 +8,7 @@ import { VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { ProfileResponse, useInfiniteFavoriteUsers } from '@/services/api'
+import { routing } from '@/services/routing'
 import { getPublicAvatarUrl } from '@/utils/avatar'
 
 export default () => {
@@ -38,7 +39,9 @@ export default () => {
   const renderItem = ({ item }: ListRenderItemInfo<ProfileWithAvatar>) => (
     <PlayerListItem
       {...item}
-      onPress={() => router.navigate(`/community/${item.id}`)}
+      onPress={() =>
+        item.id && router.navigate(routing.communityUser.path(item.id))
+      }
     />
   )
 

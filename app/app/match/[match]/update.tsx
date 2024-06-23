@@ -1,13 +1,14 @@
 import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
 
-import { useOverlayStore } from '@/app/store'
 import { MatchForm, MatchFormValues, matchFormServices } from '@/components'
 import { Button, Loader, ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useDeleteMatch, useMatch, useUpdateMatch } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
+import { useOverlayStore } from '@/services/overlaysStore'
+import { routing } from '@/services/routing'
 import { Nillable } from '@/types'
 
 const { formatToParams, formatToFormValues } = matchFormServices
@@ -38,7 +39,7 @@ export default () => {
   })
 
   const { mutate: deleteMatch, isPending: isPendingDelete } = useDeleteMatch({
-    onSuccess: () => router.replace('/(tabs)/play'),
+    onSuccess: () => router.replace(routing.play.path()),
   })
 
   if (isLoading) return <Loader />

@@ -1,27 +1,30 @@
-import { Stack } from 'expo-router'
-
+// app/match/[match]/_layout.js
 import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
+import { Stack } from 'expo-router'
 
 export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
 
   return (
-    <Stack>
+    <Stack initialRouteName="index">
       <Stack.Screen
         name="index"
         options={{
           title: t('bookingDetails'),
-          // TODO: why nested navigators needs back button
           headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
-        name="players-manage"
-        options={{ title: t('playersManage') }}
+        name={routing.matchPlayersManage.name}
+        options={{
+          title: t('playersManage'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
+        }}
       />
       <Stack.Screen
-        name="update"
+        name={routing.matchUpdate.name}
         options={{
           title: '',
           presentation: 'containedModal',
@@ -29,15 +32,16 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name="user/[user]"
+        name={routing.matchUser.name}
         options={{
           title: '',
         }}
       />
       <Stack.Screen
-        name="chat"
+        name={routing.matchChat.name}
         options={{
           title: '',
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
     </Stack>

@@ -10,6 +10,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 import { useManageMatchRequests } from '@/hooks/useManageMatchRequests'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { ProfileResponse, useMatchRequests } from '@/services/api'
+import { routing } from '@/services/routing'
 import { getPublicAvatarUrl } from '@/utils/avatar'
 
 export default () => {
@@ -47,7 +48,7 @@ export default () => {
     <PlayerListItem
       {...item}
       onPress={() =>
-        router.navigate(`/(tabs)/play/match/${matchId}/user/${item.id}`)
+        item.id && router.navigate(routing.matchUser.path(matchId, item.id))
       }
       matchRequest={{
         isLoading: isManageMatchRequestsLoading,

@@ -9,6 +9,7 @@ import {
 import { useOnboardingContext } from '@/contexts'
 import { ScrollView } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default () => {
   const tGlobal = useTranslate()
@@ -17,7 +18,7 @@ export default () => {
 
   const handleOnSubmit = (values: PersonalInfoFormValues) => {
     setPersonalInfo(values)
-    router.navigate('/(modals)/onboarding/avatar')
+    router.navigate(routing.onboardingAvatar.path())
   }
 
   return (

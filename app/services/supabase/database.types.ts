@@ -240,6 +240,47 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string
+          id: number
+          is_read: boolean
+          subtitle: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification"]
+          url: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          is_read?: boolean
+          subtitle?: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification"]
+          url?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          is_read?: boolean
+          subtitle?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["notification"]
+          url?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -321,6 +362,12 @@ export type Database = {
     Enums: {
       manual_preference: "LEFT_HANDED" | "RIGHT_HANDED"
       match_request_status: "ACCEPTED" | "REFUSED" | "PENDING"
+      notification:
+        | "NEW_MESSAGE"
+        | "NEW_MATCHES"
+        | "NEW_MATCH_REQUEST"
+        | "MATCH_REQUEST_RESPONSE_ACCEPTED"
+        | "MATCH_REQUEST_RESPONSE_REFUSED"
       side_preference: "LEFT" | "RIGHT" | "BOTH"
     }
     CompositeTypes: {

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { keys } from 'remeda'
 
-import { OverlaysStored, useOverlayStore } from '@/app/store'
+import { OverlaysStored, useOverlayStore } from '@/services/overlaysStore'
 
 export type OverlayWrapperChildrenProps = {
   hide: () => void

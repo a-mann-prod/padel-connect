@@ -10,7 +10,10 @@ import { Platform } from 'react-native'
 import { DefaultAlert, SelfDeleteAlert } from '@/components'
 import { AuthProvider, ColorSchemeProvider, ThemeProvider } from '@/contexts'
 import { NotificationsProvider } from '@/contexts/NotificationsContext'
+import { HeaderBackButton } from '@/designSystem'
 import { useInit } from '@/hooks/useInit'
+import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
 
@@ -40,10 +43,10 @@ export default Sentry.wrap(() => {
     return null
   }
 
-  return <RootLayoutNav />
+  return <RootProvider />
 })
 
-const RootLayoutNav = () => {
+const RootProvider = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -63,16 +66,7 @@ const RootLayoutNav = () => {
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <NotificationsProvider>
-              <Stack initialRouteName={unstable_settings.initialRouteName}>
-                <Stack.Screen
-                  name="(modals)"
-                  options={{
-                    presentation: 'containedModal',
-                    headerShown: false,
-                  }}
-                />
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              </Stack>
+              <RootLayoutNav />
               {Platform.OS === 'web' && (
                 <ReactQueryDevtools initialIsOpen={false} />
               )}
@@ -83,5 +77,34 @@ const RootLayoutNav = () => {
         </QueryClientProvider>
       </ThemeProvider>
     </ColorSchemeProvider>
+  )
+}
+
+const RootLayoutNav = () => {
+  const t = useTranslate(undefined, { keyPrefix: 'navigation' })
+
+  return (
+    <Stack initialRouteName={unstable_settings.initialRouteName}>
+      <Stack.Screen
+        name={routing.modals.name}
+        options={{
+          presentation: 'containedModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name={routing.tabs.name} options={{ headerShown: false }} />
+      <Stack.Screen
+        name={routing.match.name}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={routing.matchCreate.name}
+        options={{
+          title: t('matchCreate'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
+          presentation: 'containedModal',
+        }}
+      />
+    </Stack>
   )
 }

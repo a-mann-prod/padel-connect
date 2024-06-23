@@ -1,8 +1,8 @@
 import { VStack } from '@gluestack-ui/themed'
 
-import { useOverlayStore } from '@/app/store'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { useOverlayStore } from '@/services/overlaysStore'
 
 export default () => {
   const t = useTranslate('settings')
