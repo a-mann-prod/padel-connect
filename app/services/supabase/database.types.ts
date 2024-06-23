@@ -352,6 +352,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      mark_all_notifications_as_read: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       verify_user_password: {
         Args: {
           password: string

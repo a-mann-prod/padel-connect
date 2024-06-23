@@ -1,15 +1,18 @@
 import { VStack } from '@gluestack-ui/themed'
+import { router } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
 
 import { NotificationListItem, NotificationListItemProps } from '@/components'
 import { VirtualizedList } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
+import { useInvalidatePostgrestQuery } from '@/hooks/useInvalidateQuery'
 import { useMe } from '@/hooks/useMe'
 import {
   useInfiniteAllNotifications,
+  useUnreadNotifications,
   useUpdateNotification,
 } from '@/services/api'
-import { router } from 'expo-router'
+import { supabase } from '@/services/supabase'
 
 export default () => {
   const { data: me } = useMe()
@@ -25,16 +28,24 @@ export default () => {
     params: { user_id: me?.id as string },
   })
 
-  const { mutate } = useUpdateNotification({
-    onError: (e) => console.log(e),
-  })
+  const { mutate } = useUpdateNotification()
 
-  // how read all notifs ?
+  const invalidatePotsgrestQuery = useInvalidatePostgrestQuery()
+
+  const readAllNotifications = async () => {
+    await supabase.rpc('mark_all_notifications_as_read')
+    invalidatePotsgrestQuery('notifications')
+  }
+
+  const { count: unreadNotificationsCount } = useUnreadNotifications({
+    params: { user_id: me?.id as string },
+  })
 
   useHeaderButton({
     icon: 'FAS-check',
-    onPress: () => console.log('read all'),
+    onPress: readAllNotifications,
     side: 'headerRight',
+    disabled: !unreadNotificationsCount,
   })
 
   const renderItem = ({

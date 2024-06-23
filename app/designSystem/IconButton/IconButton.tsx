@@ -30,7 +30,7 @@ export const IconButton = ({
   const tooManyNotifications = (badgeCount || 0) > 9
 
   return (
-    <GButton {...props}>
+    <GButton {...props} opacity={when(!!props.disabled, 0.5)}>
       <GButtonIcon
         w={'unset' as any}
         h={'unset' as any}

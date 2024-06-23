@@ -14,9 +14,16 @@ export const useInvalidatePostgrestQuery = () => {
 
   return (
     table: string,
-    selectedColumns: string,
-    filters: Record<string, unknown>
+    selectedColumns?: string,
+    filters?: Record<string, unknown>
   ) => {
+    if (!selectedColumns || !filters) {
+      queryClient.invalidateQueries({
+        queryKey: ['postgrest', 'null', 'public', table],
+      })
+      return
+    }
+
     const filtersStringified = toPairs(filters)
       .map(([key, value]) => `${key}=${value}`)
       .join(JOIN_CHAR)
