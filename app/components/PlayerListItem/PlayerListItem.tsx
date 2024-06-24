@@ -32,7 +32,7 @@ export const PlayerListItem = ({
   onPress,
   isFavorite = false,
   matchRequest,
-}: PlayerlistItemProps) => {
+}: PlayerListItemProps) => {
   return (
     <Pressable onPress={onPress}>
       <HStack gap="$5" variant="colored" rounded="$lg" p="$3">
