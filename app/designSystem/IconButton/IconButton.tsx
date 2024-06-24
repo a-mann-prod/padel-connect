@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   Button as GButton,
   ButtonIcon as GButtonIcon,
