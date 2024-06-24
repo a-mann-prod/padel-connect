@@ -368,7 +368,7 @@ export type Database = {
       match_request_status: "ACCEPTED" | "REFUSED" | "PENDING"
       notification:
         | "NEW_MESSAGE"
-        | "NEW_MATCHES"
+        | "NEW_MATCH"
         | "NEW_MATCH_REQUEST"
         | "MATCH_REQUEST_RESPONSE_ACCEPTED"
         | "MATCH_REQUEST_RESPONSE_REFUSED"

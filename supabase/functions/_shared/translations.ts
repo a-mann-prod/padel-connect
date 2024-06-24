@@ -5,8 +5,8 @@ export type Translations = Record<Language, object>;
 export const translations = {
   fr: {
     newMatch: {
-      title: "Nouveau match dispos ! 🎉",
-      body: "Des nouveaux matchs t'attendent ! Prêt(e) à donner le meilleur ? 💪",
+      title: "Nouveau match dispo ! 🎉",
+      body: "Un nouveau match t'attend ! Prêt(e) à donner le meilleur ? 💪",
     },
     newMatchRequest: {
       title: "Nouvelle demande de match ! 🎉",
@@ -23,8 +23,8 @@ export const translations = {
   },
   en: {
     newMatch: {
-      title: "New matches available! 🎉",
-      body: "New matches await you! Ready to give it your all? 💪",
+      title: "New match available! 🎉",
+      body: "New match await you! Ready to give it your all? 💪",
     },
     newMatchRequest: {
       title: "New match Request! 🎉",

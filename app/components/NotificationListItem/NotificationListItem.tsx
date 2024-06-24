@@ -16,7 +16,7 @@ const mapTypeToIcon: Record<
   FontAwesomeProps['name']
 > = {
   NEW_MESSAGE: 'FAS-envelope',
-  NEW_MATCHES: 'FAS-baseball',
+  NEW_MATCH: 'FAS-baseball',
   NEW_MATCH_REQUEST: 'FAS-circle-question',
   MATCH_REQUEST_RESPONSE_ACCEPTED: 'FAS-circle-check',
   MATCH_REQUEST_RESPONSE_REFUSED: 'FAS-circle-xmark',

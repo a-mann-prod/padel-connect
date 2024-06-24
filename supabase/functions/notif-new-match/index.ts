@@ -47,9 +47,9 @@ Deno.serve(async (req) => {
     return {
       title: translations[language].newMatch.title,
       subtitle: translations[language].newMatch.body,
-      url: routing.play.path(),
+      url: routing.match.path(match.id),
       user_id: u.id,
-      type: "NEW_MATCHES",
+      type: "NEW_MATCH",
     };
   });
 
