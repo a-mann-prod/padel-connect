@@ -17,7 +17,7 @@ export const translations = {
       body: "Hésite pas à envoyer un message pour préparer au mieux la rencontre !",
     },
     matchRequestRefused: {
-      title: "Ta demande de amtch a été refusée 😵",
+      title: "Ta demande de match a été refusée 😵",
       body: "Ne perds pas de temps pour retrouver un match ! 💪",
     },
   },
