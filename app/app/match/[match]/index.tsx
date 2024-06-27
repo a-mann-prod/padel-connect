@@ -1,4 +1,4 @@
-import { HStack, RefreshControl, Text, VStack } from '@gluestack-ui/themed'
+import { HStack, Text, VStack } from '@gluestack-ui/themed'
 import * as AuthSession from 'expo-auth-session'
 import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Share } from 'react-native'
@@ -35,17 +35,12 @@ export default WithMatch(() => {
 
   const { data: me } = useMe()
 
-  const {
-    data: match,
-    isLoading,
-    refetch: refetchMatch,
-    isRefetching: isRefetchingMatch,
-  } = useMatch({
+  const { data: match, isLoading: isLoadingMatch } = useMatch({
     params: { id: matchId },
     options: { enabled: !!local?.match, staleTime: 0 },
   })
 
-  const isOwner = !isLoading && match?.owner_id === me?.id
+  const isOwner = !isLoadingMatch && match?.owner_id === me?.id
 
   const {
     isPlayer,
@@ -54,16 +49,7 @@ export default WithMatch(() => {
     cancelRequestMatch,
     isRequestMatchPending,
     isCancelRequestMatchPending,
-    refetch: refetchMatchRequest,
-    isRefetching: isRefetchingMatchRequest,
   } = useManageMatchRequest(matchId, !isOwner)
-
-  const refetch = () => {
-    refetchMatchRequest()
-    refetchMatch()
-  }
-
-  const isRefetching = isRefetchingMatchRequest || isRefetchingMatch
 
   const isParticipant = isOwner || isPlayer
 
@@ -93,7 +79,7 @@ export default WithMatch(() => {
     (a, b) => userIds.indexOf(a.id || '') - userIds.indexOf(b.id || '')
   )
 
-  if (isLoading) return <Loader />
+  if (isLoadingMatch) return <Loader />
 
   if (!match) return <ListEmpty title={t('matchNotFound')} />
 
@@ -101,11 +87,7 @@ export default WithMatch(() => {
   const isBooked = !isNilOrEmpty(match.booked_url)
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-      }
-    >
+    <ScrollView>
       <VStack p="$3" gap="$3">
         {isBooked && (
           <Tile
