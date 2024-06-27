@@ -1,5 +1,6 @@
 import { Box, SafeAreaView, VStack } from '@gluestack-ui/themed'
 import { useUpsertItem } from '@supabase-cache-helpers/postgrest-react-query'
+import * as Notifications from 'expo-notifications'
 import { useLocalSearchParams, usePathname } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
 import { uniq } from 'remeda'
@@ -17,7 +18,27 @@ import {
 import { date } from '@/services/date'
 
 export default WithMatch(() => {
+  // that's workin, but better to set it globaly ?
   const pathName = usePathname()
+  Notifications.setNotificationHandler({
+    handleNotification: async (notification: Notifications.Notification) => {
+      let shouldShowAlert = true
+      const notifData = notification?.request.content.data
+
+      // if notification is same location as current location
+      // do not display notification alert
+      if (notifData?.url === pathName) {
+        shouldShowAlert = false
+      }
+
+      return {
+        shouldShowAlert,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      }
+    },
+  })
+
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
   const upsert = useUpsertItem({

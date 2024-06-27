@@ -47,6 +47,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
       setExpoPushToken(token ?? '')
     )
 
+    // listener when notification appears
     notificationListener.current =
       ExpoNotifications.addNotificationReceivedListener((notification) => {
         setNotification(notification)
