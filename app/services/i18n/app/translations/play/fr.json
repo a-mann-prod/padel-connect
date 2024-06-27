@@ -1,19 +1,4 @@
 {
-  "booked": "Réservé",
-  "cancelRequest": "Annuler la demande",
-  "chat": "Messagerie",
-  "complex": "Lieu",
   "createNewMatch": "Créer une nouvelle partie",
-  "date": "Date",
-  "datetime": "Date et heure",
-  "deleteMatch": "Supprimer la partie",
-  "deleteMatchMessage": "Es tu sûr de vouloir supprimer la partie ?",
-  "duration": "Durée",
-  "enterScore": "Renseigner le score",
-  "joinRequest": "Demande",
-  "leave": "Quitter",
-  "notBooked": "Non réservé",
-  "pay": "Payer sa part",
-  "playersManage": "Gérer les joueurs",
-  "share": "Partager"
+  "notBooked": "Non réservé"
 }

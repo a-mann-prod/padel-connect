@@ -2,6 +2,7 @@ import * as ExpoNotifications from 'expo-notifications'
 import { router } from 'expo-router'
 import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
+import { useInvalidatePostgrestQuery } from '@/hooks/useInvalidateQuery'
 import { useMe } from '@/hooks/useMe'
 import { useUpdateMe } from '@/hooks/useUpdateMe'
 import { GetMatchesParams, useUpdateNotification } from '@/services/api'
@@ -29,6 +30,8 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
   const { data: me } = useMe()
   const { mutate } = useUpdateMe()
 
+  const invalidatePotsgrestQuery = useInvalidatePostgrestQuery()
+
   const { mutate: mutateNotification } = useUpdateNotification()
 
   const [expoPushToken, setExpoPushToken] = useState('')
@@ -47,6 +50,8 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
     notificationListener.current =
       ExpoNotifications.addNotificationReceivedListener((notification) => {
         setNotification(notification)
+
+        invalidatePotsgrestQuery('notifications')
       })
 
     // notification reponse listener on notification click

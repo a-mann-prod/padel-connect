@@ -1,5 +1,7 @@
 import { VStack } from '@gluestack-ui/themed'
+import * as Notifications from 'expo-notifications'
 import { router } from 'expo-router'
+import { useEffect } from 'react'
 
 import { TileButton } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
@@ -16,6 +18,10 @@ export default () => {
   const { count: badgeCount } = useUnreadNotifications({
     params: { user_id: me?.id as string },
   })
+
+  useEffect(() => {
+    if (badgeCount !== null) Notifications.setBadgeCountAsync(badgeCount)
+  }, [badgeCount])
 
   useHeaderButton({
     icon: 'FAS-lightbulb',

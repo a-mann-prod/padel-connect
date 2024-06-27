@@ -1,25 +1,18 @@
 import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
-import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
-import { PlayerListItem } from '@/components'
+import { PlayerListItem, WithMatch } from '@/components'
 import { VirtualizedList } from '@/designSystem'
-import { SearchInput } from '@/designSystem/SearchInput/SearchInput'
-import { useDebounce } from '@/hooks/useDebounce'
 import { useManageMatchRequests } from '@/hooks/useManageMatchRequests'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { ProfileResponse, useMatchRequests } from '@/services/api'
 import { routing } from '@/services/routing'
 import { getPublicAvatarUrl } from '@/utils/avatar'
 
-export default () => {
+export default WithMatch(() => {
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
-
-  const [search, setSearch] = useState<string | undefined>(undefined)
-  const { isDebouncing, debouncedCallback: setSearchDebounced } =
-    useDebounce(setSearch)
 
   const {
     data: matchRequests,
@@ -27,8 +20,8 @@ export default () => {
     refetch,
     isRefetching,
   } = useMatchRequests({
-    params: { match_id: matchId, search },
-    options: { enabled: !!matchId },
+    params: { match_id: matchId },
+    options: { enabled: !!matchId, staleTime: 0 },
   })
 
   const data =
@@ -60,18 +53,16 @@ export default () => {
 
   return (
     <VStack flex={1} gap="$3" m="$3">
-      <SearchInput onChangeText={setSearchDebounced} />
-
       <VirtualizedList<ProfileResponse>
         data={data}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-        isLoading={isLoading || isDebouncing}
+        isLoading={isLoading}
         refreshing={isRefetching}
         onRefresh={refetch}
       />
     </VStack>
   )
-}
+})

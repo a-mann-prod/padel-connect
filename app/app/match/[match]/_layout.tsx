@@ -1,8 +1,8 @@
-// app/match/[match]/_layout.js
+import { Stack } from 'expo-router'
+
 import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
-import { Stack } from 'expo-router'
 
 export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })

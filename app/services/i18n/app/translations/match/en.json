@@ -1,0 +1,17 @@
+{
+  "cancelRequest": "Cancel request",
+  "chat": "Chat",
+  "complex": "Location",
+  "date": "Date",
+  "datetime": "Date and time",
+  "deleteMatch": "Delete match",
+  "deleteMatchMessage": "Are you sure you want to delete the match?",
+  "duration": "Duration",
+  "enterScore": "Enter score",
+  "joinRequest": "Join request",
+  "leave": "Leave",
+  "matchNotFound": "Match not found",
+  "pay": "Pay your share",
+  "playersManage": "Manager players",
+  "share": "Share"
+}

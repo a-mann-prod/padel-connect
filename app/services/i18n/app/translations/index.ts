@@ -1,5 +1,6 @@
 import auth from './auth'
 import global from './global'
+import match from './match'
 import onboarding from './onboarding'
 import play from './play'
 import profile from './profile'
@@ -14,4 +15,5 @@ export const translations = {
   zod,
   settings,
   play,
+  match,
 }

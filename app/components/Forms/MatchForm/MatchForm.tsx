@@ -34,7 +34,7 @@ export const MatchForm = ({
   buttonTitle,
 }: MatchFormProps) => {
   const tGlobal = useTranslate()
-  const t = useTranslate('play')
+  const t = useTranslate('match')
 
   const defaultValuesMemo = useMemo(
     () => getDefaultValues(defaultValues),

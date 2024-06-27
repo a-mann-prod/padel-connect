@@ -3,6 +3,7 @@ import * as AuthSession from 'expo-auth-session'
 import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Share } from 'react-native'
 
+import { WithMatch } from '@/components'
 import {
   Button,
   Loader,
@@ -11,6 +12,7 @@ import {
   SectionRow,
   Tile,
 } from '@/designSystem'
+import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
 import { useMe } from '@/hooks/useMe'
@@ -23,9 +25,9 @@ import { routing } from '@/services/routing'
 import { isNilOrEmpty } from '@/utils/global'
 import { getUsername } from '@/utils/user'
 
-export default () => {
+export default WithMatch(() => {
   const tGlobal = useTranslate()
-  const t = useTranslate('play')
+  const t = useTranslate('match')
 
   const pathname = usePathname()
   const local = useLocalSearchParams()
@@ -36,11 +38,11 @@ export default () => {
   const {
     data: match,
     isLoading,
-    refetch,
-    isRefetching,
+    refetch: refetchMatch,
+    isRefetching: isRefetchingMatch,
   } = useMatch({
     params: { id: matchId },
-    options: { enabled: !!local?.match },
+    options: { enabled: !!local?.match, staleTime: 0 },
   })
 
   const isOwner = !isLoading && match?.owner_id === me?.id
@@ -52,7 +54,16 @@ export default () => {
     cancelRequestMatch,
     isRequestMatchPending,
     isCancelRequestMatchPending,
+    refetch: refetchMatchRequest,
+    isRefetching: isRefetchingMatchRequest,
   } = useManageMatchRequest(matchId, !isOwner)
+
+  const refetch = () => {
+    refetchMatchRequest()
+    refetchMatch()
+  }
+
+  const isRefetching = isRefetchingMatchRequest || isRefetchingMatch
 
   const isParticipant = isOwner || isPlayer
 
@@ -84,7 +95,7 @@ export default () => {
 
   if (isLoading) return <Loader />
 
-  if (!match) return
+  if (!match) return <ListEmpty title={t('matchNotFound')} />
 
   const matchDatetime = date.dayjs(match.datetime)
   const isBooked = !isNilOrEmpty(match.booked_url)
@@ -232,4 +243,4 @@ export default () => {
       </VStack>
     </ScrollView>
   )
-}
+})

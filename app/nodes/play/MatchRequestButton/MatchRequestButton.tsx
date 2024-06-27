@@ -13,7 +13,7 @@ export const MatchRequestButton = ({
   onCancelPress,
   ...props
 }: MatchRequestButtonProps) => {
-  const t = useTranslate('play')
+  const t = useTranslate('match')
 
   return (
     <Button

@@ -122,7 +122,7 @@ type BookedStatusProps = {
 }
 
 const BookedStatus = ({ isBooked }: BookedStatusProps) => {
-  const t = useTranslate('play')
+  const t = useTranslate('match')
 
   return (
     <HStack gap="$2" alignItems="center">

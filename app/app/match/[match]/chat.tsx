@@ -4,7 +4,7 @@ import { useLocalSearchParams, usePathname } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
 import { uniq } from 'remeda'
 
-import { KeyboardAvoidingView } from '@/components'
+import { KeyboardAvoidingView, WithMatch } from '@/components'
 import { Message, MessageInput, VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
@@ -16,7 +16,7 @@ import {
 } from '@/services/api'
 import { date } from '@/services/date'
 
-export default () => {
+export default WithMatch(() => {
   const pathName = usePathname()
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
@@ -119,4 +119,4 @@ export default () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   )
-}
+})

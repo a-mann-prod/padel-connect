@@ -12,9 +12,14 @@ export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
 
   const { data: me } = useMe()
 
-  const { data: matchRequest, isLoading } = useMatchRequest({
+  const {
+    data: matchRequest,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useMatchRequest({
     params: { match_id: matchId, user_id: me?.id as string },
-    options: { enabled: !!(matchId && me?.id) && enabled },
+    options: { enabled: !!(matchId && me?.id) && enabled, staleTime: 0 },
   })
 
   const { mutate: requestMatch, isPending: isRequestMatchPending } =
@@ -37,5 +42,7 @@ export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
       me?.id && cancelRequestMatch({ match_id: matchId, user_id: me?.id }),
     isRequestMatchPending,
     isCancelRequestMatchPending,
+    refetch,
+    isRefetching,
   }
 }

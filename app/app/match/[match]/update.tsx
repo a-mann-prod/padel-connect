@@ -1,7 +1,12 @@
 import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
 
-import { MatchForm, MatchFormValues, matchFormServices } from '@/components'
+import {
+  MatchForm,
+  MatchFormValues,
+  WithMatch,
+  matchFormServices,
+} from '@/components'
 import { Button, Loader, ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
@@ -13,8 +18,8 @@ import { Nillable } from '@/types'
 
 const { formatToParams, formatToFormValues } = matchFormServices
 
-export default () => {
-  const t = useTranslate('play')
+export default WithMatch(() => {
+  const t = useTranslate('match')
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
@@ -66,4 +71,4 @@ export default () => {
       </VStack>
     </ScrollView>
   )
-}
+})

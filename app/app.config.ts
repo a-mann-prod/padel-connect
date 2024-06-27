@@ -24,6 +24,7 @@ export default ({ config }: ConfigContext) => ({
     supportsTablet: true,
     infoPlist: {
       CFBundleAllowMixedLocalizations: true,
+      UIBackgroundModes: ['remote-notification'],
     },
     bundleIdentifier: 'com.a-mann-prod.padel-connect',
   },

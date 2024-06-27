@@ -1,15 +1,12 @@
-import { Box, Center, Text } from '@gluestack-ui/themed'
+import { Box } from '@gluestack-ui/themed'
 import { ForwardedRef, Ref, forwardRef } from 'react'
 import {
   VirtualizedList as RNVirtualizedList,
   VirtualizedListProps as RNVirtualizedListProps,
 } from 'react-native'
 
-import { Icon } from '../Icon/Icon'
+import { ListEmpty } from '../ListEmpty/ListEmpty'
 import { Loader } from '../Loader/Loader'
-
-import { useTranslate } from '@/services/i18n'
-import { when } from '@/utils/when'
 
 export type VirtualizedListProps<T> = RNVirtualizedListProps<T> & {
   isLoading?: boolean
@@ -22,21 +19,11 @@ const VirtualizedListInner = <T,>(
   { isLoading, isLoadingNext, data, ...props }: VirtualizedListProps<T>,
   ref: ForwardedRef<VirtualizedListRef<T>>
 ) => {
-  const t = useTranslate()
   const ItemSeparatorComponent = () => <Box pt="$3" />
 
   const ListEmptyComponent = () => {
     if (data) {
-      return (
-        <Center
-          flex={1}
-          gap="$3"
-          transform={when(!!props?.inverted, [{ scaleY: -1 }])}
-        >
-          <Text>{t('noData')}</Text>
-          <Icon name="FAR-face-frown-open" size="xl" />
-        </Center>
-      )
+      return <ListEmpty inverted={props.inverted} />
     }
   }
 

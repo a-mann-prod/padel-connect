@@ -68,7 +68,7 @@ export default () => {
             formControlProps={{}}
             name="reserved"
             options={[
-              { label: t('booked'), value: 'true' },
+              { label: tGlobal('booked'), value: 'true' },
               { label: t('notBooked'), value: 'false' },
             ]}
             single
