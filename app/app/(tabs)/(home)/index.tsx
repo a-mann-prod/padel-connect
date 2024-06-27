@@ -24,7 +24,7 @@ export default () => {
   }, [badgeCount])
 
   useHeaderButton({
-    icon: 'FAS-lightbulb',
+    icon: 'FAS-bell',
     onPress: () => router.navigate(routing.homeNotifications.path()),
     side: 'headerRight',
     badgeCount,
