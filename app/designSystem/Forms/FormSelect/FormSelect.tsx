@@ -58,8 +58,8 @@ export const FormSelect = ({
           />
           <SelectIcon
             px="$2"
-            w={'unset' as any}
-            h={'unset' as any}
+            w={null}
+            h={null}
             as={(iconProps: any) => (
               <FontAwesome {...iconProps} name="FAS-chevron-down" />
             )}

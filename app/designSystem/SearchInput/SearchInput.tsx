@@ -12,8 +12,8 @@ export const SearchInput = (props: SearchInputProps) => {
     <Input>
       <InputSlot pl="$3">
         <InputIcon
-          w={'unset' as any}
-          h={'unset' as any}
+          w={null}
+          h={null}
           as={(iconProps: any) => (
             <FontAwesome {...iconProps} name="FAS-magnifying-glass" />
           )}

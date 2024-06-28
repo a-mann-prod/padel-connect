@@ -33,8 +33,8 @@ export const IconButton = ({
   return (
     <GButton {...props} opacity={when(!!props.disabled, 0.5)}>
       <GButtonIcon
-        w={'unset' as any}
-        h={'unset' as any}
+        w={null}
+        h={null}
         {...iconProps}
         as={(innerProps: any) => <FontAwesome name={icon} {...innerProps} />}
       />

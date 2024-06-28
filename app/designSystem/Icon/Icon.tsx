@@ -19,8 +19,8 @@ export const Icon = ({ name, color, ...props }: IconProps) => {
       {...props}
       justifyContent="center"
       color={colorToken}
-      w={'unset' as any}
-      h={'unset' as any}
+      w={null}
+      h={null}
       as={(innerProps: any) => <FontAwesome name={name} {...innerProps} />}
     />
   )
