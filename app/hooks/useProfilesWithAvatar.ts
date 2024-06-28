@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { ProfileWithAvatar } from './useProfileWithAvatar'
 
 import {
@@ -18,14 +19,18 @@ export type UseProfilesWithAvatar = {
 export const useProfilesWithAvatar = (
   props: UseQueryProps<ProfilesResponse, GetProfilesParams>
 ): UseProfilesWithAvatar => {
-  const { data, isLoading: isLoadingProfile } = useProfiles(props)
+  const { data, isLoading } = useProfiles(props)
 
   return {
-    data: data?.map((d) => {
-      if (!d.avatar_url) return d
+    data: useMemo(
+      () =>
+        data?.map((d) => {
+          if (!d.avatar_url) return d
 
-      return { ...d, avatar: getPublicAvatarUrl(d.avatar_url) }
-    }),
-    isLoading: isLoadingProfile,
+          return { ...d, avatar: getPublicAvatarUrl(d.avatar_url) }
+        }),
+      [data]
+    ),
+    isLoading,
   }
 }

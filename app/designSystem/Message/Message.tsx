@@ -2,7 +2,6 @@ import { Box, Center, HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
 
 import { Avatar } from '../Avatar/Avatar'
-import { Loader } from '../Loader/Loader'
 
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { MessageResponse } from '@/services/api'
@@ -17,7 +16,6 @@ export type MessageProps = {
   createdDate: Dayjs
   isMe: boolean
   isLast: boolean
-  isFetchingOldMessages?: boolean
 
   prevMessage?: MessageResponse
   nextMessage?: MessageResponse
@@ -28,7 +26,6 @@ export const Message = ({
   isMe,
   isLast = false,
   createdDate,
-  isFetchingOldMessages = false,
   prevMessage,
   nextMessage,
 }: MessageProps) => {
@@ -40,7 +37,6 @@ export const Message = ({
 
   return (
     <VStack gap="$3">
-      {isLast && isFetchingOldMessages && <Loader />}
       {!isSameDay && (
         <Center pt="$3">
           <Text>

@@ -40,7 +40,7 @@ export default WithMatch(() => {
     options: { enabled: !!local?.match, staleTime: 0 },
   })
 
-  const isOwner = !isLoadingMatch && match?.owner_id === me?.id
+  const isOwner = match?.owner_id === me?.id
 
   const {
     isPlayer,
@@ -49,6 +49,7 @@ export default WithMatch(() => {
     cancelRequestMatch,
     isRequestMatchPending,
     isCancelRequestMatchPending,
+    isLoading: isLoadingMatchRequest,
   } = useManageMatchRequest(matchId, !isOwner)
 
   const isParticipant = isOwner || isPlayer
@@ -79,7 +80,7 @@ export default WithMatch(() => {
     (a, b) => userIds.indexOf(a.id || '') - userIds.indexOf(b.id || '')
   )
 
-  if (isLoadingMatch) return <Loader />
+  if (isLoadingMatch || isLoadingMatchRequest) return <Loader />
 
   if (!match) return <ListEmpty title={t('matchNotFound')} />
 

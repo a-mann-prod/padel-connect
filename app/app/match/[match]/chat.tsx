@@ -2,13 +2,17 @@ import { Box, SafeAreaView, VStack } from '@gluestack-ui/themed'
 import { useUpsertItem } from '@supabase-cache-helpers/postgrest-react-query'
 import * as Notifications from 'expo-notifications'
 import { useLocalSearchParams, usePathname } from 'expo-router'
+import { useEffect, useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 import { uniq } from 'remeda'
 
 import { KeyboardAvoidingView, WithMatch } from '@/components'
 import { Message, MessageInput, VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
-import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
+import {
+  ProfilesWithAvatar,
+  useProfilesWithAvatar,
+} from '@/hooks/useProfilesWithAvatar'
 import {
   MessageResponse,
   useInfiniteMessages,
@@ -52,7 +56,7 @@ export default WithMatch(() => {
   const {
     data: messages,
     fetchNext,
-    isLoading,
+    isLoading: isLoadingMessages,
     isLoadingNext,
   } = useInfiniteMessages({
     params: { match_id: matchId },
@@ -65,19 +69,27 @@ export default WithMatch(() => {
           if (!curr.sender_id) return acc
           return [...acc, curr.sender_id]
         }, [])
-      )
+      ).sort()
     : []
 
-  const { data: profiles } = useProfilesWithAvatar({
-    params: { ids: userIds },
-    options: { enabled: !!userIds.length },
-  })
+  const { data: profiles, isLoading: isLoadingProfiles } =
+    useProfilesWithAvatar({
+      params: { ids: userIds },
+      options: { enabled: !!userIds.length },
+    })
+
+  // needed to avoid global isLoading when fetching messages with a new user
+  const [senders, setSenders] = useState<ProfilesWithAvatar>([])
+  useEffect(() => {
+    if (profiles?.length) setSenders(profiles)
+  }, [profiles])
+
+  const isLoading = isLoadingMessages || (isLoadingProfiles && !senders?.length)
 
   useMessagesSubscription({
     options: {
       callback: async (e) => {
         // if user is not in the screen
-        console.log('new msg', pathName)
         if (e.eventType === 'INSERT') {
           const newMessage = e.new
           if (newMessage.sender_id !== me?.id) {
@@ -90,13 +102,11 @@ export default WithMatch(() => {
 
   const { mutate: addMessage } = useInsertMessages()
 
-  if (!messages) return
-
   const renderItem = ({
     item: { id, content, sender_id, created_at },
     index,
   }: ListRenderItemInfo<MessageResponse>) => {
-    const sender = profiles?.find(({ id }) => id === sender_id)
+    const sender = senders.find(({ id }) => id === sender_id)
 
     return (
       <Message
@@ -105,9 +115,8 @@ export default WithMatch(() => {
         isMe={sender?.id === me?.id}
         sender={sender}
         createdDate={date.dayjs(created_at)}
-        isFetchingOldMessages={isLoadingNext}
-        prevMessage={messages[index + 1]} // because list is reversed
-        nextMessage={messages[index - 1]} // because list is reversed
+        prevMessage={messages?.[index + 1]} // because list is reversed
+        nextMessage={messages?.[index - 1]} // because list is reversed
         isLast={index === 0} // because list is reversed
       />
     )
@@ -123,7 +132,8 @@ export default WithMatch(() => {
             getItemCount={(data) => data.length}
             keyExtractor={(item) => item.id.toString()}
             renderItem={renderItem}
-            isLoading={!messages.length && isLoading}
+            isLoading={isLoading}
+            isLoadingNext={isLoadingNext}
             onEndReached={fetchNext}
             inverted
           />

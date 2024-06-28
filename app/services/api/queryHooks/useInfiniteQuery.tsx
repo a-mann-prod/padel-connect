@@ -42,10 +42,8 @@ export const useInfiniteQuery = <T extends { id: number | string }>(
     // a revoir pour chat et notifications
     if (!isLoading && nextData) {
       if (isCacheUpdating.current) {
-        console.log('ici')
         setData((data) => uniqBy([...nextData, ...(data || [])], prop('id')))
       } else {
-        console.log('oula')
         setData((data) => uniqBy([...(data || []), ...nextData], prop('id')))
         isCacheUpdating.current = true
       }
