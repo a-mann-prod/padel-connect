@@ -51,6 +51,7 @@ Deno.serve(async (req) => {
     },
     body: JSON.stringify({
       to: user.push_token,
+      _contentAvailable: true, // used for background notifications
       sound: "default",
       title: notification.title,
       body: notification.subtitle,

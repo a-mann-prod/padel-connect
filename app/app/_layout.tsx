@@ -2,8 +2,10 @@ import * as Sentry from '@sentry/react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import 'expo-dev-client'
+import * as ExpoNotifications from 'expo-notifications'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
+import * as TaskManager from 'expo-task-manager'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
@@ -17,22 +19,15 @@ import { routing } from '@/services/routing'
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
 
-import * as ExpoNotifications from 'expo-notifications'
-import * as TaskManager from 'expo-task-manager'
-
 const BACKGROUND_NOTIFICATION_TASK = 'BACKGROUND-NOTIFICATION-TASK'
+TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, async ({ data }) => {
+  const badgeCount = await ExpoNotifications.getBadgeCountAsync()
+  ExpoNotifications.setBadgeCountAsync(badgeCount + 1)
+})
 
-console.log('notif')
-TaskManager.defineTask(
-  BACKGROUND_NOTIFICATION_TASK,
-  ({ data, error, executionInfo }) => {
-    console.log('Received a notification in the background!')
-    // Do something with the notification data
-  }
+ExpoNotifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK).then(() =>
+  console.log(`${BACKGROUND_NOTIFICATION_TASK} succcesfully registered`)
 )
-
-ExpoNotifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK)
-console.log('setted')
 
 export {
   // Catch any errors thrown by the Layout component.
