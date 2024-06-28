@@ -29,17 +29,12 @@ export const Message = ({
   isLast = false,
   createdDate,
   isFetchingOldMessages = false,
-
   prevMessage,
   nextMessage,
 }: MessageProps) => {
   const t = useTranslate()
 
-  const isSameUser = prevMessage?.sender_id === sender?.id
-
-  // const isSameDay = prevMessage
-  //   ? createdDate.isSame(prevMessage?.created_at, 'day')
-  //   : createdDate.isSame(nextMessage?.created_at, 'day')
+  const isSameUser = nextMessage?.sender_id === sender?.id
 
   const isSameDay = isSameDayFn(createdDate, prevMessage, nextMessage)
 
@@ -47,7 +42,7 @@ export const Message = ({
     <VStack gap="$3">
       {isLast && isFetchingOldMessages && <Loader />}
       {!isSameDay && (
-        <Center>
+        <Center pt="$3">
           <Text>
             {createdDate.isSame(date.now(), 'day')
               ? t('today')
@@ -57,7 +52,7 @@ export const Message = ({
       )}
 
       <HStack
-        mt={when(isSameUser, '-$2.5')}
+        mb={when(isSameUser, '-$2.5')}
         gap="$2"
         justifyContent={isMe ? 'flex-end' : 'flex-start'}
         alignItems="flex-end"
