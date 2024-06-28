@@ -12,6 +12,7 @@ import { useManageFavoriteUser } from '@/hooks/useManageFavoriteUser'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
+import { isNilOrEmpty } from '@/utils/global'
 
 export type ProfileProps = {
   user?: ProfileWithAvatar
@@ -59,7 +60,7 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
               <Text>
                 {tGlobal(
                   `manualPreference.${user.manual_preference?.toLowerCase()}`
-                )}
+                ) || tGlobal('unknown')}
               </Text>
             )}
           />
@@ -70,7 +71,18 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
               <Text>
                 {tGlobal(
                   `sidePreference.${user.side_preference?.toLowerCase()}`
-                )}
+                ) || tGlobal('unknown')}
+              </Text>
+            )}
+          />
+          <SectionRow
+            title={tGlobal('level')}
+            icon="FAS-dumbbell"
+            rightComponent={() => (
+              <Text>
+                {isNilOrEmpty(user.level)
+                  ? tGlobal('unknown')
+                  : `${tGlobal('level')} ${user.level}`}
               </Text>
             )}
           />
@@ -80,13 +92,6 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
             rightComponent={() =>
               user.created_at && <Text>{date.fromNow(user.created_at)}</Text>
             }
-          />
-          <SectionRow
-            title={tGlobal('level')}
-            icon="FAS-dumbbell"
-            rightComponent={() => (
-              <Text>{user.level || tGlobal('unknown')}</Text>
-            )}
           />
         </Section>
       </VStack>
