@@ -81,6 +81,13 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
               user.created_at && <Text>{date.fromNow(user.created_at)}</Text>
             }
           />
+          <SectionRow
+            title={tGlobal('level')}
+            icon="FAS-dumbbell"
+            rightComponent={() => (
+              <Text>{user.level || tGlobal('unknown')}</Text>
+            )}
+          />
         </Section>
       </VStack>
     </ScrollView>

@@ -292,6 +292,7 @@ export type Database = {
           is_onboarding_completed: boolean
           language: string | null
           last_name: string | null
+          level: number | null
           manual_preference:
             | Database["public"]["Enums"]["manual_preference"]
             | null
@@ -309,6 +310,7 @@ export type Database = {
           is_onboarding_completed?: boolean
           language?: string | null
           last_name?: string | null
+          level?: number | null
           manual_preference?:
             | Database["public"]["Enums"]["manual_preference"]
             | null
@@ -328,6 +330,7 @@ export type Database = {
           is_onboarding_completed?: boolean
           language?: string | null
           last_name?: string | null
+          level?: number | null
           manual_preference?:
             | Database["public"]["Enums"]["manual_preference"]
             | null

@@ -100,5 +100,6 @@
     "title": "Preferred side"
   },
   "today": "Today",
+  "unknown": "Unknown",
   "warning": "Warning"
 }
