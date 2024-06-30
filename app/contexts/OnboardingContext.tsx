@@ -4,7 +4,7 @@ import { PersonalInfoFormValues } from '@/components/Forms/PersonalInfoForm/Pers
 import { PreferencesFormValues } from '@/components/Forms/PreferencesForm/PreferencesForm.services'
 import { AvatarFormValues } from '@/nodes/onboarding/AvatarForm/AvatarForm.services'
 import { buildContext } from '@/services/buildContext'
-import { Level } from '@/utils/levelEstimation'
+import { Level } from '@/utils/level'
 
 type OnboardingContextProps = {
   personalInfo: PersonalInfoFormValues | undefined

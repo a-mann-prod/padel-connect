@@ -7,7 +7,7 @@ import { useOnboardingContext } from '@/contexts'
 import { useLevelEstimationSteps } from '@/hooks/useLevelEstimationSteps'
 import { routing } from '@/services/routing'
 import { modifyArray } from '@/utils/array'
-import { LevelInput, calculLevel } from '@/utils/levelEstimation'
+import { LevelInput, calculLevel } from '@/utils/level'
 
 export default () => {
   const { setLevel } = useOnboardingContext()

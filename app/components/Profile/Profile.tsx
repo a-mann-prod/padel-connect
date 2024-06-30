@@ -1,4 +1,5 @@
 import { HStack, Text, VStack } from '@gluestack-ui/themed'
+import { pick } from 'remeda'
 
 import {
   Avatar,
@@ -13,6 +14,7 @@ import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
+import { getLevel } from '@/utils/level'
 
 export type ProfileProps = {
   user?: ProfileWithAvatar
@@ -33,6 +35,10 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
   if (isLoading) return <Loader />
 
   if (!user) return
+
+  const level = getLevel(
+    pick(user, ['defense_level', 'offense_level', 'service_level'])
+  )
 
   return (
     <ScrollView>
@@ -80,9 +86,9 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
             icon="FAS-dumbbell"
             rightComponent={() => (
               <Text>
-                {isNilOrEmpty(user.level)
+                {isNilOrEmpty(level)
                   ? tGlobal('unknown')
-                  : `${tGlobal('level')} ${user.level}`}
+                  : `${tGlobal('level')} ${level}`}
               </Text>
             )}
           />
