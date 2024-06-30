@@ -22,12 +22,9 @@ export default () => {
     ])
   })
 
-  console.log(levelInput)
-
   useEffect(() => {
     if (sliderRef.current?.getIsLastIndex()) {
       const level = calculLevel(levelInput)
-      console.log(level)
       setLevel(level)
       router.navigate(routing.onboardingGetStarted.path())
     }
