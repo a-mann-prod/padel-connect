@@ -1,5 +1,34 @@
 {
   "getStarted": {
     "subtitle": "C'est tout bon !"
+  },
+  "levelEstimation": {
+    "question0": {
+      "choice0": "Choix 0 qui rapporte 0 pt",
+      "choice1": "Choix 1 qui rapporte 5 pts",
+      "choice2": "Choix 2 qui rapporte 10 pts",
+      "title": "Service"
+    },
+    "question1": {
+      "choice0": "Choix 0 qui rapporte 0 pt",
+      "choice1": "Choix 1 qui rapporte 5 pts",
+      "choice2": "Choix 2 qui rapporte 10 pts",
+      "subtitle": "Trajectoires sur mes coups droits et revers",
+      "title": "Défense"
+    },
+    "question2": {
+      "choice0": "Choix 0 qui rapporte 0 pt",
+      "choice1": "Choix 1 qui rapporte 5 pts",
+      "choice2": "Choix 2 qui rapporte 10 pts",
+      "subtitle": "Défense avec les vitres",
+      "title": "Défense"
+    },
+    "question3": {
+      "choice0": "Choix 0 qui rapporte 0 pt",
+      "choice1": "Choix 1 qui rapporte 5 pts",
+      "choice2": "Choix 2 qui rapporte 10 pts",
+      "subtitle": "Au filet",
+      "title": "Attaque"
+    }
   }
 }

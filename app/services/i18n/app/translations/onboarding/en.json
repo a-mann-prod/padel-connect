@@ -1,5 +1,34 @@
 {
   "getStarted": {
     "subtitle": "All is good!"
+  },
+  "levelEstimation": {
+    "question0": {
+      "choice0": "Choice 0 which gives 0 pts",
+      "choice1": "Choice 1 which gives 5 pts",
+      "choice2": "Choice 2 which gives 10 pts",
+      "title": "Service"
+    },
+    "question1": {
+      "choice0": "Choice 0 which gives 0 pts",
+      "choice1": "Choice 1 which gives 5 pts",
+      "choice2": "Choice 2 which gives 10 pts",
+      "subtitle": "Trajectories on my forehands and backhands",
+      "title": "Defense"
+    },
+    "question2": {
+      "choice0": "Choice 0 which gives 0 pts",
+      "choice1": "Choice 1 which gives 5 pts",
+      "choice2": "Choice 2 which gives 10 pts",
+      "subtitle": "Defense with the glass walls",
+      "title": "Defense"
+    },
+    "question3": {
+      "choice0": "Choice 0 which gives 0 pts",
+      "choice1": "Choice 1 which gives 5 pts",
+      "choice2": "Choice 2 which gives 10 pts",
+      "subtitle": "At the net",
+      "title": "Attack"
+    }
   }
 }

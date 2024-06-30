@@ -285,6 +285,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          defense_level: number | null
           first_name: string | null
           id: string
           is_new_match_notification_enabled: boolean | null
@@ -292,17 +293,19 @@ export type Database = {
           is_onboarding_completed: boolean
           language: string | null
           last_name: string | null
-          level: number | null
           manual_preference:
             | Database["public"]["Enums"]["manual_preference"]
             | null
+          offense_level: number | null
           push_token: string | null
+          service_level: number | null
           side_preference: Database["public"]["Enums"]["side_preference"] | null
           updated_at: string | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          defense_level?: number | null
           first_name?: string | null
           id: string
           is_new_match_notification_enabled?: boolean | null
@@ -310,11 +313,12 @@ export type Database = {
           is_onboarding_completed?: boolean
           language?: string | null
           last_name?: string | null
-          level?: number | null
           manual_preference?:
             | Database["public"]["Enums"]["manual_preference"]
             | null
+          offense_level?: number | null
           push_token?: string | null
+          service_level?: number | null
           side_preference?:
             | Database["public"]["Enums"]["side_preference"]
             | null
@@ -323,6 +327,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string
+          defense_level?: number | null
           first_name?: string | null
           id?: string
           is_new_match_notification_enabled?: boolean | null
@@ -330,11 +335,12 @@ export type Database = {
           is_onboarding_completed?: boolean
           language?: string | null
           last_name?: string | null
-          level?: number | null
           manual_preference?:
             | Database["public"]["Enums"]["manual_preference"]
             | null
+          offense_level?: number | null
           push_token?: string | null
+          service_level?: number | null
           side_preference?:
             | Database["public"]["Enums"]["side_preference"]
             | null

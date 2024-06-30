@@ -18,3 +18,15 @@ export const chunk = <T>(array: T[], size: number): T[][] => {
     array.slice(index * size, index * size + size)
   )
 }
+
+export const modifyArray = <T>(arr: T[], index: number, value: T): T[] => {
+  const newArr = [...arr]
+
+  if (index >= newArr.length) {
+    newArr.push(value)
+  } else {
+    newArr[index] = value
+  }
+
+  return newArr
+}

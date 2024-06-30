@@ -32,6 +32,12 @@ export default () => {
             title: t('preferences'),
           }}
         />
+        <Stack.Screen
+          name="level-estimation"
+          options={{
+            title: t('levelEstimation'),
+          }}
+        />
       </Stack>
     </OnboardingProvider>
   )

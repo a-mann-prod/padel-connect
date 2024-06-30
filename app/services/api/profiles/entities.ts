@@ -9,7 +9,9 @@ export type ProfileResponse = Pick<
   | 'manual_preference'
   | 'side_preference'
   | 'is_onboarding_completed'
-  | 'level'
+  | 'offense_level'
+  | 'defense_level'
+  | 'service_level'
   | 'updated_at'
   | 'created_at'
 >
@@ -17,4 +19,4 @@ export type ProfileResponse = Pick<
 export type ProfilesResponse = ProfileResponse[]
 
 export const profilesQueryCols =
-  'id, last_name, first_name, avatar_url, manual_preference, side_preference, is_onboarding_completed, level, updated_at, created_at'
+  'id, last_name, first_name, avatar_url, manual_preference, side_preference, is_onboarding_completed, offense_level, defense_level, service_level, updated_at, created_at'

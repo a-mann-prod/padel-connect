@@ -95,6 +95,10 @@ export const routing = {
     name: 'preferences',
     path: () => `${modalsRoot.onboarding.path()}/preferences`,
   },
+  onboardingLevelEstimation: {
+    name: 'levelEstimation',
+    path: () => `${modalsRoot.onboarding.path()}/level-estimation`,
+  },
 
   // (modals)/root
   rootEmailVerified: {

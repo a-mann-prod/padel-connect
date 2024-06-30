@@ -4,6 +4,7 @@ import { PersonalInfoFormValues } from '@/components/Forms/PersonalInfoForm/Pers
 import { PreferencesFormValues } from '@/components/Forms/PreferencesForm/PreferencesForm.services'
 import { AvatarFormValues } from '@/nodes/onboarding/AvatarForm/AvatarForm.services'
 import { buildContext } from '@/services/buildContext'
+import { Level } from '@/utils/levelEstimation'
 
 type OnboardingContextProps = {
   personalInfo: PersonalInfoFormValues | undefined
@@ -12,6 +13,8 @@ type OnboardingContextProps = {
   setAvatar: Dispatch<SetStateAction<AvatarFormValues | undefined>>
   preferences: PreferencesFormValues | undefined
   setPreferences: Dispatch<SetStateAction<PreferencesFormValues | undefined>>
+  level: Level | undefined
+  setLevel: Dispatch<SetStateAction<Level | undefined>>
 }
 
 const [_, Provider, useOnboardingContext] =
@@ -23,6 +26,7 @@ export const OnboardingProvider = ({ children }: PropsWithChildren) => {
   const [personalInfo, setPersonalInfo] = useState<PersonalInfoFormValues>()
   const [avatar, setAvatar] = useState<AvatarFormValues>()
   const [preferences, setPreferences] = useState<PreferencesFormValues>()
+  const [level, setLevel] = useState<Level>()
 
   return (
     <Provider
@@ -33,6 +37,8 @@ export const OnboardingProvider = ({ children }: PropsWithChildren) => {
         setAvatar,
         preferences,
         setPreferences,
+        level,
+        setLevel,
       }}
     >
       {children}

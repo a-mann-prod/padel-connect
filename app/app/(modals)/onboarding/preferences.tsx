@@ -17,7 +17,7 @@ export default () => {
 
   const handleOnSubmit = (preferences: PreferencesFormValues) => {
     setPreferences(preferences)
-    router.navigate(routing.onboardingGetStarted.path())
+    router.navigate(routing.onboardingLevelEstimation.path())
   }
 
   return (
