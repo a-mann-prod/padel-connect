@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -31,7 +31,7 @@ export const NotificationAlertsForm = ({
 }: NotificationAlertsFormProps) => {
   const tGlobal = useTranslate()
 
-  const defaultValuesMemo = useMemo(
+  const defaultValuesMemo = useMemo<NotificationAlertsFormValues>(
     () => getDefaultValues(defaultValues),
     [defaultValues]
   )
@@ -41,11 +41,7 @@ export const NotificationAlertsForm = ({
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit, reset } = methods
-
-  useEffect(() => {
-    reset(defaultValuesMemo)
-  }, [defaultValuesMemo, reset])
+  const { handleSubmit } = methods
 
   return (
     <>

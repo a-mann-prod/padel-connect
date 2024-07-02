@@ -1,6 +1,6 @@
 import { HStack, Text, VStack } from '@gluestack-ui/themed'
 
-import { useSettingsItems } from './mainSettings.services'
+import { useSettingsItems } from './MainSettings.services'
 
 import { ScrollView, Section, SectionRow } from '@/designSystem'
 import { FormAvatar, ImageAsset } from '@/designSystem/Forms'

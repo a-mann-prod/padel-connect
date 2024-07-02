@@ -4,7 +4,7 @@ import {
   Avatar,
   Icon,
   IconButton,
-  IconProps,
+  IconNameProp,
   Pressable,
   PressableProps,
 } from '@/designSystem'
@@ -84,7 +84,7 @@ export const PlayerListItem = ({
 type SubItemProps = {
   i18nParentKey: string
   i18nKey?: string | null
-  icon: IconProps['name']
+  icon: IconNameProp
 }
 
 const SubItem = ({ i18nParentKey, i18nKey, icon }: SubItemProps) => {

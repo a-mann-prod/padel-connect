@@ -1,10 +1,10 @@
 import { HStack, Heading } from '@gluestack-ui/themed'
 
-import { Icon, IconProps } from '../Icon/Icon'
+import { Icon, IconNameProp, IconProps } from '../Icon/Icon'
 
 export type TileProps = {
   title: string
-  icon?: IconProps['name']
+  icon?: IconNameProp
   color?: IconProps['color']
   iconRight?: boolean
 } & typeof HStack.defaultProps

@@ -54,7 +54,7 @@ export const useSettingsItems = () => {
           },
           {
             title: t('general.updatePreferences'),
-            icon: 'FAR-lightbulb',
+            icon: 'FAS-face-grin-hearts',
             onPress: () =>
               router.navigate(routing.profileSettingsUpdatePreferences.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,

@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 
-import { PasswordChangeForm } from '@/nodes/settings/PasswordChangeForm/PasswordChangeForm'
+import { PasswordChangeForm } from '@/components'
 
 export default () => {
   return (

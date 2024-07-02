@@ -24,7 +24,8 @@ export default () => {
   const [levelInput, setLevelInput] = useState<LevelInput[]>([])
 
   const steps = useLevelEstimationSteps((value, type) => {
-    const currentIndex = carouselRef.current?.incrementPage()
+    const currentIndex = carouselRef.current?.getCurrentIndex()
+    carouselRef.current?.incrementPage()
     setLevelInput((prev) => [
       ...modifyArray(prev, currentIndex, { value, type }),
     ])

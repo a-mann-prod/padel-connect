@@ -1,6 +1,3 @@
-import { WithAuth } from '@/components'
-import { MainSettings } from '@/nodes'
+import { MainSettings, WithAuth } from '@/components'
 
-export default WithAuth(() => {
-  return <MainSettings />
-})
+export default WithAuth(() => <MainSettings />)

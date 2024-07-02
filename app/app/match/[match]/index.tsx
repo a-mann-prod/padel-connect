@@ -64,7 +64,7 @@ export default WithMatch(() => {
 
   const userIds = match
     ? [
-        match.owner_id,
+        ...(match.owner_id ? [match.owner_id] : []),
         ...(match.match_requests?.map(({ user_id }) => user_id) || []),
       ]
     : []

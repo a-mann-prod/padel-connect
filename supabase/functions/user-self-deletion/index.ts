@@ -33,12 +33,15 @@ Deno.serve(async (req) => {
     });
 
     // Now we can get the session or user object
-    await client.auth.getUser();
+    const {
+      data: { user },
+    } = await client.auth.getUser();
 
     // And we can run queries in the context of our authenticated user
     const { data: profiles, error: userError } = await client
       .from("profiles")
-      .select("id, avatar_url");
+      .select("id, avatar_url")
+      .eq("id", user?.id);
     if (userError) throw userError;
     const user_id = profiles[0].id;
     const user_avatar = profiles[0].avatar_url;

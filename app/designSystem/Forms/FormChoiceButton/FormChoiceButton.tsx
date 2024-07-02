@@ -5,17 +5,22 @@ import {
   CheckboxIndicator,
   CheckboxLabel,
 } from '@gluestack-ui/themed'
+import { ComponentProps } from 'react'
 
 import { FormControl, FormControlProps } from '../FormControl/FormControl'
 
+import { Icon, IconNameProp, IconProps } from '@/designSystem/Icon/Icon'
 import { isNilOrEmpty } from '@/utils/global'
+import { when } from '@/utils/when'
+
+type CheckboxGroupProps = ComponentProps<typeof CheckboxGroup>
 
 export type FormChoiceButtonProps<TSingle extends boolean> = {
   formControlProps: FormControlProps
   options: ChoiceButtonProps[]
   value: TSingle extends boolean ? string : string[]
   single?: TSingle
-} & typeof CheckboxGroup.defaultProps
+} & CheckboxGroupProps
 
 export const FormChoiceButton = <TSingle extends boolean>({
   formControlProps,
@@ -56,7 +61,11 @@ export const FormChoiceButton = <TSingle extends boolean>({
       >
         <Box display="flex" flexDirection="row" gap={5}>
           {options.map((opt) => (
-            <ChoiceButton key={opt.value} {...opt} />
+            <ChoiceButton
+              key={opt.value}
+              {...opt}
+              customChecked={transformValue(value).includes(opt.value)}
+            />
           ))}
         </Box>
       </CheckboxGroup>
@@ -64,12 +73,31 @@ export const FormChoiceButton = <TSingle extends boolean>({
   )
 }
 
-type ChoiceButtonProps = {
+type CheckboxProps = ComponentProps<typeof Checkbox>
+
+export type ChoiceButtonProps = {
   label: string
   value: string
-} & typeof Checkbox.defaultProps
+  icon?: IconNameProp
+  iconProps?: IconProps
+  customChecked?: boolean
+} & CheckboxProps
 
-const ChoiceButton = ({ label, ...props }: ChoiceButtonProps) => {
+const ChoiceButton = ({
+  label,
+  icon,
+  iconProps,
+  customChecked, // TODO: find a better way to know if it's checked (to change icon color)
+  ...props
+}: ChoiceButtonProps) => {
+  const iconColorProps = customChecked
+    ? {
+        color: '$primary500',
+      }
+    : {
+        '$light-color': '$textLight600',
+        '$dark-color': '$textDark400',
+      }
   return (
     <Checkbox {...props} aria-label={label} flex={1}>
       <CheckboxIndicator
@@ -79,10 +107,23 @@ const ChoiceButton = ({ label, ...props }: ChoiceButtonProps) => {
         $checked-borderColor="$primary500"
         $active-borderColor="$primary600"
       >
+        {icon && (
+          <Icon
+            px="$3"
+            pt="$3"
+            pb="$1"
+            size="xl"
+            name={icon}
+            $invalid-color="$error700"
+            {...iconColorProps}
+            {...iconProps}
+          />
+        )}
         <CheckboxLabel
           $checked-color="$primary500"
           $active-color="$primary600"
           $invalid-color="$error700"
+          pb={when(!!icon, '$2')}
         >
           {label}
         </CheckboxLabel>

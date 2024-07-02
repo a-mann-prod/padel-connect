@@ -166,7 +166,7 @@ export type Database = {
           duration: number
           id: number
           level: number
-          owner_id: string
+          owner_id: string | null
           updated_at: string
         }
         Insert: {
@@ -177,7 +177,7 @@ export type Database = {
           duration: number
           id?: number
           level: number
-          owner_id: string
+          owner_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -188,7 +188,7 @@ export type Database = {
           duration?: number
           id?: number
           level?: number
-          owner_id?: string
+          owner_id?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -368,6 +368,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_new_match_notified_users: {
+        Args: {
+          match_level: number
+          match_owner_id: string
+          match_complex_id: number
+        }
+        Returns: {
+          id: string
+          language: string
+        }[]
+      }
       mark_all_notifications_as_read: {
         Args: Record<PropertyKey, never>
         Returns: undefined

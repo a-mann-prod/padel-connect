@@ -3,20 +3,29 @@ import { ComponentProps } from 'react'
 
 import { FontAwesome, FontAwesomeProps } from './FontAwesome/FontAwesome'
 
-type GIconProps = ComponentProps<typeof GIcon> & {
-  color?: any
-}
+type GIconProps = ComponentProps<typeof GIcon>
 
 export type IconProps = GIconProps & {
-  name: FontAwesomeProps['name']
+  color?: any
+  inverseY?: boolean
+  inverseX?: boolean
 }
 
-export const Icon = ({ name, color, ...props }: IconProps) => {
+export type IconNameProp = FontAwesomeProps['name']
+
+export const Icon = ({
+  name,
+  color,
+  inverseX,
+  inverseY,
+  ...props
+}: IconProps & { name: IconNameProp }) => {
   const colorToken = useToken('colors', color)
 
   return (
     <GIcon
       {...props}
+      transform={[{ scaleX: inverseX ? -1 : 1 }, { scaleY: inverseY ? -1 : 1 }]}
       justifyContent="center"
       color={colorToken}
       w={null}

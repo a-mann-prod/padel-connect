@@ -11,7 +11,7 @@ import { useRef, useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
 
-import { Icon, IconProps } from '../Icon/Icon'
+import { Icon, IconNameProp } from '../Icon/Icon'
 import { ImageViewer } from '../ImageViewer/ImageViewer'
 import { ImageWrapper } from '../ImageViewer/ImageWrapper'
 import { Skeleton } from '../Skeleton/Skeleton'
@@ -26,7 +26,7 @@ export type AvatarProps = {
   status?: 'online' | 'offline' | 'hidden'
   onPress?: TouchableOpacityProps['onPress']
   isLoading?: boolean
-  fallBackIcon?: IconProps['name']
+  fallBackIcon?: IconNameProp
   containerProps?: typeof VStack.defaultProps
   displayBadge?: boolean
   viewerEnabled?: boolean

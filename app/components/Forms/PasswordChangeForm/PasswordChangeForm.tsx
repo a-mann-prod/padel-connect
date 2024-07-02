@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import {
   PasswordChangeFormValues,
   passwordChangeFormServices,
-} from './passwordChangeForm.services'
+} from './PasswordChangeForm.services'
 
 import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem/'

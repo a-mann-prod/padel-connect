@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 
-import { EmailChangeForm } from '@/nodes/settings/EmailChangeForm/EmailChangeForm'
+import { EmailChangeForm } from '@/components'
 
 export default () => {
   return (

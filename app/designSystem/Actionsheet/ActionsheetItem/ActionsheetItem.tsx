@@ -4,13 +4,13 @@ import {
   ActionsheetItem as GActionsheetItem,
 } from '@gluestack-ui/themed'
 
-import { Icon, IconProps } from '../../Icon/Icon'
+import { Icon, IconNameProp } from '../../Icon/Icon'
 
 import { isNilOrEmpty } from '@/utils/global'
 
 export type ActionsheetItemProps = typeof GActionsheetItem.defaultProps & {
   id: string
-  icon?: IconProps['name']
+  icon?: IconNameProp
   title: string
 }
 

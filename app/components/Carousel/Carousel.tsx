@@ -19,9 +19,7 @@ export const Carousel = forwardRef(({ steps }: OnboardingProps, ref: any) => {
 
   useImperativeHandle(ref, () => ({
     ...localRef.current,
-    incrementPage: () => {
-      localRef.current?.setPage(pageIndex)
-    },
+    incrementPage: () => localRef.current?.setPage(pageIndex + 1),
     getCurrentIndex: () => pageIndex,
     getIsBeforeLastIndex: () => isBeforeLastIndex,
   }))

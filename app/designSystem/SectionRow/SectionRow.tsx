@@ -3,7 +3,7 @@ import { ReactNode, useState } from 'react'
 import { GestureResponderEvent } from 'react-native'
 
 import { Actionsheet, ActionsheetProps } from '../Actionsheet/Actionsheet'
-import { Icon, IconProps } from '../Icon/Icon'
+import { Icon, IconNameProp } from '../Icon/Icon'
 import { Pressable, PressableProps } from '../Pressable/Pressable'
 
 import { Config } from '@/services/theme/gluestack-ui/gluestack-ui.config'
@@ -11,7 +11,7 @@ import { when } from '@/utils/when'
 
 export type SectionRowProps = {
   title: string
-  icon: IconProps['name']
+  icon: IconNameProp
   iconColor?: keyof Config['tokens']['colors']
   onPress?: PressableProps['onPress']
   rightComponent?: () => ReactNode

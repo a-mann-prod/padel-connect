@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -51,11 +51,7 @@ export const FiltersForm = ({
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit, reset } = methods
-
-  useEffect(() => {
-    reset(defaultValuesMemo)
-  }, [defaultValuesMemo, reset])
+  const { handleSubmit } = methods
 
   return (
     <>

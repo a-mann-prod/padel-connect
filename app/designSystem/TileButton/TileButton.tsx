@@ -1,11 +1,11 @@
 import { HStack, Heading, VStack } from '@gluestack-ui/themed'
 
-import { Icon, IconProps } from '../Icon/Icon'
+import { Icon, IconNameProp } from '../Icon/Icon'
 import { Pressable, PressableProps } from '../Pressable/Pressable'
 
 export type TileButtonProps = {
   title: string
-  icon?: IconProps['name']
+  icon?: IconNameProp
   color?: any
 } & PressableProps
 

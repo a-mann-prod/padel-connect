@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import {
   EmailChangeFormValues,
   emailChangeFormServices,
-} from './emailChangeForm.services'
+} from './EmailChangeForm.services'
 
 import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem/'
@@ -49,6 +49,9 @@ export const EmailChangeForm = () => {
             formControlProps={{
               title: tGlobal('newEmail'),
             }}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
             displayPlaceHolder
           />
         </FormProvider>

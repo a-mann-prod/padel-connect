@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { z } from 'zod'
 
+import { ChoiceButtonProps } from '@/designSystem'
 import { validators } from '@/services/formValidator'
 import { useTranslate } from '@/services/i18n'
 import { Database } from '@/services/supabase/database.types'
@@ -29,15 +30,21 @@ const schema = z.object({
 export const useManualPreferenceOptions = () => {
   const tGlobal = useTranslate(undefined, { keyPrefix: 'manualPreference' })
 
-  return useMemo<
-    {
-      label: string
-      value: ManualPreference
-    }[]
-  >(
+  return useMemo<(ChoiceButtonProps & { value: ManualPreference })[]>(
     () => [
-      { value: 'LEFT_HANDED', label: tGlobal('left_handed') },
-      { value: 'RIGHT_HANDED', label: tGlobal('right_handed') },
+      {
+        value: 'LEFT_HANDED',
+        label: tGlobal('left_handed'),
+        icon: 'FAR-hand',
+        iconProps: {
+          inverseX: true,
+        },
+      },
+      {
+        value: 'RIGHT_HANDED',
+        label: tGlobal('right_handed'),
+        icon: 'FAR-hand',
+      },
     ],
     [tGlobal]
   )
@@ -46,16 +53,11 @@ export const useManualPreferenceOptions = () => {
 export const useSidePreferenceOptions = () => {
   const tGlobal = useTranslate(undefined, { keyPrefix: 'sidePreference' })
 
-  return useMemo<
-    {
-      label: string
-      value: SidePreference
-    }[]
-  >(
+  return useMemo<(ChoiceButtonProps & { value: SidePreference })[]>(
     () => [
-      { value: 'LEFT', label: tGlobal('left') },
-      { value: 'RIGHT', label: tGlobal('right') },
-      { value: 'BOTH', label: tGlobal('both') },
+      { value: 'LEFT', label: tGlobal('left'), icon: 'FAS-arrow-left' },
+      { value: 'RIGHT', label: tGlobal('right'), icon: 'FAS-arrow-right' },
+      { value: 'BOTH', label: tGlobal('both'), icon: 'FAS-arrows-left-right' },
     ],
     [tGlobal]
   )

@@ -43,7 +43,7 @@
   "email": "Email",
   "firstname": "Firstname",
   "lastname": "Lastname",
-  "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
+  "lastnameHelpMessage": "By default, only the first letter of your last name will be displayed",
   "letsGo": "Let's go! 🚀",
   "level": "Level",
   "levelRangeHelpMessage": "Searched levels range: {{min}} - {{max}}",
