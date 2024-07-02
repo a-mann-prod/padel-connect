@@ -1,4 +1,3 @@
-import { isNilOrEmpty } from '@/utils/global'
 import { getMatchQueryCols, getMatchesQueryCols } from './entities'
 import {
   GetMatchParams,
@@ -7,6 +6,7 @@ import {
 } from './params'
 
 import { supabase } from '@/services/supabase'
+import { isNilOrEmpty } from '@/utils/global'
 
 export const getMatchFn = (params: GetMatchParams) =>
   supabase
@@ -28,11 +28,15 @@ export const getMatchesFn = (params: GetMatchesParams) => {
     query = query.lte('datetime', params.dates.end)
   }
 
+  if (params.complex_id) {
+    query = query.eq('complex_id', params.complex_id)
+  }
+
   if (params.level) {
-    if (params.level.min) {
+    if (!isNilOrEmpty(params.level.min)) {
       query = query.gte('level', params.level.min)
     }
-    if (params.level.min) {
+    if (!isNilOrEmpty(params.level.max)) {
       query = query.lte('level', params.level.max)
     }
   }

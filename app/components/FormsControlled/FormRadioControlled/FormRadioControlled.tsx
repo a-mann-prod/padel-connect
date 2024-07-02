@@ -4,11 +4,13 @@ import { FormRadio, FormRadioProps } from '@/designSystem/Forms'
 
 export type FormRadioControlledProps = {
   name: string
+  onChangeAfter?: () => void
 } & Omit<FormRadioProps, 'value' | 'onChange'>
 
 export const FormRadioControlled = ({
   name,
   formControlProps,
+  onChangeAfter,
   ...props
 }: FormRadioControlledProps) => {
   const {
@@ -19,7 +21,10 @@ export const FormRadioControlled = ({
   return (
     <FormRadio
       formControlProps={{ ...formControlProps, error }}
-      onChange={onChange}
+      onChange={(e) => {
+        onChange(e)
+        onChangeAfter?.()
+      }}
       value={value}
       {...props}
     />

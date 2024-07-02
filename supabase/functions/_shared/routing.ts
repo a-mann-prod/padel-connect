@@ -96,8 +96,16 @@ export const routing = {
     path: () => `${modalsRoot.onboarding.path()}/preferences`,
   },
   onboardingLevelEstimation: {
-    name: "levelEstimation",
+    name: "level-estimation",
     path: () => `${modalsRoot.onboarding.path()}/level-estimation`,
+  },
+  onboardingNotificationAlerts: {
+    name: "notification-alerts",
+    path: () => `${modalsRoot.onboarding.path()}/notification-alerts`,
+  },
+  onboardingFilters: {
+    name: "filters",
+    path: () => `${modalsRoot.onboarding.path()}/filters`,
   },
 
   // (modals)/root
@@ -150,6 +158,10 @@ export const routing = {
   profileSettingsUpdatePreferences: {
     name: "update-preferences",
     path: () => `${profileSettings.path()}/update-preferences`,
+  },
+  profileSettingsUpdateNotificationAlerts: {
+    name: "update-notification-alerts",
+    path: () => `${profileSettings.path()}/update-notification-alerts`,
   },
   profileSettingsEmailChange: {
     name: "email-change",

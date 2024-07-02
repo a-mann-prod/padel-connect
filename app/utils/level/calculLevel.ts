@@ -8,7 +8,7 @@ export const calculLevel = (levelInputs: LevelInput[]): Level => {
     if (values.length === 0) return 0
     const minValue = Math.min(...values)
     const adjustedSum =
-      values.reduce((sum, val) => sum + val, 0) + COEFF * minValue
+      values.reduce((acc, curr) => acc + curr, 0) + COEFF * minValue
     const average = adjustedSum / (values.length + COEFF)
     return Math.floor(average * 10) / 10
   }

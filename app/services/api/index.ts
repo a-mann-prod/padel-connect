@@ -1,6 +1,7 @@
 export * from './auth'
 export * from './complexes'
 export * from './favorite_users'
+export * from './match_filters'
 export * from './match_requests'
 export * from './matches'
 export * from './messages'

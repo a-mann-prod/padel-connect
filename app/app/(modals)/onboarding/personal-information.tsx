@@ -14,7 +14,7 @@ import { routing } from '@/services/routing'
 export default () => {
   const tGlobal = useTranslate()
 
-  const { setPersonalInfo } = useOnboardingContext()
+  const { personalInfo, setPersonalInfo } = useOnboardingContext()
 
   const handleOnSubmit = (values: PersonalInfoFormValues) => {
     setPersonalInfo(values)
@@ -26,6 +26,7 @@ export default () => {
       <ScrollView>
         <VStack gap="$5" m="$5">
           <PersonalInfoForm
+            defaultValues={personalInfo}
             onSubmit={handleOnSubmit}
             buttonTitle={tGlobal('next')}
           />

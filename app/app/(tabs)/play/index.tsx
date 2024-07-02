@@ -4,18 +4,25 @@ import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { DateCarouselFilter, MatchListItem } from '@/components'
-import { useMatchFiltersContext } from '@/contexts'
 import { Button, VirtualizedList } from '@/designSystem'
-import { useHeaderButton } from '@/hooks/useHeaderButton'
+import { useMe } from '@/hooks/useMe'
+import { useMyMatchFilters } from '@/hooks/useMyMatchFilters'
 import { MatchesResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
+import { getLevelRange } from '@/utils/level'
 
 export default () => {
   const t = useTranslate('play')
   const [dateFilter, setDateFilter] = useState(date.now())
-  const { matchFilters, defaultMatchFilters } = useMatchFiltersContext()
+
+  const { data: me } = useMe()
+  const { data: matchFilters } = useMyMatchFilters()
+
+  const [min, max] = matchFilters?.is_my_level_range
+    ? getLevelRange(me?.level)
+    : [undefined, undefined]
 
   const {
     data: matches,
@@ -28,16 +35,12 @@ export default () => {
         start: dateFilter.startOf('day').toISOString(),
         end: dateFilter.endOf('day').toISOString(),
       },
+      level: {
+        min,
+        max,
+      },
       ...matchFilters,
     },
-  })
-
-  useHeaderButton({
-    side: 'headerRight',
-    icon: 'FAS-sliders',
-    onPress: () => router.navigate(routing.playFilters.path()),
-    hasEmptyBadge:
-      JSON.stringify(defaultMatchFilters) !== JSON.stringify(matchFilters),
   })
 
   const renderItem = ({

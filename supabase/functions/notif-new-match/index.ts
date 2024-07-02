@@ -25,14 +25,15 @@ Deno.serve(async (req) => {
   const payload: WebhookPayload = await req.json();
   const match = payload.record;
 
-  // get users to be notified on match insert
-  const { data: users } = await clientAdmin
-    .from("profiles")
-    .select("id, language, match_filters!inner(user_id)")
-    .neq("id", match.owner_id)
-    .eq("is_new_match_notification_enabled", true)
-    .lte("match_filters.min_level", match.level)
-    .gte("match_filters.max_level", match.level);
+  // test
+  const { data: users } = await clientAdmin.rpc(
+    "get_new_match_notified_users",
+    {
+      match_level: match.level,
+      match_owner_id: match.owner_id,
+      match_complex_id: match.complex_id,
+    }
+  );
 
   if (!users?.length) {
     return new Response(JSON.stringify({ errorCode: "users_not_found" }), {

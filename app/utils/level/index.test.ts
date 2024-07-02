@@ -4,7 +4,7 @@ import { calculLevel, getLevel } from './index'
 import { Level, LevelInput } from './types'
 
 describe('calculLevel', () => {
-  it('should add coef 4 to the minus level per inputs and return average (floor) per inputs', () => {
+  it('should add coeff 4 to the minus level per inputs and return average (floor) per inputs', () => {
     // ARRANGE
     const level: LevelInput[] = [
       { type: 'defense', value: 5 },

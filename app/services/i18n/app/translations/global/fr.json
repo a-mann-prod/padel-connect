@@ -25,8 +25,10 @@
   "apply": "Appliquer",
   "back": "Retour",
   "booked": "Réservé",
+  "canReevaluateLevel": "Ce niveau n'est pas définitif, tu pourras le re évaluer plus tard",
   "cancel": "Annuler",
   "captain": "Capitaine",
+  "complex": "Complexe sportif",
   "confirmNewPassword": "Confirmation nouveau mot de passe",
   "confirmPassword": "Confirmer le mot de passe",
   "continue": "Continuer",
@@ -36,6 +38,7 @@
     "minute_plural": "{{count}} minutes"
   },
   "delete": "Supprimer",
+  "displayOnlyMatchesOfMyLevel": "Afficher uniquement les matchs de mon niveau",
   "edit": "Modifier",
   "email": "Email",
   "firstname": "Prénom",
@@ -43,6 +46,8 @@
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée.",
   "letsGo": "C'est parti ! 🚀",
   "level": "Niveau",
+  "levelRangeHelpMessage": "Plage des niveaux recherchés : {{min}} - {{max}}",
+  "levelRevelation": "Bravo, tu es niveau",
   "manualPreference": {
     "left_handed": "Gaucher",
     "right_handed": "Droiter",
@@ -69,6 +74,7 @@
     "login": "Connexion",
     "matchCreate": "Nouvelle partie",
     "myMatches": "Mes matchs",
+    "notificationAlerts": "Notifications",
     "notifications": "Notifications",
     "passwordChange": "Changement mot de passe",
     "passwordReset": "Nouveau mot de passe",
@@ -88,6 +94,11 @@
   "newPassword": "Nouveau mot de passe",
   "next": "Suivant",
   "noData": "Aucune donnée trouvée",
+  "none": "Aucun",
+  "notification": {
+    "newMatch": "Notifier les nouveaux matchs",
+    "newMessage": "Notifier les nouveaux messages"
+  },
   "or": "ou",
   "password": "Mot de passe",
   "previous": "Précédent",

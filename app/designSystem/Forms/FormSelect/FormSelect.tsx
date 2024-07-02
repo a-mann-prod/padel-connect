@@ -10,7 +10,7 @@ import {
   SelectPortal,
   SelectTrigger,
 } from '@gluestack-ui/themed'
-import { PropsWithChildren } from 'react'
+import { ComponentProps, PropsWithChildren } from 'react'
 import { Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -20,7 +20,11 @@ import { FontAwesome } from '@/designSystem/Icon/FontAwesome/FontAwesome'
 import { isNilOrEmpty } from '@/utils/global'
 import { when } from '@/utils/when'
 
-type SelectItemsProps = typeof SelectItem.defaultProps & {
+type SelectProps = ComponentProps<typeof Select>
+
+type SelectItemProps = Omit<ComponentProps<typeof SelectItem>, 'value'>
+
+type SelectItemsProps = SelectItemProps & {
   label: string
   value: string
 }
@@ -30,7 +34,7 @@ export type FormSelectProps = {
   formControlProps: FormControlProps
   items: SelectItemsProps[]
   value?: string
-} & typeof Select.defaultProps
+} & SelectProps
 
 export const FormSelect = ({
   displayPlaceHolder = false,
@@ -71,8 +75,8 @@ export const FormSelect = ({
             <SelectDragIndicatorWrapper>
               <SelectDragIndicator />
             </SelectDragIndicatorWrapper>
-            {items.map((item) => (
-              <SelectItem key={item.label} {...item} />
+            {items.map(({ value, ...item }) => (
+              <SelectItem key={item.label} value={value} {...item} />
             ))}
           </SelectItemsContent>
         </SelectPortal>

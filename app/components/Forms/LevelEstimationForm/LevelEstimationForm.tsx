@@ -1,4 +1,3 @@
-import { Box } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
@@ -45,15 +44,13 @@ export const LevelEstimationForm = ({
   }, [defaultValuesMemo, reset])
 
   return (
-    <Box p="$3">
-      <FormProvider {...methods}>
-        <FormRadioControlled
-          formControlProps={{}}
-          name="level"
-          options={options}
-          onTouchEnd={handleSubmit(onSubmit)}
-        />
-      </FormProvider>
-    </Box>
+    <FormProvider {...methods}>
+      <FormRadioControlled
+        formControlProps={{}}
+        name="level"
+        options={options}
+        onChangeAfter={handleSubmit(onSubmit)}
+      />
+    </FormProvider>
   )
 }

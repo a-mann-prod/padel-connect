@@ -1,17 +1,17 @@
+import { CarouselStepProps } from '@/components/Carousel/CarouselStep'
 import { LevelEstimationForm } from '@/components/Forms/LevelEstimationForm/LevelEstimationForm'
-import { SliderStepProps } from '@/components/Slider/SliderStep'
 import { useTranslate } from '@/services/i18n'
 
 export type ChoiceType = 'offense' | 'defense' | 'service'
 
-type Question = Omit<SliderStepProps, 'containerProps' | 'content'> & {
+type Question = Omit<CarouselStepProps, 'containerProps' | 'content'> & {
   type: ChoiceType
   choices: { label: string; value: number }[]
 }
 
 export const useLevelEstimationSteps = (
   onSubmit: (value: number, type: ChoiceType) => void
-) => {
+): CarouselStepProps[] => {
   const t = useTranslate('onboarding', { keyPrefix: 'levelEstimation' })
 
   const questions: Question[] = [
@@ -56,16 +56,18 @@ export const useLevelEstimationSteps = (
     },
   ]
 
-  return questions.map(({ choices, type, ...question }) => ({
-    ...question,
-    content: (
-      <LevelEstimationForm
-        onSubmit={(v) => onSubmit(Number(v.level), type)}
-        options={choices.map(({ label, value }) => ({
-          label,
-          value: value.toString(),
-        }))}
-      />
-    ),
-  }))
+  return [
+    ...questions.map(({ choices, type, ...question }) => ({
+      ...question,
+      content: (
+        <LevelEstimationForm
+          onSubmit={(v) => onSubmit(Number(v.level), type)}
+          options={choices.map(({ label, value }) => ({
+            label,
+            value: value.toString(),
+          }))}
+        />
+      ),
+    })),
+  ]
 }

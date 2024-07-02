@@ -11,9 +11,9 @@ import {
   FormSelectControlled,
 } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
+import { useComplexItems } from '@/hooks/useComplexItems'
 import { useDurationItems } from '@/hooks/useDurationItems'
 import { useLevelItems } from '@/hooks/useLevelItems'
-import { useComplexes } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
@@ -54,8 +54,7 @@ export const MatchForm = ({
 
   const levelItems = useLevelItems()
   const durationItems = useDurationItems()
-
-  const { data: complexes } = useComplexes({ params: {} })
+  const complexItems = useComplexItems()
 
   return (
     <>
@@ -70,12 +69,7 @@ export const MatchForm = ({
             displayPlaceHolder
             name="complex_id"
             formControlProps={{ title: t('complex') }}
-            items={
-              complexes?.map(({ id, name }) => ({
-                value: id.toString(),
-                label: name,
-              })) || []
-            }
+            items={complexItems}
           />
           <FormSelectControlled
             displayPlaceHolder

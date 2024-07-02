@@ -1,24 +1,24 @@
 import { Box, Center, Heading, Text, VStack } from '@gluestack-ui/themed'
 import { ReactNode } from 'react'
 
-export type SliderStepProps = {
-  title: string
+export type CarouselStepProps = {
+  title?: string
   subtitle?: string
   content: ReactNode
   containerProps?: typeof VStack.defaultProps
 }
 
-export const SliderStep = ({
+export const CarouselStep = ({
   title,
   subtitle,
   content,
   containerProps,
-}: SliderStepProps) => {
+}: CarouselStepProps) => {
   return (
-    <VStack {...containerProps}>
-      <Box pt="$3">
+    <VStack flex={1} {...containerProps}>
+      <Box flex={1} gap="$3">
         <Center>
-          <Heading size="lg">{title}</Heading>
+          {title && <Heading size="lg">{title}</Heading>}
           {subtitle && <Text variant="subtitle">{subtitle}</Text>}
         </Center>
         {content}

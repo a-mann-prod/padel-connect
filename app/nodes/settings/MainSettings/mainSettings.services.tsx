@@ -60,6 +60,15 @@ export const useSettingsItems = () => {
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
+            title: t('general.updateNotificationAlerts'),
+            icon: 'FAR-bell',
+            onPress: () =>
+              router.navigate(
+                routing.profileSettingsUpdateNotificationAlerts.path()
+              ),
+            rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
+          },
+          {
             title: t('general.biometricAuth'),
             icon: 'FAS-fingerprint',
             rightComponent: () => <Switch isDisabled />,

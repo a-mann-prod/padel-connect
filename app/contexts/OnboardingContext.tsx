@@ -1,5 +1,7 @@
 import { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react'
 
+import { NotificationAlertsFormValues } from '@/components'
+import { FiltersFormValues } from '@/components/Forms/FiltersForm/FiltersForm.services'
 import { PersonalInfoFormValues } from '@/components/Forms/PersonalInfoForm/PersonalInfoForm.services'
 import { PreferencesFormValues } from '@/components/Forms/PreferencesForm/PreferencesForm.services'
 import { AvatarFormValues } from '@/nodes/onboarding/AvatarForm/AvatarForm.services'
@@ -15,6 +17,12 @@ type OnboardingContextProps = {
   setPreferences: Dispatch<SetStateAction<PreferencesFormValues | undefined>>
   level: Level | undefined
   setLevel: Dispatch<SetStateAction<Level | undefined>>
+  notificationAlerts: NotificationAlertsFormValues | undefined
+  setNotificationAlerts: Dispatch<
+    SetStateAction<NotificationAlertsFormValues | undefined>
+  >
+  filters: FiltersFormValues | undefined
+  setFilters: Dispatch<SetStateAction<FiltersFormValues | undefined>>
 }
 
 const [_, Provider, useOnboardingContext] =
@@ -27,6 +35,9 @@ export const OnboardingProvider = ({ children }: PropsWithChildren) => {
   const [avatar, setAvatar] = useState<AvatarFormValues>()
   const [preferences, setPreferences] = useState<PreferencesFormValues>()
   const [level, setLevel] = useState<Level>()
+  const [notificationAlerts, setNotificationAlerts] =
+    useState<NotificationAlertsFormValues>()
+  const [filters, setFilters] = useState<FiltersFormValues>()
 
   return (
     <Provider
@@ -39,6 +50,10 @@ export const OnboardingProvider = ({ children }: PropsWithChildren) => {
         setPreferences,
         level,
         setLevel,
+        notificationAlerts,
+        setNotificationAlerts,
+        filters,
+        setFilters,
       }}
     >
       {children}

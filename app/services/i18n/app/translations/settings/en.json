@@ -14,6 +14,7 @@
     "emailChange": "Change my email",
     "passwordChange": "Change my password",
     "title": "General",
+    "updateNotificationAlerts": "Change notifications",
     "updatePersonalInformation": "Change my info",
     "updatePreferences": "Change my preferences"
   },

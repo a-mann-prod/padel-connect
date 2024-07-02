@@ -87,24 +87,31 @@ export type Database = {
       }
       match_filters: {
         Row: {
+          complex_id: number | null
           created_at: string
-          max_level: number | null
-          min_level: number | null
+          is_my_level_range: boolean
           user_id: string
         }
         Insert: {
+          complex_id?: number | null
           created_at?: string
-          max_level?: number | null
-          min_level?: number | null
+          is_my_level_range?: boolean
           user_id?: string
         }
         Update: {
+          complex_id?: number | null
           created_at?: string
-          max_level?: number | null
-          min_level?: number | null
+          is_my_level_range?: boolean
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "public_match_filters_complex_id_fkey"
+            columns: ["complex_id"]
+            isOneToOne: false
+            referencedRelation: "complexes"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "public_match_filters_user_id_fkey"
             columns: ["user_id"]

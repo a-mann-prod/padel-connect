@@ -1,10 +1,14 @@
+import { pick } from 'remeda'
+
 import { GetProfileParams, ProfileResponse, useProfile } from '@/services/api'
 import { useImage } from '@/services/api/image'
 import { UseQueryProps } from '@/services/api/types'
+import { getLevel } from '@/utils/level'
 
 export type ProfileWithAvatar = Partial<
   ProfileResponse & {
     avatar: string
+    level: number
   }
 >
 
@@ -23,8 +27,12 @@ export const useProfileWithAvatar = (
     options: { enabled: !!data?.avatar_url },
   })
 
+  const level = data
+    ? getLevel(pick(data, ['defense_level', 'offense_level', 'service_level']))
+    : undefined
+
   return {
-    data: { ...data, avatar },
+    data: { ...data, avatar, level },
     isLoading: isLoadingProfile || isLoadingAvatar,
   }
 }

@@ -1,12 +1,15 @@
 import { User } from '@supabase/supabase-js'
 import { useMemo } from 'react'
+import { pick } from 'remeda'
 
 import { ProfileWithAvatar, useProfileWithAvatar } from './useProfileWithAvatar'
 
 import { useAuthContext } from '@/contexts'
+import { getLevel } from '@/utils/level'
 
 export type UseMe = {
-  data?: ProfileWithAvatar & Partial<Pick<User, 'id' | 'created_at'>>
+  data?: ProfileWithAvatar &
+    Partial<Pick<User, 'id' | 'created_at'>> & { level?: number }
   isLoading: boolean
 }
 
@@ -19,9 +22,18 @@ export const useMe = (): UseMe => {
   })
 
   const data = useMemo(() => {
-    if (!user) return
+    if (!user || !profile) return
 
-    return { id: user.id, created_at: user.created_at, ...profile }
+    const level = getLevel(
+      pick(profile, ['offense_level', 'defense_level', 'service_level'])
+    )
+
+    return {
+      id: user.id,
+      created_at: user.created_at,
+      level,
+      ...profile,
+    }
   }, [profile, user])
 
   return {

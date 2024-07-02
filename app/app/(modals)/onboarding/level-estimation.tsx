@@ -1,42 +1,70 @@
-import { SafeAreaView } from '@gluestack-ui/themed'
+import {
+  Center,
+  Heading,
+  SafeAreaView,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import { useEffect, useRef, useState } from 'react'
 
-import { Slider } from '@/components'
+import { Carousel } from '@/components'
 import { useOnboardingContext } from '@/contexts'
+import { Button } from '@/designSystem'
 import { useLevelEstimationSteps } from '@/hooks/useLevelEstimationSteps'
+import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { modifyArray } from '@/utils/array'
-import { LevelInput, calculLevel } from '@/utils/level'
+import { LevelInput, calculLevel, getLevel } from '@/utils/level'
 
 export default () => {
-  const { setLevel } = useOnboardingContext()
-  const sliderRef = useRef<any>(null)
+  const tGlobal = useTranslate()
+  const { level, setLevel } = useOnboardingContext()
+  const carouselRef = useRef<any>(null)
   const [levelInput, setLevelInput] = useState<LevelInput[]>([])
 
   const steps = useLevelEstimationSteps((value, type) => {
-    const currentIndex = sliderRef.current?.getCurrentIndex()
-    sliderRef.current?.setPage(currentIndex + 1)
+    const currentIndex = carouselRef.current?.incrementPage()
     setLevelInput((prev) => [
       ...modifyArray(prev, currentIndex, { value, type }),
     ])
   })
 
   useEffect(() => {
-    if (sliderRef.current?.getIsLastIndex()) {
+    if (carouselRef.current?.getIsBeforeLastIndex()) {
       const level = calculLevel(levelInput)
       setLevel(level)
-      router.navigate(routing.onboardingGetStarted.path())
     }
   }, [levelInput, setLevel])
 
   return (
     <SafeAreaView flex={1}>
-      <Slider
-        ref={sliderRef}
-        steps={steps}
-        onPress={() => console.log('test')}
+      <Carousel
+        ref={carouselRef}
+        steps={[
+          ...steps,
+          {
+            content: (
+              <VStack flex={1} gap="$3">
+                <Center flex={1} gap="$2">
+                  <Text>{tGlobal('levelRevelation')}</Text>
+                  <Heading>{level ? getLevel(level) : undefined}</Heading>
+                </Center>
+                <Text variant="subtitle">{tGlobal('canReevaluateLevel')}</Text>
+              </VStack>
+            ),
+          },
+        ]}
       />
+      <VStack p="$3">
+        <Button
+          isDisabled={!level}
+          title={tGlobal('next')}
+          onPress={() =>
+            router.navigate(routing.onboardingNotificationAlerts.path())
+          }
+        />
+      </VStack>
     </SafeAreaView>
   )
 }

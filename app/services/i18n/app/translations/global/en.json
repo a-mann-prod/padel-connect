@@ -25,8 +25,10 @@
   "apply": "Apply",
   "back": "Retour",
   "booked": "Booked",
+  "canReevaluateLevel": "This level is not final, you can reevaluate it later",
   "cancel": "Cancel",
   "captain": "Captain",
+  "complex": "Sports complex",
   "confirmNewPassword": "Confirm new password",
   "confirmPassword": "Confirm password",
   "continue": "Continue",
@@ -36,6 +38,7 @@
     "minute_plural": "{{count}} minutes"
   },
   "delete": "Delete",
+  "displayOnlyMatchesOfMyLevel": "Display only matches of my level",
   "edit": "Edit",
   "email": "Email",
   "firstname": "Firstname",
@@ -43,6 +46,9 @@
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de votre nom de famille sera affichée.",
   "letsGo": "Let's go! 🚀",
   "level": "Level",
+  "levelRangeHelpMessage": "Searched levels range: {{min}} - {{max}}",
+
+  "levelRevelation": "Congratulations, you are level",
   "manualPreference": {
     "left_handed": "Left-handed",
     "right_handed": "Right-handed",
@@ -69,6 +75,7 @@
     "login": "Login",
     "matchCreate": "New match",
     "myMatches": "My matches",
+    "notificationAlerts": "Notifications",
     "notifications": "Notifications",
     "passwordChange": "Change password",
     "passwordReset": "New password",
@@ -88,6 +95,11 @@
   "newPassword": "New password",
   "next": "Next",
   "noData": "No data found",
+  "none": "None",
+  "notification": {
+    "newMatch": "Notify new matches",
+    "newMessage": "Notify new messages"
+  },
   "or": "or",
   "password": "Password",
   "previous": "Previous",
