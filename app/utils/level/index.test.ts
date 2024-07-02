@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals'
 
-import { calculLevel, getLevel } from './index'
+import { calculLevel, getLevel, getLevelRange } from './index'
 import { Level, LevelInput } from './types'
 
 describe('calculLevel', () => {
@@ -117,6 +117,68 @@ describe('getLevel', () => {
 
     // ACT
     const current = getLevel(level)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+})
+
+describe('getLevelRange', () => {
+  it('should return [0, 2] for level 1', () => {
+    // ARRANGE
+    const level = 1
+    const expected = [0, 2]
+
+    // ACT
+    const current = getLevelRange(level)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+
+  it('should return [0, 1] for level 0', () => {
+    // ARRANGE
+    const level = 0
+    const expected = [0, 1]
+
+    // ACT
+    const current = getLevelRange(level)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+
+  it('should return [9, 10] for level 10', () => {
+    // ARRANGE
+    const level = 10
+    const expected = [9, 10]
+
+    // ACT
+    const current = getLevelRange(level)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+
+  it('should return [4, 6] for level 5.5', () => {
+    // ARRANGE
+    const level = 5.5
+    const expected = [4, 6]
+
+    // ACT
+    const current = getLevelRange(level)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+
+  it('should return [0, 1] for level 0.1', () => {
+    // ARRANGE
+    const level = 0.1
+    const expected = [0, 1]
+
+    // ACT
+    const current = getLevelRange(level)
 
     // ASSERT
     expect(current).toEqual(expected)
