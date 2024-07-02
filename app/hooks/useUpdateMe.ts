@@ -1,4 +1,5 @@
 import { User } from '@supabase/supabase-js'
+import { useCallback } from 'react'
 
 import { useAuthContext } from '@/contexts'
 import {
@@ -6,8 +7,7 @@ import {
   UpdateProfileParams,
   useUpdateProfile,
 } from '@/services/api'
-import { UseMutationProps } from '@/services/api/types'
-import { useCallback } from 'react'
+import { UseMutationProps } from '@/services/api/queryHooks/types'
 
 export type UseUpdateMe = {
   data: Partial<ProfileResponse & Pick<User, 'id' | 'created_at'>>

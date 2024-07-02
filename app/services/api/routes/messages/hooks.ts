@@ -5,13 +5,13 @@ import {
 } from '@supabase-cache-helpers/postgrest-react-query'
 
 import { supabase } from '@/services/supabase'
-import { useInfiniteQuery } from '../queryHooks/useInfiniteQuery'
+import { useInfiniteQuery } from '../../queryHooks'
 import {
   UseInfiniteQueryProps,
   UseMutationProps,
   UseQueryProps,
   UseSubscriptionProps,
-} from '../types'
+} from '../../queryHooks/types'
 import { MessageResponse, MessagesResponse } from './entities'
 import { getMessageFn, getMessagesFn, setMessagesFn } from './functions'
 import {

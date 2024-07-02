@@ -3,12 +3,12 @@ import {
   useUpdateMutation,
 } from '@supabase-cache-helpers/postgrest-react-query'
 
-import { useInfiniteQuery } from '../queryHooks/useInfiniteQuery'
+import { useInfiniteQuery } from '../../queryHooks'
 import {
   UseInfiniteQueryProps,
   UseMutationProps,
   UseQueryProps,
-} from '../types'
+} from '../../queryHooks/types'
 import { NotificationResponse, NotificationsResponse } from './entities'
 import {
   getAllNotificationsFn,

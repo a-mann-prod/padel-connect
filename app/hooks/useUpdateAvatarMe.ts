@@ -4,8 +4,8 @@ import { useMe } from './useMe'
 import { useUpdateMe } from './useUpdateMe'
 
 import { ProfileResponse } from '@/services/api'
-import { useDeleteImages, useSaveImage } from '@/services/api/image'
-import { UseUploadProps } from '@/services/api/types'
+import { UseUploadProps } from '@/services/api/queryHooks/types'
+import { useDeleteImages, useSaveImage } from '@/services/api/routes/image'
 import { FileInput } from '@/utils/file'
 
 export type UseUpdateMe = {

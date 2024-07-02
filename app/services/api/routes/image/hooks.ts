@@ -4,7 +4,11 @@ import {
   useUpload,
 } from '@supabase-cache-helpers/storage-react-query'
 
-import { UseFileUrlProps, UseRemoveFilesProps, UseUploadProps } from '../types'
+import {
+  UseFileUrlProps,
+  UseRemoveFilesProps,
+  UseUploadProps,
+} from '../../queryHooks/types'
 import { getStorageFn } from './functions'
 import { GetImageParams } from './params'
 

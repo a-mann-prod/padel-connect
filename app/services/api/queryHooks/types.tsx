@@ -12,8 +12,8 @@ import {
 } from '@tanstack/react-query'
 
 import { UseSubscriptionOpts } from '@supabase-cache-helpers/postgrest-react-query'
-import { StorageType } from './image'
-import { InfiniteQueryOptions } from './queryHooks/useInfiniteQuery'
+import { StorageType } from '../routes/image'
+import { InfiniteQueryOptions } from './useInfiniteQuery'
 
 // QueryOptions from Supa cache helper
 export type QueryOptions<TResponse, TError> = Omit<

@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+
 import { ProfileWithAvatar } from './useProfileWithAvatar'
 
 import {
@@ -6,7 +7,7 @@ import {
   ProfilesResponse,
   useProfiles,
 } from '@/services/api'
-import { UseQueryProps } from '@/services/api/types'
+import { UseQueryProps } from '@/services/api/queryHooks/types'
 import { getPublicAvatarUrl } from '@/utils/avatar'
 
 export type ProfilesWithAvatar = ProfileWithAvatar[]

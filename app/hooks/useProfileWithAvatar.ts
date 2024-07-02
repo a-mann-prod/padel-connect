@@ -1,8 +1,8 @@
 import { pick } from 'remeda'
 
 import { GetProfileParams, ProfileResponse, useProfile } from '@/services/api'
-import { useImage } from '@/services/api/image'
-import { UseQueryProps } from '@/services/api/types'
+import { UseQueryProps } from '@/services/api/queryHooks/types'
+import { useImage } from '@/services/api/routes/image'
 import { getLevel } from '@/utils/level'
 
 export type ProfileWithAvatar = Partial<

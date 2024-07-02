@@ -1,6 +1,6 @@
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query'
 
-import { UseQueryProps } from '../types'
+import { UseQueryProps } from '../../queryHooks/types'
 import { ComplexResponse, ComplexesResponse } from './entities'
 import { getComplexFn, getComplexesFn } from './functions'
 import { GetComplexParams, GetComplexesParams } from './params'

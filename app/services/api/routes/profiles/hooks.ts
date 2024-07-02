@@ -3,7 +3,7 @@ import {
   useUpdateMutation,
 } from '@supabase-cache-helpers/postgrest-react-query'
 
-import { UseMutationProps, UseQueryProps } from '../types'
+import { UseMutationProps, UseQueryProps } from '../../queryHooks/types'
 import {
   ProfileResponse,
   ProfilesResponse,
