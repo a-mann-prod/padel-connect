@@ -3,7 +3,7 @@ import * as AuthSession from 'expo-auth-session'
 import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Share } from 'react-native'
 
-import { WithMatch } from '@/components'
+import { MatchRequestButton, PlayersAvatars, WithMatch } from '@/components'
 import {
   Button,
   Loader,
@@ -17,7 +17,6 @@ import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
 import { useMe } from '@/hooks/useMe'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
-import { MatchRequestButton, PlayersAvatars } from '@/nodes/play'
 import { useMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'

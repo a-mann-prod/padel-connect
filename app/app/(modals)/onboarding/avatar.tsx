@@ -1,8 +1,7 @@
 import { VStack } from '@gluestack-ui/themed'
 
-import { KeyboardAvoidingView } from '@/components'
+import { AvatarForm, KeyboardAvoidingView } from '@/components'
 import { ScrollView } from '@/designSystem'
-import { AvatarForm } from '@/nodes'
 
 export default () => (
   <KeyboardAvoidingView>

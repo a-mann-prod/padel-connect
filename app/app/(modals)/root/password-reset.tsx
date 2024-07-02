@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 
-import { PasswordResetForm } from '@/nodes'
+import { PasswordResetForm } from '@/components'
 
 export default () => {
   return (

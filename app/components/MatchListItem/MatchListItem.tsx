@@ -2,12 +2,12 @@ import { HStack, Heading, Text, VStack } from '@gluestack-ui/themed'
 
 import { Icon, Pressable, PressableProps } from '@/designSystem'
 import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
-import { PlayersAvatars } from '@/nodes/play'
 import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { getPublicAvatarUrl } from '@/utils/avatar'
 import { isNilOrEmpty } from '@/utils/global'
+import { PlayersAvatars } from '../PlayersAvatars/PlayersAvatars'
 
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import {
   PasswordResetFormValues,
   passwordResetFormServices,
-} from './passwordResetForm.services'
+} from './PasswordResetForm.services'
 
 import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem/'

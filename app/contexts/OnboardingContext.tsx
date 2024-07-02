@@ -1,10 +1,10 @@
 import { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react'
 
 import { NotificationAlertsFormValues } from '@/components'
+import { AvatarFormValues } from '@/components/Forms/AvatarForm/AvatarForm.services'
 import { FiltersFormValues } from '@/components/Forms/FiltersForm/FiltersForm.services'
 import { PersonalInfoFormValues } from '@/components/Forms/PersonalInfoForm/PersonalInfoForm.services'
 import { PreferencesFormValues } from '@/components/Forms/PreferencesForm/PreferencesForm.services'
-import { AvatarFormValues } from '@/nodes/onboarding/AvatarForm/AvatarForm.services'
 import { buildContext } from '@/services/buildContext'
 import { Level } from '@/utils/level'
 
