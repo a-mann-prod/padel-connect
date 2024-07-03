@@ -4,30 +4,68 @@
   },
   "levelEstimation": {
     "question0": {
-      "choice0": "Choix 0 qui rapporte 0 pt",
-      "choice1": "Choix 1 qui rapporte 5 pts",
-      "choice2": "Choix 2 qui rapporte 10 pts",
+      "choice0": "J’essaie de mettre la balle dans le carré sans faire de double faute. Je veux juste engager le point",
+      "choice1": "Mon service est lent et haut, je préfère éviter la double faute tout en essayant une première balle plus forte que la seconde",
+      "choice2": "Mon premier service est plus puissant que le second, je le coupe parfois. La deuxième balle est lente, haute et régulière",
+      "choice3": "Je coupe systématiquement mon premier service, varie les zones pendant le match et cible les points faibles de l’adversaire. Servir la vitre est un avantage",
+      "choice4": "Je cherche un premier service lent et profond pour me permettre d'arriver au filet sans recevoir un retour difficile. Je vise un point de contact bas pour l'adversaire",
+      "choice5": "Mon service est un atout pour obtenir un point de contact haut au filet et dominer. Servir le T est plus sûr car mon adversaire sait gérer les vitres",
+      "choice6": "Comme le niveau 6, mais avec peu de différence entre mes premières et secondes balles, offrant une première volée au-dessus du filet",
       "title": "Service"
     },
     "question1": {
-      "choice0": "Choix 0 qui rapporte 0 pt",
-      "choice1": "Choix 1 qui rapporte 5 pts",
-      "choice2": "Choix 2 qui rapporte 10 pts",
+      "choice0": "J'ai du mal à les contrôler, c'est un peu aléatoire, je manque de technique",
+      "choice1": "Je deviens plus régulier, j'arrive à viser à gauche et à droite du terrain adverse",
+      "choice2": "Je prends confiance dans un geste régulier, parfois j'essaie de varier avec des effets mais c'est moins constant",
+      "choice3": "Je varie les effets selon la situation, mais j'utilise plus souvent mes coups rassurants pour tenter de gagner le point depuis le fond du court",
+      "choice4": "Je commence à varier les effets selon la situation : je coupe les balles hautes, joue dans les pieds avec du lift, utilise des chiquitas et des lobs pour reprendre le filet. Je joue à plat avec contrôle pour une défense sans risque le reste du temps",
+      "choice5": "Je sais reprendre le filet avec un lob ou une chiquita au bon moment. Je masque mes lobs et utilise les zones faibles des attaquants en fonction de leur position et profil",
+      "choice6": "Sauf très bon coup de l'adversaire, je ne suis jamais mis en défaut sur des balles classiques, je varie mon jeu et cache mes coups pour déstabiliser l'adversaire",
       "subtitle": "Trajectoires sur mes coups droits et revers",
       "title": "Défense"
     },
     "question2": {
-      "choice0": "Choix 0 qui rapporte 0 pt",
-      "choice1": "Choix 1 qui rapporte 5 pts",
-      "choice2": "Choix 2 qui rapporte 10 pts",
+      "choice0": "J'évite que la balle touche les vitres car je ne sais pas gérer les rebonds",
+      "choice1": "J'évite que la balle touche les vitres mais je commence à renvoyer des rebonds droits quand les balles ne sont pas trop rapides",
+      "choice2": "Je renvoie régulièrement les rebonds droits, mais je suis souvent perdu avec les vitres latérales",
+      "choice3": "Je sais me placer et défendre les balles droites ou en diagonale, mais je prends souvent la mauvaise décision en diagonale",
+      "choice4": "Je me place bien, lis les effets sur les vitres et sais comment me déplacer. Sur les smashs, j'avance pour contre-attaquer. L'adversaire doit réussir une belle balle pour me mettre en difficulté",
+      "choice5": "Sur réception des smashs, je lis les effets et rebonds dans les angles, renvoyant ces balles plus souvent qu'elles ne me prennent en défaut, et je défends bien dans un rythme intense",
+      "choice6": "Même en situations critiques, je place mes coups pour piéger l'adversaire (lob, chiquitas) selon son profil et notre stratégie de jeu",
       "subtitle": "Défense avec les vitres",
       "title": "Défense"
     },
     "question3": {
-      "choice0": "Choix 0 qui rapporte 0 pt",
-      "choice1": "Choix 1 qui rapporte 5 pts",
-      "choice2": "Choix 2 qui rapporte 10 pts",
+      "choice0": "Je ne sais pas rejouer chez l’adversaire en utilisant mes propres vitres",
+      "choice1": "Je ne joue pas chez l’adversaire en utilisant mes propres vitres",
+      "choice2": "Quand je suis lobé et en retard, j'utilise parfois la vitre du fond pour renvoyer la balle, mais le résultat est aléatoire",
+      "choice3": "En retard, j'utilise régulièrement la vitre du fond pour renvoyer la balle, mais sans contrôler hauteur ou profondeur",
+      "choice4": "J’utilise la vitre du fond et contrôle bien la hauteur pour éviter un smash en retour",
+      "choice5": "Je maîtrise parfaitement les vitres du fond pour trouver un lob et utilise les vitres latérales pour ouvrir des angles de jeu",
+      "choice6": "Quand j’utilise mes vitres, je mets souvent mes adversaires en difficulté, créant la surprise et renversant le jeu",
+      "subtitle": "Utilisation des vitres",
+      "title": "Défense"
+    },
+    "question4": {
+      "choice0": "Je ne monte pas au filet depuis le fond du court. Si je suis au filet, je ne sais pas revenir en défense, et le lob m'est fatal. Je joue principalement au fond du court, avançant seulement sur une balle courte. Je fais peu de volées",
+      "choice1": "Je monte au filet mais ne contrôle pas bien mes volées. Je sais que le filet m'aide à finir le point, mais je ne parviens pas à renvoyer les lobs et revenir en défense",
+      "choice2": "Je monte au filet quand l'adversaire est au fond. Je ne maîtrise pas encore mes volées, souvent en opposition. Si lobé, je sais revenir défendre et passer de l'attaque à la défense",
+      "choice3": "Monter au filet est un avantage, mais je fais encore des erreurs sur mes volées. Lobé, je commence à contre-attaquer (bajadas ou lob en réponse)",
+      "choice4": "Au filet, je construis mon attaque en déplaçant l'adversaire. Je contrôle mes volées et ne panique plus sur les lobs, contre-attaquant quand c'est judicieux",
+      "choice5": "Mes volées sont placées selon la position de la défense adverse. J'analyse le jeu pour choisir mon coup, utilisant des amortis et contrepieds au bon moment",
+      "choice6": "Mes volées ont des effets marqués au rebond sur les vitres adverses, restant basses et rapides. Le rythme de jeu est plus intense pour la défense adverse",
       "subtitle": "Au filet",
+      "title": "Attaque"
+    },
+    "question5": {
+      "choice0": "Je commence à faire mes premiers smashs",
+      "choice1": "Parfois, il m’arrive de finir un point grâce à un smash qui accélère trop le rythme pour mon adversaire",
+      "choice2": "Je smashe toujours de la même manière (avec effet ou non). Si la balle est courte, je tape le plus fort possible pour finir le point",
+      "choice3": "J'ai un smash favori pour frapper fort (à plat ou vibora). En reculant, j'essaie un smash plus lent (bandeja, gancho, rulo) mais fais encore des fautes",
+      "choice4": "Si le lob est trop court, je peux faire sortir la balle ou la ramener dans mon camp. J'utilise des effets latéraux (vibora) pour viser les doubles vitres ou surprendre au centre. J'ai une bandeja sûre pour les balles non attaquables",
+      "choice5": "Je maîtrise et varie tous les types de smashs et les zones de placement. Viboras, smashs liftés, à plat et bandejas font partie intégrante de mon jeu, et je les utilise selon la situation analysée",
+      "choice6": "Mes smashs ont des effets très marqués sur les vitres. Mes viboras sont puissantes et restent basses, mes bandejas redescendent sur les vitres, et les fautes directes en attaque sont rares",
+      "subtitle": "Mes smashs",
       "title": "Attaque"
     }
   }

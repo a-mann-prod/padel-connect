@@ -1,33 +1,71 @@
 {
   "getStarted": {
-    "subtitle": "All is good!"
+    "subtitle": "It's all good!"
   },
   "levelEstimation": {
     "question0": {
-      "choice0": "Choice 0 which gives 0 pts",
-      "choice1": "Choice 1 which gives 5 pts",
-      "choice2": "Choice 2 which gives 10 pts",
-      "title": "Service"
+      "choice0": "I try to get the ball into the box without double faulting. I just want to start the point",
+      "choice1": "My serve is slow and high, I prefer to avoid double faulting while trying a first serve stronger than the second",
+      "choice2": "My first serve is stronger than the second, I sometimes slice it. The second ball is slow, high, and consistent",
+      "choice3": "I systematically slice my first serve, vary the zones during the match, and target the opponent's weak points. Serving the glass is an advantage",
+      "choice4": "I look for a slow and deep first serve to allow me to get to the net without receiving a difficult return. I aim for a low contact point for the opponent",
+      "choice5": "My serve is an asset to get a high contact point at the net and dominate. Serving the T is safer because my opponent can handle the glass",
+      "choice6": "Like level 6, but with little difference between my first and second serves, offering a first volley above the net",
+      "title": "Serve"
     },
     "question1": {
-      "choice0": "Choice 0 which gives 0 pts",
-      "choice1": "Choice 1 which gives 5 pts",
-      "choice2": "Choice 2 which gives 10 pts",
+      "choice0": "I have trouble controlling them, it's a bit random, I lack technique",
+      "choice1": "I'm becoming more consistent, I can aim to the left and right of the opponent's court",
+      "choice2": "I'm gaining confidence in a consistent stroke, sometimes I try to vary with spins but it's less consistent",
+      "choice3": "I vary the spins depending on the situation, but I use my reliable shots more often to try to win the point from the back of the court",
+      "choice4": "I start to vary the spins depending on the situation: I slice high balls, play into the feet with topspin, use chiquitas and lobs to regain the net. I play flat with control for a risk-free defense the rest of the time",
+      "choice5": "I know how to regain the net with a lob or chiquita at the right time. I disguise my lobs and use the attackers' weak spots based on their position and profile",
+      "choice6": "Except for a very good shot from the opponent, I am never caught out on standard balls, I vary my game and disguise my shots to unsettle the opponent",
       "subtitle": "Trajectories on my forehands and backhands",
       "title": "Defense"
     },
     "question2": {
-      "choice0": "Choice 0 which gives 0 pts",
-      "choice1": "Choice 1 which gives 5 pts",
-      "choice2": "Choice 2 which gives 10 pts",
-      "subtitle": "Defense with the glass walls",
+      "choice0": "I avoid the ball hitting the glass because I can't handle the rebounds",
+      "choice1": "I avoid the ball hitting the glass but I'm starting to return straight rebounds when the balls aren't too fast",
+      "choice2": "I regularly return straight rebounds, but I'm often lost with the side glasses",
+      "choice3": "I know how to position myself and defend straight or diagonal balls, but I often make the wrong decision on diagonal balls",
+      "choice4": "I position myself well, read the spins off the glass, and know how to move. On smashes, I move forward to counter-attack. The opponent must make a good shot to put me in trouble",
+      "choice5": "On receiving smashes, I read the spins and bounces in the corners, returning these balls more often than they catch me out, and I defend well in an intense rhythm",
+      "choice6": "Even in critical situations, I place my shots to trap the opponent (lob, chiquitas) according to their profile and our game strategy",
+      "subtitle": "Defense with the glass",
       "title": "Defense"
     },
     "question3": {
-      "choice0": "Choice 0 which gives 0 pts",
-      "choice1": "Choice 1 which gives 5 pts",
-      "choice2": "Choice 2 which gives 10 pts",
+      "choice0": "I don't know how to play back using my own glass",
+      "choice1": "I don't play back using my own glass",
+      "choice2": "When I'm lobbed and late, I sometimes use the back glass to return the ball, but the result is random",
+      "choice3": "When late, I regularly use the back glass to return the ball, but without controlling height or depth",
+      "choice4": "I use the back glass and control the height well to avoid a smash in return",
+      "choice5": "I master the back glass perfectly to find a lob and use the side glasses to open up game angles",
+      "choice6": "When I use my glasses, I often put my opponents in trouble, creating surprise and turning the game around",
+      "subtitle": "Using the glass",
+      "title": "Defense"
+    },
+    "question4": {
+      "choice0": "I don't go to the net from the back of the court. If I'm at the net, I don't know how to get back on defense, and the lob is fatal. I mainly play at the back of the court, only moving forward on a short ball. I rarely volley",
+      "choice1": "I go to the net but don't control my volleys well. I know the net helps me finish the point, but I can't return lobs and get back on defense",
+      "choice2": "I go to the net when the opponent is at the back. I haven't mastered my volleys yet, often just blocking. If lobbed, I know how to get back on defense and switch from attack to defense",
+      "choice3": "Going to the net is an advantage, but I still make mistakes on my volleys. When lobbed, I'm starting to counter-attack (bajadas or lob in response)",
+      "choice4": "At the net, I build my attack by moving the opponent. I control my volleys and no longer panic on lobs, counter-attacking when it's wise",
+      "choice5": "My volleys are placed according to the position of the opposing defense. I analyze the game to choose my shot, using drop shots and counterattacks at the right time",
+      "choice6": "My volleys have marked spins on the opponents' glass, staying low and fast. The game rhythm is more intense for the opposing defense",
       "subtitle": "At the net",
+      "title": "Attack"
+    },
+    "question5": {
+      "choice0": "I'm starting to do my first smashes",
+      "choice1": "Sometimes, I manage to finish a point with a smash that speeds up the game too much for my opponent",
+      "choice2": "I always smash the same way (with or without spin). If the ball is short, I hit as hard as possible to finish the point",
+      "choice3": "I have a favorite smash to hit hard (flat or vibora). When retreating, I try a slower smash (bandeja, gancho, rulo) but still make mistakes",
+      "choice4": "If the lob is too short, I can hit the ball out of the court or bring it back into my court. I use side spins (vibora) to aim for double glass or surprise in the center. I have a reliable bandeja for non-attackable balls",
+      "choice5": "I master and vary all types of smashes and placement zones. Viboras, topspin smashes, flat smashes, and bandejas are integral parts of my game, and I use them according to the analyzed situation",
+      "choice6": "My smashes have very marked effects on the glass. My viboras are powerful and stay low, my bandejas come down on the glass, and direct faults in attack are rare",
+      "subtitle": "My smashes",
       "title": "Attack"
     }
   }
