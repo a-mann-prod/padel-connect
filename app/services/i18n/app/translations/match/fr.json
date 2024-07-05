@@ -13,5 +13,7 @@
   "matchNotFound": "Match introuvable",
   "pay": "Payer sa part",
   "playersManage": "Gérer les joueurs",
+  "privateMatch": "Match privé",
+  "privateMatchHelpMessage": "N'apparaitra pas dans la liste des matches disponibles et n'enverra pas de notifications",
   "share": "Partager"
 }

@@ -24,7 +24,7 @@ export type MatchesResponse = (Omit<Tables<'matches'>, 'complex_id'> & {
 export type MatchesCountResponse = Pick<Tables<'matches'>, 'id' | 'datetime'>[]
 
 export const getMatchQueryCols =
-  'id, complex:complexes(id, name), owner_id, match_requests(match_id, user_id), datetime, booked_url, duration, level, updated_at, created_at'
+  'id, complex:complexes(id, name), owner_id, match_requests(match_id, user_id), datetime, slot_status, duration, level, is_private, updated_at, created_at'
 
 export const getMatchesQueryCols =
-  'id, complex:complexes(id, name), owner_id, owner:profiles!public_matches_owner_id_fkey(id, avatar_url), match_requests(match_id, user_id, user:profiles(id, avatar_url)), datetime, booked_url, duration, level, updated_at, created_at'
+  'id, complex:complexes(id, name), owner_id, owner:profiles!public_matches_owner_id_fkey(id, avatar_url), match_requests(match_id, user_id, user:profiles(id, avatar_url)), datetime, slot_status, duration, level, is_private, updated_at, created_at'

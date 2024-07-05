@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { MatchFormValues, matchFormServices } from './MatchForm.services'
@@ -10,6 +10,7 @@ import {
   FormDateTimePickerControlled,
   FormSelectControlled,
 } from '@/components/FormsControlled'
+import { FormCheckboxControlled } from '@/components/FormsControlled/FormCheckboxControlled/FormCheckboxControlled'
 import { Button } from '@/designSystem'
 import { useComplexItems } from '@/hooks/useComplexItems'
 import { useDurationItems } from '@/hooks/useDurationItems'
@@ -46,11 +47,7 @@ export const MatchForm = ({
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit, reset } = methods
-
-  useEffect(() => {
-    reset(defaultValuesMemo)
-  }, [defaultValuesMemo, reset])
+  const { handleSubmit } = methods
 
   const levelItems = useLevelItems()
   const durationItems = useDurationItems()
@@ -82,6 +79,13 @@ export const MatchForm = ({
             name="duration"
             formControlProps={{ title: t('duration') }}
             items={durationItems}
+          />
+          <FormCheckboxControlled
+            name="is_private"
+            formControlProps={{
+              title: t('privateMatch'),
+              helpMessage: t('privateMatchHelpMessage'),
+            }}
           />
         </VStack>
       </FormProvider>

@@ -14,7 +14,7 @@ const getDefaultValues = (
   datetime: props?.datetime || '',
   duration: props?.duration || '',
   level: props?.level || '',
-  booked_url: props?.booked_url || '',
+  is_private: props?.is_private || false,
 })
 
 const schema = z.object({
@@ -23,7 +23,7 @@ const schema = z.object({
   datetime: validators.string.required(),
   duration: validators.string.required(),
   level: validators.string.required(),
-  booked_url: validators.string.optional(),
+  is_private: validators.boolean.required(),
 })
 
 const formatToParams = (props: MatchFormValues): InsertMatchParams => ({

@@ -18,10 +18,10 @@ export const Tile = ({
 }: TileProps) => {
   return (
     <HStack
-      justifyContent="space-between"
       flexDirection={iconRight ? 'row-reverse' : 'row'}
       rounded="$lg"
       p="$3"
+      gap="$3"
       {...props}
     >
       {icon && <Icon size="xl" name={icon} color={color} />}

@@ -1,13 +1,20 @@
 import { HStack, Heading, Text, VStack } from '@gluestack-ui/themed'
 
-import { Icon, Pressable, PressableProps } from '@/designSystem'
+import { PlayersAvatars } from '../PlayersAvatars/PlayersAvatars'
+
+import {
+  Icon,
+  IconNameProp,
+  IconProps,
+  Pressable,
+  PressableProps,
+} from '@/designSystem'
 import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
+import { Database } from '@/services/supabase/database.types'
 import { getPublicAvatarUrl } from '@/utils/avatar'
-import { isNilOrEmpty } from '@/utils/global'
-import { PlayersAvatars } from '../PlayersAvatars/PlayersAvatars'
 
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']
@@ -16,7 +23,7 @@ export type MatchlistItemProps = {
 export const MatchListItem = ({
   onPress,
   level,
-  booked_url,
+  slot_status,
   // type,
   datetime,
   complex,
@@ -57,7 +64,7 @@ export const MatchListItem = ({
               </Text>
             </VStack>
           </HStack>
-          <BookedStatus isBooked={!isNilOrEmpty(booked_url)} />
+          <SlotStatusIcon status={slot_status} />
         </HStack>
         <HStack>
           <PlayersAvatars data={players} />
@@ -117,23 +124,30 @@ const DurationFlag = ({ value }: DurationFlagProps) => {
   )
 }
 
-type BookedStatusProps = {
-  isBooked: boolean
+type SlotStatus = Database['public']['Enums']['match_slot_status']
+
+type SlotStatusIconProps = {
+  status: SlotStatus | null
 }
 
-const BookedStatus = ({ isBooked }: BookedStatusProps) => {
-  const t = useTranslate('match')
+const SlotStatusIcon = ({ status }: SlotStatusIconProps) => {
+  const mapStatusToIcon: Record<SlotStatus, IconNameProp> = {
+    AVAILABLE: 'FAR-circle',
+    BOOKED: 'FAR-circle-check',
+    UNAVAILABLE: 'FAR-circle-xmark',
+  }
+
+  const mapStatusToColor: Record<SlotStatus, IconProps['color']> = {
+    AVAILABLE: '',
+    BOOKED: '$green.500',
+    UNAVAILABLE: '$red.500',
+  }
+
+  if (!status) return
 
   return (
     <HStack gap="$2" alignItems="center">
-      {isBooked ? (
-        <HStack alignItems="center" gap="$2">
-          <Text>{t('booked')}</Text>
-          <Icon name="FAS-circle-check" color="$green500" />
-        </HStack>
-      ) : (
-        <Icon name="FAR-circle-check" />
-      )}
+      <Icon name={mapStatusToIcon[status]} color={mapStatusToColor[status]} />
     </HStack>
   )
 }

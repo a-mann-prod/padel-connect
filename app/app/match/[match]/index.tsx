@@ -85,17 +85,16 @@ export default WithMatch(() => {
   const matchStartTime = date.dayjs(match.datetime)
   const matchEndTime = matchStartTime.add(match.duration, 'm')
   // const isMatchPassed = matchEndTime.isBefore(date.now()))
-  const isBooked = !isNilOrEmpty(match.booked_url)
+  const isBooked = !isNilOrEmpty(match.slot_status === 'BOOKED')
 
   return (
     <ScrollView>
       <VStack p="$3" gap="$3">
-        {isBooked && (
+        {match.is_private && (
           <Tile
-            title={t('booked')}
-            bgColor="$green500"
-            icon="FAS-check"
-            iconRight
+            title={t('privateMatch')}
+            bgColor="$primary500"
+            icon="FAS-lock"
           />
         )}
         <Section>
@@ -116,9 +115,7 @@ export default WithMatch(() => {
               <HStack gap="$1">
                 <Text>{matchStartTime.format('HH:mm')}</Text>
                 <Text>-</Text>
-                <Text>
-                  {matchEndTime.add(match.duration, 'm').format('HH:mm')}
-                </Text>
+                <Text>{matchEndTime.format('HH:mm')}</Text>
                 <Text>
                   ({tGlobal('datetime.minute', { count: match.duration })})
                 </Text>
