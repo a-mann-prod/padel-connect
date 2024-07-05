@@ -21,6 +21,7 @@
       }
     },
     "preview": {
+      "channel": "preview",
       "developmentClient": false,
       "distribution": "internal",
       "env": {
@@ -32,6 +33,7 @@
       }
     },
     "production": {
+      "channel": "production",
       "env": {
         "EXPO_PUBLIC_ENV": "production",
         "EXPO_PUBLIC_KOFI_URL": "https://ko-fi.com/gregamann",

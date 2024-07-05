@@ -70,5 +70,11 @@ export default ({ config }: ConfigContext) => ({
       projectId: 'e57567a8-f956-4548-aefe-67c0990d02ea',
     },
   },
+  updates: {
+    url: 'https://u.expo.dev/e57567a8-f956-4548-aefe-67c0990d02ea',
+  },
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
   owner: 'a-mann-prod',
 })

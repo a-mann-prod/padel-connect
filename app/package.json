@@ -12,7 +12,8 @@
     "test-ci": "jest --ci",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prettier": "prettier --check \"./**/*.{ts,tsx,js,jsx,json,yaml,yml}\"",
-    "type-check": "tsc  --noemit"
+    "type-check": "tsc  --noemit",
+    "ota-build": "node ./scripts/ota-build"
   },
   "jest": {
     "preset": "jest-expo",
@@ -55,6 +56,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.4",
     "expo-task-manager": "~11.8.2",
+    "expo-updates": "~0.25.18",
     "i18next": "~23.9.0",
     "moti": "~0.27.2",
     "react": "^18.2.0",
