@@ -7,13 +7,13 @@ import { ProfileWithAvatar, useProfileWithAvatar } from './useProfileWithAvatar'
 import { useAuthContext } from '@/contexts'
 import { getLevel } from '@/utils/level'
 
-export type UseMe = {
+export type UseMeProps = {
   data?: ProfileWithAvatar &
     Partial<Pick<User, 'id' | 'created_at'>> & { level?: number }
   isLoading: boolean
 }
 
-export const useMe = (): UseMe => {
+export const useMe = (): UseMeProps => {
   const { user, isLoadingSignIn } = useAuthContext()
 
   const { data: profile, isLoading: isLoadingProfile } = useProfileWithAvatar({

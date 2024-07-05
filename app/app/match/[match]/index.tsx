@@ -12,7 +12,6 @@ import {
   SectionRow,
   Tile,
 } from '@/designSystem'
-import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
 import { useMe } from '@/hooks/useMe'
@@ -81,9 +80,11 @@ export default WithMatch(() => {
 
   if (isLoadingMatch || isLoadingMatchRequest) return <Loader />
 
-  if (!match) return <ListEmpty title={t('matchNotFound')} />
+  if (!match) return
 
-  const matchDatetime = date.dayjs(match.datetime)
+  const matchStartTime = date.dayjs(match.datetime)
+  const matchEndTime = matchStartTime.add(match.duration, 'm')
+  // const isMatchPassed = matchEndTime.isBefore(date.now()))
   const isBooked = !isNilOrEmpty(match.booked_url)
 
   return (
@@ -113,10 +114,10 @@ export default WithMatch(() => {
             icon="FAR-clock"
             rightComponent={() => (
               <HStack gap="$1">
-                <Text>{matchDatetime.format('HH:mm')}</Text>
+                <Text>{matchStartTime.format('HH:mm')}</Text>
                 <Text>-</Text>
                 <Text>
-                  {matchDatetime.add(match.duration, 'm').format('HH:mm')}
+                  {matchEndTime.add(match.duration, 'm').format('HH:mm')}
                 </Text>
                 <Text>
                   ({tGlobal('datetime.minute', { count: match.duration })})
