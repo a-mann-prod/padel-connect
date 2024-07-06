@@ -368,7 +368,7 @@ export type Database = {
       }
       tournaments: {
         Row: {
-          complex_id: number | null
+          complex_id: number
           created_at: string
           datetime: string
           description: string
@@ -377,7 +377,7 @@ export type Database = {
           type: Database["public"]["Enums"]["tournament_type"]
         }
         Insert: {
-          complex_id?: number | null
+          complex_id: number
           created_at?: string
           datetime: string
           description: string
@@ -386,7 +386,7 @@ export type Database = {
           type: Database["public"]["Enums"]["tournament_type"]
         }
         Update: {
-          complex_id?: number | null
+          complex_id?: number
           created_at?: string
           datetime?: string
           description?: string
