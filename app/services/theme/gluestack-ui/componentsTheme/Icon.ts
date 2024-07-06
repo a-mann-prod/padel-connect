@@ -64,6 +64,14 @@ export const BaseIcon = createStyle({
         },
       },
     },
+    variant: {
+      subtitle: {
+        color: '$textLight600',
+        _dark: {
+          color: '$textDark300',
+        },
+      },
+    },
   },
   // defaultProps: {
   //   size: 'md',

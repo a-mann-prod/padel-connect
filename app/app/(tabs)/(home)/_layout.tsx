@@ -19,6 +19,14 @@ export default () => {
           title: t('notifications'),
         }}
       />
+      <Stack.Screen
+        name={routing.homeTournaments.name}
+        options={{ title: t('tournaments') }}
+      />
+      <Stack.Screen
+        name={routing.homeTournamentDetail.name}
+        options={{ title: '' }}
+      />
     </Stack>
   )
 }

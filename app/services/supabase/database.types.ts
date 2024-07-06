@@ -366,6 +366,44 @@ export type Database = {
           },
         ]
       }
+      tournaments: {
+        Row: {
+          complex_id: number | null
+          created_at: string
+          datetime: string
+          description: string
+          id: number
+          title: string
+          type: Database["public"]["Enums"]["tournament_type"]
+        }
+        Insert: {
+          complex_id?: number | null
+          created_at?: string
+          datetime: string
+          description: string
+          id?: number
+          title: string
+          type: Database["public"]["Enums"]["tournament_type"]
+        }
+        Update: {
+          complex_id?: number | null
+          created_at?: string
+          datetime?: string
+          description?: string
+          id?: number
+          title?: string
+          type?: Database["public"]["Enums"]["tournament_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_tournaments_complex_id_fkey"
+            columns: ["complex_id"]
+            isOneToOne: false
+            referencedRelation: "complexes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -404,6 +442,7 @@ export type Database = {
         | "MATCH_REQUEST_RESPONSE_ACCEPTED"
         | "MATCH_REQUEST_RESPONSE_REFUSED"
       side_preference: "LEFT" | "RIGHT" | "BOTH"
+      tournament_type: "LEISURE" | "COMPETITION"
     }
     CompositeTypes: {
       [_ in never]: never

@@ -38,6 +38,13 @@ export default () => {
       <TileButton
         color="$white"
         bgColor="$primary500"
+        title={t('navigation.tournaments')}
+        icon="FAS-trophy"
+        onPress={() => router.navigate(routing.homeTournaments.path())}
+      />
+      <TileButton
+        color="$white"
+        bgColor="$primary500"
         title={t('navigation.myMatches')}
         icon="FAS-baseball"
         onPress={() => router.navigate(routing.homeMyMatches.path())}

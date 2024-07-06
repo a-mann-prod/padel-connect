@@ -130,6 +130,15 @@ export const routing = {
     name: 'notifications',
     path: () => `${tabsRoot.home.path()}/notifications`,
   },
+  homeTournaments: {
+    name: 'tournaments',
+    path: () => `${tabsRoot.home.path()}/tournaments`,
+  },
+  homeTournamentDetail: {
+    name: '[tournament]',
+    path: (tournamentId: string | number) =>
+      `${tabsRoot.home.path()}/${tournamentId}`,
+  },
 
   // (tabs)/play
   playFilters: {

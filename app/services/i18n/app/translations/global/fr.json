@@ -33,6 +33,7 @@
   "confirmPassword": "Confirmer le mot de passe",
   "continue": "Continuer",
   "create": "Créer",
+  "date": "Date",
   "datetime": {
     "minute": "{{count}} minute",
     "minute_plural": "{{count}} minutes"
@@ -48,6 +49,7 @@
   "level": "Niveau",
   "levelRangeHelpMessage": "Plage des niveaux recherchés : {{min}} - {{max}}",
   "levelRevelation": "Bravo, tu es niveau",
+  "location": "Lieu",
   "manualPreference": {
     "left_handed": "Gaucher",
     "right_handed": "Droiter",
@@ -87,6 +89,7 @@
     "register": "Inscription",
     "settings": "Réglages",
     "termsOfUse": "Conditions d'utilisation",
+    "tournaments": "Tournois",
     "updatePersonalInformation": "Informations personnelles",
     "updatePreferences": "Préférences"
   },
@@ -100,6 +103,7 @@
     "newMessage": "Notifier les nouveaux messages"
   },
   "or": "ou",
+  "participate": "Je participe",
   "password": "Mot de passe",
   "previous": "Précédent",
   "resend": "Renvoyer",
@@ -113,6 +117,11 @@
     "title": "Côté favoris"
   },
   "today": "Aujourd'hui",
+  "tournament": {
+    "competition": "Compétition",
+    "leisure": "Fun"
+  },
+  "tournamentNotFound": "Tournoi introuvable",
   "unknown": "Inconnu",
   "warning": "Attention"
 }

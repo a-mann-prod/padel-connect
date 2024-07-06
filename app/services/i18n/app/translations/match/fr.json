@@ -1,8 +1,6 @@
 {
   "cancelRequest": "Annuler la demande",
   "chat": "Messagerie",
-  "complex": "Lieu",
-  "date": "Date",
   "datetime": "Date et heure",
   "deleteMatch": "Supprimer la partie",
   "deleteMatchMessage": "Es tu sûr de vouloir supprimer la partie ?",

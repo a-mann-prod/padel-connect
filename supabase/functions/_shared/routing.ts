@@ -126,6 +126,10 @@ export const routing = {
     name: "my-matches",
     path: () => `${tabsRoot.home.path()}/my-matches`,
   },
+  homeTournaments: {
+    name: "tournaments",
+    path: () => `${tabsRoot.home.path()}/tournaments`,
+  },
   homeNotifications: {
     name: "notifications",
     path: () => `${tabsRoot.home.path()}/notifications`,

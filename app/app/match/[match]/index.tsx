@@ -99,12 +99,12 @@ export default WithMatch(() => {
         )}
         <Section>
           <SectionRow
-            title={t('complex')}
+            title={tGlobal('location')}
             icon="FAS-location-dot"
             rightComponent={() => <Text>{match.complex?.name}</Text>}
           />
           <SectionRow
-            title={t('date')}
+            title={tGlobal('location')}
             icon="FAR-calendar"
             rightComponent={() => <Text>{date.format(match.datetime)}</Text>}
           />
