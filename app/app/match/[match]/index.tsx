@@ -1,4 +1,4 @@
-import { HStack, Text, VStack } from '@gluestack-ui/themed'
+import { HStack, SafeAreaView, Text, VStack } from '@gluestack-ui/themed'
 import * as AuthSession from 'expo-auth-session'
 import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Share } from 'react-native'
@@ -88,139 +88,141 @@ export default WithMatch(() => {
   const isBooked = !isNilOrEmpty(match.slot_status === 'BOOKED')
 
   return (
-    <ScrollView>
-      <VStack p="$3" gap="$3">
-        {match.is_private && (
-          <Tile
-            title={t('privateMatch')}
-            bgColor="$primary500"
-            icon="FAS-lock"
-          />
-        )}
-        <Section>
-          <SectionRow
-            title={tGlobal('location')}
-            icon="FAS-location-dot"
-            rightComponent={() => <Text>{match.complex?.name}</Text>}
-          />
-          <SectionRow
-            title={tGlobal('location')}
-            icon="FAR-calendar"
-            rightComponent={() => <Text>{date.format(match.datetime)}</Text>}
-          />
-          <SectionRow
-            title={t('duration')}
-            icon="FAR-clock"
-            rightComponent={() => (
-              <HStack gap="$1">
-                <Text>{matchStartTime.format('HH:mm')}</Text>
-                <Text>-</Text>
-                <Text>{matchEndTime.format('HH:mm')}</Text>
+    <SafeAreaView>
+      <ScrollView>
+        <VStack p="$3" gap="$3">
+          {match.is_private && (
+            <Tile
+              title={t('privateMatch')}
+              bgColor="$primary500"
+              icon="FAS-lock"
+            />
+          )}
+          <Section>
+            <SectionRow
+              title={tGlobal('location')}
+              icon="FAS-location-dot"
+              rightComponent={() => <Text>{match.complex?.name}</Text>}
+            />
+            <SectionRow
+              title={tGlobal('location')}
+              icon="FAR-calendar"
+              rightComponent={() => <Text>{date.format(match.datetime)}</Text>}
+            />
+            <SectionRow
+              title={t('duration')}
+              icon="FAR-clock"
+              rightComponent={() => (
+                <HStack gap="$1">
+                  <Text>{matchStartTime.format('HH:mm')}</Text>
+                  <Text>-</Text>
+                  <Text>{matchEndTime.format('HH:mm')}</Text>
+                  <Text>
+                    ({tGlobal('datetime.minute', { count: match.duration })})
+                  </Text>
+                </HStack>
+              )}
+            />
+          </Section>
+
+          <Section>
+            <SectionRow
+              title={tGlobal('captain')}
+              icon="FAS-crown"
+              rightComponent={() => (
+                <Text>{getUsername(owner?.first_name, owner?.last_name)}</Text>
+              )}
+            />
+            <SectionRow
+              title={tGlobal('level')}
+              icon="FAS-dumbbell"
+              rightComponent={() => (
                 <Text>
-                  ({tGlobal('datetime.minute', { count: match.duration })})
+                  {tGlobal('level')} {match.level}
                 </Text>
-              </HStack>
-            )}
-          />
-        </Section>
+              )}
+            />
+          </Section>
 
-        <Section>
-          <SectionRow
-            title={tGlobal('captain')}
-            icon="FAS-crown"
-            rightComponent={() => (
-              <Text>{getUsername(owner?.first_name, owner?.last_name)}</Text>
-            )}
-          />
-          <SectionRow
-            title={tGlobal('level')}
-            icon="FAS-dumbbell"
-            rightComponent={() => (
-              <Text>
-                {tGlobal('level')} {match.level}
-              </Text>
-            )}
-          />
-        </Section>
-
-        <Section>
-          <PlayersAvatars
-            size="lg"
-            displayName
-            data={sortedPlayers}
-            orientation="column"
-            onPress={(id) =>
-              router.navigate(routing.matchUser.path(matchId, id))
-            }
-          />
-        </Section>
-
-        {isOwner && (
-          <>
-            <Link asChild href={routing.matchPlayersManage.path(matchId)}>
-              <Button title={t('playersManage')} />
-            </Link>
-
-            <Button
-              title={t('share')}
-              icon="FAS-share"
-              isDisabled
-              onPress={() =>
-                Share.share({
-                  url: AuthSession.makeRedirectUri({ path: pathname }),
-                  message:
-                    "Hey je viens de créer un match, si t'es dispo tu peux venir le rejoindre en cliquant sur le lien",
-                })
+          <Section>
+            <PlayersAvatars
+              size="lg"
+              displayName
+              data={sortedPlayers}
+              orientation="column"
+              onPress={(id) =>
+                router.navigate(routing.matchUser.path(matchId, id))
               }
             />
-          </>
-        )}
-        {isParticipant && (
-          <>
-            <Button
-              title={t('chat')}
-              icon="FAS-message"
-              iconRight
-              action="positive"
-              onPress={() => router.navigate(routing.matchChat.path(matchId))}
+          </Section>
+
+          {isOwner && (
+            <>
+              <Link asChild href={routing.matchPlayersManage.path(matchId)}>
+                <Button title={t('playersManage')} />
+              </Link>
+
+              <Button
+                title={t('share')}
+                icon="FAS-share"
+                isDisabled
+                onPress={() =>
+                  Share.share({
+                    url: AuthSession.makeRedirectUri({ path: pathname }),
+                    message:
+                      "Hey je viens de créer un match, si t'es dispo tu peux venir le rejoindre en cliquant sur le lien",
+                  })
+                }
+              />
+            </>
+          )}
+          {isParticipant && (
+            <>
+              <Button
+                title={t('chat')}
+                icon="FAS-message"
+                iconRight
+                action="positive"
+                onPress={() => router.navigate(routing.matchChat.path(matchId))}
+              />
+              <Button
+                title={t('enterScore')}
+                icon="FAS-award"
+                iconRight
+                // onPress={cancelRequestMatch}
+                // isLoading={isCancelRequestMatchPending}
+              />
+            </>
+          )}
+          {!isParticipant && (
+            <MatchRequestButton
+              isRequesting={isRequesting}
+              onPress={requestMatch}
+              isLoading={isRequestMatchPending || isCancelRequestMatchPending}
+              onCancelPress={cancelRequestMatch}
             />
-            <Button
-              title={t('enterScore')}
-              icon="FAS-award"
-              iconRight
-              // onPress={cancelRequestMatch}
-              // isLoading={isCancelRequestMatchPending}
-            />
-          </>
-        )}
-        {!isParticipant && (
-          <MatchRequestButton
-            isRequesting={isRequesting}
-            onPress={requestMatch}
-            isLoading={isRequestMatchPending || isCancelRequestMatchPending}
-            onCancelPress={cancelRequestMatch}
-          />
-        )}
-        {isPlayer && (
-          <>
-            {/* <Button
+          )}
+          {isPlayer && (
+            <>
+              {/* <Button
               title={t('pay')}
               icon="FAS-money-bill"
               iconRight
               onPress={() => match.booked_url && openUrl(match.booked_url)}
               isDisabled={!isBooked}
             /> */}
-            <Button
-              title={t('leave')}
-              action="negative"
-              icon="FAS-person-walking-arrow-right"
-              iconRight
-              onPress={cancelRequestMatch}
-              isLoading={isCancelRequestMatchPending}
-            />
-          </>
-        )}
-      </VStack>
-    </ScrollView>
+              <Button
+                title={t('leave')}
+                action="negative"
+                icon="FAS-person-walking-arrow-right"
+                iconRight
+                onPress={cancelRequestMatch}
+                isLoading={isCancelRequestMatchPending}
+              />
+            </>
+          )}
+        </VStack>
+      </ScrollView>
+    </SafeAreaView>
   )
 })
