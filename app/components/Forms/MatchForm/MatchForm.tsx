@@ -65,7 +65,7 @@ export const MatchForm = ({
           <FormSelectControlled
             displayPlaceHolder
             name="complex_id"
-            formControlProps={{ title: t('complex') }}
+            formControlProps={{ title: tGlobal('complex') }}
             items={complexItems}
           />
           <FormSelectControlled
