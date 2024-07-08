@@ -9,6 +9,7 @@ export type NotificationType = 'MESSAGE' | 'OTHER'
 
 export type NotificationListItemProps = NotificationResponse & {
   onPress: PressableProps['onPress']
+  unread_ids?: number[]
 }
 
 const mapTypeToIcon: Record<
@@ -29,8 +30,11 @@ export const NotificationListItem = ({
   created_at,
   is_read,
   type,
+  unread_ids = [],
 }: NotificationListItemProps) => {
-  const unreadStyle = !is_read
+  const unreadCount = unread_ids.length + (is_read ? 0 : 1)
+
+  const unreadStyle = unreadCount
     ? {
         fontWeight: '$semibold',
       }
@@ -42,7 +46,7 @@ export const NotificationListItem = ({
         <HStack flex={1} gap="$3">
           <Icon name={mapTypeToIcon[type]} color="$primary500" size="xl" />
           <VStack flex={1}>
-            <Text flex={1} {...unreadStyle}>
+            <Text flex={1} {...unreadStyle} numberOfLines={1}>
               {title}
             </Text>
             <Text

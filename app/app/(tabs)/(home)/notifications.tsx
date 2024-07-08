@@ -10,7 +10,6 @@ import { useMe } from '@/hooks/useMe'
 import {
   useInfiniteAllNotifications,
   useUnreadNotifications,
-  useUpdateNotification,
 } from '@/services/api'
 import { supabase } from '@/services/supabase'
 
@@ -28,7 +27,33 @@ export default () => {
     params: { user_id: me?.id as string },
   })
 
-  const { mutate } = useUpdateNotification()
+  const empiledNotifications = notifications?.reduce<
+    Omit<NotificationListItemProps, 'onPress'>[]
+  >((acc, curr) => {
+    if (curr.type !== 'NEW_MESSAGE') {
+      acc.push(curr)
+      return acc
+    }
+
+    const prevItem = acc[acc.length - 1]
+
+    if (
+      !prevItem ||
+      prevItem.type !== 'NEW_MESSAGE' ||
+      prevItem.url !== curr.url
+    ) {
+      acc.push(curr)
+    } else {
+      if (!curr.is_read) {
+        if (!prevItem.unread_ids) {
+          prevItem.unread_ids = []
+        }
+        prevItem.unread_ids.push(curr.id)
+      }
+    }
+
+    return acc
+  }, [])
 
   const invalidatePotsgrestQuery = useInvalidatePostgrestQuery()
 
@@ -54,7 +79,15 @@ export default () => {
     <NotificationListItem
       {...item}
       onPress={() => {
-        mutate({ id: item.id, is_read: true })
+        const hasUnread = !item.is_read || !!item?.unread_ids?.length
+        if (hasUnread) {
+          const ids = [item.id, ...(item?.unread_ids || [])]
+          supabase
+            .rpc('mark_notifications_as_read', {
+              ids,
+            })
+            .then(() => invalidatePotsgrestQuery('notifications'))
+        }
         if (item?.url) router.push(item.url)
       }}
     />
@@ -63,7 +96,7 @@ export default () => {
   return (
     <VStack flex={1} gap="$3" m="$3">
       <VirtualizedList<NotificationListItemProps>
-        data={notifications}
+        data={empiledNotifications}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}

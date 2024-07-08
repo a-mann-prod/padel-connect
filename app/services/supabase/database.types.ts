@@ -424,6 +424,12 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      mark_notifications_as_read: {
+        Args: {
+          ids: number[]
+        }
+        Returns: undefined
+      }
       verify_user_password: {
         Args: {
           password: string
