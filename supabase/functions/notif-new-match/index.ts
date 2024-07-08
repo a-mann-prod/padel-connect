@@ -25,6 +25,12 @@ Deno.serve(async (req) => {
   const payload: WebhookPayload = await req.json();
   const match = payload.record;
 
+  // if private, do not add
+  if (match.is_private)
+    return new Response("Private match", {
+      headers: { "Content-Type": "application/json" },
+    });
+
   // test
   const { data: users } = await clientAdmin.rpc(
     "get_new_match_notified_users",
