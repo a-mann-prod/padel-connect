@@ -1,4 +1,4 @@
-import { HStack, Heading, VStack } from '@gluestack-ui/themed'
+import { HStack, Heading, VStack, useColorMode } from '@gluestack-ui/themed'
 import { chunk } from 'remeda'
 
 import { Avatar, AvatarProps, Divider } from '@/designSystem'
@@ -66,6 +66,7 @@ const AvatarItem = ({
   onEmptyPress,
   ...props
 }: ProfileWithAvatar & Omit<MatchPlayersProps, 'data'>) => {
+  const colorMode = useColorMode()
   const isEmpty = id?.startsWith(EMPTY_PREFIX)
 
   const sharedProps: AvatarProps = {
@@ -83,6 +84,9 @@ const AvatarItem = ({
         key={id}
         {...sharedProps}
         fallBackIcon="FAS-plus"
+        border={{
+          color: colorMode === 'light' ? 'white' : 'backgroundDark950',
+        }}
         onPress={onEmptyPress}
         firstname=" "
         {...props}

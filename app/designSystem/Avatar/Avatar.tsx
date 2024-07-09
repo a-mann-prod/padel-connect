@@ -6,7 +6,6 @@ import {
   Avatar as GAvatar,
   Heading,
   VStack,
-  useColorMode,
   useToken,
 } from '@gluestack-ui/themed'
 import { ComponentProps, useRef, useState } from 'react'
@@ -54,11 +53,7 @@ export const Avatar = ({
   border,
   ...props
 }: AvatarProps) => {
-  const colorMode = useColorMode()
-  const borderColor = useToken(
-    'colors',
-    border?.color || (colorMode === 'light' ? 'white' : 'backgroundDark950')
-  )
+  const borderColor = useToken('colors', border?.color || 'black')
   const borderWidth = useToken('borderWidths', '4')
 
   const imageViewerRef = useRef<any>(null)
@@ -91,8 +86,8 @@ export const Avatar = ({
           disabled={!onPress}
           style={{
             borderRadius: 50,
-            borderColor,
-            borderWidth,
+            borderColor: border?.color ? borderColor : undefined,
+            borderWidth: border?.color ? borderWidth : undefined,
           }}
         >
           <Skeleton radius="round" show={isLoading || isImageLoading}>
