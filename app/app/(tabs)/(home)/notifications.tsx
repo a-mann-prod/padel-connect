@@ -66,12 +66,16 @@ export default () => {
     params: { user_id: me?.id as string },
   })
 
-  useHeaderButton({
-    icon: 'FAS-check',
-    onPress: readAllNotifications,
-    side: 'headerRight',
-    disabled: !unreadNotificationsCount,
-  })
+  useHeaderButton(
+    [
+      {
+        icon: 'FAS-check',
+        onPress: readAllNotifications,
+        disabled: !unreadNotificationsCount,
+      },
+    ],
+    'headerRight'
+  )
 
   const renderItem = ({
     item,

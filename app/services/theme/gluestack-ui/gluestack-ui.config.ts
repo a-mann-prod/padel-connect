@@ -700,6 +700,10 @@ export const gluestackUIConfig = createConfig({
 
 export type Config = typeof gluestackUIConfig // Assuming `config` is defined elsewhere
 
+export type ColorsToken = keyof Config['tokens']['colors']
+export type SpaceToken = keyof Config['tokens']['space']
+export type BorderWidthsToken = keyof Config['tokens']['borderWidths']
+
 type Components = typeof componentsConfig
 
 export const componentsConfig = createComponents(componentsTheme)

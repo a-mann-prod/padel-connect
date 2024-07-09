@@ -6,8 +6,10 @@ import {
   Avatar as GAvatar,
   Heading,
   VStack,
+  useColorMode,
+  useToken,
 } from '@gluestack-ui/themed'
-import { useRef, useState } from 'react'
+import { ComponentProps, useRef, useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
 
@@ -16,8 +18,11 @@ import { ImageViewer } from '../ImageViewer/ImageViewer'
 import { ImageWrapper } from '../ImageViewer/ImageWrapper'
 import { Skeleton } from '../Skeleton/Skeleton'
 
+import { ColorsToken } from '@/services/theme/gluestack-ui/gluestack-ui.config'
 import { isNilOrEmpty } from '@/utils/global'
 import { getInitials, getUsername } from '@/utils/user'
+
+export type GAvatarProps = ComponentProps<typeof GAvatar>
 
 export type AvatarProps = {
   imageUrl?: string
@@ -30,7 +35,10 @@ export type AvatarProps = {
   containerProps?: typeof VStack.defaultProps
   displayBadge?: boolean
   viewerEnabled?: boolean
-} & typeof GAvatar.defaultProps
+  border?: Partial<{
+    color: ColorsToken
+  }>
+} & GAvatarProps
 
 export const Avatar = ({
   imageUrl,
@@ -43,15 +51,23 @@ export const Avatar = ({
   containerProps,
   displayBadge,
   viewerEnabled,
+  border,
   ...props
 }: AvatarProps) => {
+  const colorMode = useColorMode()
+  const borderColor = useToken(
+    'colors',
+    border?.color || (colorMode === 'light' ? 'white' : 'backgroundDark950')
+  )
+  const borderWidth = useToken('borderWidths', '4')
+
   const imageViewerRef = useRef<any>(null)
 
   const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
   const completeName = getUsername(firstname, lastname)
 
   const displayFallback = () => {
-    if (completeName && !isEmpty(completeName))
+    if (completeName && !isEmpty(completeName) && !fallBackIcon)
       return (
         <AvatarFallbackText>
           {getInitials(firstname, lastname)}
@@ -70,7 +86,15 @@ export const Avatar = ({
         data={[{ key: 'avatar', source: { uri: imageUrl } }]}
       />
       <VStack alignItems="center" gap="$3" {...containerProps}>
-        <TouchableOpacity onPress={onPress} disabled={!onPress}>
+        <TouchableOpacity
+          onPress={onPress}
+          disabled={!onPress}
+          style={{
+            borderRadius: 50,
+            borderColor,
+            borderWidth,
+          }}
+        >
           <Skeleton radius="round" show={isLoading || isImageLoading}>
             <ImageWrapper
               index={0}

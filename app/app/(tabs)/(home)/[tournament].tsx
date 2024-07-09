@@ -22,11 +22,15 @@ export default () => {
   const tGlobal = useTranslate()
   const t = useTranslate()
 
-  useHeaderButton({
-    icon: 'FAS-share',
-    side: 'headerRight',
-    onPress: () => alert('Not available yet'),
-  })
+  useHeaderButton(
+    [
+      {
+        icon: 'FAS-share',
+        onPress: () => alert('Not available yet'),
+      },
+    ],
+    'headerRight'
+  )
 
   const local = useLocalSearchParams()
   const tournamentId = Number(local?.tournament)

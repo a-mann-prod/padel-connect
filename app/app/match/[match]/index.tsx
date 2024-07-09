@@ -3,7 +3,7 @@ import * as AuthSession from 'expo-auth-session'
 import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Share } from 'react-native'
 
-import { MatchRequestButton, PlayersAvatars, WithMatch } from '@/components'
+import { MatchPlayers, MatchRequestButton, WithMatch } from '@/components'
 import {
   Button,
   Loader,
@@ -52,13 +52,26 @@ export default WithMatch(() => {
 
   const isParticipant = isOwner || isPlayer
 
-  useHeaderButton({
-    icon: 'FAS-pencil',
-    onPress: () =>
-      match?.id && router.navigate(routing.matchUpdate.path(match?.id)),
-    side: 'headerRight',
-    condition: isOwner,
-  })
+  useHeaderButton(
+    [
+      {
+        icon: 'FAS-share',
+        onPress: () =>
+          Share.share({
+            url: AuthSession.makeRedirectUri({ path: pathname }),
+            message: t('shareMessage'),
+          }),
+        condition: isParticipant,
+      },
+      {
+        icon: 'FAS-pencil',
+        onPress: () =>
+          match?.id && router.navigate(routing.matchUpdate.path(match?.id)),
+        condition: isOwner,
+      },
+    ],
+    'headerRight'
+  )
 
   const userIds = match
     ? [
@@ -145,36 +158,30 @@ export default WithMatch(() => {
           </Section>
 
           <Section>
-            <PlayersAvatars
+            <MatchPlayers
               size="lg"
-              displayName
               data={sortedPlayers}
-              orientation="column"
               onPress={(id) =>
                 router.navigate(routing.matchUser.path(matchId, id))
               }
+              onEmptyPress={() => console.log('ici')}
             />
           </Section>
 
-          {isOwner && (
-            <>
-              <Link asChild href={routing.matchPlayersManage.path(matchId)}>
-                <Button title={t('playersManage')} />
-              </Link>
+          {isParticipant && (
+            <Button
+              title={t('pay')}
+              icon="FAS-money-bill"
+              iconRight
+              bgColor="$green500"
+              onPress={() => alert('Not implemented yet')}
+            />
+          )}
 
-              <Button
-                title={t('share')}
-                icon="FAS-share"
-                isDisabled
-                onPress={() =>
-                  Share.share({
-                    url: AuthSession.makeRedirectUri({ path: pathname }),
-                    message:
-                      "Hey je viens de créer un match, si t'es dispo tu peux venir le rejoindre en cliquant sur le lien",
-                  })
-                }
-              />
-            </>
+          {isOwner && (
+            <Link asChild href={routing.matchPlayersManage.path(matchId)}>
+              <Button title={t('playersManage')} />
+            </Link>
           )}
           {isParticipant && (
             <>
@@ -182,16 +189,16 @@ export default WithMatch(() => {
                 title={t('chat')}
                 icon="FAS-message"
                 iconRight
-                action="positive"
+                bgColor="$yellow500"
                 onPress={() => router.navigate(routing.matchChat.path(matchId))}
               />
-              <Button
+              {/* <Button
                 title={t('enterScore')}
                 icon="FAS-award"
                 iconRight
                 // onPress={cancelRequestMatch}
                 // isLoading={isCancelRequestMatchPending}
-              />
+              /> */}
             </>
           )}
           {!isParticipant && (
@@ -203,23 +210,14 @@ export default WithMatch(() => {
             />
           )}
           {isPlayer && (
-            <>
-              {/* <Button
-              title={t('pay')}
-              icon="FAS-money-bill"
+            <Button
+              title={t('leave')}
+              action="negative"
+              icon="FAS-person-walking-arrow-right"
               iconRight
-              onPress={() => match.booked_url && openUrl(match.booked_url)}
-              isDisabled={!isBooked}
-            /> */}
-              <Button
-                title={t('leave')}
-                action="negative"
-                icon="FAS-person-walking-arrow-right"
-                iconRight
-                onPress={cancelRequestMatch}
-                isLoading={isCancelRequestMatchPending}
-              />
-            </>
+              onPress={cancelRequestMatch}
+              isLoading={isCancelRequestMatchPending}
+            />
           )}
         </VStack>
       </ScrollView>

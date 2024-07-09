@@ -13,5 +13,7 @@
   "playersManage": "Manager players",
   "privateMatch": "Private match",
   "privateMatchHelpMessage": "Will not appear in the list of available matches and will not send notifications",
-  "share": "Share"
+  "share": "Share",
+  "shareMessage": "Hey! Up for a game of padel? You can join by clicking the following link",
+  "team": "Team"
 }

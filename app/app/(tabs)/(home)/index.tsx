@@ -23,13 +23,17 @@ export default () => {
     if (badgeCount !== null) Notifications.setBadgeCountAsync(badgeCount)
   }, [badgeCount])
 
-  useHeaderButton({
-    icon: 'FAS-bell',
-    onPress: () => router.navigate(routing.homeNotifications.path()),
-    side: 'headerRight',
-    badgeCount,
-    condition: !!me,
-  })
+  useHeaderButton(
+    [
+      {
+        icon: 'FAS-bell',
+        onPress: () => router.navigate(routing.homeNotifications.path()),
+        badgeCount,
+        condition: !!me,
+      },
+    ],
+    'headerRight'
+  )
 
   useNavigationBadgeCount(badgeCount)
 
