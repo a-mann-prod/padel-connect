@@ -126,13 +126,18 @@ export const routing = {
     name: "my-matches",
     path: () => `${tabsRoot.home.path()}/my-matches`,
   },
+  homeNotifications: {
+    name: "notifications",
+    path: () => `${tabsRoot.home.path()}/notifications`,
+  },
   homeTournaments: {
     name: "tournaments",
     path: () => `${tabsRoot.home.path()}/tournaments`,
   },
-  homeNotifications: {
-    name: "notifications",
-    path: () => `${tabsRoot.home.path()}/notifications`,
+  homeTournamentDetail: {
+    name: "[tournament]",
+    path: (tournamentId: string | number) =>
+      `${tabsRoot.home.path()}/${tournamentId}`,
   },
 
   // (tabs)/play

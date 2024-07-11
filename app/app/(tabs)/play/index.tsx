@@ -24,6 +24,8 @@ export default () => {
     ? getLevelRange(me?.level)
     : [undefined, undefined]
 
+  const isToday = dateFilter.isSame(date.now(), 'day')
+
   const {
     data: matches,
     isLoading,
@@ -32,7 +34,9 @@ export default () => {
   } = useMatches({
     params: {
       dates: {
-        start: dateFilter.startOf('day').toISOString(),
+        start: isToday
+          ? dateFilter.toISOString()
+          : dateFilter.startOf('day').toISOString(),
         end: dateFilter.endOf('day').toISOString(),
       },
       level: {

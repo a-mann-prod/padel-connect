@@ -21,8 +21,9 @@ export const useHeaderButton = (
         <HStack>
           {arrayProps
             .filter(({ condition }) => condition)
-            .map(({ badgeCount, ...props }) => (
+            .map(({ badgeCount, ...props }, index) => (
               <HeaderButton
+                key={index}
                 {...props}
                 badgeCount={when(!!badgeCount, badgeCount)}
               />

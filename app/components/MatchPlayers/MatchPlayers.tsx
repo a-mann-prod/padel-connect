@@ -6,6 +6,7 @@ import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { useTranslate } from '@/services/i18n'
 import { iterate } from '@/utils/array'
+import { Fragment } from 'react'
 
 const MAX_PLAYER_NB = 4
 const EMPTY_PREFIX = 'empty_'
@@ -37,21 +38,21 @@ export const MatchPlayers = ({ data, ...props }: MatchPlayersProps) => {
   return (
     <HStack>
       {avatarColumns.map((col, index) => (
-        <>
+        <Fragment key={index}>
           <VStack flex={1} gap="$3" alignItems="center">
             <Heading size="sm">
               {t('team')} {mapIndexToTeam[index]}
             </Heading>
             <VStack flex={1} gap="$3">
-              {col.map((avatar, index) => (
+              {col.map((avatar) => (
                 <AvatarItem key={avatar.id} {...avatar} {...props} />
               ))}
             </VStack>
           </VStack>
           {index % 2 === 0 && index !== avatarColumns.length && (
-            <Divider key={index} orientation="vertical" />
+            <Divider orientation="vertical" />
           )}
-        </>
+        </Fragment>
       ))}
     </HStack>
   )
