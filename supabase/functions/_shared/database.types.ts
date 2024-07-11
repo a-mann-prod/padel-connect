@@ -164,6 +164,7 @@ export type Database = {
           datetime: string
           duration: number
           id: number
+          is_competition: boolean | null
           is_private: boolean
           level: number
           owner_id: string | null
@@ -176,6 +177,7 @@ export type Database = {
           datetime: string
           duration: number
           id?: number
+          is_competition?: boolean | null
           is_private?: boolean
           level: number
           owner_id?: string | null
@@ -188,6 +190,7 @@ export type Database = {
           datetime?: string
           duration?: number
           id?: number
+          is_competition?: boolean | null
           is_private?: boolean
           level?: number
           owner_id?: string | null

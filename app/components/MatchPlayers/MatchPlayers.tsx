@@ -20,9 +20,14 @@ export type MatchPlayersProps = {
   data?: ProfilesWithAvatar
   onPress?: (userId: string) => void
   onEmptyPress?: () => void
+  displayTeam?: boolean
 } & Pick<AvatarProps, 'size'>
 
-export const MatchPlayers = ({ data, ...props }: MatchPlayersProps) => {
+export const MatchPlayers = ({
+  data,
+  displayTeam = true,
+  ...props
+}: MatchPlayersProps) => {
   const t = useTranslate('match')
   const emptySlots = MAX_PLAYER_NB - (data?.length || 0)
 
@@ -40,9 +45,11 @@ export const MatchPlayers = ({ data, ...props }: MatchPlayersProps) => {
       {avatarColumns.map((col, index) => (
         <Fragment key={index}>
           <VStack flex={1} gap="$3" alignItems="center">
-            <Heading size="sm">
-              {t('team')} {mapIndexToTeam[index]}
-            </Heading>
+            {displayTeam && (
+              <Heading size="sm">
+                {t('team')} {mapIndexToTeam[index]}
+              </Heading>
+            )}
             <VStack flex={1} gap="$3">
               {col.map((avatar) => (
                 <AvatarItem key={avatar.id} {...avatar} {...props} />

@@ -87,6 +87,13 @@ export const MatchForm = ({
               helpMessage: t('privateMatchHelpMessage'),
             }}
           />
+          <FormCheckboxControlled
+            name="is_competition"
+            formControlProps={{
+              title: t('competitionMatch'),
+              helpMessage: t('competitionMatchHelpMessage'),
+            }}
+          />
         </VStack>
       </FormProvider>
       <Button

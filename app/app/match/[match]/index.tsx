@@ -175,6 +175,7 @@ export default WithMatch(() => {
                 onEmptyPress={() =>
                   !isParticipant && setShowRequestActionsheet(true)
                 }
+                displayTeam={!!match.is_competition}
               />
             </Section>
 

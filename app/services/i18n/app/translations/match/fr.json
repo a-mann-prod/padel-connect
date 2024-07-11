@@ -1,6 +1,8 @@
 {
   "cancelRequest": "Annuler la demande",
   "chat": "Messagerie",
+  "competitionMatch": "Match compétitif",
+  "competitionMatchHelpMessage": "Permettra d'ajouter les scores en fin de match",
   "datetime": "Date et heure",
   "deleteMatch": "Supprimer la partie",
   "deleteMatchMessage": "Es tu sûr de vouloir supprimer la partie ?",
