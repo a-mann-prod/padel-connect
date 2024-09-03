@@ -1,4 +1,5 @@
 import { HStack, Heading, VStack, useColorMode } from '@gluestack-ui/themed'
+import { Fragment } from 'react'
 import { chunk } from 'remeda'
 
 import { Avatar, AvatarProps, Divider } from '@/designSystem'
@@ -6,7 +7,6 @@ import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { useTranslate } from '@/services/i18n'
 import { iterate } from '@/utils/array'
-import { Fragment } from 'react'
 
 const MAX_PLAYER_NB = 4
 const EMPTY_PREFIX = 'empty_'
