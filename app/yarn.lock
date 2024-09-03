@@ -6216,6 +6216,15 @@ expo-application@~5.9.0:
   resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-5.9.1.tgz#a12e0cf2741b6f084cc49cd0121ad0a70c770459"
   integrity sha512-uAfLBNZNahnDZLRU41ZFmNSKtetHUT9Ua557/q189ua0AWV7pQjoVAx49E4953feuvqc9swtU3ScZ/hN1XO/FQ==
 
+expo-asset@~10.0.10:
+  version "10.0.10"
+  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-10.0.10.tgz#9e6e02c1a6ec3d19b50d5e615e4dd8e5cc30e857"
+  integrity sha512-0qoTIihB79k+wGus9wy0JMKq7DdenziVx3iUkGvMAy2azscSgWH6bd2gJ9CGnhC6JRd3qTMFBL0ou/fx7WZl7A==
+  dependencies:
+    expo-constants "~16.0.0"
+    invariant "^2.2.4"
+    md5-file "^3.2.3"
+
 expo-asset@~10.0.6:
   version "10.0.6"
   resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-10.0.6.tgz#0894c4e824ce90e130852e6eecaba386e9f2e5aa"

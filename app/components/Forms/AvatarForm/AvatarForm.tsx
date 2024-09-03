@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 
 import { AvatarFormValues, avatarFormServices } from './AvatarForm.services'
 
-import { FormProvider } from '@/components'
+import { FormProvider } from '@/components/FormProvider/FormProvider'
 import { FormAvatarControlled } from '@/components/FormsControlled/FormAvatarControlled/FormAvatarControlled'
 import { useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'

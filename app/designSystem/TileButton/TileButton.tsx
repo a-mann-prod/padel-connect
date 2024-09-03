@@ -18,7 +18,7 @@ export const TileButton = ({
   return (
     <Pressable
       flexGrow={1}
-      h="$24"
+      h="$20"
       rounded="$lg"
       p="$3"
       {...props}

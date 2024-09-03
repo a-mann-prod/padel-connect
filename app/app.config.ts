@@ -48,6 +48,12 @@ export default ({ config }: ConfigContext) => ({
     'expo-router',
     'expo-localization',
     [
+      'expo-asset',
+      {
+        assets: ['./assets/images/home-header-background.jpg'],
+      },
+    ],
+    [
       '@sentry/react-native/expo',
       {
         organization: process.env.SENTRY_ORG,
