@@ -65,7 +65,7 @@ export default WithMatch(() => {
             url: AuthSession.makeRedirectUri({ path: pathname }),
             message: t('shareMessage'),
           }),
-        condition: isParticipant,
+        condition: true,
       },
       {
         icon: 'FAS-pencil',
