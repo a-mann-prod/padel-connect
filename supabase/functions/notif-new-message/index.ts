@@ -43,17 +43,7 @@ Deno.serve(async (req) => {
     .eq("match_requests.status", "ACCEPTED")
     .eq("is_new_message_notification_enabled", true);
 
-  // get owner to be notified on new message
-  const { data: owners } = await clientAdmin
-    .from("profiles")
-    .select(
-      "id, language, matches!public_matches_owner_id_fkey!inner(owner_id)"
-    )
-    .neq("id", message.sender_id)
-    .eq("matches.id", message.match_id)
-    .eq("is_new_message_notification_enabled", true);
-
-  const users = [...(players || []), ...(owners || [])];
+  const users = players || [];
 
   if (!users.length) {
     return new Response(JSON.stringify({ errorCode: "users_not_found" }), {

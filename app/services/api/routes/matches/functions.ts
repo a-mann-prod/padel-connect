@@ -22,7 +22,9 @@ export const getMatchesFn = (params: GetMatchesParams) => {
     .select(getMatchesQueryCols)
     .eq('match_requests.status', 'ACCEPTED')
 
-  query = query.gte('datetime', params.dates.start)
+  if (params.dates.start) {
+    query = query.gte('datetime', params.dates.start)
+  }
 
   if (params.dates.end) {
     query = query.lte('datetime', params.dates.end)
@@ -49,7 +51,13 @@ export const getMatchesFn = (params: GetMatchesParams) => {
     }
   }
 
-  return query.order('datetime', { ascending: true })
+  if (!isNilOrEmpty(params.user_id) && params.user_id) {
+    query = query.eq('match_requests.user_id', params.user_id)
+  }
+
+  return query.order('datetime', {
+    ascending: params?.orderBy?.datetime ?? true,
+  })
 }
 
 export const getMatchesCountFn = (params: GetMatchesCountParams) => {

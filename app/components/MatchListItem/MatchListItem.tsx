@@ -28,25 +28,14 @@ export const MatchListItem = ({
   datetime,
   complex,
   duration,
-  owner,
   match_requests,
 }: MatchlistItemProps) => {
   const tGlobal = useTranslate()
 
-  const players: ProfilesWithAvatar = [
-    {
-      id: owner?.id,
-      avatar: owner?.avatar_url
-        ? getPublicAvatarUrl(owner.avatar_url)
-        : undefined,
-    },
-    ...match_requests.map(({ user }) => ({
-      id: user?.id,
-      avatar: user?.avatar_url
-        ? getPublicAvatarUrl(user.avatar_url)
-        : undefined,
-    })),
-  ]
+  const players: ProfilesWithAvatar = match_requests.map(({ user }) => ({
+    id: user?.id,
+    avatar: user?.avatar_url ? getPublicAvatarUrl(user.avatar_url) : undefined,
+  }))
 
   return (
     <Pressable onPress={onPress}>

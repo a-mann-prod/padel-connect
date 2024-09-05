@@ -124,18 +124,21 @@ export type Database = {
       match_requests: {
         Row: {
           created_at: string
+          is_owner: boolean
           match_id: number
           status: Database["public"]["Enums"]["match_request_status"]
           user_id: string
         }
         Insert: {
           created_at?: string
+          is_owner?: boolean
           match_id: number
           status?: Database["public"]["Enums"]["match_request_status"]
           user_id: string
         }
         Update: {
           created_at?: string
+          is_owner?: boolean
           match_id?: number
           status?: Database["public"]["Enums"]["match_request_status"]
           user_id?: string
@@ -167,7 +170,6 @@ export type Database = {
           is_competition: boolean | null
           is_private: boolean
           level: number
-          owner_id: string | null
           slot_status: Database["public"]["Enums"]["match_slot_status"] | null
           updated_at: string
         }
@@ -180,7 +182,6 @@ export type Database = {
           is_competition?: boolean | null
           is_private?: boolean
           level: number
-          owner_id?: string | null
           slot_status?: Database["public"]["Enums"]["match_slot_status"] | null
           updated_at?: string
         }
@@ -193,7 +194,6 @@ export type Database = {
           is_competition?: boolean | null
           is_private?: boolean
           level?: number
-          owner_id?: string | null
           slot_status?: Database["public"]["Enums"]["match_slot_status"] | null
           updated_at?: string
         }
@@ -203,13 +203,6 @@ export type Database = {
             columns: ["complex_id"]
             isOneToOne: false
             referencedRelation: "complexes"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "public_matches_owner_id_fkey"
-            columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -415,7 +408,6 @@ export type Database = {
       get_new_match_notified_users: {
         Args: {
           match_level: number
-          match_owner_id: string
           match_complex_id: number
         }
         Returns: {

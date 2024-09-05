@@ -28,10 +28,9 @@ Deno.serve(async (req) => {
   // get owner to be notified on match request insert
   const { data: user } = await clientAdmin
     .from("profiles")
-    .select(
-      "id, language, matches!public_matches_owner_id_fkey!inner(owner_id)"
-    )
-    .eq("matches.id", matchRequest.match_id)
+    .select("id, language, match_requests!inner(user_id)")
+    .eq("match_requests.match_id", matchRequest.match_id)
+    .eq("match_requests.is_owner", true)
     .maybeSingle();
 
   if (!user) {

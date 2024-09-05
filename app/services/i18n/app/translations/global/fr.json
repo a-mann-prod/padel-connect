@@ -43,6 +43,7 @@
   "edit": "Modifier",
   "email": "Email",
   "firstname": "Prénom",
+  "incomingMatches": "Match(s) à venir",
   "lastname": "Nom",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée",
   "letsGo": "C'est parti ! 🚀",
@@ -89,7 +90,7 @@
     "register": "Inscription",
     "settings": "Réglages",
     "termsOfUse": "Conditions d'utilisation",
-    "tournaments": "Tournois",
+    "tournaments": "Tournois à venir",
     "updatePersonalInformation": "Informations personnelles",
     "updatePreferences": "Préférences"
   },
@@ -110,6 +111,7 @@
   "save": "Enregistrer",
   "search": "Rechercher",
   "send": "Envoyer",
+  "showPastMatches": "Afficher les matchs passés",
   "sidePreference": {
     "both": "Les deux",
     "left": "Gauche",

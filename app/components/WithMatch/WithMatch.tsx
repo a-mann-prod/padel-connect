@@ -4,14 +4,11 @@ import { FC } from 'react'
 import { Loader } from '@/designSystem'
 import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
 import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
-import { useMe } from '@/hooks/useMe'
 import { useMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 
 const WithMatchWrapper: FC<{ Component: FC }> = ({ Component }) => {
-  const { data: me } = useMe()
-
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
@@ -20,8 +17,7 @@ const WithMatchWrapper: FC<{ Component: FC }> = ({ Component }) => {
     options: { enabled: !!local?.match },
   })
 
-  const isOwner = match?.owner_id === me?.id
-  const { isPlayer } = useManageMatchRequest(matchId, !isOwner)
+  const { isPlayer, isOwner } = useManageMatchRequest(matchId)
 
   const isParticipant = isOwner || isPlayer
 

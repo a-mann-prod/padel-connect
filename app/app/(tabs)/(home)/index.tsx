@@ -48,7 +48,7 @@ export default () => {
         zIndex={1}
         w="$full"
       >
-        <HStack mx="$5" justifyContent="flex-end">
+        <HStack mx="$3" justifyContent="flex-end">
           {me && (
             <Box bgColor="white" rounded="$full">
               <HeaderButton
@@ -77,7 +77,7 @@ export default () => {
           borderTopLeftRadius="$3xl"
           borderTopRightRadius="$3xl"
         >
-          <VStack gap="$5" m="$5">
+          <VStack gap="$5" m="$3" mt="$3">
             <TileButton
               color="$white"
               bgColor="$yellow500"
@@ -92,6 +92,13 @@ export default () => {
               icon="FAS-baseball"
               onPress={() => router.navigate(routing.homeMyMatches.path())}
               disabled={!me}
+            />
+            <TileButton
+              color="$white"
+              bgColor="$primary500"
+              title={t('navigation.myMatches')}
+              icon="FAS-arrow-up-right-dots"
+              disabled
             />
           </VStack>
         </Box>

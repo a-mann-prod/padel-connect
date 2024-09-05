@@ -6,7 +6,7 @@ export type GetMatchParams = {
 
 export type GetMatchesParams = {
   dates: {
-    start: string
+    start?: string
     end?: string
   }
   level?: {
@@ -19,6 +19,10 @@ export type GetMatchesParams = {
   }
   reserved?: boolean
   complex_id?: number | null
+  orderBy?: {
+    datetime?: boolean
+  }
+  user_id?: string
 }
 
 export type GetMatchesCountParams = {

@@ -5,7 +5,6 @@ import { MatchForm, MatchFormValues, matchFormServices } from '@/components'
 import { ScrollView } from '@/designSystem'
 import { formDateTimePickerServices } from '@/designSystem/Forms/FormDateTimePicker/FormDateTimePicker.services'
 import { useHandleError } from '@/hooks/useHandleError'
-import { useMe } from '@/hooks/useMe'
 import { useInsertMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
@@ -23,10 +22,7 @@ export default () => {
   const t = useTranslate()
   const onError = useHandleError()
 
-  const { data: me } = useMe()
-
   const defaultValues: Nillable<MatchFormValues> = {
-    owner_id: me?.id,
     datetime: formatWithMinuteInterval(
       date.dayjs(datetime).toDate()
     ).toISOString(),

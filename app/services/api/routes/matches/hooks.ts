@@ -47,7 +47,12 @@ export const useMatchesCount = ({
 
 export const useInsertMatch = (
   options?: UseMutationProps<any, InsertMatchParams | InsertMatchParams[], any>
-) => useInsertMutation(setMatchFn(), ['id'], 'id', options)
+) =>
+  useInsertMutation(setMatchFn(), ['id'], 'id', {
+    ...options,
+    disableAutoQuery: true,
+    revalidateTables: [{ table: 'matches', schema: 'public' }],
+  })
 
 // cant use directly supabase cache hooks because of "agggregate functions not allowed"
 // export const useInsertMatch = (
@@ -83,7 +88,8 @@ export const useUpdateMatch = (
 ) =>
   useUpdateMutation(setMatchFn(), ['id'], getMatchQueryCols, {
     ...options,
-    // revalidateTables: [{ table: 'matches', schema: 'public' }],
+    disableAutoQuery: true,
+    revalidateTables: [{ table: 'matches', schema: 'public' }],
   })
 
 export const useDeleteMatch = (

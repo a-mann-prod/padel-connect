@@ -36,7 +36,6 @@ Deno.serve(async (req) => {
     "get_new_match_notified_users",
     {
       match_level: match.level,
-      match_owner_id: match.owner_id,
       match_complex_id: match.complex_id,
     }
   );

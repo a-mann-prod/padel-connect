@@ -10,7 +10,6 @@ const getDefaultValues = (
   props?: Nillable<MatchFormValues>
 ): MatchFormValues => ({
   complex_id: props?.complex_id || '',
-  owner_id: props?.owner_id || '',
   datetime: props?.datetime || '',
   duration: props?.duration || '',
   level: props?.level || '',
@@ -20,7 +19,6 @@ const getDefaultValues = (
 
 const schema = z.object({
   complex_id: validators.string.required(),
-  owner_id: validators.string.required(),
   datetime: validators.string.required(),
   duration: validators.string.required(),
   level: validators.string.required(),
@@ -42,7 +40,6 @@ const formatToFormValues = (
 
   return {
     ...props,
-    owner_id: props.owner_id,
     complex_id: props.complex?.id.toString(),
     duration: props.duration.toString(),
     level: props.level.toString(),

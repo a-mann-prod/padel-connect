@@ -43,6 +43,7 @@
   "edit": "Edit",
   "email": "Email",
   "firstname": "Firstname",
+  "incomingMatches": "Incoming match(es)",
   "lastname": "Lastname",
   "lastnameHelpMessage": "By default, only the first letter of your last name will be displayed",
   "letsGo": "Let's go! 🚀",
@@ -90,7 +91,7 @@
     "register": "Register",
     "settings": "Settings",
     "termsOfUse": "Terms of use",
-    "tournaments": "Tournaments",
+    "tournaments": "Incoming tournaments",
     "updatePersonalInformation": "Personal information",
     "updatePreferences": "Preferences"
   },
@@ -111,6 +112,7 @@
   "save": "Save",
   "search": "Search",
   "send": "Send",
+  "showPastMatches": "Show past matches",
   "sidePreference": {
     "both": "Both",
     "left": "Left",

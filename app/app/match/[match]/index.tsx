@@ -16,7 +16,6 @@ import {
 } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
-import { useMe } from '@/hooks/useMe'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { useMatch } from '@/services/api'
 import { date } from '@/services/date'
@@ -35,24 +34,21 @@ export default WithMatch(() => {
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
-  const { data: me } = useMe()
-
   const { data: match, isLoading: isLoadingMatch } = useMatch({
     params: { id: matchId },
     options: { enabled: !!local?.match, staleTime: 0 },
   })
 
-  const isOwner = match?.owner_id === me?.id
-
   const {
     isPlayer,
+    isOwner,
     isRequesting,
     requestMatch,
     cancelRequestMatch,
     isRequestMatchPending,
     isCancelRequestMatchPending,
     isLoading: isLoadingMatchRequest,
-  } = useManageMatchRequest(matchId, !isOwner)
+  } = useManageMatchRequest(matchId)
 
   const isParticipant = isOwner || isPlayer
 
@@ -77,19 +73,17 @@ export default WithMatch(() => {
     'headerRight'
   )
 
-  const userIds = match
-    ? [
-        ...(match.owner_id ? [match.owner_id] : []),
-        ...(match.match_requests?.map(({ user_id }) => user_id) || []),
-      ]
-    : []
+  const userIds = match?.match_requests?.map(({ user_id }) => user_id) || []
+  const ownerId = match?.match_requests.find(
+    ({ is_owner }) => is_owner
+  )?.user_id
 
   const { data: players } = useProfilesWithAvatar({
     params: { ids: userIds },
     options: { enabled: !!userIds.length },
   })
 
-  const owner = players?.find(({ id }) => id === match?.owner_id)
+  const owner = players?.find(({ id }) => id === ownerId)
 
   const sortedPlayers = players?.sort(
     (a, b) => userIds.indexOf(a.id || '') - userIds.indexOf(b.id || '')

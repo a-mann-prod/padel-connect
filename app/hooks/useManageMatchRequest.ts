@@ -7,7 +7,7 @@ import {
   useMatchRequest,
 } from '@/services/api'
 
-export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
+export const useManageMatchRequest = (matchId: number) => {
   const onError = useHandleError()
 
   const { data: me } = useMe()
@@ -19,7 +19,7 @@ export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
     isRefetching,
   } = useMatchRequest({
     params: { match_id: matchId, user_id: me?.id as string },
-    options: { enabled: !!(matchId && me?.id) && enabled, staleTime: 0 },
+    options: { enabled: !!(matchId && me?.id), staleTime: 0 },
   })
 
   const { mutate: requestMatch, isPending: isRequestMatchPending } =
@@ -34,7 +34,8 @@ export const useManageMatchRequest = (matchId: number, enabled: boolean) => {
 
   return {
     isRequesting: matchRequest?.status === 'PENDING',
-    isPlayer: matchRequest?.status === 'ACCEPTED',
+    isPlayer: matchRequest?.status === 'ACCEPTED' && !matchRequest?.is_owner,
+    isOwner: matchRequest?.is_owner,
     isLoading,
     requestMatch: () =>
       me?.id && requestMatch([{ match_id: matchId, user_id: me?.id }]),
