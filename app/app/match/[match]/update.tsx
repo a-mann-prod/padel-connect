@@ -7,7 +7,7 @@ import {
   WithMatch,
   matchFormServices,
 } from '@/components'
-import { Button, Loader, ScrollView } from '@/designSystem'
+import { Button, ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useDeleteMatch, useMatch, useUpdateMatch } from '@/services/api'
@@ -28,7 +28,7 @@ export default WithMatch(() => {
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
 
-  const { data: match, isLoading } = useMatch({
+  const { data: match } = useMatch({
     params: { id: matchId },
     options: { enabled: !!matchId },
   })
@@ -46,8 +46,6 @@ export default WithMatch(() => {
   const { mutate: deleteMatch, isPending: isPendingDelete } = useDeleteMatch({
     onSuccess: () => router.replace(routing.play.path()),
   })
-
-  if (isLoading) return <Loader />
 
   return (
     <ScrollView>

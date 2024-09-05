@@ -22,7 +22,6 @@ import { useMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
-import { isNilOrEmpty } from '@/utils/global'
 import { getUsername } from '@/utils/user'
 
 export default WithMatch(() => {
@@ -106,7 +105,6 @@ export default WithMatch(() => {
 
   const matchStartTime = date.dayjs(match.datetime)
   const matchEndTime = matchStartTime.add(match.duration, 'm')
-  const isBooked = !isNilOrEmpty(match.slot_status === 'BOOKED')
 
   return (
     <>
