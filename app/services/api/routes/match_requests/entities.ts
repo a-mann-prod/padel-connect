@@ -4,7 +4,7 @@ import { Tables } from '@/services/supabase/database.types'
 
 export type MatchRequestResponse = Pick<
   Tables<'match_requests'>,
-  'is_owner' | 'status' | 'match_id' | 'user_id'
+  'is_owner' | 'status' | 'match_id' | 'user_id' | 'has_payed'
 >
 
 export type MatchRequestsResponse = (Tables<'match_requests'> & {
@@ -14,7 +14,8 @@ export type MatchRequestsResponse = (Tables<'match_requests'> & {
   > | null
 })[]
 
-export const getMatchRequestQueryCols = 'match_id, user_id, status, is_owner'
+export const getMatchRequestQueryCols =
+  'match_id, user_id, status, is_owner, has_payed'
 
 export const getMatchRequestsQueryCols =
-  'match_id, user_id, player:profiles!inner(id, first_name, last_name, avatar_url, side_preference, manual_preference), is_owner, status, created_at'
+  'match_id, user_id, player:profiles!inner(id, first_name, last_name, avatar_url, side_preference, manual_preference), is_owner, status, has_payed, created_at'

@@ -5,6 +5,7 @@ import {
   useDeleteMatchRequest,
   useInsertMatchRequests,
   useMatchRequest,
+  useUpdateMatchRequest,
 } from '@/services/api'
 
 export const useManageMatchRequest = (matchId: number) => {
@@ -32,15 +33,24 @@ export const useManageMatchRequest = (matchId: number) => {
       onError,
     })
 
+  const { mutate: updateMatchRequest } = useUpdateMatchRequest({ onError })
+
   return {
     isRequesting: matchRequest?.status === 'PENDING',
     isPlayer: matchRequest?.status === 'ACCEPTED' && !matchRequest?.is_owner,
     isOwner: matchRequest?.is_owner,
     isLoading,
     requestMatch: () =>
-      me?.id && requestMatch([{ match_id: matchId, user_id: me?.id }]),
+      me?.id && requestMatch([{ match_id: matchId, user_id: me.id }]),
     cancelRequestMatch: () =>
-      me?.id && cancelRequestMatch({ match_id: matchId, user_id: me?.id }),
+      me?.id && cancelRequestMatch({ match_id: matchId, user_id: me.id }),
+    payMatch: () =>
+      me?.id &&
+      updateMatchRequest({
+        match_id: matchId,
+        user_id: me.id,
+        has_payed: true,
+      }),
     isRequestMatchPending,
     isCancelRequestMatchPending,
     refetch,

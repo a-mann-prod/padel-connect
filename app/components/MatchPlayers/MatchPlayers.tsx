@@ -21,6 +21,7 @@ export type MatchPlayersProps = {
   onPress?: (userId: string) => void
   onEmptyPress?: () => void
   displayTeam?: boolean
+  hasPayedIds: string[]
 } & Pick<AvatarProps, 'size'>
 
 export const MatchPlayers = ({
@@ -72,6 +73,7 @@ const AvatarItem = ({
   last_name,
   onPress,
   onEmptyPress,
+  hasPayedIds,
   ...props
 }: ProfileWithAvatar & Omit<MatchPlayersProps, 'data'>) => {
   const colorMode = useColorMode()
@@ -79,7 +81,11 @@ const AvatarItem = ({
 
   const sharedProps: AvatarProps = {
     border: {
-      color: isEmpty ? undefined : 'warning500',
+      color: isEmpty
+        ? undefined
+        : id && hasPayedIds.includes(id)
+          ? 'green500'
+          : 'orange500',
     },
     size: 'md',
     bgColor: '$secondary300',

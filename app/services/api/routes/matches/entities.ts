@@ -8,7 +8,12 @@ export type DefaultMatchResponse = PostgrestSingleResponse<Tables<'matches'>[]>
 
 export type MatchResponse = Omit<Tables<'matches'>, 'complex_id'> & {
   complex: Pick<Tables<'complexes'>, 'id' | 'name'> | null
-  match_requests: { user_id: string; match_id: number; is_owner: boolean }[]
+  match_requests: {
+    user_id: string
+    match_id: number
+    is_owner: boolean
+    has_payed: boolean
+  }[]
 }
 
 export type MatchesResponse = (Omit<Tables<'matches'>, 'complex_id'> & {
@@ -24,7 +29,7 @@ export type MatchesResponse = (Omit<Tables<'matches'>, 'complex_id'> & {
 export type MatchesCountResponse = Pick<Tables<'matches'>, 'id' | 'datetime'>[]
 
 export const getMatchQueryCols =
-  'id, complex:complexes(id, name), match_requests!inner(match_id, user_id, is_owner), datetime, slot_status, duration, level, is_private, is_competition, updated_at, created_at'
+  'id, complex:complexes(id, name), match_requests!inner(match_id, user_id, is_owner, has_payed), datetime, slot_status, duration, level, is_private, is_competition, updated_at, created_at'
 
 export const getMatchesQueryCols =
-  'id, complex:complexes(id, name), match_requests!inner(match_id, user_id, is_owner, user:profiles(id, avatar_url)), datetime, slot_status, duration, level, is_private, is_competition, updated_at, created_at'
+  'id, complex:complexes(id, name), match_requests!inner(match_id, user_id, is_owner, has_payed, user:profiles(id, avatar_url)), datetime, slot_status, duration, level, is_private, is_competition, updated_at, created_at'

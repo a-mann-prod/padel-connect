@@ -16,6 +16,7 @@ import {
 } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
+import { useMe } from '@/hooks/useMe'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { useMatch } from '@/services/api'
 import { date } from '@/services/date'
@@ -27,6 +28,8 @@ import { getUsername } from '@/utils/user'
 export default WithMatch(() => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
+
+  const { data: me } = useMe()
 
   const [showRequestActionsheet, setShowRequestActionsheet] = useState(false)
 
@@ -45,6 +48,7 @@ export default WithMatch(() => {
     isRequesting,
     requestMatch,
     cancelRequestMatch,
+    payMatch,
     isRequestMatchPending,
     isCancelRequestMatchPending,
     isLoading: isLoadingMatchRequest,
@@ -77,6 +81,13 @@ export default WithMatch(() => {
   const ownerId = match?.match_requests.find(
     ({ is_owner }) => is_owner
   )?.user_id
+
+  const hasPayedIds =
+    match?.match_requests
+      .filter(({ has_payed }) => !!has_payed)
+      .map(({ user_id }) => user_id) || []
+
+  const hasPayed = me?.id ? hasPayedIds.includes(me.id) : false
 
   const { data: players } = useProfilesWithAvatar({
     params: { ids: userIds },
@@ -170,16 +181,17 @@ export default WithMatch(() => {
                   !isParticipant && setShowRequestActionsheet(true)
                 }
                 displayTeam={!!match.is_competition}
+                hasPayedIds={hasPayedIds}
               />
             </Section>
 
-            {isParticipant && (
+            {isParticipant && !hasPayed && (
               <Button
                 title={t('pay')}
                 icon="FAS-money-bill"
                 iconRight
                 bgColor="$green500"
-                onPress={() => alert('Not implemented yet')}
+                onPress={payMatch}
               />
             )}
 

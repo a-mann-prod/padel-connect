@@ -93,13 +93,6 @@ export default () => {
               onPress={() => router.navigate(routing.homeMyMatches.path())}
               disabled={!me}
             />
-            <TileButton
-              color="$white"
-              bgColor="$primary500"
-              title={t('navigation.myMatches')}
-              icon="FAS-arrow-up-right-dots"
-              disabled
-            />
           </VStack>
         </Box>
       </Box>

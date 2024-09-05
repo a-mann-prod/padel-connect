@@ -124,6 +124,7 @@ export type Database = {
       match_requests: {
         Row: {
           created_at: string;
+          has_payed: boolean | null;
           is_owner: boolean;
           match_id: number;
           status: Database["public"]["Enums"]["match_request_status"];
@@ -131,6 +132,7 @@ export type Database = {
         };
         Insert: {
           created_at?: string;
+          has_payed?: boolean | null;
           is_owner?: boolean;
           match_id: number;
           status?: Database["public"]["Enums"]["match_request_status"];
@@ -138,6 +140,7 @@ export type Database = {
         };
         Update: {
           created_at?: string;
+          has_payed?: boolean | null;
           is_owner?: boolean;
           match_id?: number;
           status?: Database["public"]["Enums"]["match_request_status"];
