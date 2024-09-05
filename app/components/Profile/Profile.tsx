@@ -80,9 +80,7 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
             icon="FAS-dumbbell"
             rightComponent={() => (
               <Text>
-                {isNilOrEmpty(user?.level)
-                  ? tGlobal('unknown')
-                  : `${tGlobal('level')} ${user.level}`}
+                {isNilOrEmpty(user?.level) ? tGlobal('unknown') : user.level}
               </Text>
             )}
           />

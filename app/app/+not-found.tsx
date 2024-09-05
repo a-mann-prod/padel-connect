@@ -5,7 +5,7 @@ export default () => {
   return (
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />
-      <VStack gap="$2" m="$5">
+      <VStack gap="$3" m="$5">
         <Text>This screen doesn't exist.</Text>
         <Link href="/">
           <Text>Go to home screen!</Text>

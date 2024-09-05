@@ -52,7 +52,7 @@
   "location": "Lieu",
   "manualPreference": {
     "left_handed": "Gaucher",
-    "right_handed": "Droiter",
+    "right_handed": "Droitier",
     "title": "Main forte"
   },
   "matchType": {
@@ -114,7 +114,7 @@
     "both": "Les deux",
     "left": "Gauche",
     "right": "Droit",
-    "title": "Côté favoris"
+    "title": "Côté favori"
   },
   "today": "Aujourd'hui",
   "tournament": {
