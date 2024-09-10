@@ -1,6 +1,6 @@
 import * as AuthSession from 'expo-auth-session'
 
-import { handleEmailTranslation, handleSupabaseAuthError } from '../shared'
+import { handleSupabaseAuthError } from '../shared'
 import { RegisterResponse } from './entities'
 import { RegisterParams } from './params'
 
@@ -17,7 +17,7 @@ export const registerFn = async ({
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { emailRedirectTo, data: handleEmailTranslation() },
+    options: { emailRedirectTo },
   })
 
   if (error) {
