@@ -125,7 +125,7 @@ export default WithMatch(() => {
                 rightComponent={() => <Text>{match.complex?.name}</Text>}
               />
               <SectionRow
-                title={tGlobal('location')}
+                title={tGlobal('date')}
                 icon="FAR-calendar"
                 rightComponent={() => (
                   <Text>{date.format(match.datetime)}</Text>
