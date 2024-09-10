@@ -4,9 +4,9 @@ import {
   ActionsheetDragIndicator,
   ActionsheetDragIndicatorWrapper,
   Actionsheet as GActionsheet,
+  SafeAreaView,
 } from '@gluestack-ui/themed'
 import { PropsWithChildren } from 'react'
-import { SafeAreaView } from 'react-native'
 
 import {
   ActionsheetItem,
@@ -33,7 +33,7 @@ export const Actionsheet = ({
       <ActionsheetBackdrop />
 
       <ActionsheetContent h="auto" pb="$0">
-        <SafeAreaView style={{ width: '100%' }}>
+        <SafeAreaView w="$full">
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator />
           </ActionsheetDragIndicatorWrapper>

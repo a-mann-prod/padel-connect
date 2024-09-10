@@ -1,6 +1,5 @@
 import { Tables } from '@/services/supabase/database.types'
 
-export type MatchFilterResponse = Tables<'match_filters'>
+export type MatchFilterResponse = Omit<Tables<'match_filters'>, 'user_id'>
 
-export const matchFilterQueryCols =
-  'is_my_level_range, complex_id, user_id, created_at'
+export const matchFilterQueryCols = 'is_my_level_range, complex_id, created_at'

@@ -9,7 +9,11 @@ export const SheetContainer = ({
   children,
 }: PropsWithChildren<SheetContainerProps>) => {
   return (
-    <SafeAreaView borderTopLeftRadius="$3xl" borderTopRightRadius="$3xl">
+    <SafeAreaView
+      variant="colored"
+      borderTopLeftRadius="$3xl"
+      borderTopRightRadius="$3xl"
+    >
       <ScrollView alwaysBounceVertical={false}>
         <VStack space="2xl" p="$6">
           {children}

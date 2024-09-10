@@ -1,6 +1,5 @@
-import { Text, VStack } from '@gluestack-ui/themed'
+import { SafeAreaView, Text, VStack } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
-import { SafeAreaView } from 'react-native'
 
 import { WithoutAuth } from '@/components'
 import { Button } from '@/designSystem'

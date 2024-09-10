@@ -27,7 +27,7 @@ export default () => {
             defaultValues={{ is_my_level_range: true, ...filters }}
             onSubmit={handleOnSubmit}
             buttonTitle={tGlobal('next')}
-            overrideLevel={!!level ? getLevel(level) : undefined}
+            overrideLevel={level ? getLevel(level) : undefined}
           />
         </VStack>
       </ScrollView>

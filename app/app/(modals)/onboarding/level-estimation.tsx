@@ -39,7 +39,7 @@ export default () => {
   }, [levelInput, setLevel])
 
   return (
-    <SafeAreaView flex={1}>
+    <SafeAreaView flex={1} variant="colored">
       <Carousel
         ref={carouselRef}
         steps={[

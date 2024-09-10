@@ -41,16 +41,10 @@ export default () => {
 
   return (
     <>
-      <SafeAreaView
-        flex={1}
-        position="absolute"
-        bgColor="transparent"
-        zIndex={1}
-        w="$full"
-      >
+      <SafeAreaView flex={1} position="absolute" zIndex={1} w="$full">
         <HStack mx="$3" justifyContent="flex-end">
           {me && (
-            <Box bgColor="white" rounded="$full">
+            <Box variant="colored" rounded="$full">
               <HeaderButton
                 icon="FAS-bell"
                 onPress={() =>
@@ -62,7 +56,7 @@ export default () => {
           )}
         </HStack>
       </SafeAreaView>
-      <Box flex={1}>
+      <Box flex={1} variant="colored">
         <Image
           h="40%"
           w="$full"
