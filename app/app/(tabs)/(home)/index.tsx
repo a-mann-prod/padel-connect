@@ -3,10 +3,12 @@ import {
   HStack,
   Image,
   SafeAreaView,
+  StatusBar,
   useColorMode,
   useToken,
   VStack,
 } from '@gluestack-ui/themed'
+import { useIsFocused } from '@react-navigation/native'
 import * as Notifications from 'expo-notifications'
 import { router } from 'expo-router'
 import { useEffect } from 'react'
@@ -23,6 +25,8 @@ export default () => {
   const t = useTranslate()
 
   const colorMode = useColorMode()
+
+  const isFocused = useIsFocused()
 
   const backgroundColor = useToken(
     'colors',
@@ -41,6 +45,7 @@ export default () => {
 
   return (
     <>
+      {isFocused && <StatusBar barStyle="dark-content" />}
       <SafeAreaView flex={1} position="absolute" zIndex={1} w="$full">
         <HStack mx="$3" justifyContent="flex-end">
           {me && (
