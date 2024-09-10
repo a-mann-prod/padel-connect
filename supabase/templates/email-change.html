@@ -1,7 +1,7 @@
-<h2>{{ .Data.ChangeEmailAddress.H2 }}</h2>
+<h2>Confirm Change of Email</h2>
 
 <p>
-  {{ .Data.ChangeEmailAddress.P }} {{ .Email }} {{ .Data.ChangeEmailAddress.To
-  }} {{ .NewEmail }} {{ .Data.ChangeEmailAddress.Last }}
+  Follow this link to confirm the update of your email from {{ .Email }} to {{
+  .NewEmail }}:
 </p>
-<p><a href="{{ .ConfirmationURL }}">{{ .Data.ChangeEmailAddress.Link }}</a></p>
+<p><a href="{{ .ConfirmationURL }}">Change Email</a></p>

@@ -1,7 +1,7 @@
-<h2>{{ .Data.InviteUser.H2 }}</h2>
+<h2>You have been invited</h2>
 
 <p>
-  {{ .Data.InviteUser.PFirstPart }} {{ .SiteURL }} {{
-  .Data.InviteUser.PSecondPart }}
+  You have been invited to create a user on {{ .SiteURL }}. Follow this link to
+  accept the invite:
 </p>
-<p><a href="{{ .ConfirmationURL }}">{{ .Data.InviteUser.Link }}</a></p>
+<p><a href="{{ .ConfirmationURL }}">Accept the invite</a></p>

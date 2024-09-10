@@ -97,19 +97,19 @@ enable_confirmations = true
 
 # Email templates
 [auth.email.template.confirmation]
-subject = "{{ .Data.ConfirmSignup.Title }}"
+subject = "Confirm Your Signup"
 content_path = "./supabase/templates/confirmation.html"
 [auth.email.template.invite]
-subject = "{{ .Data.InviteUser.Title }}"
+subject = "You have been invited"
 content_path = "./supabase/templates/invite.html"
 [auth.email.template.magic_link]
-subject = "{{ .Data.MagicLink.Title }}"
+subject = "Your Magic Link"
 content_path = "./supabase/templates/magic-link.html"
 [auth.email.template.email_change]
-subject = "{{ .Data.ChangeEmailAddress.Title }}"
+subject = "Confirm Email Change"
 content_path = "./supabase/templates/email-change.html"
 [auth.email.template.recovery]
-subject = "{{ .Data.ResetPassword.Title }}"
+subject = "Reset Your Password"
 content_path = "./supabase/templates/recovery.html"
 
 [auth.sms]
