@@ -176,7 +176,7 @@ export default WithMatch(() => {
                   router.navigate(routing.matchUser.path(matchId, id))
                 }
                 onEmptyPress={() =>
-                  !isParticipant && setShowRequestActionsheet(true)
+                  !isParticipant && !!me && setShowRequestActionsheet(true)
                 }
                 displayTeam={!!match.is_competition}
                 hasPayedIds={hasPayedIds}

@@ -12,6 +12,7 @@ import {
 } from '@/designSystem'
 import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
+import { useMe } from '@/hooks/useMe'
 import { useTournament } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
@@ -21,12 +22,14 @@ const { mapTypeToIcon } = tournamentListItemServices
 export default () => {
   const tGlobal = useTranslate()
   const t = useTranslate()
+  const { data: me } = useMe()
 
   useHeaderButton(
     [
       {
         icon: 'FAS-share',
         onPress: () => alert('Not available yet'),
+        condition: true,
       },
     ],
     'headerRight'
@@ -72,6 +75,7 @@ export default () => {
         <Button
           title={tGlobal('participate')}
           onPress={() => alert('Not available yet')}
+          isDisabled={!me}
         />
       </VStack>
     </ScrollView>

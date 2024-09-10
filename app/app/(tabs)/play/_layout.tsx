@@ -1,11 +1,10 @@
-import { Stack, router } from 'expo-router'
+import { Stack } from 'expo-router'
 
-import { WithAuth } from '@/components'
-import { HeaderBackButton, HeaderButton } from '@/designSystem'
+import { HeaderBackButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
-export default WithAuth(() => {
+export default () => {
   const t = useTranslate(undefined, { keyPrefix: 'navigation' })
 
   return (
@@ -14,13 +13,6 @@ export default WithAuth(() => {
         name="index"
         options={{
           title: t('play'),
-          headerRight: (props) => (
-            <HeaderButton
-              icon="FAS-sliders"
-              onPress={() => router.navigate(routing.playFilters.path())}
-              {...props}
-            />
-          ),
         }}
       />
       <Stack.Screen
@@ -33,4 +25,4 @@ export default WithAuth(() => {
       />
     </Stack>
   )
-})
+}

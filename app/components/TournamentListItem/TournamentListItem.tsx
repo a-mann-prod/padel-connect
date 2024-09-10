@@ -1,9 +1,10 @@
 import { HStack, Text, VStack } from '@gluestack-ui/themed'
 
+import { tournamentListItemServices as services } from './TournamentListItem.services'
+
 import { Icon, Pressable, PressableProps } from '@/designSystem'
 import { TournamentResponse } from '@/services/api'
 import { date } from '@/services/date'
-import { tournamentListItemServices as services } from './TournamentListItem.services'
 
 const { mapTypeToIcon } = services
 
@@ -35,7 +36,7 @@ export const TournamentListItem = ({
             <Text flex={1}>{title}</Text>
             <HStack alignItems="center" gap="$2">
               <Text variant="subtitle">
-                {date.dayjs(datetime).format('LLL')}
+                {date.dayjs(datetime).format('L HH:MM')}
               </Text>
             </HStack>
           </HStack>

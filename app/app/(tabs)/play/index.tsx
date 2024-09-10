@@ -5,6 +5,7 @@ import { ListRenderItemInfo } from 'react-native'
 
 import { DateCarouselFilter, MatchListItem } from '@/components'
 import { Button, VirtualizedList } from '@/designSystem'
+import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useMe } from '@/hooks/useMe'
 import { useMyMatchFilters } from '@/hooks/useMyMatchFilters'
 import { MatchesResponse, useMatches } from '@/services/api'
@@ -47,6 +48,17 @@ export default () => {
     },
   })
 
+  useHeaderButton(
+    [
+      {
+        icon: 'FAS-sliders',
+        onPress: () => router.navigate(routing.playFilters.path()),
+        condition: !!me,
+      },
+    ],
+    'headerRight'
+  )
+
   const renderItem = ({
     item,
   }: ListRenderItemInfo<MatchesResponse[number]>) => (
@@ -86,6 +98,7 @@ export default () => {
             routing.matchCreate.path({ datetime: dateFilter.toISOString() })
           )
         }
+        isDisabled={!me}
       />
     </VStack>
   )
