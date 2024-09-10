@@ -23,7 +23,7 @@ import {
 export const useMessagesSubscription = ({ options }: UseSubscriptionProps) =>
   useSubscription(
     supabase,
-    'messages',
+    'messages2',
     {
       event: '*',
       table: 'messages',
