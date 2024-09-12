@@ -1,31 +1,23 @@
-import { HStack, SafeAreaView, Text, VStack } from '@gluestack-ui/themed'
+import { SafeAreaView, VStack } from '@gluestack-ui/themed'
 import * as AuthSession from 'expo-auth-session'
-import { Link, router, useLocalSearchParams, usePathname } from 'expo-router'
+import { router, useLocalSearchParams, usePathname } from 'expo-router'
 import { useState } from 'react'
 import { Share } from 'react-native'
 
-import { MatchPlayers, MatchRequestButton, WithMatch } from '@/components'
 import {
-  Actionsheet,
-  Button,
-  Loader,
-  ScrollView,
-  Section,
-  SectionRow,
-  Tile,
-} from '@/designSystem'
+  MatchActionButtons,
+  MatchInfo,
+  MatchRequestButton,
+  WithMatch,
+} from '@/components'
+import { Actionsheet, Loader, ScrollView } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
-import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
+import { getMatchTimes, useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
-import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
-import { useMatch } from '@/services/api'
-import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
-import { getUsername } from '@/utils/user'
 
 export default WithMatch(() => {
-  const tGlobal = useTranslate()
   const t = useTranslate('match')
 
   const { data: me } = useMe()
@@ -36,24 +28,19 @@ export default WithMatch(() => {
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
-  const { data: match, isLoading: isLoadingMatch } = useMatch({
-    params: { id: matchId },
-    options: { enabled: !!local?.match, staleTime: 0 },
-  })
-
   const {
-    isPlayer,
+    match,
     isOwner,
     isRequesting,
     requestMatch,
-    cancelRequestMatch,
-    payMatch,
     isRequestMatchPending,
+    cancelRequestMatch,
     isCancelRequestMatchPending,
-    isLoading: isLoadingMatchRequest,
-  } = useManageMatchRequest(matchId)
-
-  const isParticipant = isOwner || isPlayer
+    isLoading,
+    isPlayer,
+    payMatch,
+    isPayMatchPending,
+  } = useManageMatch(matchId)
 
   useHeaderButton(
     [
@@ -76,156 +63,43 @@ export default WithMatch(() => {
     'headerRight'
   )
 
-  const userIds = match?.match_requests?.map(({ user_id }) => user_id) || []
-  const ownerId = match?.match_requests.find(
-    ({ is_owner }) => is_owner
-  )?.user_id
-
-  const hasPayedIds =
-    match?.match_requests
-      .filter(({ has_payed }) => !!has_payed)
-      .map(({ user_id }) => user_id) || []
-
-  const hasPayed = me?.id ? hasPayedIds.includes(me.id) : false
-
-  const { data: players } = useProfilesWithAvatar({
-    params: { ids: userIds },
-    options: { enabled: !!userIds.length },
-  })
-
-  const owner = players?.find(({ id }) => id === ownerId)
-
-  const sortedPlayers = players?.sort(
-    (a, b) => userIds.indexOf(a.id || '') - userIds.indexOf(b.id || '')
-  )
-
-  if (isLoadingMatch || isLoadingMatchRequest) return <Loader />
+  if (isLoading) return <Loader />
 
   if (!match) return
 
-  const matchStartTime = date.dayjs(match.datetime)
-  const matchEndTime = matchStartTime.add(match.duration, 'm')
+  const { isMatchPassed, matchStartTime, matchEndTime } = getMatchTimes(match)
+
+  const hasPayedUserIds =
+    match.match_requests
+      .filter(({ has_payed }) => !!has_payed)
+      .map(({ user_id }) => user_id) || []
+
+  const hasPayed = me?.id ? hasPayedUserIds.includes(me.id) : false
 
   return (
     <>
       <SafeAreaView>
         <ScrollView>
           <VStack p="$3" gap="$3">
-            {match.is_private && (
-              <Tile
-                title={t('privateMatch')}
-                bgColor="$primary500"
-                icon="FAS-lock"
-              />
-            )}
-            <Section>
-              <SectionRow
-                title={tGlobal('location')}
-                icon="FAS-location-dot"
-                rightComponent={() => <Text>{match.complex?.name}</Text>}
-              />
-              <SectionRow
-                title={tGlobal('date')}
-                icon="FAR-calendar"
-                rightComponent={() => (
-                  <Text>{date.format(match.datetime)}</Text>
-                )}
-              />
-              <SectionRow
-                title={t('duration')}
-                icon="FAR-clock"
-                rightComponent={() => (
-                  <HStack gap="$1">
-                    <Text>{matchStartTime.format('HH:mm')}</Text>
-                    <Text>-</Text>
-                    <Text>{matchEndTime.format('HH:mm')}</Text>
-                    <Text>
-                      ({tGlobal('datetime.minute', { count: match.duration })})
-                    </Text>
-                  </HStack>
-                )}
-              />
-            </Section>
-
-            <Section>
-              <SectionRow
-                title={tGlobal('captain')}
-                icon="FAS-crown"
-                rightComponent={() => (
-                  <Text>
-                    {getUsername(owner?.first_name, owner?.last_name)}
-                  </Text>
-                )}
-              />
-              <SectionRow
-                title={tGlobal('level')}
-                icon="FAS-dumbbell"
-                rightComponent={() => (
-                  <Text>
-                    {tGlobal('level')} {match.level}
-                  </Text>
-                )}
-              />
-            </Section>
-
-            <Section>
-              <MatchPlayers
-                size="lg"
-                data={sortedPlayers}
-                onPress={(id) =>
-                  router.navigate(routing.matchUser.path(matchId, id))
-                }
-                onEmptyPress={() =>
-                  !isParticipant && !!me && setShowRequestActionsheet(true)
-                }
-                displayTeam={!!match.is_competition}
-                hasPayedIds={hasPayedIds}
-              />
-            </Section>
-
-            {isParticipant && !hasPayed && (
-              <Button
-                title={t('pay')}
-                icon="FAS-money-bill"
-                iconRight
-                bgColor="$green500"
-                onPress={payMatch}
-              />
-            )}
-
-            {isOwner && (
-              <Link asChild href={routing.matchPlayersManage.path(matchId)}>
-                <Button title={t('playersManage')} />
-              </Link>
-            )}
-            {isParticipant && (
-              <>
-                <Button
-                  title={t('chat')}
-                  icon="FAS-message"
-                  iconRight
-                  bgColor="$yellow500"
-                  onPress={() =>
-                    router.navigate(routing.matchChat.path(matchId))
-                  }
-                />
-                {/* <Button
-                title={t('enterScore')}
-                icon="FAS-award"
-                iconRight
-                // onPress={cancelRequestMatch}
-                // isLoading={isCancelRequestMatchPending}
-              /> */}
-              </>
-            )}
-            {isPlayer && (
-              <Button
-                title={t('leave')}
-                action="negative"
-                icon="FAS-person-walking-arrow-right"
-                iconRight
-                onPress={cancelRequestMatch}
-                isLoading={isCancelRequestMatchPending}
+            <MatchInfo
+              match={match}
+              onEmptyPress={() => setShowRequestActionsheet(true)}
+              isMatchPassed={isMatchPassed}
+              matchStartTime={matchStartTime}
+              matchEndTime={matchEndTime}
+              hasPayedUserIds={hasPayedUserIds}
+              isParticipant={isOwner || isPlayer}
+            />
+            {!isMatchPassed && (
+              <MatchActionButtons
+                matchId={matchId}
+                hasPayed={hasPayed}
+                isOwner={isOwner}
+                isPlayer={isPlayer}
+                onLeaveButtonPress={cancelRequestMatch}
+                isLeaveButtonLoading={isCancelRequestMatchPending}
+                onPayButtonPress={payMatch}
+                isPayButtonLoading={isPayMatchPending}
               />
             )}
           </VStack>

@@ -3,21 +3,14 @@ import { FC } from 'react'
 
 import { Loader } from '@/designSystem'
 import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
-import { useManageMatchRequest } from '@/hooks/useManageMatchRequest'
-import { useMatch } from '@/services/api'
-import { date } from '@/services/date'
+import { getMatchTimes, useManageMatch } from '@/hooks/useManageMatch'
 import { useTranslate } from '@/services/i18n'
 
 const WithMatchWrapper: FC<{ Component: FC }> = ({ Component }) => {
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
-  const { data: match, isLoading } = useMatch({
-    params: { id: matchId },
-    options: { enabled: !!local?.match },
-  })
-
-  const { isPlayer, isOwner } = useManageMatchRequest(matchId)
+  const { match, isPlayer, isOwner, isLoading } = useManageMatch(matchId)
 
   const isParticipant = isOwner || isPlayer
 
@@ -25,10 +18,7 @@ const WithMatchWrapper: FC<{ Component: FC }> = ({ Component }) => {
 
   if (!match) return <MatchNotFound />
 
-  const isMatchPassed = date
-    .dayjs(match.datetime)
-    .add(match.duration, 'm')
-    .isBefore(date.now())
+  const { isMatchPassed } = getMatchTimes(match)
 
   if (isMatchPassed && !isParticipant) return <MatchNotFound />
 

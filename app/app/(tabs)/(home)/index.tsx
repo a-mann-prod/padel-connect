@@ -13,7 +13,7 @@ import * as Notifications from 'expo-notifications'
 import { router } from 'expo-router'
 import { useEffect } from 'react'
 
-import { HeaderButton, TileButton } from '@/designSystem'
+import { Button, HeaderButton } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { useNavigationBadgeCount } from '@/hooks/useNavigationBadgeCount'
 import { useUnreadNotifications } from '@/services/api'
@@ -76,19 +76,24 @@ export default () => {
           borderTopLeftRadius="$3xl"
           borderTopRightRadius="$3xl"
         >
-          <VStack gap="$5" m="$3" mt="$3">
-            <TileButton
-              color="$white"
-              bgColor="$yellow500"
+          <VStack gap="$3" m="$3" mt="$3">
+            <Button
+              justifyContent="space-between"
               title={t('navigation.tournaments')}
               icon="FAS-trophy"
+              iconRight
+              size="xl"
+              rounded="$lg"
+              action="warning"
               onPress={() => router.navigate(routing.homeTournaments.path())}
             />
-            <TileButton
-              color="$white"
-              bgColor="$primary500"
+            <Button
+              justifyContent="space-between"
               title={t('navigation.myMatches')}
               icon="FAS-baseball"
+              iconRight
+              size="xl"
+              rounded="$lg"
               onPress={() => router.navigate(routing.homeMyMatches.path())}
               disabled={!me}
             />

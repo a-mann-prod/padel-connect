@@ -395,6 +395,95 @@ export const Button = createStyle({
           },
         },
       },
+      warning: {
+        bg: '$yellow500',
+        borderColor: '$yellow300',
+        ':hover': {
+          bg: '$yellow600',
+          borderColor: '$yellow400',
+        },
+
+        ':active': {
+          bg: '$yellow700',
+          borderColor: '$yellow700',
+        },
+
+        _text: {
+          color: '$yellow600',
+          ':hover': {
+            color: '$yellow600',
+          },
+          ':active': {
+            color: '$yellow700',
+          },
+        },
+        _icon: {
+          color: '$yellow600',
+          ':hover': {
+            color: '$yellow600',
+          },
+          ':active': {
+            color: '$yellow700',
+          },
+        },
+        _spinner: {
+          props: {
+            color: '$yellow600',
+          },
+          ':hover': {
+            props: { color: '$yellow600' },
+          },
+          ':active': {
+            props: { color: '$yellow700' },
+          },
+        },
+        _dark: {
+          bg: '$yellow400',
+          borderColor: '$yellow700',
+          ':hover': {
+            bg: '$yellow500',
+            borderColor: '$yellow400',
+          },
+          ':active': {
+            bg: '$yellow600',
+            borderColor: '$yellow300',
+          },
+          _text: {
+            color: '$yellow300',
+            ':hover': {
+              color: '$yellow300',
+            },
+            ':active': {
+              color: '$yellow200',
+            },
+          },
+          _icon: {
+            color: '$yellow300',
+            ':hover': {
+              color: '$yellow300',
+            },
+            ':active': {
+              color: '$yellow200',
+            },
+          },
+          _spinner: {
+            props: {
+              color: '$yellow300',
+            },
+            ':hover': {
+              props: { color: '$yellow300' },
+            },
+            ':active': {
+              props: { color: '$yellow200' },
+            },
+          },
+          ':focusVisible': {
+            _web: {
+              boxShadow: 'offset 0 0 0 2px $info400',
+            },
+          },
+        },
+      },
 
       default: {
         bg: '$transparent',
@@ -691,6 +780,29 @@ export const Button = createStyle({
       },
     },
     {
+      action: 'warning',
+      variant: 'link',
+      value: {
+        px: '$0',
+        bg: 'transparent',
+        ':hover': {
+          bg: 'transparent',
+        },
+        ':active': {
+          bg: 'transparent',
+        },
+        _dark: {
+          bg: 'transparent',
+          ':hover': {
+            bg: 'transparent',
+          },
+          ':active': {
+            bg: 'transparent',
+          },
+        },
+      },
+    },
+    {
       action: 'primary',
       variant: 'outline',
       value: {
@@ -758,6 +870,28 @@ export const Button = createStyle({
     },
     {
       action: 'negative',
+      variant: 'outline',
+      value: {
+        bg: 'transparent',
+        ':hover': {
+          bg: '$backgroundLight50',
+        },
+        ':active': {
+          bg: 'transparent',
+        },
+        _dark: {
+          bg: 'transparent',
+          ':hover': {
+            bg: '$backgroundDark900',
+          },
+          ':active': {
+            bg: 'transparent',
+          },
+        },
+      },
+    },
+    {
+      action: 'warning',
       variant: 'outline',
       value: {
         bg: 'transparent',
@@ -997,6 +1131,70 @@ export const Button = createStyle({
             props: { color: '$textLight0' },
           },
         },
+        _dark: {
+          _text: {
+            color: '$textDark0',
+            ':hover': {
+              color: '$textDark0',
+            },
+            ':active': {
+              color: '$textDark0',
+            },
+          },
+          _icon: {
+            color: '$textDark0',
+            ':hover': {
+              color: '$textDark0',
+            },
+            ':active': {
+              color: '$textDark0',
+            },
+          },
+          _spinner: {
+            props: { color: '$textDark0' },
+            ':hover': {
+              props: { color: '$textDark0' },
+            },
+            ':active': {
+              props: { color: '$textDark0' },
+            },
+          },
+        },
+      },
+    },
+    {
+      action: 'warning',
+      variant: 'solid',
+      value: {
+        _text: {
+          color: '$textLight0',
+          ':hover': {
+            color: '$textLight0',
+          },
+          ':active': {
+            color: '$textLight0',
+          },
+        },
+        _icon: {
+          color: '$textLight0',
+          ':hover': {
+            color: '$textLight0',
+          },
+          ':active': {
+            color: '$textLight0',
+          },
+          props: { color: '$textLight0' },
+        },
+        _spinner: {
+          props: { color: '$textLight0' },
+          ':hover': {
+            props: { color: '$textLight0' },
+          },
+          ':active': {
+            props: { color: '$textLight0' },
+          },
+        },
+
         _dark: {
           _text: {
             color: '$textDark0',

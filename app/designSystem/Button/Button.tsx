@@ -4,18 +4,20 @@ import {
   ButtonIcon as GButtonIcon,
   ButtonText as GButtonText,
 } from '@gluestack-ui/themed'
-import { forwardRef } from 'react'
+import { forwardRef, PropsWithChildren } from 'react'
 
 import { FontAwesome, FontAwesomeProps } from '../Icon/FontAwesome/FontAwesome'
 
 import { isNilOrEmpty } from '@/utils/global'
+
+type GButtonProps = PropsWithChildren<typeof GButton.defaultProps>
 
 export type ButtonProps = {
   title: string
   icon?: FontAwesomeProps['name']
   iconRight?: boolean
   isLoading?: boolean
-} & typeof GButton.defaultProps
+} & GButtonProps
 
 export const Button = forwardRef(
   (
