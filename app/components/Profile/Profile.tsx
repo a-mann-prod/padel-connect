@@ -9,6 +9,7 @@ import {
   SectionRow,
 } from '@/designSystem'
 import { useManageFavoriteUser } from '@/hooks/useManageFavoriteUser'
+import { useMe } from '@/hooks/useMe'
 import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
@@ -23,6 +24,7 @@ export type ProfileProps = {
 export const Profile = ({ user, isLoading, external }: ProfileProps) => {
   const t = useTranslate('profile')
   const tGlobal = useTranslate()
+  const { data: me } = useMe()
 
   const {
     isFavorite,
@@ -49,6 +51,7 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
               icon={isFavorite ? 'FAS-star' : 'FAR-star'}
               onPress={() => toggleFavorite()}
               isLoading={isLoadingFavorite}
+              isDisabled={!me}
             />
           </HStack>
         )}

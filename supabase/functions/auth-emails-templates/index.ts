@@ -78,7 +78,7 @@ Deno.serve(async (req) => {
     authEmailTranslations.bodies[language][email_data.email_action_type];
 
   const htmlContent = body
-    .replace("{{confirmation_url}}", email_data.confirmation_url)
+    ?.replace("{{confirmation_url}}", email_data.confirmation_url)
     .replace("{{token}}", email_data.token || "")
     .replace("{{new_token}}", email_data.token_new || "")
     .replace("{{site_url}}", email_data.site_url || "")
