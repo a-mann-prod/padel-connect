@@ -42,6 +42,12 @@ export default WithMatch(() => {
     isPayMatchPending,
   } = useManageMatch(matchId)
 
+  const { isMatchPassed } = match
+    ? getMatchTimes(match)
+    : {
+        isMatchPassed: true,
+      }
+
   useHeaderButton(
     [
       {
@@ -51,13 +57,13 @@ export default WithMatch(() => {
             url: AuthSession.makeRedirectUri({ path: pathname }),
             message: t('shareMessage'),
           }),
-        condition: true,
+        condition: !isMatchPassed,
       },
       {
         icon: 'FAS-pencil',
         onPress: () =>
           match?.id && router.navigate(routing.matchUpdate.path(match?.id)),
-        condition: isOwner,
+        condition: isOwner && !isMatchPassed,
       },
     ],
     'headerRight'
@@ -67,7 +73,7 @@ export default WithMatch(() => {
 
   if (!match) return
 
-  const { isMatchPassed, matchStartTime, matchEndTime } = getMatchTimes(match)
+  const { matchStartTime, matchEndTime } = getMatchTimes(match)
 
   const hasPayedUserIds =
     match.match_requests
