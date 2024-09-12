@@ -16,6 +16,9 @@
       },
       "match_full": {
         "title": "Partie complète"
+      },
+      "new_password_should_be_different_from_the_old_password": {
+        "title": "Le nouveau mot de passe doit être différent de l'ancien"
       }
     },
     "success": {

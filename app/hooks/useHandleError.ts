@@ -7,8 +7,9 @@ export const useHandleError = () => {
   const t = useTranslate(undefined, { keyPrefix: 'api.errors' })
 
   return (e: Error) => {
-    const message = e.message.toLowerCase()
-    console.error(e)
+    // clean error code
+    const message = e.message.toLowerCase().replaceAll('.', '')
+    console.error(e, message)
     toast.show({
       title: t([`${message}.title`, 'default']),
       message: t(`${message}.message`),

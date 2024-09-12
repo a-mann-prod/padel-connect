@@ -10,13 +10,16 @@
       "invalid_login_credentials": {
         "message": "Incorrect email and/or password",
         "title": "Incorrect credentials"
+      },
+      "invalid_password": {
+        "title": "Incorrect password"
+      },
+      "match_full": {
+        "title": "Match full"
+      },
+      "new_password_should_be_different_from_the_old_password": {
+        "title": "New password should be different from the old one"
       }
-    },
-    "invalid_password": {
-      "title": "Incorrect password"
-    },
-    "match_full": {
-      "title": "Match full"
     },
     "success": {
       "default": "Recording completed"
