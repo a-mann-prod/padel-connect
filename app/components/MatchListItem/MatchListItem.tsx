@@ -121,8 +121,8 @@ const SlotStatusIcon = ({ status }: SlotStatusIconProps) => {
 
   const mapStatusToColor: Record<SlotStatus, IconProps['color']> = {
     AVAILABLE: '',
-    BOOKED: '$green.500',
-    UNAVAILABLE: '$red.500',
+    BOOKED: '$green500',
+    UNAVAILABLE: '$red500',
   }
 
   if (!status) return
