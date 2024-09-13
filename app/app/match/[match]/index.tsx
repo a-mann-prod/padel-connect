@@ -1,7 +1,6 @@
 import { SafeAreaView, VStack } from '@gluestack-ui/themed'
 import * as AuthSession from 'expo-auth-session'
 import { router, useLocalSearchParams, usePathname } from 'expo-router'
-import { useState } from 'react'
 import { Share } from 'react-native'
 
 import {
@@ -10,7 +9,7 @@ import {
   MatchRequestButton,
   WithMatch,
 } from '@/components'
-import { Actionsheet, Loader, ScrollView } from '@/designSystem'
+import { Loader, ScrollView } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { getMatchTimes, useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
@@ -21,8 +20,6 @@ export default WithMatch(() => {
   const t = useTranslate('match')
 
   const { data: me } = useMe()
-
-  const [showRequestActionsheet, setShowRequestActionsheet] = useState(false)
 
   const pathname = usePathname()
   const local = useLocalSearchParams()
@@ -81,49 +78,43 @@ export default WithMatch(() => {
       .map(({ user_id }) => user_id) || []
 
   const hasPayed = me?.id ? hasPayedUserIds.includes(me.id) : false
+  const isParticipant = isOwner || isPlayer
 
   return (
-    <>
-      <SafeAreaView>
-        <ScrollView>
-          <VStack p="$3" gap="$3">
-            <MatchInfo
-              match={match}
-              onEmptyPress={() => setShowRequestActionsheet(true)}
-              isMatchPassed={isMatchPassed}
-              matchStartTime={matchStartTime}
-              matchEndTime={matchEndTime}
-              hasPayedUserIds={hasPayedUserIds}
-              isParticipant={isOwner || isPlayer}
-            />
-            {!isMatchPassed && (
-              <MatchActionButtons
-                matchId={matchId}
-                hasPayed={hasPayed}
-                isOwner={isOwner}
-                isPlayer={isPlayer}
-                onLeaveButtonPress={cancelRequestMatch}
-                isLeaveButtonLoading={isCancelRequestMatchPending}
-                onPayButtonPress={payMatch}
-                isPayButtonLoading={isPayMatchPending}
-              />
-            )}
-          </VStack>
-        </ScrollView>
-      </SafeAreaView>
-      <Actionsheet
-        isOpen={showRequestActionsheet}
-        onClose={() => setShowRequestActionsheet(false)}
-      >
-        <VStack gap="$3" p="$2">
-          <MatchRequestButton
-            isRequesting={isRequesting}
-            onPress={requestMatch}
-            isLoading={isRequestMatchPending || isCancelRequestMatchPending}
-            onCancelPress={cancelRequestMatch}
+    <SafeAreaView>
+      <ScrollView>
+        <VStack p="$3" gap="$3">
+          <MatchInfo
+            match={match}
+            isMatchPassed={isMatchPassed}
+            matchStartTime={matchStartTime}
+            matchEndTime={matchEndTime}
+            hasPayedUserIds={hasPayedUserIds}
+            isParticipant={isParticipant}
           />
+          {!isMatchPassed && (
+            <MatchActionButtons
+              matchId={matchId}
+              hasPayed={hasPayed}
+              isOwner={isOwner}
+              isPlayer={isPlayer}
+              onLeaveButtonPress={cancelRequestMatch}
+              isLeaveButtonLoading={isCancelRequestMatchPending}
+              onPayButtonPress={payMatch}
+              isPayButtonLoading={isPayMatchPending}
+            />
+          )}
+          {!isParticipant && (
+            <MatchRequestButton
+              isRequesting={isRequesting}
+              onPress={requestMatch}
+              isLoading={isRequestMatchPending || isCancelRequestMatchPending}
+              onCancelPress={cancelRequestMatch}
+              isDisabled={!me}
+            />
+          )}
         </VStack>
-      </Actionsheet>
-    </>
+      </ScrollView>
+    </SafeAreaView>
   )
 })

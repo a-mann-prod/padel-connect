@@ -22,7 +22,7 @@ type MatchInfoProps = {
 
   hasPayedUserIds: string[]
 
-  onEmptyPress: () => void
+  onEmptyPress?: () => void
 }
 export const MatchInfo = ({
   match,
@@ -120,7 +120,7 @@ export const MatchInfo = ({
           onPress={(id) =>
             router.navigate(routing.matchUser.path(match.id, id))
           }
-          onEmptyPress={() => !isParticipant && !!me && onEmptyPress()}
+          onEmptyPress={() => !isParticipant && !!me && onEmptyPress?.()}
           displayTeam={!!match.is_competition}
           hasPayedUserIds={hasPayedUserIds}
           isMatchPassed={isMatchPassed}

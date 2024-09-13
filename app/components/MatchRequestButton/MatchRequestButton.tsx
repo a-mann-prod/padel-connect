@@ -5,7 +5,7 @@ export type MatchRequestButtonProps = {
   isRequesting: boolean
   onPress: ButtonProps['onPress']
   onCancelPress: ButtonProps['onPress']
-} & Pick<ButtonProps, 'isLoading'>
+} & Pick<ButtonProps, 'isLoading' | 'isDisabled'>
 
 export const MatchRequestButton = ({
   isRequesting,
