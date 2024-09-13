@@ -25,6 +25,12 @@ Deno.serve(async (req) => {
   const payload: WebhookPayload = await req.json();
   const matchRequest = payload.record;
 
+  if (matchRequest.is_owner === true) {
+    return new Response("No notification on match creation", {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   // get owner to be notified on match request insert
   const { data: user } = await clientAdmin
     .from("profiles")
