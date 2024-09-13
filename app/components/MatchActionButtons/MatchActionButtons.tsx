@@ -40,13 +40,24 @@ export const MatchActionButtons = ({
 
   return (
     <VStack gap="$3">
-      {isParticipant && isReserved && !hasPayed && (
+      {isOwner && !isReserved && (
+        <Button
+          title={t('book')}
+          icon="FAS-money-bill"
+          iconRight
+          action="positive"
+          onPress={onPayButtonPress}
+          isLoading={isPayButtonLoading}
+        />
+      )}
+      {isPlayer && !hasPayed && isReserved && (
         <Button
           title={t('pay')}
           icon="FAS-money-bill"
           iconRight
           action="positive"
           onPress={onPayButtonPress}
+          isLoading={isPayButtonLoading}
         />
       )}
 
