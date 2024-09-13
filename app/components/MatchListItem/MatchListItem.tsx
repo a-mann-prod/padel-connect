@@ -9,55 +9,48 @@ import {
   Pressable,
   PressableProps,
 } from '@/designSystem'
+import { isMatchReserved } from '@/hooks/useManageMatch'
 import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
-import { Database } from '@/services/supabase/database.types'
 import { getPublicAvatarUrl } from '@/utils/avatar'
 
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']
 } & MatchesResponse[number]
 
-export const MatchListItem = ({
-  onPress,
-  level,
-  slot_status,
-  // type,
-  datetime,
-  complex,
-  duration,
-  match_requests,
-}: MatchlistItemProps) => {
+export const MatchListItem = ({ onPress, ...match }: MatchlistItemProps) => {
   const tGlobal = useTranslate()
 
-  const players: ProfilesWithAvatar = match_requests.map(({ user }) => ({
+  const players: ProfilesWithAvatar = match.match_requests.map(({ user }) => ({
     id: user?.id,
     avatar: user?.avatar_url ? getPublicAvatarUrl(user.avatar_url) : undefined,
   }))
+
+  const isReserved = isMatchReserved(match)
 
   return (
     <Pressable onPress={onPress}>
       <VStack gap="$8" variant="colored" rounded="$lg" p="$3">
         <HStack alignItems="flex-start">
           <HStack flex={1} gap="$6">
-            <DateFlag isoDate={datetime} />
+            <DateFlag isoDate={match.datetime} />
             <VStack flex={1}>
               <Heading size="sm" lineHeight="$xs">
-                {complex?.name}
+                {match.complex?.name}
               </Heading>
               <Text variant="subtitle">
                 {/* {tGlobal(`matchType.${type.toLowerCase()}`)} -{' '} */}
-                {tGlobal('level')} {level}
+                {tGlobal('level')} {match.level}
               </Text>
             </VStack>
           </HStack>
-          <SlotStatusIcon status={slot_status} />
+          <SlotStatusIcon status={isReserved ? 'BOOKED' : 'AVAILABLE'} />
         </HStack>
         <HStack>
           <PlayersAvatars data={players} />
-          <DurationFlag value={duration} />
+          <DurationFlag value={match.duration} />
         </HStack>
       </VStack>
     </Pressable>
@@ -113,7 +106,7 @@ const DurationFlag = ({ value }: DurationFlagProps) => {
   )
 }
 
-type SlotStatus = Database['public']['Enums']['match_slot_status']
+type SlotStatus = 'AVAILABLE' | 'BOOKED' | 'UNAVAILABLE'
 
 type SlotStatusIconProps = {
   status: SlotStatus | null

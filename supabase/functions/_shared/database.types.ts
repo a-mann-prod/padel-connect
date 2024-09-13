@@ -179,7 +179,6 @@ export type Database = {
           is_competition: boolean | null
           is_private: boolean
           level: number
-          slot_status: Database["public"]["Enums"]["match_slot_status"] | null
           updated_at: string
         }
         Insert: {
@@ -191,7 +190,6 @@ export type Database = {
           is_competition?: boolean | null
           is_private?: boolean
           level: number
-          slot_status?: Database["public"]["Enums"]["match_slot_status"] | null
           updated_at?: string
         }
         Update: {
@@ -203,7 +201,6 @@ export type Database = {
           is_competition?: boolean | null
           is_private?: boolean
           level?: number
-          slot_status?: Database["public"]["Enums"]["match_slot_status"] | null
           updated_at?: string
         }
         Relationships: [
@@ -444,7 +441,6 @@ export type Database = {
     Enums: {
       manual_preference: "LEFT_HANDED" | "RIGHT_HANDED"
       match_request_status: "ACCEPTED" | "REFUSED" | "PENDING"
-      match_slot_status: "AVAILABLE" | "BOOKED" | "UNAVAILABLE"
       notification:
         | "NEW_MESSAGE"
         | "NEW_MATCH"

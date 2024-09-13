@@ -11,7 +11,11 @@ import {
 } from '@/components'
 import { Loader, ScrollView } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
-import { getMatchTimes, useManageMatch } from '@/hooks/useManageMatch'
+import {
+  getMatchTimes,
+  isMatchReserved,
+  useManageMatch,
+} from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -37,7 +41,6 @@ export default WithMatch(() => {
     isPlayer,
     payMatch,
     isPayMatchPending,
-    isReserved,
   } = useManageMatch(matchId)
 
   const { isMatchPassed } = match
@@ -103,7 +106,7 @@ export default WithMatch(() => {
               isLeaveButtonLoading={isCancelRequestMatchPending}
               onPayButtonPress={payMatch}
               isPayButtonLoading={isPayMatchPending}
-              isReserved={isReserved}
+              isReserved={isMatchReserved(match)}
             />
           )}
           {!isParticipant && (

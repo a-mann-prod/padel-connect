@@ -10,8 +10,8 @@ import {
 import { Button, ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
-import { useManageMatch } from '@/hooks/useManageMatch'
-import { useDeleteMatch, useUpdateMatch } from '@/services/api'
+import { isMatchReserved } from '@/hooks/useManageMatch'
+import { useDeleteMatch, useMatch, useUpdateMatch } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { useOverlayStore } from '@/services/overlaysStore'
 import { routing } from '@/services/routing'
@@ -30,7 +30,12 @@ export default WithMatch(() => {
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
 
-  const { match, isReserved } = useManageMatch(matchId)
+  const { data: match } = useMatch({
+    params: { id: matchId },
+    options: { enabled: !!matchId },
+  })
+
+  const isReserved = match && isMatchReserved(match)
 
   const defaultValues: Nillable<MatchFormValues> = formatToFormValues(match)
 
