@@ -4,4 +4,4 @@ export type ComplexResponse = Tables<'complexes'>
 
 export type ComplexesResponse = Tables<'complexes'>[]
 
-export const getComplexesQueryCols = 'id, name, created_at'
+export const getComplexesQueryCols = 'id, name, phone_number, created_at'

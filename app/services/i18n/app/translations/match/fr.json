@@ -1,11 +1,12 @@
 {
+  "callComplex": "Appeler le centre",
   "cancelRequest": "Annuler la demande",
   "chat": "Messagerie",
   "competitionMatch": "Match compétitif",
   "competitionMatchHelpMessage": "Permettra d'ajouter les scores en fin de match",
   "datetime": "Date et heure",
-  "deleteMatch": "Supprimer la partie",
-  "deleteMatchMessage": "Es tu sûr de vouloir supprimer la partie ?",
+  "deleteMatch": "Supprimer le match",
+  "deleteMatchMessage": "Es tu sûr de vouloir supprimer le match ?",
   "duration": "Durée",
   "enterScore": "Renseigner le score",
   "joinRequest": "Demande",
@@ -17,6 +18,6 @@
   "privateMatch": "Match privé",
   "privateMatchHelpMessage": "N'apparaitra pas dans la liste des matches disponibles et n'enverra pas de notifications",
   "share": "Partager",
-  "shareMessage": "Hey ! Chaud pour une partie de padel ? Tu peux la rejoindre en cliquant sur le lien suivant",
+  "shareMessage": "Hey ! Chaud pour un match de padel ? Tu peux la rejoindre en cliquant sur le lien suivant",
   "team": "Equipe"
 }

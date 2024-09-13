@@ -7,6 +7,7 @@ import { routing } from '@/services/routing'
 
 type MatchActionButtonsProps = {
   matchId: number
+  isReserved: boolean
 
   onLeaveButtonPress: () => void
   isLeaveButtonLoading: boolean
@@ -21,6 +22,7 @@ type MatchActionButtonsProps = {
 
 export const MatchActionButtons = ({
   matchId,
+  isReserved,
 
   hasPayed,
   isOwner,
@@ -38,7 +40,7 @@ export const MatchActionButtons = ({
 
   return (
     <VStack gap="$3">
-      {isParticipant && !hasPayed && (
+      {isParticipant && isReserved && !hasPayed && (
         <Button
           title={t('pay')}
           icon="FAS-money-bill"

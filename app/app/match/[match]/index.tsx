@@ -37,6 +37,7 @@ export default WithMatch(() => {
     isPlayer,
     payMatch,
     isPayMatchPending,
+    isReserved,
   } = useManageMatch(matchId)
 
   const { isMatchPassed } = match
@@ -102,6 +103,7 @@ export default WithMatch(() => {
               isLeaveButtonLoading={isCancelRequestMatchPending}
               onPayButtonPress={payMatch}
               isPayButtonLoading={isPayMatchPending}
+              isReserved={isReserved}
             />
           )}
           {!isParticipant && (

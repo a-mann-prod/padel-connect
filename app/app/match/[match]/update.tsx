@@ -10,11 +10,13 @@ import {
 import { Button, ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
-import { useDeleteMatch, useMatch, useUpdateMatch } from '@/services/api'
+import { useManageMatch } from '@/hooks/useManageMatch'
+import { useDeleteMatch, useUpdateMatch } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { useOverlayStore } from '@/services/overlaysStore'
 import { routing } from '@/services/routing'
 import { Nillable } from '@/types'
+import { Linking } from 'react-native'
 
 const { formatToParams, formatToFormValues } = matchFormServices
 
@@ -28,10 +30,7 @@ export default WithMatch(() => {
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
 
-  const { data: match } = useMatch({
-    params: { id: matchId },
-    options: { enabled: !!matchId },
-  })
+  const { match, isReserved } = useManageMatch(matchId)
 
   const defaultValues: Nillable<MatchFormValues> = formatToFormValues(match)
 
@@ -55,17 +54,31 @@ export default WithMatch(() => {
           defaultValues={defaultValues}
           isLoading={isPending}
         />
-        <Button
-          title={t('deleteMatch')}
-          action="negative"
-          onPress={() =>
-            show('defaultAlert', {
-              message: t('deleteMatchMessage'),
-              onContinueCallback: () => deleteMatch({ id: matchId }),
-            })
-          }
-          isLoading={isPendingDelete}
-        />
+
+        {isReserved ? (
+          <Button
+            title={t('callCenter')}
+            action="negative"
+            onPress={() =>
+              match?.complex?.phone_number &&
+              Linking.openURL(`tel:${match?.complex?.phone_number}`)
+            }
+            isLoading={isPendingDelete}
+            isDisabled={!match?.complex?.phone_number}
+          />
+        ) : (
+          <Button
+            title={t('deleteMatch')}
+            action="negative"
+            onPress={() =>
+              show('defaultAlert', {
+                message: t('deleteMatchMessage'),
+                onContinueCallback: () => deleteMatch({ id: matchId }),
+              })
+            }
+            isLoading={isPendingDelete}
+          />
+        )}
       </VStack>
     </ScrollView>
   )

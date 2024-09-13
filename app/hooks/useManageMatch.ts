@@ -8,6 +8,7 @@ import {
   useInsertMatchRequests,
   useMatch,
   useMatchRequest,
+  useMatchRequests,
   useUpdateMatchRequest,
 } from '@/services/api'
 
@@ -38,12 +39,16 @@ export const useManageMatch = (matchId: number) => {
   const { mutate: updateMatchRequest, isPending: isPayMatchPending } =
     useUpdateMatchRequest({ onError })
 
+  const { data: matchRequests, isLoading: isLoadingMatchRequests } =
+    useMatchRequests({ params: { match_id: matchId } })
+
   return {
     match,
     isRequesting: matchRequest?.status === 'PENDING',
     isPlayer: matchRequest?.status === 'ACCEPTED' && !matchRequest?.is_owner,
     isOwner: !!matchRequest?.is_owner,
-    isLoading: isLoadingMatchRequest || isLoadingMatch,
+    isLoading:
+      isLoadingMatchRequest || isLoadingMatch || isLoadingMatchRequests,
     requestMatch: () =>
       me?.id && requestMatch([{ match_id: matchId, user_id: me.id }]),
     cancelRequestMatch: () =>
@@ -58,6 +63,9 @@ export const useManageMatch = (matchId: number) => {
     isRequestMatchPending,
     isCancelRequestMatchPending,
     isPayMatchPending,
+    isReserved: !!matchRequests?.some(
+      ({ is_owner, has_payed }) => is_owner && has_payed
+    ),
   }
 }
 
