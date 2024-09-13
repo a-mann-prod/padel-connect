@@ -25,6 +25,13 @@ Deno.serve(async (req) => {
   const payload: WebhookPayload = await req.json();
   const matchRequest = payload.record;
 
+  // maybe to remove when adapted to 4Padel ?
+  if (payload.old_record?.has_payed !== matchRequest.has_payed) {
+    return new Response("No request response notification if user has payed", {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   // get users to be notified on match request update
   const { data: user } = await clientAdmin
     .from("profiles")
