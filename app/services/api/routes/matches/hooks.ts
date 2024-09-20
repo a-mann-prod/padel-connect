@@ -10,12 +10,14 @@ import {
   MatchResponse,
   MatchesCountResponse,
   MatchesResponse,
+  UserMatchesResponse,
   getMatchQueryCols,
 } from './entities'
 import {
   getMatchFn,
   getMatchesCountFn,
   getMatchesFn,
+  getUserMatchesFn,
   setMatchFn,
 } from './functions'
 import {
@@ -23,6 +25,7 @@ import {
   GetMatchParams,
   GetMatchesCountParams,
   GetMatchesParams,
+  GetUserMatchesParams,
   InsertMatchParams,
   UpdateMatchParams,
 } from './params'
@@ -32,6 +35,12 @@ export const useMatch = ({
   options,
 }: UseQueryProps<MatchResponse, GetMatchParams>) =>
   useQuery<MatchResponse>(getMatchFn(params), options)
+
+export const useUserMatches = ({
+  params,
+  options,
+}: UseQueryProps<UserMatchesResponse, GetUserMatchesParams>) =>
+  useQuery<UserMatchesResponse>(getUserMatchesFn(params), options)
 
 export const useMatches = ({
   params,

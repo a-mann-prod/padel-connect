@@ -22,7 +22,11 @@ export type GetMatchesParams = {
   orderBy?: {
     datetime?: boolean
   }
-  user_id?: string
+  match_ids?: number[]
+}
+
+export type GetUserMatchesParams = {
+  user_id: string
 }
 
 export type GetMatchesCountParams = {

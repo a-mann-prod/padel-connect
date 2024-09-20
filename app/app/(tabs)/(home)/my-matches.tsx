@@ -6,7 +6,7 @@ import { ListRenderItemInfo } from 'react-native'
 import { MatchListItem } from '@/components'
 import { Button, VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
-import { MatchesResponse, useMatches } from '@/services/api'
+import { MatchesResponse, useMatches, useUserMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -23,6 +23,13 @@ export default () => {
     []
   )
 
+  const { data: userMatches, isLoading: isLoadingMatchIds } = useUserMatches({
+    params: { user_id: me?.id as string },
+    options: { enabled: !isNilOrEmpty(me?.id) },
+  })
+
+  const matchIds = userMatches?.map(({ id }) => id) || []
+
   const {
     data: matches,
     isLoading,
@@ -31,10 +38,10 @@ export default () => {
   } = useMatches({
     params: {
       dates,
-      user_id: me?.id,
+      match_ids: matchIds,
     },
     options: {
-      enabled: !isNilOrEmpty(me?.id),
+      enabled: !isNilOrEmpty(matchIds),
     },
   })
 
@@ -57,7 +64,7 @@ export default () => {
           getItemCount={(data) => data.length}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
-          isLoading={isLoading}
+          isLoading={isLoading || isLoadingMatchIds}
           onRefresh={refetch}
           refreshing={isRefetching}
         />

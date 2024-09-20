@@ -85,7 +85,7 @@ export default WithMatch(() => {
   const isParticipant = isOwner || isPlayer
 
   return (
-    <SafeAreaView>
+    <SafeAreaView flex={1}>
       <ScrollView>
         <VStack p="$3" gap="$3">
           <MatchInfo

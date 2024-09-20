@@ -3,6 +3,7 @@ import {
   GetMatchParams,
   GetMatchesCountParams,
   GetMatchesParams,
+  GetUserMatchesParams,
 } from './params'
 
 import { supabase } from '@/services/supabase'
@@ -51,13 +52,21 @@ export const getMatchesFn = (params: GetMatchesParams) => {
     }
   }
 
-  if (!isNilOrEmpty(params.user_id) && params.user_id) {
-    query = query.eq('match_requests.user_id', params.user_id)
+  if (!isNilOrEmpty(params.match_ids) && params.match_ids) {
+    query = query.in('id', params.match_ids)
   }
 
   return query.order('datetime', {
     ascending: params?.orderBy?.datetime ?? true,
   })
+}
+
+export const getUserMatchesFn = (params: GetUserMatchesParams) => {
+  let query = supabase
+    .from('matches')
+    .select('id, match_requests!inner(user_id)')
+
+  return query.eq('match_requests.user_id', params.user_id)
 }
 
 export const getMatchesCountFn = (params: GetMatchesCountParams) => {

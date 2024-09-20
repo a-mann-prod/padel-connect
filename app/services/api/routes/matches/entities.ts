@@ -27,6 +27,12 @@ export type MatchesResponse = (Omit<Tables<'matches'>, 'complex_id'> & {
   }[]
 })[]
 
+export type UserMatchesResponse = (Pick<Tables<'matches'>, 'id'> & {
+  match_requests: {
+    user_id: string
+  }[]
+})[]
+
 export type MatchesCountResponse = Pick<Tables<'matches'>, 'id' | 'datetime'>[]
 
 export const getMatchQueryCols =
