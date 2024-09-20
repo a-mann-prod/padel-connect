@@ -22,6 +22,7 @@ export const validators = {
   number: {
     required: () => numberRequired,
     optional: () => z.number().nullable().optional(),
+    array: () => numberRequired,
   },
   boolean: {
     required: () => booleanRequired,

@@ -92,19 +92,19 @@ export type Database = {
         Row: {
           complex_id: number | null
           created_at: string
-          is_my_level_range: boolean
+          level_range: number[]
           user_id: string
         }
         Insert: {
           complex_id?: number | null
           created_at?: string
-          is_my_level_range?: boolean
+          level_range?: number[]
           user_id?: string
         }
         Update: {
           complex_id?: number | null
           created_at?: string
-          is_my_level_range?: boolean
+          level_range?: number[]
           user_id?: string
         }
         Relationships: [

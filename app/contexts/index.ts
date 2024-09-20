@@ -1,4 +1,5 @@
 export * from './AuthContext'
 export * from './ColorSchemeContext'
+export * from './FiltersContext'
 export * from './OnboardingContext'
 export * from './ThemeProvider'

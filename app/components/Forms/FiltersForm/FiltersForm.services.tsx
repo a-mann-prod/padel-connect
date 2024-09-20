@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-import { MatchFilterResponse, UpdateMatchFilterParams } from '@/services/api'
+import { MatchFilters } from '@/contexts'
+import { UpdateMatchFilterParams } from '@/services/api'
 import { validators } from '@/services/formValidator'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
 import { isNilOrEmpty } from '@/utils/global'
-import { getLevelRange } from '@/utils/level'
 
 export type FiltersFormValues = z.infer<typeof schema>
 
@@ -13,12 +13,12 @@ const getDefaultValues = (
   props?: Nillable<FiltersFormValues> | null
 ): FiltersFormValues => ({
   complex_id: props?.complex_id || '',
-  is_my_level_range: props?.is_my_level_range || false,
+  level_range: props?.level_range || [0, 10],
 })
 
 const schema = z.object({
   complex_id: validators.string.optional(),
-  is_my_level_range: validators.boolean.required(),
+  level_range: validators.number.required().array(),
 })
 
 const formatToParams = (props: FiltersFormValues): UpdateMatchFilterParams => ({
@@ -27,7 +27,7 @@ const formatToParams = (props: FiltersFormValues): UpdateMatchFilterParams => ({
 })
 
 const formatToFormValues = (
-  props: MatchFilterResponse | null | undefined
+  props: MatchFilters
 ): Nillable<FiltersFormValues> => {
   if (!props) return {}
 
@@ -40,8 +40,7 @@ const formatToFormValues = (
 export const useDisplayLevelHelpMessage = () => {
   const t = useTranslate()
 
-  return (currentLevel = 0) => {
-    const [min, max] = getLevelRange(currentLevel)
+  return ([min, max]: number[]) => {
     return t('levelRangeHelpMessage', { min, max })
   }
 }

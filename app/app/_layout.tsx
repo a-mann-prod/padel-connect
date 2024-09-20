@@ -10,7 +10,12 @@ import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
 import { DefaultAlert, SelfDeleteAlert } from '@/components'
-import { AuthProvider, ColorSchemeProvider, ThemeProvider } from '@/contexts'
+import {
+  AuthProvider,
+  ColorSchemeProvider,
+  FiltersProvider,
+  ThemeProvider,
+} from '@/contexts'
 import { NotificationsProvider } from '@/contexts/NotificationsContext'
 import { HeaderBackButton } from '@/designSystem'
 import { useInit } from '@/hooks/useInit'
@@ -77,14 +82,16 @@ const RootProvider = () => {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <NotificationsProvider>
-              <RootLayoutNav />
-              {Platform.OS === 'web' && (
-                <ReactQueryDevtools initialIsOpen={false} />
-              )}
-              <SelfDeleteAlert />
-              <DefaultAlert />
-            </NotificationsProvider>
+            <FiltersProvider>
+              <NotificationsProvider>
+                <RootLayoutNav />
+                {Platform.OS === 'web' && (
+                  <ReactQueryDevtools initialIsOpen={false} />
+                )}
+                <SelfDeleteAlert />
+                <DefaultAlert />
+              </NotificationsProvider>
+            </FiltersProvider>
           </AuthProvider>
         </QueryClientProvider>
       </ThemeProvider>

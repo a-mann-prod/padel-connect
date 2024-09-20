@@ -42,7 +42,6 @@
     "minute_plural": "{{count}} minutes"
   },
   "delete": "Supprimer",
-  "displayOnlyMatchesOfMyLevel": "Afficher uniquement les matchs de mon niveau",
   "edit": "Modifier",
   "email": "Email",
   "firstname": "Prénom",

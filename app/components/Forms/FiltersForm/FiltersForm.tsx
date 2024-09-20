@@ -10,11 +10,12 @@ import {
 } from './FiltersForm.services'
 
 import { FormProvider } from '@/components/FormProvider/FormProvider'
-import { FormSelectControlled } from '@/components/FormsControlled'
-import { FormCheckboxControlled } from '@/components/FormsControlled/FormCheckboxControlled/FormCheckboxControlled'
+import {
+  FormRangeSliderControlled,
+  FormSelectControlled,
+} from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useComplexItems } from '@/hooks/useComplexItems'
-import { useMe } from '@/hooks/useMe'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
 
@@ -25,7 +26,6 @@ export type FiltersFormProps = {
   onSubmit: (values: FiltersFormValues) => void
   isLoading?: boolean
   buttonTitle?: string
-  overrideLevel?: number
 }
 
 export const FiltersForm = ({
@@ -33,9 +33,7 @@ export const FiltersForm = ({
   defaultValues,
   isLoading,
   buttonTitle,
-  overrideLevel,
 }: FiltersFormProps) => {
-  const { data: me } = useMe()
   const tGlobal = useTranslate()
   const displayLevelHelpMessage = useDisplayLevelHelpMessage()
 
@@ -51,20 +49,20 @@ export const FiltersForm = ({
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit } = methods
+  const { handleSubmit, watch } = methods
 
   return (
     <>
       <FormProvider {...methods}>
         <VStack gap="$2">
-          <FormCheckboxControlled
-            name="is_my_level_range"
+          <FormRangeSliderControlled
+            name="level_range"
             formControlProps={{
-              title: `${tGlobal('displayOnlyMatchesOfMyLevel')}`,
-              helpMessage: displayLevelHelpMessage(
-                overrideLevel || me?.level || 0
-              ),
+              title: tGlobal('level'),
+              helpMessage: displayLevelHelpMessage(watch('level_range')),
             }}
+            minValue={0}
+            maxValue={10}
           />
           <FormSelectControlled
             formControlProps={{ title: tGlobal('complex') }}

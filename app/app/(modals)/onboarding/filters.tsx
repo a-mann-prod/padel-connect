@@ -7,7 +7,7 @@ import { useOnboardingContext } from '@/contexts'
 import { ScrollView } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
-import { getLevel } from '@/utils/level'
+import { getLevel, getLevelRange } from '@/utils/level'
 
 export default () => {
   const tGlobal = useTranslate()
@@ -24,10 +24,12 @@ export default () => {
       <ScrollView>
         <VStack gap="$5" m="$5">
           <FiltersForm
-            defaultValues={{ is_my_level_range: true, ...filters }}
+            defaultValues={{
+              level_range: level ? getLevelRange(getLevel(level)) : undefined,
+              ...filters,
+            }}
             onSubmit={handleOnSubmit}
             buttonTitle={tGlobal('next')}
-            overrideLevel={level ? getLevel(level) : undefined}
           />
         </VStack>
       </ScrollView>

@@ -4,26 +4,23 @@ import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { DateCarouselFilter, MatchListItem } from '@/components'
+import { useFiltersContext } from '@/contexts'
 import { Button, VirtualizedList } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useMe } from '@/hooks/useMe'
-import { useMyMatchFilters } from '@/hooks/useMyMatchFilters'
 import { MatchesResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
-import { getLevelRange } from '@/utils/level'
 
 export default () => {
   const t = useTranslate('play')
   const [dateFilter, setDateFilter] = useState(date.now())
 
   const { data: me } = useMe()
-  const { data: matchFilters } = useMyMatchFilters()
+  const { filters } = useFiltersContext()
 
-  const [min, max] = matchFilters?.is_my_level_range
-    ? getLevelRange(me?.level)
-    : [undefined, undefined]
+  const [min, max] = filters.level_range || [undefined, undefined]
 
   const isToday = dateFilter.isSame(date.now(), 'day')
 
@@ -44,7 +41,7 @@ export default () => {
         min,
         max,
       },
-      ...matchFilters,
+      ...filters,
     },
   })
 
@@ -53,7 +50,7 @@ export default () => {
       {
         icon: 'FAS-sliders',
         onPress: () => router.navigate(routing.playFilters.path()),
-        condition: !!me,
+        condition: true,
       },
     ],
     'headerRight'

@@ -4,8 +4,6 @@ import {
   Image,
   SafeAreaView,
   StatusBar,
-  useColorMode,
-  useToken,
   VStack,
 } from '@gluestack-ui/themed'
 import { useIsFocused } from '@react-navigation/native'
@@ -24,14 +22,7 @@ export default () => {
   const { data: me } = useMe()
   const t = useTranslate()
 
-  const colorMode = useColorMode()
-
   const isFocused = useIsFocused()
-
-  const backgroundColor = useToken(
-    'colors',
-    colorMode === 'light' ? 'backgroundLight50' : 'black'
-  )
 
   const { count: badgeCount } = useUnreadNotifications({
     params: { user_id: me?.id as string },
@@ -72,9 +63,9 @@ export default () => {
         <Box
           flex={1}
           mt={-30}
-          bgColor={backgroundColor}
           borderTopLeftRadius="$3xl"
           borderTopRightRadius="$3xl"
+          variant="colored"
         >
           <VStack gap="$3" m="$3" mt="$3">
             <Button
