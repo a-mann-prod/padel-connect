@@ -14,11 +14,13 @@ const getDefaultValues = (
 ): FiltersFormValues => ({
   complex_id: props?.complex_id || '',
   level_range: props?.level_range || [0, 10],
+  match_type: props?.match_type || '',
 })
 
 const schema = z.object({
   complex_id: validators.string.optional(),
   level_range: validators.number.required().array(),
+  match_type: validators.string.optional(),
 })
 
 const formatToParams = (props: FiltersFormValues): UpdateMatchFilterParams => ({

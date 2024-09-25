@@ -93,18 +93,21 @@ export type Database = {
           complex_id: number | null
           created_at: string
           level_range: number[]
+          type: Database["public"]["Enums"]["match_type"] | null
           user_id: string
         }
         Insert: {
           complex_id?: number | null
           created_at?: string
           level_range?: number[]
+          type?: Database["public"]["Enums"]["match_type"] | null
           user_id?: string
         }
         Update: {
           complex_id?: number | null
           created_at?: string
           level_range?: number[]
+          type?: Database["public"]["Enums"]["match_type"] | null
           user_id?: string
         }
         Relationships: [
@@ -176,9 +179,9 @@ export type Database = {
           datetime: string
           duration: number
           id: number
-          is_competition: boolean | null
           is_private: boolean
           level: number
+          type: Database["public"]["Enums"]["match_type"]
           updated_at: string
         }
         Insert: {
@@ -187,9 +190,9 @@ export type Database = {
           datetime: string
           duration: number
           id?: number
-          is_competition?: boolean | null
           is_private?: boolean
           level: number
+          type?: Database["public"]["Enums"]["match_type"]
           updated_at?: string
         }
         Update: {
@@ -198,9 +201,9 @@ export type Database = {
           datetime?: string
           duration?: number
           id?: number
-          is_competition?: boolean | null
           is_private?: boolean
           level?: number
+          type?: Database["public"]["Enums"]["match_type"]
           updated_at?: string
         }
         Relationships: [
@@ -376,7 +379,7 @@ export type Database = {
           description: string
           id: number
           title: string
-          type: Database["public"]["Enums"]["tournament_type"]
+          type: Database["public"]["Enums"]["match_type"]
         }
         Insert: {
           complex_id: number
@@ -385,7 +388,7 @@ export type Database = {
           description: string
           id?: number
           title: string
-          type: Database["public"]["Enums"]["tournament_type"]
+          type?: Database["public"]["Enums"]["match_type"]
         }
         Update: {
           complex_id?: number
@@ -394,7 +397,7 @@ export type Database = {
           description?: string
           id?: number
           title?: string
-          type?: Database["public"]["Enums"]["tournament_type"]
+          type?: Database["public"]["Enums"]["match_type"]
         }
         Relationships: [
           {
@@ -431,6 +434,7 @@ export type Database = {
     Enums: {
       manual_preference: "LEFT_HANDED" | "RIGHT_HANDED"
       match_request_status: "ACCEPTED" | "REFUSED" | "PENDING"
+      match_type: "LEISURE" | "COMPETITION"
       notification:
         | "NEW_MESSAGE"
         | "NEW_MATCH"
@@ -438,7 +442,6 @@ export type Database = {
         | "MATCH_REQUEST_RESPONSE_ACCEPTED"
         | "MATCH_REQUEST_RESPONSE_REFUSED"
       side_preference: "LEFT" | "RIGHT" | "BOTH"
-      tournament_type: "LEISURE" | "COMPETITION"
     }
     CompositeTypes: {
       [_ in never]: never

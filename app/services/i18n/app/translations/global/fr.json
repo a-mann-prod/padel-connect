@@ -59,8 +59,9 @@
     "title": "Main forte"
   },
   "matchType": {
-    "competitive": "Compétition",
-    "friendly": "Amical"
+    "competition": "Compétition",
+    "leisure": "Amical",
+    "title": "Type de match"
   },
   "me": "Moi",
   "message": "Message",

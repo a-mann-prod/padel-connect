@@ -16,6 +16,7 @@ import {
 } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useComplexItems } from '@/hooks/useComplexItems'
+import { useMatchTypeItems } from '@/hooks/useMatchTypeItems'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
 
@@ -38,6 +39,7 @@ export const FiltersForm = ({
   const displayLevelHelpMessage = useDisplayLevelHelpMessage()
 
   const complexItems = useComplexItems()
+  const typeItems = useMatchTypeItems()
 
   const defaultValuesMemo = useMemo(
     () => getDefaultValues(defaultValues),
@@ -68,6 +70,11 @@ export const FiltersForm = ({
             formControlProps={{ title: tGlobal('complex') }}
             name="complex_id"
             items={[{ label: tGlobal('none'), value: '' }, ...complexItems]}
+          />
+          <FormSelectControlled
+            formControlProps={{ title: tGlobal('matchType.title') }}
+            name="match_type"
+            items={[{ label: tGlobal('none'), value: '' }, ...typeItems]}
           />
         </VStack>
       </FormProvider>

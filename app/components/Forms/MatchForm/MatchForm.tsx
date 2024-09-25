@@ -15,6 +15,7 @@ import { Button } from '@/designSystem'
 import { useComplexItems } from '@/hooks/useComplexItems'
 import { useDurationItems } from '@/hooks/useDurationItems'
 import { useLevelItems } from '@/hooks/useLevelItems'
+import { useMatchTypeItems } from '@/hooks/useMatchTypeItems'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
@@ -52,6 +53,7 @@ export const MatchForm = ({
   const levelItems = useLevelItems()
   const durationItems = useDurationItems()
   const complexItems = useComplexItems()
+  const typeItems = useMatchTypeItems()
 
   return (
     <>
@@ -80,18 +82,17 @@ export const MatchForm = ({
             formControlProps={{ title: t('duration') }}
             items={durationItems}
           />
+          <FormSelectControlled
+            displayPlaceHolder
+            name="type"
+            formControlProps={{ title: t('matchType') }}
+            items={typeItems}
+          />
           <FormCheckboxControlled
             name="is_private"
             formControlProps={{
               title: t('privateMatch'),
               helpMessage: t('privateMatchHelpMessage'),
-            }}
-          />
-          <FormCheckboxControlled
-            name="is_competition"
-            formControlProps={{
-              title: t('competitionMatch'),
-              helpMessage: t('competitionMatchHelpMessage'),
             }}
           />
         </VStack>

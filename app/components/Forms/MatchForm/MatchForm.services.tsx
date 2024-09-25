@@ -14,7 +14,7 @@ const getDefaultValues = (
   duration: props?.duration || '',
   level: props?.level || '',
   is_private: props?.is_private || false,
-  is_competition: props?.is_competition || false,
+  match_type: props?.match_type || '',
 })
 
 const schema = z.object({
@@ -23,7 +23,7 @@ const schema = z.object({
   duration: validators.string.required(),
   level: validators.string.required(),
   is_private: validators.boolean.required(),
-  is_competition: validators.boolean.required(),
+  match_type: validators.string.required(),
 })
 
 const formatToParams = (props: MatchFormValues): InsertMatchParams => ({

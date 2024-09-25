@@ -60,8 +60,9 @@
     "title": "Strong hand"
   },
   "matchType": {
-    "competitive": "Competitive",
-    "friendly": "Friendly"
+    "competition": "Competitive",
+    "leisure": "Friendly",
+    "title": "Match type"
   },
   "me": "Me",
   "message": "Message",

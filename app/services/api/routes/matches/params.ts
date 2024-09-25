@@ -23,6 +23,7 @@ export type GetMatchesParams = {
     datetime?: boolean
   }
   match_ids?: number[]
+  type?: Database['public']['Enums']['match_type'] | null
 }
 
 export type GetUserMatchesParams = {

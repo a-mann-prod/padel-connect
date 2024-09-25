@@ -121,7 +121,7 @@ export const MatchInfo = ({
             router.navigate(routing.matchUser.path(match.id, id))
           }
           onEmptyPress={() => !isParticipant && !!me && onEmptyPress?.()}
-          displayTeam={!!match.is_competition}
+          displayTeam={match.type === 'COMPETITION'}
           hasPayedUserIds={hasPayedUserIds}
           isMatchPassed={isMatchPassed}
         />
