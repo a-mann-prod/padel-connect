@@ -411,16 +411,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_new_match_notified_users: {
-        Args: {
-          match_level: number
-          match_complex_id: number
-        }
-        Returns: {
-          id: string
-          language: string
-        }[]
-      }
       mark_all_notifications_as_read: {
         Args: Record<PropertyKey, never>
         Returns: undefined
