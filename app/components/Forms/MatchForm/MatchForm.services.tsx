@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { InsertMatchParams, MatchResponse } from '@/services/api'
 import { validators } from '@/services/formValidator'
+import { Database } from '@/services/supabase/database.types'
 import { Nillable } from '@/types'
 
 export type MatchFormValues = z.infer<typeof schema>
@@ -14,7 +15,7 @@ const getDefaultValues = (
   duration: props?.duration || '',
   level: props?.level || '',
   is_private: props?.is_private || false,
-  match_type: props?.match_type || '',
+  type: props?.type || '',
 })
 
 const schema = z.object({
@@ -23,11 +24,12 @@ const schema = z.object({
   duration: validators.string.required(),
   level: validators.string.required(),
   is_private: validators.boolean.required(),
-  match_type: validators.string.required(),
+  type: validators.string.required(),
 })
 
 const formatToParams = (props: MatchFormValues): InsertMatchParams => ({
   ...props,
+  type: props.type as Database['public']['Enums']['match_type'],
   complex_id: Number(props.complex_id),
   duration: Number(props.duration),
   level: Number(props.level),
