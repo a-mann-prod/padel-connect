@@ -53,13 +53,6 @@ export const useSettingsItems = () => {
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
           },
           {
-            title: t('general.updatePreferences'),
-            icon: 'FAS-face-grin-hearts',
-            onPress: () =>
-              router.navigate(routing.profileSettingsUpdatePreferences.path()),
-            rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
-          },
-          {
             title: t('general.updateNotificationAlerts'),
             icon: 'FAR-bell',
             onPress: () =>

@@ -27,7 +27,7 @@ export const AvatarForm = () => {
 
   const onSubmit = (avatar: AvatarFormValues) => {
     setAvatar(avatar)
-    router.navigate(routing.onboardingPreferences.path())
+    router.navigate(routing.onboardingLevelEstimation.path())
   }
 
   return (

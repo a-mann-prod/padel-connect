@@ -91,10 +91,6 @@ export const routing = {
     name: 'get-started',
     path: () => `${modalsRoot.onboarding.path()}/get-started`,
   },
-  onboardingPreferences: {
-    name: 'preferences',
-    path: () => `${modalsRoot.onboarding.path()}/preferences`,
-  },
   onboardingLevelEstimation: {
     name: 'level-estimation',
     path: () => `${modalsRoot.onboarding.path()}/level-estimation`,
@@ -167,10 +163,6 @@ export const routing = {
   profileSettingsUpdatePersonalInformation: {
     name: 'update-personal-information',
     path: () => `${profileSettings.path()}/update-personal-information`,
-  },
-  profileSettingsUpdatePreferences: {
-    name: 'update-preferences',
-    path: () => `${profileSettings.path()}/update-preferences`,
   },
   profileSettingsUpdateNotificationAlerts: {
     name: 'update-notification-alerts',

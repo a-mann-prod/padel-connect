@@ -15,8 +15,7 @@
     "passwordChange": "Change my password",
     "title": "General",
     "updateNotificationAlerts": "Change notifications",
-    "updatePersonalInformation": "Change my info",
-    "updatePreferences": "Change my preferences"
+    "updatePersonalInformation": "My info"
   },
   "legalInformation": {
     "privacyPolicy": "Privacy policy",

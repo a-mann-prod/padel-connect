@@ -6,10 +6,15 @@ import { useForm } from 'react-hook-form'
 import {
   PersonalInfoFormValues,
   personalInfoFormServices,
+  useManualPreferenceOptions,
+  useSidePreferenceOptions,
 } from './PersonalInfoForm.services'
 
 import { FormProvider } from '@/components/FormProvider/FormProvider'
-import { FormInputControlled } from '@/components/FormsControlled'
+import {
+  FormChoiceButtonControlled,
+  FormInputControlled,
+} from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types/nillable'
@@ -67,6 +72,19 @@ export const PersonalInfoForm = ({
             autoCapitalize="words"
             autoCorrect={false}
             inputMode="text"
+          />
+          <FormChoiceButtonControlled
+            name="manual_preference"
+            single
+            formControlProps={{ title: tGlobal('manualPreference.title') }}
+            options={useManualPreferenceOptions()}
+          />
+
+          <FormChoiceButtonControlled
+            name="side_preference"
+            single
+            formControlProps={{ title: tGlobal('sidePreference.title') }}
+            options={useSidePreferenceOptions()}
           />
         </FormProvider>
       </VStack>

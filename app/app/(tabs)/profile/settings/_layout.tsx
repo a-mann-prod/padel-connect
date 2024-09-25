@@ -21,10 +21,6 @@ export default WithAuth(() => {
         options={{ title: t('updatePersonalInformation') }}
       />
       <Stack.Screen
-        name={routing.profileSettingsUpdatePreferences.name}
-        options={{ title: t('updatePreferences') }}
-      />
-      <Stack.Screen
         name={routing.profileSettingsUpdateNotificationAlerts.name}
         options={{ title: t('updateNotificationAlerts') }}
       />
