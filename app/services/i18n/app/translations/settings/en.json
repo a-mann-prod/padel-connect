@@ -11,10 +11,10 @@
       "title": "Display"
     },
     "deleteAccount": "Delete my account",
-    "emailChange": "Change my email",
+    "emailChange": "Update my email",
     "passwordChange": "Change my password",
     "title": "General",
-    "updateNotificationAlerts": "Change notifications",
+    "updateNotificationAlerts": "Notifications",
     "updatePersonalInformation": "My info"
   },
   "legalInformation": {
