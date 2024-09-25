@@ -71,7 +71,6 @@ export const useSettingsItems = () => {
           {
             title: t('general.darkmode.title'),
             icon: colorScheme === 'dark' ? 'FAR-moon' : 'FAR-sun',
-            iconColor: 'amber500',
             items: [
               {
                 id: 'devicePreference',
