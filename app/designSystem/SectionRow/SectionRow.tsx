@@ -4,6 +4,7 @@ import { GestureResponderEvent } from 'react-native'
 
 import { Actionsheet, ActionsheetProps } from '../Actionsheet/Actionsheet'
 import { Icon, IconNameProp } from '../Icon/Icon'
+import { Loader } from '../Loader/Loader'
 import { Pressable, PressableProps } from '../Pressable/Pressable'
 
 import { Config } from '@/services/theme/gluestack-ui/gluestack-ui.config'
@@ -17,6 +18,7 @@ export type SectionRowProps = {
   rightComponent?: () => ReactNode
   isDisabled?: boolean
   isHidden?: boolean
+  isLoading?: boolean
 
   onChange?: ActionsheetProps['onChange']
   items?: ActionsheetProps['items']
@@ -30,6 +32,7 @@ export const SectionRow = ({
   rightComponent,
   isDisabled,
   isHidden,
+  isLoading,
 
   onChange,
   items,
@@ -50,7 +53,7 @@ export const SectionRow = ({
           <Box w="$8" backgroundColor="">
             <Icon name={icon} size="md" color={iconColor} />
           </Box>
-          <Text fontSize="$md">{title}</Text>
+          {isLoading ? <Loader /> : <Text fontSize="$md">{title}</Text>}
         </HStack>
         {rightComponent?.()}
       </HStack>

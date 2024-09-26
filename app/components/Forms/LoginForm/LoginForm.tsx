@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link, router, useLocalSearchParams } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { useForm } from 'react-hook-form'
 
 import { LoginFormValues, loginFormServices } from './LoginForm.services'
@@ -17,14 +17,15 @@ const { getDefaultValues, schema } = loginFormServices
 export const LoginForm = () => {
   const t = useTranslate('auth')
   const tGlobal = useTranslate()
-  const { redirectTo } = useLocalSearchParams()
+  // const { redirectTo } = useLocalSearchParams()
 
   const onError = useHandleError()
 
   const { mutate: login, isPending } = useLogin({
     onSuccess: () => {
-      router.dismissAll()
-      router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
+      router.canGoBack() && router.back() // need to go back one time because of navigation to login
+      // router.dismissAll()
+      // router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
     },
     onError,
   })

@@ -131,27 +131,33 @@ export type Database = {
         Row: {
           created_at: string
           has_payed: boolean
+          invite_status: Database["public"]["Enums"]["match_request_status"]
           is_guest: boolean
           is_owner: boolean
           match_id: number
+          request_id: string
           status: Database["public"]["Enums"]["match_request_status"]
           user_id: string
         }
         Insert: {
           created_at?: string
           has_payed?: boolean
+          invite_status?: Database["public"]["Enums"]["match_request_status"]
           is_guest?: boolean
           is_owner?: boolean
           match_id: number
+          request_id?: string
           status?: Database["public"]["Enums"]["match_request_status"]
           user_id: string
         }
         Update: {
           created_at?: string
           has_payed?: boolean
+          invite_status?: Database["public"]["Enums"]["match_request_status"]
           is_guest?: boolean
           is_owner?: boolean
           match_id?: number
+          request_id?: string
           status?: Database["public"]["Enums"]["match_request_status"]
           user_id?: string
         }

@@ -18,4 +18,4 @@ export const getMatchRequestQueryCols =
   'match_id, user_id, status, is_owner, has_payed'
 
 export const getMatchRequestsQueryCols =
-  'match_id, user_id, player:profiles!inner(id, first_name, last_name, avatar_url, side_preference, manual_preference), is_owner, status, has_payed, is_guest, created_at'
+  'match_id, user_id, player:profiles!inner(id, first_name, last_name, avatar_url, side_preference, manual_preference), is_owner, status, has_payed, is_guest, invite_status, request_id, created_at'

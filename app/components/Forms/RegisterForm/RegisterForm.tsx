@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { router, useLocalSearchParams } from 'expo-router'
+import { router } from 'expo-router'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -21,14 +21,15 @@ export const RegisterForm = () => {
   const t = useTranslate('auth')
   const tGlobal = useTranslate()
   const toast = useToast()
-  const { redirectTo } = useLocalSearchParams()
+  // const { redirectTo } = useLocalSearchParams()
   const onError = useHandleError()
 
   const { mutate: register, isPending } = useRegister({
     onSuccess: ({ user, session }) => {
       // if session, no need to verify email
       if (session) {
-        router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
+        router.canGoBack() && router.back() // need to go back one time because of navigation to login
+        // router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
         return
       }
       if (user?.email) {

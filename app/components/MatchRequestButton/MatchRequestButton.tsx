@@ -18,7 +18,7 @@ export const MatchRequestButton = ({
   return (
     <Button
       title={t(isRequesting ? 'cancelRequest' : 'joinRequest')}
-      icon={isRequesting ? 'FAS-ban' : 'FAS-handshake'}
+      icon={isRequesting ? 'FAS-trash' : 'FAS-handshake'}
       iconRight={isRequesting}
       onPress={isRequesting ? onCancelPress : onPress}
       action={isRequesting ? 'negative' : 'primary'}

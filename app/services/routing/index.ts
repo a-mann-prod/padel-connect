@@ -212,4 +212,9 @@ export const routing = {
     name: 'chat',
     path: (matchId: string | number) => `${root.match.path(matchId)}/chat`,
   },
+  matchJoinRequest: {
+    name: 'join-request',
+    path: (matchId: string | number) =>
+      `${root.match.path(matchId)}/join-request`,
+  },
 }

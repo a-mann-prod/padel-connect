@@ -86,7 +86,6 @@ export default () => {
               size="xl"
               rounded="$lg"
               onPress={() => router.navigate(routing.homeMyMatches.path())}
-              isDisabled={!me}
             />
           </VStack>
         </Box>

@@ -6,7 +6,6 @@ import { ListRenderItemInfo } from 'react-native'
 import { DateCarouselFilter, MatchListItem } from '@/components'
 import { useFiltersContext } from '@/contexts'
 import { Button, VirtualizedList } from '@/designSystem'
-import { useMe } from '@/hooks/useMe'
 import { MatchesResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
@@ -16,7 +15,6 @@ export default () => {
   const t = useTranslate('play')
   const [dateFilter, setDateFilter] = useState(date.now())
 
-  const { data: me } = useMe()
   const { filters } = useFiltersContext()
 
   const [min, max] = filters.level_range || [undefined, undefined]
@@ -83,7 +81,6 @@ export default () => {
             routing.matchCreate.path({ datetime: dateFilter.toISOString() })
           )
         }
-        isDisabled={!me}
       />
     </VStack>
   )

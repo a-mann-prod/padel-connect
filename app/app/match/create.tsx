@@ -1,7 +1,12 @@
 import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
 
-import { MatchForm, MatchFormValues, matchFormServices } from '@/components'
+import {
+  MatchForm,
+  MatchFormValues,
+  WithAuth,
+  matchFormServices,
+} from '@/components'
 import { ScrollView } from '@/designSystem'
 import { formDateTimePickerServices } from '@/designSystem/Forms/FormDateTimePicker/FormDateTimePicker.services'
 import { useHandleError } from '@/hooks/useHandleError'
@@ -15,7 +20,7 @@ const { formatToParams } = matchFormServices
 
 const { formatWithMinuteInterval } = formDateTimePickerServices
 
-export default () => {
+export default WithAuth(() => {
   const local = useLocalSearchParams()
   const datetime = local?.datetime as string | undefined
 
@@ -48,4 +53,4 @@ export default () => {
       </VStack>
     </ScrollView>
   )
-}
+})

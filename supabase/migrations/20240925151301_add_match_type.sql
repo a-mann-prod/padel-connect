@@ -6,9 +6,9 @@ alter table "public"."matches" drop column "is_competition";
 
 alter table "public"."matches" add column "type" match_type not null default 'LEISURE'::match_type;
 
-alter table "public"."tournaments" alter column "type" set default 'LEISURE'::match_type;
-
 alter table "public"."tournaments" alter column "type" set data type match_type using "type"::text::match_type;
+
+alter table "public"."tournaments" alter column "type" set default 'LEISURE'::match_type;
 
 drop type "public"."tournament_type";
 

@@ -4,7 +4,6 @@ import { router } from 'expo-router'
 
 import { MatchPlayers, MatchTypeTile } from '@/components'
 import { Section, SectionRow, Tile } from '@/designSystem'
-import { useMe } from '@/hooks/useMe'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { MatchResponse } from '@/services/api'
 import { date } from '@/services/date'
@@ -38,8 +37,6 @@ export const MatchInfo = ({
 }: MatchInfoProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
-
-  const { data: me } = useMe()
 
   const userIds = match.match_requests.map(({ user_id }) => user_id) || []
   const ownerId = match.match_requests.find(({ is_owner }) => is_owner)?.user_id
@@ -125,7 +122,6 @@ export const MatchInfo = ({
           onPress={(id) =>
             router.navigate(routing.matchUser.path(match.id, id))
           }
-          onEmptyPress={() => !isParticipant && !!me && onEmptyPress?.()}
           displayTeam={match.type === 'COMPETITION'}
           hasPayedUserIds={hasPayedUserIds}
           isMatchPassed={isMatchPassed}

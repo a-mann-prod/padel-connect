@@ -3,7 +3,7 @@ import { router } from 'expo-router'
 import { useMemo } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
-import { MatchListItem } from '@/components'
+import { MatchListItem, WithAuth } from '@/components'
 import { Button, VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { MatchesResponse, useMatches, useUserMatches } from '@/services/api'
@@ -12,7 +12,7 @@ import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { isNilOrEmpty } from '@/utils/global'
 
-export default () => {
+export default WithAuth(() => {
   const t = useTranslate()
   const { data: me } = useMe()
 
@@ -75,4 +75,4 @@ export default () => {
       />
     </VStack>
   )
-}
+})

@@ -20,7 +20,7 @@ type SettingsSection = SectionProps & {
 export const useSettingsItems = () => {
   const t = useTranslate('settings')
 
-  const { signOut } = useAuthContext()
+  const { signOut, isLoadingSignOut } = useAuthContext()
   const { deviceColorScheme, colorScheme, setColorScheme } =
     useColorSchemeContext()
 
@@ -163,11 +163,19 @@ export const useSettingsItems = () => {
             icon: 'FAS-power-off',
             iconColor: 'red500',
             onPress: () => signOut(),
+            isLoading: isLoadingSignOut,
           },
         ],
       },
     ],
-    [colorScheme, deviceColorScheme, setColorScheme, signOut, t]
+    [
+      colorScheme,
+      deviceColorScheme,
+      setColorScheme,
+      signOut,
+      isLoadingSignOut,
+      t,
+    ]
   )
   return { items }
 }

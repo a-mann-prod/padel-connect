@@ -44,6 +44,12 @@ export default () => {
           headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
+      <Stack.Screen
+        name={routing.matchJoinRequest.name}
+        options={{
+          title: '',
+        }}
+      />
     </Stack>
   )
 }

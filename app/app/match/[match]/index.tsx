@@ -6,7 +6,7 @@ import { Share } from 'react-native'
 import {
   MatchActionButtons,
   MatchInfo,
-  MatchRequestButton,
+  PreMatchRequestButton,
   WithMatch,
 } from '@/components'
 import { Loader, ScrollView } from '@/designSystem'
@@ -33,8 +33,6 @@ export default WithMatch(() => {
     match,
     isOwner,
     isRequesting,
-    requestMatch,
-    isRequestMatchPending,
     cancelRequestMatch,
     isCancelRequestMatchPending,
     isLoading,
@@ -109,13 +107,13 @@ export default WithMatch(() => {
               isReserved={isMatchReserved(match)}
             />
           )}
+
           {!isParticipant && (
-            <MatchRequestButton
+            <PreMatchRequestButton
               isRequesting={isRequesting}
-              onPress={requestMatch}
-              isLoading={isRequestMatchPending || isCancelRequestMatchPending}
-              onCancelPress={cancelRequestMatch}
-              isDisabled={!me}
+              onPress={() =>
+                router.navigate(routing.matchJoinRequest.path(matchId))
+              }
             />
           )}
         </VStack>
