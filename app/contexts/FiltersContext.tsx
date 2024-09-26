@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react'
 
 import { useMe } from '@/hooks/useMe'
 import {
@@ -14,6 +14,9 @@ type FiltersContextProps = {
   filters: MatchFilters
   saveFilters: (value: MatchFilters) => void
   isServerFiltersLoading: boolean
+
+  tournamentsFilters: any
+  setTournamentsFilters: Dispatch<SetStateAction<any>>
 }
 
 const [_, Provider, useFiltersContext] =
@@ -23,6 +26,8 @@ export { useFiltersContext }
 
 export function FiltersProvider({ children }: { children: ReactNode }) {
   const [filters, setFilters] = useState<MatchFilters>({})
+  const [tournamentsFilters, setTournamentsFilters] = useState<any>({})
+
   const { data: me } = useMe()
 
   const { data: serverFilters, isLoading: isServerFiltersLoading } =
@@ -45,7 +50,15 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <Provider value={{ filters, saveFilters, isServerFiltersLoading }}>
+    <Provider
+      value={{
+        filters,
+        saveFilters,
+        isServerFiltersLoading,
+        tournamentsFilters,
+        setTournamentsFilters,
+      }}
+    >
       {children}
     </Provider>
   )

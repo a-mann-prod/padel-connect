@@ -20,5 +20,19 @@ export const getTournamentsFn = (params: GetTournamentsParams) => {
     .gte('datetime', today)
     .order('datetime', { ascending: true })
 
+  if (params.complex_id) {
+    query = query.eq('complex_id', params.complex_id)
+  }
+
+  if (params.type) {
+    query = query.eq('type', params.type)
+  }
+
+  if (params.month) {
+    const month = date.dayjs(params.month)
+    const [start, end] = [month.startOf('month'), month.endOf('month')]
+    query = query.gte('datetime', start).lte('datetime', end)
+  }
+
   return query
 }

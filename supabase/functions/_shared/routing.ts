@@ -1,61 +1,61 @@
 const root = {
   modals: {
-    name: "(modals)",
-    path: () => "/(modals)",
+    name: '(modals)',
+    path: () => '/(modals)',
   },
   tabs: {
-    name: "(tabs)",
-    path: () => "/(tabs)",
+    name: '(tabs)',
+    path: () => '/(tabs)',
   },
   match: {
-    name: "match/[match]",
+    name: 'match/[match]',
     path: (matchId: string | number) => `/match/${matchId}`,
   },
   matchCreate: {
-    name: "match/create",
+    name: 'match/create',
     path: ({ datetime }: { datetime?: string } = {}) =>
-      datetime ? `/match/create?datetime=${datetime}` : "/match/create",
+      datetime ? `/match/create?datetime=${datetime}` : '/match/create',
   },
-};
+}
 
 const modalsRoot = {
   auth: {
-    name: "auth",
+    name: 'auth',
     path: () => `${root.modals.path()}/auth`,
   },
   onboarding: {
-    name: "onboarding",
+    name: 'onboarding',
     path: () => `${root.modals.path()}/onboarding`,
   },
   root: {
-    name: "root",
+    name: 'root',
     path: () => `${root.modals.path()}/root`,
   },
-};
+}
 
 const tabsRoot = {
   home: {
-    name: "(home)",
+    name: '(home)',
     path: () => `${root.tabs.path()}/(home)`,
   },
   play: {
-    name: "play",
+    name: 'play',
     path: () => `${root.tabs.path()}/play`,
   },
   community: {
-    name: "community",
+    name: 'community',
     path: () => `${root.tabs.path()}/community`,
   },
   profile: {
-    name: "profile",
+    name: 'profile',
     path: () => `${root.tabs.path()}/profile`,
   },
-};
+}
 
 const profileSettings = {
-  name: "settings",
+  name: 'settings',
   path: () => `${tabsRoot.profile.path()}/settings`,
-};
+}
 
 export const routing = {
   // root
@@ -66,55 +66,51 @@ export const routing = {
 
   // (modals)/auth
   authLogin: {
-    name: "login",
+    name: 'login',
     path: () => `${modalsRoot.auth.path()}/login`,
   },
   authRegister: {
-    name: "register",
+    name: 'register',
     path: () => `${modalsRoot.auth.path()}/register`,
   },
   authPasswordResetRequest: {
-    name: "password-reset-request",
+    name: 'password-reset-request',
     path: () => `${modalsRoot.auth.path()}/password-reset-request`,
   },
 
   // (modals)/onboarding
   onboardingPersonalInformation: {
-    name: "personal-information",
+    name: 'personal-information',
     path: () => `${modalsRoot.onboarding.path()}/personal-information`,
   },
   onboardingAvatar: {
-    name: "avatar",
+    name: 'avatar',
     path: () => `${modalsRoot.onboarding.path()}/avatar`,
   },
   onboardingGetStarted: {
-    name: "get-started",
+    name: 'get-started',
     path: () => `${modalsRoot.onboarding.path()}/get-started`,
   },
-  onboardingPreferences: {
-    name: "preferences",
-    path: () => `${modalsRoot.onboarding.path()}/preferences`,
-  },
   onboardingLevelEstimation: {
-    name: "level-estimation",
+    name: 'level-estimation',
     path: () => `${modalsRoot.onboarding.path()}/level-estimation`,
   },
   onboardingNotificationAlerts: {
-    name: "notification-alerts",
+    name: 'notification-alerts',
     path: () => `${modalsRoot.onboarding.path()}/notification-alerts`,
   },
   onboardingFilters: {
-    name: "filters",
+    name: 'filters',
     path: () => `${modalsRoot.onboarding.path()}/filters`,
   },
 
   // (modals)/root
   rootEmailVerified: {
-    name: "email-verified",
+    name: 'email-verified',
     path: () => `${modalsRoot.root.path()}/email-verified`,
   },
   rootPasswordReset: {
-    name: "password-reset",
+    name: 'password-reset',
     path: () => `${modalsRoot.root.path()}/password-reset`,
   },
 
@@ -123,40 +119,44 @@ export const routing = {
 
   // (tabs)/(home)
   homeMyMatches: {
-    name: "my-matches",
+    name: 'my-matches',
     path: () => `${tabsRoot.home.path()}/my-matches`,
   },
   homeMyOldMatches: {
-    name: "my-old-matches",
+    name: 'my-old-matches',
     path: () => `${tabsRoot.home.path()}/my-old-matches`,
   },
   homeNotifications: {
-    name: "notifications",
+    name: 'notifications',
     path: () => `${tabsRoot.home.path()}/notifications`,
   },
   homeTournaments: {
-    name: "tournaments",
+    name: 'tournaments',
     path: () => `${tabsRoot.home.path()}/tournaments`,
   },
+  homeTournamentsFilters: {
+    name: 'tournaments-filters',
+    path: () => `${tabsRoot.home.path()}/tournaments-filters`,
+  },
   homeTournamentDetail: {
-    name: "[tournament]",
+    name: '[tournament]',
     path: (tournamentId: string | number) =>
       `${tabsRoot.home.path()}/${tournamentId}`,
   },
 
   // (tabs)/play
   playFilters: {
-    name: "filters",
+    name: 'filters',
     path: () => `${tabsRoot.play.path()}/filters`,
   },
 
   // (tabs)/community
   communityUser: {
-    name: "[user]",
+    name: '[user]',
     path: (userId: string | number) => `${tabsRoot.community.path()}/${userId}`,
   },
   communityFavoriteUsers: {
-    name: "favorite-users",
+    name: 'favorite-users',
     path: () => `${tabsRoot.community.path()}/favorite-users`,
   },
 
@@ -165,55 +165,51 @@ export const routing = {
 
   // (tabs)/profile/settings
   profileSettingsUpdatePersonalInformation: {
-    name: "update-personal-information",
+    name: 'update-personal-information',
     path: () => `${profileSettings.path()}/update-personal-information`,
   },
-  profileSettingsUpdatePreferences: {
-    name: "update-preferences",
-    path: () => `${profileSettings.path()}/update-preferences`,
-  },
   profileSettingsUpdateNotificationAlerts: {
-    name: "update-notification-alerts",
+    name: 'update-notification-alerts',
     path: () => `${profileSettings.path()}/update-notification-alerts`,
   },
   profileSettingsEmailChange: {
-    name: "email-change",
+    name: 'email-change',
     path: () => `${profileSettings.path()}/email-change`,
   },
   profileSettingsPasswordChange: {
-    name: "password-change",
+    name: 'password-change',
     path: () => `${profileSettings.path()}/password-change`,
   },
   profileSettingsPrivacyPolicy: {
-    name: "privacy-policy",
+    name: 'privacy-policy',
     path: () => `${profileSettings.path()}/privacy-policy`,
   },
   profileSettingsTermsOfUse: {
-    name: "terms-of-use",
+    name: 'terms-of-use',
     path: () => `${profileSettings.path()}/terms-of-use`,
   },
   profileSettingsDangerZone: {
-    name: "danger-zone",
+    name: 'danger-zone',
     path: () => `${profileSettings.path()}/danger-zone`,
   },
 
   // match
   matchUpdate: {
-    name: "update",
+    name: 'update',
     path: (matchId: string | number) => `${root.match.path(matchId)}/update`,
   },
   matchUser: {
-    name: "user/[user]",
+    name: 'user/[user]',
     path: (matchId: string | number, userId: string | number) =>
       `${root.match.path(matchId)}/user/${userId}`,
   },
   matchPlayersManage: {
-    name: "players-manage",
+    name: 'players-manage',
     path: (matchId: string | number) =>
       `${root.match.path(matchId)}/players-manage`,
   },
   matchChat: {
-    name: "chat",
+    name: 'chat',
     path: (matchId: string | number) => `${root.match.path(matchId)}/chat`,
   },
-};
+}

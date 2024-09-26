@@ -1,5 +1,6 @@
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 
+import { HeaderButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -31,7 +32,24 @@ export default () => {
       />
       <Stack.Screen
         name={routing.homeTournaments.name}
-        options={{ title: t('tournaments') }}
+        options={{
+          title: t('tournaments'),
+          headerRight: (props) => (
+            <HeaderButton
+              icon="FAS-sliders"
+              onPress={() =>
+                router.navigate(routing.homeTournamentsFilters.path())
+              }
+              {...props}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={routing.homeTournamentsFilters.name}
+        options={{
+          title: t('filters'),
+        }}
       />
       <Stack.Screen
         name={routing.homeTournamentDetail.name}

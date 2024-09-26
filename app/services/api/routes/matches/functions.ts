@@ -35,6 +35,10 @@ export const getMatchesFn = (params: GetMatchesParams) => {
     query = query.eq('complex_id', params.complex_id)
   }
 
+  if (params.type) {
+    query = query.eq('type', params.type)
+  }
+
   if (params.level) {
     if (!isNilOrEmpty(params.level.min)) {
       query = query.gte('level', params.level.min)
@@ -54,10 +58,6 @@ export const getMatchesFn = (params: GetMatchesParams) => {
 
   if (!isNilOrEmpty(params.match_ids) && params.match_ids) {
     query = query.in('id', params.match_ids)
-  }
-
-  if (!isNilOrEmpty(params.type) && params.type) {
-    query = query.eq('type', params.type)
   }
 
   return query.order('datetime', {

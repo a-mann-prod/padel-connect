@@ -134,6 +134,10 @@ export const routing = {
     name: 'tournaments',
     path: () => `${tabsRoot.home.path()}/tournaments`,
   },
+  homeTournamentsFilters: {
+    name: 'tournaments-filters',
+    path: () => `${tabsRoot.home.path()}/tournaments-filters`,
+  },
   homeTournamentDetail: {
     name: '[tournament]',
     path: (tournamentId: string | number) =>

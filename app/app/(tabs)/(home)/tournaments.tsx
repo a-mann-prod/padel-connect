@@ -3,13 +3,18 @@ import { router } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
 
 import { TournamentListItem } from '@/components'
+import { useFiltersContext } from '@/contexts'
 import { VirtualizedList } from '@/designSystem'
 import { TournamentResponse, useTournaments } from '@/services/api'
 import { routing } from '@/services/routing'
 
 export default () => {
+  const { tournamentsFilters } = useFiltersContext()
+
   const { data, isLoading, refetch, isRefetching } = useTournaments({
-    params: {},
+    params: {
+      ...tournamentsFilters,
+    },
   })
 
   const renderItem = ({ item }: ListRenderItemInfo<TournamentResponse>) => (
