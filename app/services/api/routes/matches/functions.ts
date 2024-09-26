@@ -23,11 +23,11 @@ export const getMatchesFn = (params: GetMatchesParams) => {
     .select(getMatchesQueryCols)
     .eq('match_requests.status', 'ACCEPTED')
 
-  if (params.dates.start) {
+  if (params?.dates?.start) {
     query = query.gte('datetime', params.dates.start)
   }
 
-  if (params.dates.end) {
+  if (params?.dates?.end) {
     query = query.lte('datetime', params.dates.end)
   }
 

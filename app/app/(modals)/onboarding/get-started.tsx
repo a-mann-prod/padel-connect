@@ -12,7 +12,7 @@ export default () => {
   const t = useTranslate('onboarding', { keyPrefix: 'getStarted' })
   const tGlobal = useTranslate()
 
-  const { personalInfo, avatar, preferences, level, notificationAlerts } =
+  const { personalInfo, avatar, level, notificationAlerts } =
     useOnboardingContext()
 
   const { mutate: updateAvatarMe, isPending: isPendingUpdateAvatarMe } =
@@ -32,7 +32,6 @@ export default () => {
   const onSubmit = async () =>
     updateMe({
       ...personalInfo,
-      ...preferences,
       ...level,
       ...notificationAlerts,
       is_onboarding_completed: true,
