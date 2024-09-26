@@ -5,7 +5,7 @@ export type GetMatchParams = {
 }
 
 export type GetMatchesParams = {
-  dates: {
+  dates?: {
     start?: string
     end?: string
   }
@@ -28,6 +28,10 @@ export type GetMatchesParams = {
 
 export type GetUserMatchesParams = {
   user_id: string
+  dates?: {
+    start?: string
+    end?: string
+  }
 }
 
 export type GetMatchesCountParams = {

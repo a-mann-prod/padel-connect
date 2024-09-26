@@ -24,7 +24,7 @@ export default WithAuth(() => {
   )
 
   const { data: userMatches, isLoading: isLoadingMatchIds } = useUserMatches({
-    params: { user_id: me?.id as string },
+    params: { user_id: me?.id as string, dates },
     options: { enabled: !isNilOrEmpty(me?.id) },
   })
 
@@ -37,7 +37,6 @@ export default WithAuth(() => {
     isRefetching,
   } = useMatches({
     params: {
-      dates,
       match_ids: matchIds,
     },
     options: {

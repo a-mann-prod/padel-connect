@@ -70,6 +70,14 @@ export const getUserMatchesFn = (params: GetUserMatchesParams) => {
     .from('matches')
     .select('id, match_requests!inner(user_id)')
 
+  if (params?.dates?.start) {
+    query = query.gte('datetime', params.dates.start)
+  }
+
+  if (params?.dates?.end) {
+    query = query.lte('datetime', params.dates.end)
+  }
+
   return query.eq('match_requests.user_id', params.user_id)
 }
 

@@ -22,12 +22,6 @@ export default () => {
           }}
         />
         <Stack.Screen
-          name={routing.onboardingPreferences.name}
-          options={{
-            title: t('preferences'),
-          }}
-        />
-        <Stack.Screen
           name={routing.onboardingLevelEstimation.name}
           options={{
             title: t('levelEstimation'),
