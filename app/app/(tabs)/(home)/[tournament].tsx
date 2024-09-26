@@ -1,23 +1,14 @@
 import { Text, VStack } from '@gluestack-ui/themed'
 import { useLocalSearchParams } from 'expo-router'
 
-import { tournamentListItemServices } from '@/components/TournamentListItem/TournamentListItem.services'
-import {
-  Button,
-  Loader,
-  ScrollView,
-  Section,
-  SectionRow,
-  Tile,
-} from '@/designSystem'
+import { MatchTypeTile } from '@/components'
+import { Button, Loader, ScrollView, Section, SectionRow } from '@/designSystem'
 import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useMe } from '@/hooks/useMe'
 import { useTournament } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
-
-const { mapTypeToIcon } = tournamentListItemServices
 
 export default () => {
   const tGlobal = useTranslate()
@@ -50,11 +41,7 @@ export default () => {
   return (
     <ScrollView>
       <VStack p="$3" gap="$3">
-        <Tile
-          title={t(`tournament.${tournament.type.toLowerCase()}`)}
-          bgColor="$primary500"
-          icon={mapTypeToIcon[tournament.type]}
-        />
+        <MatchTypeTile type={tournament.type} />
         <Section title={tournament.title}>
           <Text>{tournament.description}</Text>
         </Section>

@@ -15,6 +15,7 @@ import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { getPublicAvatarUrl } from '@/utils/avatar'
+import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']
@@ -41,12 +42,14 @@ export const MatchListItem = ({ onPress, ...match }: MatchlistItemProps) => {
                 {match.complex?.name}
               </Heading>
               <Text variant="subtitle">
-                {/* {tGlobal(`matchType.${type.toLowerCase()}`)} -{' '} */}
                 {tGlobal('level')} {match.level}
               </Text>
             </VStack>
           </HStack>
-          <SlotStatusIcon status={isReserved ? 'BOOKED' : 'AVAILABLE'} />
+          <HStack gap="$3">
+            <MatchTypeIcon type={match.type} />
+            <SlotStatusIcon status={isReserved ? 'BOOKED' : 'AVAILABLE'} />
+          </HStack>
         </HStack>
         <HStack>
           <PlayersAvatars data={players} />

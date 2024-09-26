@@ -61,7 +61,7 @@
   },
   "matchType": {
     "competition": "Competitive",
-    "leisure": "Friendly",
+    "leisure": "Fun",
     "title": "Match type"
   },
   "me": "Me",
@@ -123,10 +123,6 @@
     "title": "Preferred side"
   },
   "today": "Today",
-  "tournament": {
-    "competition": "Competition",
-    "leisure": "Fun"
-  },
   "tournamentNotFound": "Tournament not found",
   "unknown": "Unknown",
   "warning": "Warning"

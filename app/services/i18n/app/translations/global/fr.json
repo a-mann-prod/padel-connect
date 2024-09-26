@@ -60,7 +60,7 @@
   },
   "matchType": {
     "competition": "Compétition",
-    "leisure": "Amical",
+    "leisure": "Fun",
     "title": "Type de match"
   },
   "me": "Moi",
@@ -122,10 +122,6 @@
     "title": "Côté favori"
   },
   "today": "Aujourd'hui",
-  "tournament": {
-    "competition": "Compétition",
-    "leisure": "Fun"
-  },
   "tournamentNotFound": "Tournoi introuvable",
   "unknown": "Inconnu",
   "warning": "Attention"

@@ -2,7 +2,7 @@ import { HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
 import { router } from 'expo-router'
 
-import { MatchPlayers } from '@/components'
+import { MatchPlayers, MatchTypeTile } from '@/components'
 import { Section, SectionRow, Tile } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
@@ -65,8 +65,13 @@ export const MatchInfo = ({
         />
       )}
       {match.is_private && (
-        <Tile title={t('privateMatch')} bgColor="$primary500" icon="FAS-lock" />
+        <Tile
+          title={t('privateMatch')}
+          bgColor="$secondary500"
+          icon="FAS-lock"
+        />
       )}
+      <MatchTypeTile type={match.type} />
       <Section>
         <SectionRow
           title={tGlobal('location')}

@@ -1,12 +1,10 @@
 import { HStack, Text, VStack } from '@gluestack-ui/themed'
 
-import { tournamentListItemServices as services } from './TournamentListItem.services'
+import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 
-import { Icon, Pressable, PressableProps } from '@/designSystem'
+import { Pressable, PressableProps } from '@/designSystem'
 import { TournamentResponse } from '@/services/api'
 import { date } from '@/services/date'
-
-const { mapTypeToIcon } = services
 
 export type TournamentListItemProps = TournamentResponse & {
   onPress: PressableProps['onPress']
@@ -29,7 +27,7 @@ export const TournamentListItem = ({
         p="$3"
         alignItems="center"
       >
-        <Icon name={mapTypeToIcon[type]} color="$primary500" size="xl" />
+        <MatchTypeIcon type={type} size="xl" color="$primary500" />
 
         <VStack flex={1} gap="$2">
           <HStack alignItems="center">
