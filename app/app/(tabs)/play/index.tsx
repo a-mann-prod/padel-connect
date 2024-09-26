@@ -6,7 +6,6 @@ import { ListRenderItemInfo } from 'react-native'
 import { DateCarouselFilter, MatchListItem } from '@/components'
 import { useFiltersContext } from '@/contexts'
 import { Button, VirtualizedList } from '@/designSystem'
-import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useMe } from '@/hooks/useMe'
 import { MatchesResponse, useMatches } from '@/services/api'
 import { date } from '@/services/date'
@@ -44,17 +43,6 @@ export default () => {
       ...filters,
     },
   })
-
-  useHeaderButton(
-    [
-      {
-        icon: 'FAS-sliders',
-        onPress: () => router.navigate(routing.playFilters.path()),
-        condition: true,
-      },
-    ],
-    'headerRight'
-  )
 
   const renderItem = ({
     item,

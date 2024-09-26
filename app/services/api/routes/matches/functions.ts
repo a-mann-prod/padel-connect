@@ -56,6 +56,10 @@ export const getMatchesFn = (params: GetMatchesParams) => {
     query = query.in('id', params.match_ids)
   }
 
+  if (!isNilOrEmpty(params.type) && params.type) {
+    query = query.eq('type', params.type)
+  }
+
   return query.order('datetime', {
     ascending: params?.orderBy?.datetime ?? true,
   })

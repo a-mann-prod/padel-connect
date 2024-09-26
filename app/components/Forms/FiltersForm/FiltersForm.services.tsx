@@ -4,6 +4,7 @@ import { MatchFilters } from '@/contexts'
 import { UpdateMatchFilterParams } from '@/services/api'
 import { validators } from '@/services/formValidator'
 import { useTranslate } from '@/services/i18n'
+import { Database } from '@/services/supabase/database.types'
 import { Nillable } from '@/types'
 import { isNilOrEmpty } from '@/utils/global'
 
@@ -14,17 +15,18 @@ const getDefaultValues = (
 ): FiltersFormValues => ({
   complex_id: props?.complex_id || '',
   level_range: props?.level_range || [0, 10],
-  match_type: props?.match_type || '',
+  type: props?.type || '',
 })
 
 const schema = z.object({
   complex_id: validators.string.optional(),
   level_range: validators.number.required().array(),
-  match_type: validators.string.optional(),
+  type: validators.string.optional(),
 })
 
 const formatToParams = (props: FiltersFormValues): UpdateMatchFilterParams => ({
   ...props,
+  type: props.type as Database['public']['Enums']['match_type'],
   complex_id: !isNilOrEmpty(props.complex_id) ? Number(props.complex_id) : null,
 })
 

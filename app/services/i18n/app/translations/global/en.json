@@ -1,5 +1,6 @@
 {
   "add": "Add",
+  "all": "All",
   "api": {
     "errors": {
       "default": "An error occurred",

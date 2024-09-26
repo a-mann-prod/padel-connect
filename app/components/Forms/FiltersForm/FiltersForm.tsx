@@ -69,12 +69,12 @@ export const FiltersForm = ({
           <FormSelectControlled
             formControlProps={{ title: tGlobal('complex') }}
             name="complex_id"
-            items={[{ label: tGlobal('none'), value: '' }, ...complexItems]}
+            items={[{ label: tGlobal('all'), value: '' }, ...complexItems]}
           />
           <FormSelectControlled
             formControlProps={{ title: tGlobal('matchType.title') }}
-            name="match_type"
-            items={[{ label: tGlobal('none'), value: '' }, ...typeItems]}
+            name="type"
+            items={[{ label: tGlobal('all'), value: '' }, ...typeItems]}
           />
         </VStack>
       </FormProvider>

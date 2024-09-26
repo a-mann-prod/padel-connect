@@ -1,5 +1,6 @@
 {
   "add": "Ajouter",
+  "all": "Tous",
   "api": {
     "errors": {
       "default": "Une erreur est survenue",

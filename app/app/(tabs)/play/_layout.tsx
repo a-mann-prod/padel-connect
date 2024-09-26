@@ -1,6 +1,6 @@
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 
-import { HeaderBackButton } from '@/designSystem'
+import { HeaderBackButton, HeaderButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -13,6 +13,13 @@ export default () => {
         name="index"
         options={{
           title: t('play'),
+          headerRight: (props) => (
+            <HeaderButton
+              icon="FAS-sliders"
+              onPress={() => router.navigate(routing.playFilters.path())}
+              {...props}
+            />
+          ),
         }}
       />
       <Stack.Screen
