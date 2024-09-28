@@ -54,7 +54,7 @@ export const FormDateTimePicker = ({
             ...sharedStyle,
             alignSelf: 'flex-start',
           }}
-          minuteInterval={15}
+          minuteInterval={30}
         />
       ) : (
         <HStack gap="$3">
