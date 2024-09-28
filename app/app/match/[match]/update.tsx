@@ -1,5 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
+import { Linking } from 'react-native'
 
 import {
   MatchForm,
@@ -16,7 +17,6 @@ import { useTranslate } from '@/services/i18n'
 import { useOverlayStore } from '@/services/overlaysStore'
 import { routing } from '@/services/routing'
 import { Nillable } from '@/types'
-import { Linking } from 'react-native'
 
 const { formatToParams, formatToFormValues } = matchFormServices
 
@@ -62,7 +62,7 @@ export default WithMatch(() => {
 
         {isReserved ? (
           <Button
-            title={t('callCenter')}
+            title={t('callComplex')}
             action="negative"
             onPress={() =>
               match?.complex?.phone_number &&
