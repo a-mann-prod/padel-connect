@@ -102,17 +102,6 @@ export const useSettingsItems = () => {
         title: t('support.title'),
         rows: [
           {
-            title: t('support.coffee'),
-            icon: 'FAS-mug-hot',
-            onPress: () =>
-              process.env.EXPO_PUBLIC_KOFI_URL &&
-              openUrl(process.env.EXPO_PUBLIC_KOFI_URL),
-            rightComponent: () => (
-              <Icon name="FAS-up-right-from-square" size="md" />
-            ),
-            isDisabled: !process.env.EXPO_PUBLIC_KOFI_URL,
-          },
-          {
             title: t('support.sendMessage'),
             icon: 'FAS-comment',
             onPress: () =>
@@ -122,6 +111,17 @@ export const useSettingsItems = () => {
               <Icon name="FAS-up-right-from-square" size="md" />
             ),
             isDisabled: !process.env.EXPO_PUBLIC_CONTACT_EMAIL_URL,
+          },
+          {
+            title: t('support.coffee'),
+            icon: 'FAS-hand-holding-heart',
+            onPress: () =>
+              process.env.EXPO_PUBLIC_KOFI_URL &&
+              openUrl(process.env.EXPO_PUBLIC_KOFI_URL),
+            rightComponent: () => (
+              <Icon name="FAS-up-right-from-square" size="md" />
+            ),
+            isDisabled: !process.env.EXPO_PUBLIC_KOFI_URL,
           },
         ],
       },
