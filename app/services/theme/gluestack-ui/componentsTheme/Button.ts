@@ -686,10 +686,10 @@ export const Button = createStyle({
       },
       '2xl': {
         px: '$7',
-        h: '$20',
+        h: '$16',
         _icon: {
           props: {
-            size: '2xl',
+            size: 'xl',
           },
         },
         _text: {

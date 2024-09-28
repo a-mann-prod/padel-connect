@@ -41,9 +41,9 @@ Deno.serve(async (req) => {
     .eq("is_new_match_notification_enabled", true)
     .or(
       `match_filters.complex_id.eq.${match.complex_id}, match_filters.complex_id.is.null`
-    )
-    .gte("match_filters.level_range[0]", match.level) // match.level >= min
-    .lte("match_filters.level_range[1]", match.level); // match.level <= max
+    );
+  //.gte("match_filters.level_range[0]", match.level) // match.level >= min
+  //.lte("match_filters.level_range[1]", match.level); // match.level <= max
 
   if (!users?.length) {
     return new Response(JSON.stringify({ errorCode: "users_not_found" }), {
