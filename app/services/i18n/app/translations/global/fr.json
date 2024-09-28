@@ -125,6 +125,7 @@
   },
   "today": "Aujourd'hui",
   "tournamentNotFound": "Tournoi introuvable",
+  "tournamentType": "Type de tournoi",
   "unknown": "Inconnu",
   "warning": "Attention"
 }

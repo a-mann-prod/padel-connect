@@ -12,7 +12,7 @@ export const Box = createStyle({
       backgroundColored: {
         backgroundColor: '$backgroundLight100',
         _dark: {
-          backgroundColor: '$backgroundDark900',
+          backgroundColor: '$black',
         },
       },
     },

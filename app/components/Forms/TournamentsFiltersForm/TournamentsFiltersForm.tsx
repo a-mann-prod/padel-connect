@@ -65,7 +65,7 @@ export const TournamentsFiltersForm = ({
             items={[{ label: tGlobal('all'), value: '' }, ...complexItems]}
           />
           <FormSelectControlled
-            formControlProps={{ title: tGlobal('matchType.title') }}
+            formControlProps={{ title: tGlobal('tournamentType') }}
             name="type"
             items={[{ label: tGlobal('all'), value: '' }, ...typeItems]}
           />

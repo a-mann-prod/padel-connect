@@ -126,6 +126,7 @@
   },
   "today": "Today",
   "tournamentNotFound": "Tournament not found",
+  "tournamentType": "Tournament type",
   "unknown": "Unknown",
   "warning": "Warning"
 }
