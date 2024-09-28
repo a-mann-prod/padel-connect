@@ -52,7 +52,7 @@ export default () => {
           )}
         </HStack>
       </SafeAreaView>
-      <Box flex={1} variant="colored">
+      <Box flex={1}>
         <Image
           h="40%"
           w="$full"
@@ -65,7 +65,7 @@ export default () => {
           mt={-30}
           borderTopLeftRadius="$3xl"
           borderTopRightRadius="$3xl"
-          variant="colored"
+          variant="backgroundColored"
         >
           <VStack gap="$3" m="$3" mt="$3">
             <Button
@@ -73,7 +73,7 @@ export default () => {
               title={t('navigation.tournaments')}
               icon="FAS-trophy"
               iconRight
-              size="xl"
+              size="2xl"
               rounded="$lg"
               action="warning"
               onPress={() => router.navigate(routing.homeTournaments.path())}
@@ -83,9 +83,18 @@ export default () => {
               title={t('navigation.myMatches')}
               icon="FAS-baseball"
               iconRight
-              size="xl"
+              size="2xl"
               rounded="$lg"
               onPress={() => router.navigate(routing.homeMyMatches.path())}
+            />
+            <Button
+              justifyContent="space-between"
+              title={t('navigation.myProgress')}
+              icon="FAS-arrow-up-right-dots"
+              iconRight
+              size="2xl"
+              action="positive"
+              rounded="$lg"
             />
           </VStack>
         </Box>
