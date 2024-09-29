@@ -8,14 +8,16 @@ export type FormRangeSliderProps = {
   minValue?: number
   maxValue?: number
   value: [number, number]
-  onChange?: (value: [number, number]) => void
+  onChangeMin: (value: number) => void
+  onChangeMax: (value: number) => void
 }
 
 export const FormRangeSlider = ({
   value,
   minValue,
   maxValue,
-  onChange,
+  onChangeMin,
+  onChangeMax,
   formControlProps,
 }: FormRangeSliderProps) => {
   const isDark = useColorMode() === 'dark'
@@ -25,6 +27,16 @@ export const FormRangeSlider = ({
     'colors',
     isDark ? 'secondary500' : 'secondary300'
   )
+
+  const handleOnChange = ([min, max]: [number, number]) => {
+    if (min !== value[0]) {
+      onChangeMin(min)
+    }
+
+    if (max !== value[1]) {
+      onChangeMax(max)
+    }
+  }
 
   return (
     <FormControl {...formControlProps}>
@@ -49,7 +61,7 @@ export const FormRangeSlider = ({
         trackHeight={4} // The track's height in pixel
         thumbSize={18} // The thumb's size in pixel
         // thumbImage={undefined} // An image that would represent the thumb
-        onValueChange={onChange} // Called each time the value changed. The type is (range: [number, number]) => void
+        onValueChange={handleOnChange} // Called each time the value changed. The type is (range: [number, number]) => void
         // onSlidingStart={undefined} // Called when the slider is pressed. The type is (range: [number, number]) => void
         // onSlidingComplete={undefined} // Called when the press is released. The type is (range: [number, number]) => void
         // slideOnTap={true} // If true, touching the slider will update it's value. No need to slide the thumb.

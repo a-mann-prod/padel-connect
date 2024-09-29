@@ -3,24 +3,33 @@ import { useController } from 'react-hook-form'
 import { FormRangeSlider, FormRangeSliderProps } from '@/designSystem'
 
 export type FormRangeSliderControlledProps = {
-  name: string
+  minName: string
+  maxName: string
 } & Omit<FormRangeSliderProps, 'value' | 'onChange'>
 
 export const FormRangeSliderControlled = ({
-  name,
+  minName,
+  maxName,
   formControlProps,
   ...props
 }: FormRangeSliderControlledProps) => {
   const {
-    field: { onChange, value },
+    field: { onChange: onChangeMin, value: minValue },
     fieldState: { error },
-  } = useController({ name })
+  } = useController({ name: minName })
+
+  const {
+    field: { onChange: onChangeMax, value: maxValue },
+  } = useController({ name: maxName })
+
+  console.log(minName, maxName, [minValue, maxValue])
 
   return (
     <FormRangeSlider
       formControlProps={{ ...formControlProps, error }}
-      onChange={onChange}
-      value={value}
+      onChangeMin={onChangeMin}
+      onChangeMax={onChangeMax}
+      value={[minValue, maxValue]}
       {...props}
     />
   )

@@ -92,21 +92,24 @@ export type Database = {
         Row: {
           complex_id: number | null
           created_at: string
-          level_range: number[]
+          level_max: number
+          level_min: number
           type: Database["public"]["Enums"]["match_type"] | null
           user_id: string
         }
         Insert: {
           complex_id?: number | null
           created_at?: string
-          level_range?: number[]
+          level_max?: number
+          level_min?: number
           type?: Database["public"]["Enums"]["match_type"] | null
           user_id?: string
         }
         Update: {
           complex_id?: number | null
           created_at?: string
-          level_range?: number[]
+          level_max?: number
+          level_min?: number
           type?: Database["public"]["Enums"]["match_type"] | null
           user_id?: string
         }

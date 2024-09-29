@@ -31,20 +31,26 @@ Deno.serve(async (req) => {
       headers: { "Content-Type": "application/json" },
     });
 
+  // get owners
+  const { data: owners } = await clientAdmin
+    .from("match_requests")
+    .select("user_id")
+    .eq("match_id", 31)
+    .eq("is_owner", true);
+
+  const ownerIds = owners?.map(({ user_id }) => user_id) || [];
+
   // get users
-  const { data: users } = await clientAdmin
+  const { data: users, error } = await clientAdmin
     .from("profiles")
-    .select(
-      "id, language, match_filters!inner(user_id), match_requests(user_id)"
-    )
-    .eq("match_requests.is_owner", false)
-    .eq("is_new_match_notification_enabled", true);
-  // a revoir
-  // .or(
-  //   `match_filters.complex_id.eq.${match.complex_id}, match_filters.complex_id.is.null`
-  // );
-  //   .gte("match_filters.level_range[0]", match.level) // match.level >= min
-  //   .lte("match_filters.level_range[1]", match.level); // match.level <= max
+    .select("id, language, match_filters!inner(user_id)")
+    .not("id", "in", `(${ownerIds})`)
+    .eq("is_new_match_notification_enabled", true)
+    .or(`complex_id.eq.${match.complex_id}, complex_id.is.null`, {
+      foreignTable: "match_filters",
+    })
+    .lte("match_filters.level_min", match.level)
+    .gte("match_filters.level_max", match.level);
 
   if (!users?.length) {
     return new Response(JSON.stringify({ errorCode: "users_not_found" }), {

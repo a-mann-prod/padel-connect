@@ -14,13 +14,15 @@ const getDefaultValues = (
   props?: Nillable<FiltersFormValues> | null
 ): FiltersFormValues => ({
   complex_id: props?.complex_id || '',
-  level_range: props?.level_range || [0, 10],
+  level_min: props?.level_min || 0,
+  level_max: props?.level_max || 10,
   type: props?.type || '',
 })
 
 const schema = z.object({
   complex_id: validators.string.optional(),
-  level_range: validators.number.required().array(),
+  level_min: validators.number.required(),
+  level_max: validators.number.required(),
   type: validators.string.optional(),
 })
 

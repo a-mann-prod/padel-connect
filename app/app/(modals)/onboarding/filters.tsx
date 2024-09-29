@@ -25,7 +25,8 @@ export default () => {
         <VStack gap="$5" m="$5">
           <FiltersForm
             defaultValues={{
-              level_range: level ? getLevelRange(getLevel(level)) : undefined,
+              level_min: level ? getLevelRange(getLevel(level))[0] : undefined,
+              level_max: level ? getLevelRange(getLevel(level))[1] : undefined,
               ...filters,
             }}
             onSubmit={handleOnSubmit}

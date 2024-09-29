@@ -17,7 +17,7 @@ export default () => {
 
   const { filters } = useFiltersContext()
 
-  const [min, max] = filters.level_range || [undefined, undefined]
+  const [min, max] = [filters.level_min, filters.level_max]
 
   const isToday = dateFilter.isSame(date.now(), 'day')
 

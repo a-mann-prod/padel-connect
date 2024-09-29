@@ -58,10 +58,14 @@ export const FiltersForm = ({
       <FormProvider {...methods}>
         <VStack gap="$2">
           <FormRangeSliderControlled
-            name="level_range"
+            minName="level_min"
+            maxName="level_max"
             formControlProps={{
               title: tGlobal('level'),
-              helpMessage: displayLevelHelpMessage(watch('level_range')),
+              helpMessage: displayLevelHelpMessage([
+                watch('level_min'),
+                watch('level_max'),
+              ]),
             }}
             minValue={0}
             maxValue={10}
