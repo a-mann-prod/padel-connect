@@ -40,6 +40,8 @@ Deno.serve(async (req) => {
 
   const ownerIds = owners?.map(({ user_id }) => user_id) || [];
 
+  console.log("owners", owners, ownerIds);
+
   // get users
   const { data: users, error } = await clientAdmin
     .from("profiles")
@@ -51,6 +53,8 @@ Deno.serve(async (req) => {
     })
     .lte("match_filters.level_min", match.level)
     .gte("match_filters.level_max", match.level);
+
+  console.log("users", users);
 
   if (!users?.length) {
     return new Response(JSON.stringify({ errorCode: "users_not_found" }), {
