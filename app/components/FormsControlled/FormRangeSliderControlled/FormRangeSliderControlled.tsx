@@ -5,7 +5,7 @@ import { FormRangeSlider, FormRangeSliderProps } from '@/designSystem'
 export type FormRangeSliderControlledProps = {
   minName: string
   maxName: string
-} & Omit<FormRangeSliderProps, 'value' | 'onChange'>
+} & Omit<FormRangeSliderProps, 'value' | 'onChangeMin' | 'onChangeMax'>
 
 export const FormRangeSliderControlled = ({
   minName,
