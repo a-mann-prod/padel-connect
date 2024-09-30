@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
   const { data: owners } = await clientAdmin
     .from("match_requests")
     .select("user_id")
-    .eq("match_id", 31)
+    .eq("match_id", match.id)
     .eq("is_owner", true);
 
   const ownerIds = owners?.map(({ user_id }) => user_id) || [];
