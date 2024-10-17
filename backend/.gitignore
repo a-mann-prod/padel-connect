@@ -1,0 +1,8 @@
+env
+venv
+
+# dev
+db.sqlite3
+
+# TODO: commit when securised
+settings.py
