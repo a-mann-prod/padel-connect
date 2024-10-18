@@ -17,13 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from main_app.views.complex import ComplexViewSet
-from main_app.views.tournament import TournamentViewSet
+from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MatchFilterViewSet, MatchRequestViewSet
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 router = routers.DefaultRouter()
 router.register(r'complexes', ComplexViewSet)
 router.register(r'tournaments', TournamentViewSet)
+router.register(r'profiles', ProfileViewSet)
+router.register(r'users', CustomUserViewSet, basename='customuser')
+router.register(r'match_filters', MatchFilterViewSet)
+router.register(r'match_requests', MatchRequestViewSet)
+
 
 
 urlpatterns = [
@@ -32,3 +38,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
 ]
+
+# only for developpement
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

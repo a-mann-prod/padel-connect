@@ -9,3 +9,7 @@ class Complex(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'Complex' 
+        verbose_name_plural = 'Complexes'

@@ -10,3 +10,7 @@ class Match(models.Model):
     is_private = models.BooleanField(default=False)
     level = models.IntegerField()
     type = models.CharField(max_length=20, choices=enums.MatchType.choices)
+
+    class Meta:
+        verbose_name = 'Match' 
+        verbose_name_plural = 'Matches'

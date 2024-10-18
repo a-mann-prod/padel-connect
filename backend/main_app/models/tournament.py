@@ -9,3 +9,7 @@ class Tournament(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     type = models.CharField(max_length=20, choices=enums.MatchType.choices)
+
+    class Meta:
+        verbose_name = 'Tournament' 
+        verbose_name_plural = 'Tournaments'

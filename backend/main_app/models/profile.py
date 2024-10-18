@@ -3,10 +3,10 @@ from . import enums
 from django.conf import settings
 
 class Profile(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
-    avatar_url = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     defense_level = models.IntegerField(null=True, blank=True)
@@ -19,3 +19,10 @@ class Profile(models.Model):
     language = models.CharField(max_length=10, null=True, blank=True)
     manual_preference = models.CharField(max_length=20, choices=enums.ManualPreference.choices, null=True, blank=True)
     push_token = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.email 
+    
+    class Meta:
+        verbose_name = 'Profile' 
+        verbose_name_plural = 'Profiles'
