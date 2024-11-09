@@ -1,7 +1,8 @@
-import { Tables } from '@/services/supabase/database.types'
+import { Entity, PaginatedResponse } from '../../types'
 
-export type ComplexResponse = Tables<'complexes'>
+export type ComplexResponse = Entity<{
+  name: string
+  phone_number: string
+}>
 
-export type ComplexesResponse = Tables<'complexes'>[]
-
-export const getComplexesQueryCols = 'id, name, phone_number, created_at'
+export type ComplexesResponse = PaginatedResponse<ComplexResponse>

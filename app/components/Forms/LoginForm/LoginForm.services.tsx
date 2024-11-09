@@ -5,8 +5,9 @@ import { validators } from '@/services/formValidator'
 export type LoginFormValues = z.infer<typeof schema>
 
 const getDefaultValues = (): LoginFormValues => ({
-  email: '',
-  password: '',
+  // TODO A REMOVE
+  email: 'littojustine@gmail.com',
+  password: 'Je@ndupond25',
 })
 
 const schema = z.object({

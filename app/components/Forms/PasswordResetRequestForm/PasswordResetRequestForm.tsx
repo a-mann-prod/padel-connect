@@ -29,7 +29,9 @@ export const PasswordResetRequestForm = () => {
     isPending,
     isSuccess,
   } = useResetPassword({
-    onError,
+    options: {
+      onError,
+    },
   })
 
   const methods = useForm<PasswordResetRequestFormValues>({

@@ -1,14 +1,16 @@
 import { useLocalSearchParams } from 'expo-router'
 
 import { Profile } from '@/components'
-import { useProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
+import { useProfile } from '@/services/api'
 
 export default () => {
   const local = useLocalSearchParams()
 
-  const { data: user, isLoading } = useProfileWithAvatar({
-    params: { id: local?.user as string },
-    options: { enabled: !!local?.user },
+  const userId = Number(local?.user)
+
+  const { data: user, isLoading } = useProfile({
+    params: { id: userId },
+    options: { enabled: !!userId },
   })
 
   return <Profile user={user} isLoading={isLoading} external />

@@ -10,13 +10,13 @@ import {
 } from '@/designSystem'
 import { useManageFavoriteUser } from '@/hooks/useManageFavoriteUser'
 import { useMe } from '@/hooks/useMe'
-import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
+import { ProfileResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
 
 export type ProfileProps = {
-  user?: ProfileWithAvatar
+  user?: ProfileResponse
   isLoading?: boolean
   external?: boolean
 }
@@ -26,11 +26,8 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
   const tGlobal = useTranslate()
   const { data: me } = useMe()
 
-  const {
-    isFavorite,
-    toggleFavorite,
-    isLoading: isLoadingFavorite,
-  } = useManageFavoriteUser(user?.id)
+  const { toggleFavorite, isLoading: isLoadingFavorite } =
+    useManageFavoriteUser(user)
 
   if (isLoading) return <Loader />
 
@@ -42,13 +39,13 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
         <Avatar
           firstname={user.first_name}
           lastname={user.last_name}
-          imageUrl={user.avatar}
+          imageUrl={user.avatar_url}
           viewerEnabled
         />
         {external && (
           <HStack gap="$3" justifyContent="center">
             <IconButton
-              icon={isFavorite ? 'FAS-star' : 'FAR-star'}
+              icon={user.is_favorite ? 'FAS-star' : 'FAR-star'}
               onPress={() => toggleFavorite()}
               isLoading={isLoadingFavorite}
               isDisabled={!me}
@@ -83,7 +80,9 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
             icon="FAS-dumbbell"
             rightComponent={() => (
               <Text>
-                {isNilOrEmpty(user?.level) ? tGlobal('unknown') : user.level}
+                {isNilOrEmpty(user?.calculated_level)
+                  ? tGlobal('unknown')
+                  : user.calculated_level}
               </Text>
             )}
           />

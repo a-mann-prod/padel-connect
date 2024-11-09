@@ -60,6 +60,7 @@ export const useSettingsItems = () => {
                 routing.profileSettingsUpdateNotificationAlerts.path()
               ),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
+            isDisabled: true,
           },
           {
             title: t('general.biometricAuth'),

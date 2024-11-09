@@ -2,13 +2,11 @@ import { useMemo } from 'react'
 import { z } from 'zod'
 
 import { ChoiceButtonProps } from '@/designSystem'
+import { UpdateMeProfileParams } from '@/services/api'
+import { ManualPreference, SidePreference } from '@/services/api/types'
 import { validators } from '@/services/formValidator'
 import { useTranslate } from '@/services/i18n'
-import { Database } from '@/services/supabase/database.types'
 import { Nillable } from '@/types/nillable'
-
-type ManualPreference = Database['public']['Enums']['manual_preference']
-type SidePreference = Database['public']['Enums']['side_preference']
 
 export const useManualPreferenceOptions = () => {
   const tGlobal = useTranslate(undefined, { keyPrefix: 'manualPreference' })
@@ -16,7 +14,7 @@ export const useManualPreferenceOptions = () => {
   return useMemo<(ChoiceButtonProps & { value: ManualPreference })[]>(
     () => [
       {
-        value: 'LEFT_HANDED',
+        value: ManualPreference.LEFT_HANDED,
         label: tGlobal('left_handed'),
         icon: 'FAR-hand',
         iconProps: {
@@ -24,7 +22,7 @@ export const useManualPreferenceOptions = () => {
         },
       },
       {
-        value: 'RIGHT_HANDED',
+        value: ManualPreference.RIGHT_HANDED,
         label: tGlobal('right_handed'),
         icon: 'FAR-hand',
       },
@@ -38,20 +36,30 @@ export const useSidePreferenceOptions = () => {
 
   return useMemo<(ChoiceButtonProps & { value: SidePreference })[]>(
     () => [
-      { value: 'LEFT', label: tGlobal('left'), icon: 'FAS-arrow-left' },
-      { value: 'RIGHT', label: tGlobal('right'), icon: 'FAS-arrow-right' },
-      { value: 'BOTH', label: tGlobal('both'), icon: 'FAS-arrows-left-right' },
+      {
+        value: SidePreference.LEFT,
+        label: tGlobal('left'),
+        icon: 'FAS-arrow-left',
+      },
+      {
+        value: SidePreference.RIGHT,
+        label: tGlobal('right'),
+        icon: 'FAS-arrow-right',
+      },
+      {
+        value: SidePreference.BOTH,
+        label: tGlobal('both'),
+        icon: 'FAS-arrows-left-right',
+      },
     ],
     [tGlobal]
   )
 }
 
-export type PersonalInfoFormValues = {
-  first_name: string
-  last_name: string
-  manual_preference: ManualPreference | null | undefined
-  side_preference: SidePreference | null | undefined
-}
+export type PersonalInfoFormValues = Pick<
+  UpdateMeProfileParams,
+  'first_name' | 'last_name' | 'manual_preference' | 'side_preference'
+>
 
 const getDefaultValues = (
   props?: Nillable<PersonalInfoFormValues>

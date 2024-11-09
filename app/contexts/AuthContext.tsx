@@ -1,21 +1,17 @@
-import { AuthSession, AuthUser } from '@supabase/supabase-js'
-import { router } from 'expo-router'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
+import { LoginResponse, MeResponse, useMe } from '@/services/api'
 import { buildContext } from '@/services/buildContext'
-import { supabase } from '@/services/supabase'
+import {
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  storage,
+} from '@/services/storage'
 
 type AuthContextProps = {
-  session: AuthSession | null
-  user: AuthUser | null
-  signIn: ({
-    session,
-    user,
-  }: {
-    session: AuthSession | null
-    user: AuthUser | null
-  }) => void
-  signOut: (isDeleted?: boolean) => void
+  me: MeResponse | undefined
+  signIn: (data: LoginResponse) => Promise<void>
+  signOut: () => Promise<void>
   isLoadingSignOut: boolean
   isLoadingSignIn: boolean
 }
@@ -26,84 +22,62 @@ const [_, Provider, useAuthContext] =
 export { useAuthContext }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<AuthSession | null>(null)
-  const [user, setUser] = useState<AuthUser | null>(null)
-  const [signedOut, setSignedOut] = useState(false)
-
   const [isLoadingSignOut, setIsLoadingSignOut] = useState(false)
   const [isLoadingSignIn, setIsLoadingSignIn] = useState(false)
+  const [signedIn, setSignedIn] = useState(false)
 
-  const signIn = async ({
-    session,
-    user,
-  }: {
-    session: AuthSession | null
-    user: AuthUser | null
-  }) => {
-    setSession(session)
-    setUser(user)
-    setSignedOut(false)
+  const [me, setMe] = useState<MeResponse>()
+
+  const { data, isFetching, isRefetching, refetch } = useMe({
+    options: { enabled: signedIn },
+  })
+
+  const keepSigned = async () => {
+    const accessToken = await storage.getItem(ACCESS_TOKEN_KEY)
+    const refreshToken = await storage.getItem(REFRESH_TOKEN_KEY)
+    setSignedIn(!!accessToken && !!refreshToken)
+  }
+  keepSigned()
+
+  const signIn = async ({ access, refresh }: LoginResponse) => {
+    setIsLoadingSignIn(true)
+    try {
+      // set tokens
+      await storage.setItem(ACCESS_TOKEN_KEY, access)
+      await storage.setItem(REFRESH_TOKEN_KEY, refresh)
+      setSignedIn(true)
+      refetch()
+    } catch (error) {
+      console.error('Error signing in:', error)
+      setIsLoadingSignIn(false)
+    }
   }
 
-  const signOut = async (isDeleted = false) => {
+  const signOut = async () => {
     setIsLoadingSignOut(true)
-    let error
-    if (!isDeleted) {
-      error = (await supabase.auth.signOut()).error
+    try {
+      storage.removeItem(ACCESS_TOKEN_KEY)
+      storage.removeItem(REFRESH_TOKEN_KEY)
+      setMe(undefined)
+      setSignedIn(false)
+    } catch (error) {
+      console.error('Error signing out:', error)
+    } finally {
+      setIsLoadingSignOut(false)
     }
-    setSession(null)
-    setUser(null)
-    setSignedOut(true)
-
-    if (error) {
-      console.error(error)
-    }
-    setIsLoadingSignOut(false)
-    router.replace('/')
   }
-
-  const getSession = useCallback(async () => {
-    setIsLoadingSignIn(true)
-    const { data, error } = await supabase.auth.getSession()
-
-    if (error) {
-      console.error(error)
-      signOut()
-    } else {
-      setSession(data.session)
-    }
-    setIsLoadingSignIn(false)
-  }, [])
-
-  const getUser = useCallback(async () => {
-    setIsLoadingSignIn(true)
-
-    if (session) {
-      const { data, error } = await supabase.auth.getUser()
-
-      if (error) {
-        console.error(error)
-        signOut()
-      } else {
-        setUser(data.user)
-      }
-    }
-    setIsLoadingSignIn(false)
-  }, [session])
 
   useEffect(() => {
-    // wait for sign out
-    if (isLoadingSignOut || signedOut) return
-
-    if (!session) getSession()
-    if (session && !user) getUser()
-  }, [getSession, getUser, session, user, signedOut, isLoadingSignOut])
+    if (!isFetching && !isRefetching && data) {
+      setMe(data)
+      setIsLoadingSignIn(false)
+    }
+  }, [data, isFetching, isRefetching])
 
   return (
     <Provider
       value={{
-        session,
-        user,
+        me,
         signIn,
         signOut,
         isLoadingSignOut,

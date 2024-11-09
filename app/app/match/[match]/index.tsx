@@ -1,4 +1,4 @@
-import { SafeAreaView, VStack } from '@gluestack-ui/themed'
+import { RefreshControl, SafeAreaView, VStack } from '@gluestack-ui/themed'
 import * as AuthSession from 'expo-auth-session'
 import { router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Share } from 'react-native'
@@ -39,6 +39,8 @@ export default WithMatch(() => {
     isPlayer,
     payMatch,
     isPayMatchPending,
+    refetch,
+    isRefetching,
   } = useManageMatch(matchId)
 
   const { isMatchPassed } = match
@@ -74,17 +76,25 @@ export default WithMatch(() => {
 
   const { matchStartTime, matchEndTime } = getMatchTimes(match)
 
-  const hasPayedUserIds =
-    match.match_requests
-      .filter(({ has_payed }) => !!has_payed)
-      .map(({ user_id }) => user_id) || []
+  // TODO A revoir
+  const hasPayedUserIds = [] as number[]
+  // match.match_requests
+  //   .filter(({ has_payed }) => !!has_payed)
+  //   .map(({ user_id }) => user_id) || []
 
   const hasPayed = me?.id ? hasPayedUserIds.includes(me.id) : false
   const isParticipant = isOwner || isPlayer
 
   return (
     <SafeAreaView flex={1}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={() => refetch()}
+          />
+        }
+      >
         <VStack p="$3" gap="$3">
           <MatchInfo
             match={match}

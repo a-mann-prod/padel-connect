@@ -9,15 +9,12 @@ import {
 
 import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem/'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useHandleSuccess } from '@/hooks/useHandleSuccess'
-import { useUpdateEmail } from '@/services/api'
+import { useUpdateMeEmail } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = emailChangeFormServices
 
 export const EmailChangeForm = () => {
-  const t = useTranslate('settings')
   const tGlobal = useTranslate()
 
   const methods = useForm<EmailChangeFormValues>({
@@ -27,25 +24,22 @@ export const EmailChangeForm = () => {
 
   const { handleSubmit, reset } = methods
 
-  const onSuccess = useHandleSuccess()
-  const onError = useHandleError()
-
-  const { mutate: updateEmail, isPending } = useUpdateEmail({
-    onSuccess: () => {
-      onSuccess({ title: t('emailSent') })
-      reset()
+  const { mutate: updateEmail, isPending } = useUpdateMeEmail({
+    options: {
+      onSuccess: () => {
+        reset()
+      },
     },
-    onError,
   })
 
-  const onSubmit = ({ email }: EmailChangeFormValues) => updateEmail({ email })
+  const onSubmit = (data: EmailChangeFormValues) => updateEmail(data)
 
   return (
     <>
       <VStack gap="$2">
         <FormProvider {...methods}>
           <FormInputControlled
-            name="email"
+            name="new_email"
             formControlProps={{
               title: tGlobal('newEmail'),
             }}
@@ -53,6 +47,24 @@ export const EmailChangeForm = () => {
             autoCorrect={false}
             keyboardType="email-address"
             displayPlaceHolder
+          />
+          <FormInputControlled
+            name="re_new_email"
+            formControlProps={{
+              title: tGlobal('confirmNewEmail'),
+            }}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+            displayPlaceHolder
+          />
+          <FormInputControlled
+            name="current_password"
+            formControlProps={{
+              title: tGlobal('currentPassword'),
+            }}
+            displayPlaceHolder
+            type="password"
           />
         </FormProvider>
       </VStack>

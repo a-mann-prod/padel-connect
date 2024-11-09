@@ -4,9 +4,9 @@ import { FC } from 'react'
 import { useAuthContext } from '@/contexts'
 
 const WithoutAuthWrapper: FC<{ Component: FC }> = ({ Component }) => {
-  const { session, user } = useAuthContext()
+  const { me } = useAuthContext()
 
-  if (session || user) return <Redirect href="/" />
+  if (me) return <Redirect href="/" />
 
   return <Component />
 }

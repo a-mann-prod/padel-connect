@@ -2,10 +2,13 @@ import * as ExpoNotifications from 'expo-notifications'
 import { router } from 'expo-router'
 import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
-import { useInvalidatePostgrestQuery } from '@/hooks/useInvalidateQuery'
+import { useInvalidateQuery } from '@/hooks/useInvalidateQuery'
 import { useMe } from '@/hooks/useMe'
-import { useUpdateMe } from '@/hooks/useUpdateMe'
-import { GetMatchesParams, useUpdateNotification } from '@/services/api'
+import {
+  GetMatchesParams,
+  useReadNotification,
+  useUpdateMe,
+} from '@/services/api'
 import { buildContext } from '@/services/buildContext'
 import { i18n } from '@/services/i18n'
 import {
@@ -30,9 +33,9 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
   const { data: me } = useMe()
   const { mutate } = useUpdateMe()
 
-  const invalidatePotsgrestQuery = useInvalidatePostgrestQuery()
+  const invalidateQuery = useInvalidateQuery()
 
-  const { mutate: mutateNotification } = useUpdateNotification()
+  const { mutate: readNotification } = useReadNotification()
 
   const [expoPushToken, setExpoPushToken] = useState('')
   const [notification, setNotification] = useState<
@@ -52,7 +55,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
       ExpoNotifications.addNotificationReceivedListener((notification) => {
         setNotification(notification)
 
-        invalidatePotsgrestQuery('notifications')
+        invalidateQuery(['notifications'])
       })
 
     // notification reponse listener on notification click
@@ -61,7 +64,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
         ({ notification }) => {
           const data = notification.request.content.data
 
-          if (data?.id) mutateNotification({ id: data.id, is_read: true })
+          if (data?.id) readNotification({ id: data.id })
           if (data?.url) router.navigate(data.url)
         }
       )
@@ -76,7 +79,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
           responseListener.current
         )
     }
-  }, [])
+  }, [invalidateQuery, readNotification])
 
   // add push token and langage to backend
   useEffect(() => {

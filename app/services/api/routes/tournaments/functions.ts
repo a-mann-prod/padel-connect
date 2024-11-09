@@ -1,38 +1,45 @@
-import { getTournamentsQueryCols } from './entities'
-import { GetTournamentParams, GetTournamentsParams } from './params'
+import api from '../../axiosConfig'
+import { TournamentsResponse } from './entities'
+import { GetInfiniteTournamentsParams, GetTournamentParams } from './params'
 
 import { date } from '@/services/date'
-import { supabase } from '@/services/supabase'
+
+export const getTournamentFn = async (params: GetTournamentParams) => {
+  const { data } = await api.get(`/tournaments/${params.id}/`)
+  return data
+}
 
 const today = date.now().toISOString()
 
-export const getTournamentFn = (params: GetTournamentParams) =>
-  supabase
-    .from('tournaments')
-    .select(getTournamentsQueryCols)
-    .eq('id', params.id)
-    .single()
+export const getInfiniteTournamentsFn = async (
+  params: GetInfiniteTournamentsParams,
+  pageParam: number
+) => {
+  const { data } = await api.get<TournamentsResponse>('/tournaments/', {
+    params: {
+      ...params,
+      page: pageParam,
+    },
+  })
 
-export const getTournamentsFn = (params: GetTournamentsParams) => {
-  let query = supabase
-    .from('tournaments')
-    .select(getTournamentsQueryCols)
-    .gte('datetime', today)
-    .order('datetime', { ascending: true })
+  // let paramsToQueryParams = params
 
-  if (params.complex_id) {
-    query = query.eq('complex_id', params.complex_id)
-  }
+  // if (month) {
+  //   const month = date.dayjs(month)
+  //   const [start, end] = [month.startOf('month'), month.endOf('month')]
+  //   paramsToQueryParams = {
+  //     ...paramsToQueryParams,
+  //     'datetime', start
+  //     'datetime', start
+  //   }
+  //   query = query.gte('datetime', start).lte('datetime', end)
+  // }
 
-  if (params.type) {
-    query = query.eq('type', params.type)
-  }
+  //   let query = supabase
+  //   .from('tournaments')
+  //   .select(getTournamentsQueryCols)
+  //   .gte('datetime', today)
+  //   .order('datetime', { ascending: true })
 
-  if (params.month) {
-    const month = date.dayjs(params.month)
-    const [start, end] = [month.startOf('month'), month.endOf('month')]
-    query = query.gte('datetime', start).lte('datetime', end)
-  }
-
-  return query
+  return data
 }

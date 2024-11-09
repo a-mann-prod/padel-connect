@@ -1,14 +1,12 @@
-import { Database } from '@/services/supabase/database.types'
-
 export type GetProfileParams = {
-  id: string
+  id: number
 }
 
 export type GetProfilesParams = {
-  ids?: string[]
-  current_user_id?: string
+  ids?: number[]
   search?: string
 }
 
-export type UpdateProfileParams =
-  Database['public']['Tables']['profiles']['Update']
+export type GetInfiniteProfilesParams = {
+  search?: string
+}

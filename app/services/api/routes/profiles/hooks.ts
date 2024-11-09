@@ -1,33 +1,47 @@
-import {
-  useQuery,
-  useUpdateMutation,
-} from '@supabase-cache-helpers/postgrest-react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
-import { UseMutationProps, UseQueryProps } from '../../queryHooks/types'
+import { UseInfiniteQueryProps, UseQueryProps } from '../../queryHooks'
+import { ProfileResponse, ProfilesResponse } from './entities'
+import { getInfiniteProfilesFn, getProfileFn, getProfilesFn } from './functions'
 import {
-  ProfileResponse,
-  ProfilesResponse,
-  profilesQueryCols,
-} from './entities'
-import { getProfileFn, getProfilesFn, setProfileFn } from './functions'
-import {
+  GetInfiniteProfilesParams,
   GetProfileParams,
   GetProfilesParams,
-  UpdateProfileParams,
 } from './params'
 
 export const useProfile = ({
   params,
   options,
 }: UseQueryProps<ProfileResponse, GetProfileParams>) =>
-  useQuery<ProfileResponse>(getProfileFn(params), options)
+  useQuery<ProfileResponse>({
+    queryKey: ['profiles', params.id],
+    queryFn: () => getProfileFn(params),
+    ...options,
+  })
 
 export const useProfiles = ({
   params,
   options,
 }: UseQueryProps<ProfilesResponse, GetProfilesParams>) =>
-  useQuery<ProfileResponse>(getProfilesFn(params), options)
+  useQuery<ProfilesResponse>({
+    queryKey: ['profiles'],
+    queryFn: () => getProfilesFn(params),
+    ...options,
+  })
 
-export const useUpdateProfile = (
-  options?: UseMutationProps<any, UpdateProfileParams, any>
-) => useUpdateMutation(setProfileFn(), ['id'], profilesQueryCols, options)
+export const useInfiniteProfiles = (
+  {
+    params,
+    options,
+  }: UseInfiniteQueryProps<ProfilesResponse, GetInfiniteProfilesParams> = {
+    params: {},
+    options: {},
+  }
+) =>
+  useInfiniteQuery({
+    ...options,
+    queryKey: ['profiles', 'infinite', params],
+    queryFn: ({ pageParam }) => getInfiniteProfilesFn(params, pageParam),
+    getNextPageParam: (lastPage) => lastPage.next_page,
+    initialPageParam: 1,
+  })

@@ -1,16 +1,12 @@
-import { UseMutationOptions, useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
-import { ResetPasswordResponse } from './entities'
+import { UseMutationProps } from '@/services/api/queryHooks'
 import { resetPasswordFn } from './functions'
 import { ResetPasswordParams } from './params'
 
 // reset password with email
 export const useResetPassword = (
-  options: UseMutationOptions<
-    ResetPasswordResponse,
-    Error,
-    ResetPasswordParams
-  > = {}
+  options: UseMutationProps<void, ResetPasswordParams>
 ) =>
   useMutation({
     ...options,

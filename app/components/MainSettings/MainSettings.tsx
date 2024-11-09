@@ -4,8 +4,8 @@ import { useSettingsItems } from './MainSettings.services'
 
 import { ScrollView, Section, SectionRow } from '@/designSystem'
 import { FormAvatar, ImageAsset } from '@/designSystem/Forms'
+import { useManageMeAvatar } from '@/hooks/useManageMeAvatar'
 import { useMe } from '@/hooks/useMe'
-import { useUpdateAvatarMe } from '@/hooks/useUpdateAvatarMe'
 import { config } from '@/services/config'
 import { useTranslate } from '@/services/i18n'
 import { prepareFile } from '@/utils/file'
@@ -16,17 +16,16 @@ export const MainSettings = () => {
 
   const { data: me } = useMe()
 
-  const { mutate: updateAvatarMe, isPending: isPendingUpdateAvatarMe } =
-    useUpdateAvatarMe()
+  const { deleteAvatar, isPending, updateAvatar } = useManageMeAvatar()
 
   const handleAvatarChange = async (value: ImageAsset | null) => {
     if (!value) {
-      updateAvatarMe()
+      deleteAvatar()
       return
     }
 
     const file = await prepareFile(value)
-    updateAvatarMe(file)
+    updateAvatar(file)
   }
 
   if (!me) return
@@ -37,10 +36,10 @@ export const MainSettings = () => {
         <FormAvatar
           firstname={me.first_name}
           lastname={me.last_name}
-          value={me.avatar ? { uri: me.avatar } : undefined}
+          value={me.avatar_url ? { uri: me.avatar_url } : undefined}
           onChange={handleAvatarChange}
           displayBadge
-          isLoading={isPendingUpdateAvatarMe}
+          isLoading={isPending}
         />
         {settings.map(({ rows, ...sectionProps }, index) => (
           <Section key={index} {...sectionProps}>

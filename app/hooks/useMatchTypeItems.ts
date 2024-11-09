@@ -1,10 +1,8 @@
+import { MatchType } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
-import { Database } from '@/services/supabase/database.types'
+import { values } from 'remeda'
 
-const types: Database['public']['Enums']['match_type'][] = [
-  'LEISURE',
-  'COMPETITION',
-]
+const types = values(MatchType)
 
 export const useMatchTypeItems = () => {
   const t = useTranslate(undefined, { keyPrefix: 'matchType' })

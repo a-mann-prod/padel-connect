@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from . import enums
+from django.conf import settings
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -28,7 +30,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    
+
+    is_onboarding_completed = models.BooleanField(default=False)
+    push_token = models.CharField(max_length=255, null=True, blank=True)
+    favorite_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favorited_by', blank=True)
+    language = models.CharField(max_length=10, choices=enums.Language.choices, null=True, blank=True)
+    is_new_match_notification_enabled = models.BooleanField(default=False)
+    is_new_message_notification_enabled = models.BooleanField(default=False)
+
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -41,4 +51,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'User' 
         verbose_name_plural = 'Users'
         #app_label = 'auth'
-

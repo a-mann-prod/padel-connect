@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals'
 
-import { calculLevel, getLevel, getLevelRange } from './index'
+import { calculLevel, getLevelRange } from './index'
 import { Level, LevelInput } from './types'
 
 describe('calculLevel', () => {
@@ -81,42 +81,6 @@ describe('calculLevel', () => {
 
     // ACT
     const current = calculLevel(level)
-
-    // ASSERT
-    expect(current).toEqual(expected)
-  })
-})
-
-describe('getLevel', () => {
-  it('should return average (floor) per inputs', () => {
-    // ARRANGE
-    const level: Level = {
-      defense_level: 3,
-      offense_level: 4,
-      service_level: 5,
-    }
-
-    const expected = 4
-
-    // ACT
-    const current = getLevel(level)
-
-    // ASSERT
-    expect(current).toEqual(expected)
-  })
-
-  it('should return average (floor) per inputs with float & zero', () => {
-    // ARRANGE
-    const level: Level = {
-      defense_level: 0,
-      offense_level: 1.2,
-      service_level: 2.3,
-    }
-
-    const expected = 1.1
-
-    // ACT
-    const current = getLevel(level)
 
     // ASSERT
     expect(current).toEqual(expected)

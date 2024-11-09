@@ -1,7 +1,9 @@
 from django.db import models
+from django.conf import settings
 from . import enums, Complex
 
 class Match(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     complex = models.ForeignKey(Complex, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -11,6 +13,8 @@ class Match(models.Model):
     level = models.IntegerField()
     type = models.CharField(max_length=20, choices=enums.MatchType.choices)
 
+
     class Meta:
         verbose_name = 'Match' 
         verbose_name_plural = 'Matches'
+

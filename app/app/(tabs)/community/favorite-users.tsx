@@ -5,40 +5,35 @@ import { ListRenderItemInfo } from 'react-native'
 
 import { PlayerListItem } from '@/components'
 import { VirtualizedList } from '@/designSystem'
-import { useMe } from '@/hooks/useMe'
-import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
-import { ProfileResponse, useInfiniteFavoriteUsers } from '@/services/api'
+import { FavoriteUsersResponse, useInfiniteFavoriteUsers } from '@/services/api'
 import { routing } from '@/services/routing'
-import { getPublicAvatarUrl } from '@/utils/avatar'
 
 export default () => {
-  const { data: me } = useMe()
-
   const {
-    data: favUsers,
-    fetchNext,
+    data: favUsersPages,
     isLoading,
-    isLoadingNext,
-  } = useInfiniteFavoriteUsers({
-    params: { user_id: me?.id as string },
-    options: { enabled: !!me?.id },
-  })
+    isFetchingNextPage,
+    refetch,
+    isRefetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteFavoriteUsers()
 
-  const formattedFavUsers = useMemo(
+  const favUsers = useMemo(
     () =>
-      favUsers?.map(({ favorite_user: f }) => {
-        if (!f?.avatar_url) return f
-        return {
-          ...f,
-          avatar: getPublicAvatarUrl(f.avatar_url),
-        }
-      }),
-    [favUsers]
+      favUsersPages?.pages.reduce<FavoriteUsersResponse['results']>(
+        (acc, curr) => [...acc, ...curr.results],
+        []
+      ),
+    [favUsersPages?.pages]
   )
 
-  const renderItem = ({ item }: ListRenderItemInfo<ProfileWithAvatar>) => (
+  const renderItem = ({
+    item,
+  }: ListRenderItemInfo<FavoriteUsersResponse['results'][number]>) => (
     <PlayerListItem
       {...item}
+      displayStar={false}
       onPress={() =>
         item.id && router.navigate(routing.communityUser.path(item.id))
       }
@@ -47,15 +42,17 @@ export default () => {
 
   return (
     <VStack flex={1} gap="$3" m="$3">
-      <VirtualizedList<ProfileResponse>
-        data={formattedFavUsers}
+      <VirtualizedList<FavoriteUsersResponse['results'][number]>
+        data={favUsers}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         isLoading={isLoading}
-        onEndReached={fetchNext}
-        isLoadingNext={isLoadingNext}
+        refreshing={isRefetching}
+        onRefresh={refetch}
+        onEndReached={() => hasNextPage && fetchNextPage()}
+        isLoadingNext={isFetchingNextPage}
       />
     </VStack>
   )

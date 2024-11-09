@@ -9,9 +9,7 @@ import {
 
 import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem/'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useHandleSuccess } from '@/hooks/useHandleSuccess'
-import { useUpdatePassword } from '@/services/api'
+import { useUpdateMePassword } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = passwordChangeFormServices
@@ -26,26 +24,23 @@ export const PasswordChangeForm = () => {
 
   const { handleSubmit, reset } = methods
 
-  const onSuccess = useHandleSuccess()
-  const onError = useHandleError()
-
-  const { mutate: updateUser, isPending } = useUpdatePassword({
-    onSuccess: () => {
-      onSuccess()
-      reset()
+  const { mutate: updateUser, isPending } = useUpdateMePassword({
+    options: {
+      onSuccess: () => {
+        reset()
+      },
     },
-    onError,
   })
 
-  const onSubmit = ({ password }: PasswordChangeFormValues) =>
-    updateUser({ password })
+  const onSubmit = (variables: PasswordChangeFormValues) =>
+    updateUser(variables)
 
   return (
     <>
       <VStack gap="$2">
         <FormProvider {...methods}>
           <FormInputControlled
-            name="password"
+            name="new_password"
             formControlProps={{
               title: tGlobal('newPassword'),
             }}
@@ -53,9 +48,17 @@ export const PasswordChangeForm = () => {
             type="password"
           />
           <FormInputControlled
-            name="confirmPassword"
+            name="re_new_password"
             formControlProps={{
               title: tGlobal('confirmNewPassword'),
+            }}
+            displayPlaceHolder
+            type="password"
+          />
+          <FormInputControlled
+            name="current_password"
+            formControlProps={{
+              title: tGlobal('currentPassword'),
             }}
             displayPlaceHolder
             type="password"

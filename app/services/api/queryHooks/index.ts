@@ -1,1 +1,1 @@
-export * from './useInfiniteQuery'
+export * from './types'

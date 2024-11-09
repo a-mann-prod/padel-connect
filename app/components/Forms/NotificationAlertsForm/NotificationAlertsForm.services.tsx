@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-import { UpdateProfileParams } from '@/services/api'
+import { UpdateMeProfileParams } from '@/services/api'
 import { validators } from '@/services/formValidator'
 import { Nillable } from '@/types'
 
 export type NotificationAlertsFormValues = Pick<
-  UpdateProfileParams,
+  UpdateMeProfileParams,
   'is_new_match_notification_enabled' | 'is_new_message_notification_enabled'
 >
 

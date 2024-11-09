@@ -1,5 +1,5 @@
 import { ChoiceType } from '@/hooks/useLevelEstimationSteps'
-import { UpdateProfileParams } from '@/services/api'
+import { UpdateMeProfileParams } from '@/services/api'
 
 export type LevelInput = {
   value: number
@@ -7,6 +7,6 @@ export type LevelInput = {
 }
 
 export type Level = Pick<
-  UpdateProfileParams,
+  UpdateMeProfileParams,
   'defense_level' | 'service_level' | 'offense_level'
 >

@@ -2,21 +2,18 @@ import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
 import { Linking } from 'react-native'
 
-import {
-  MatchForm,
-  MatchFormValues,
-  WithMatch,
-  matchFormServices,
-} from '@/components'
+import { MatchForm, WithMatch, matchFormServices } from '@/components'
 import { Button, ScrollView } from '@/designSystem'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { isMatchReserved } from '@/hooks/useManageMatch'
-import { useDeleteMatch, useMatch, useUpdateMatch } from '@/services/api'
+import {
+  MatchResponse,
+  useDeleteMatch,
+  useMatch,
+  useUpdateMatch,
+} from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { useOverlayStore } from '@/services/overlaysStore'
 import { routing } from '@/services/routing'
-import { Nillable } from '@/types'
 
 const { formatToParams, formatToFormValues } = matchFormServices
 
@@ -27,9 +24,6 @@ export default WithMatch(() => {
 
   const { show } = useOverlayStore()
 
-  const onSuccess = useHandleSuccess()
-  const onError = useHandleError()
-
   const { data: match } = useMatch({
     params: { id: matchId },
     options: { enabled: !!matchId },
@@ -37,18 +31,20 @@ export default WithMatch(() => {
 
   const isReserved = match && isMatchReserved(match)
 
-  const defaultValues: Nillable<MatchFormValues> = formatToFormValues(match)
+  const defaultValues = formatToFormValues(match as MatchResponse)
 
   const { mutate, isPending } = useUpdateMatch({
-    onSuccess: () => {
-      onSuccess()
-      router.back()
+    options: {
+      onSuccess: () => {
+        router.back()
+      },
     },
-    onError,
   })
 
   const { mutate: deleteMatch, isPending: isPendingDelete } = useDeleteMatch({
-    onSuccess: () => router.replace(routing.play.path()),
+    options: {
+      onSuccess: () => router.replace(routing.play.path()),
+    },
   })
 
   return (

@@ -6,21 +6,13 @@ import {
   PersonalInfoFormValues,
 } from '@/components'
 import { ScrollView } from '@/designSystem'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useMe } from '@/hooks/useMe'
-import { useUpdateMe } from '@/hooks/useUpdateMe'
+import { useUpdateMeProfile } from '@/services/api'
 
 export default () => {
   const { data } = useMe()
 
-  const onSuccess = useHandleSuccess()
-  const onError = useHandleError()
-
-  const { mutate: updateMe, isPending } = useUpdateMe({
-    onSuccess,
-    onError,
-  })
+  const { mutate: updateMe, isPending } = useUpdateMeProfile()
 
   const handleOnSubmit = (values: PersonalInfoFormValues) => updateMe(values)
 

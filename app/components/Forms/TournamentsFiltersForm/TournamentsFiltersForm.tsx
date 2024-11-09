@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
-  TournamentsFiltersFormServices,
+  tournamentsFiltersFormServices,
   TournamentsFiltersFormValues,
 } from './TournamentsFiltersForm.services'
 
@@ -15,12 +15,11 @@ import { useComplexItems } from '@/hooks/useComplexItems'
 import { useMatchTypeItems } from '@/hooks/useMatchTypeItems'
 import { useMonthItems } from '@/hooks/useMonthItems'
 import { useTranslate } from '@/services/i18n'
-import { Nillable } from '@/types'
 
-const { getDefaultValues, schema } = TournamentsFiltersFormServices
+const { getDefaultValues, schema } = tournamentsFiltersFormServices
 
 export type TournamentsFiltersFormProps = {
-  defaultValues?: Nillable<TournamentsFiltersFormValues> | null
+  defaultValues?: TournamentsFiltersFormValues
   onSubmit: (values: TournamentsFiltersFormValues) => void
   isLoading?: boolean
   buttonTitle?: string
@@ -61,7 +60,7 @@ export const TournamentsFiltersForm = ({
           />
           <FormSelectControlled
             formControlProps={{ title: tGlobal('complex') }}
-            name="complex_id"
+            name="complex"
             items={[{ label: tGlobal('all'), value: '' }, ...complexItems]}
           />
           <FormSelectControlled

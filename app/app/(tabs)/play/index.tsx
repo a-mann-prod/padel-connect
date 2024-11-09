@@ -4,9 +4,8 @@ import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { DateCarouselFilter, MatchListItem } from '@/components'
-import { useFiltersContext } from '@/contexts'
 import { Button, VirtualizedList } from '@/designSystem'
-import { MatchesResponse, useMatches } from '@/services/api'
+import { MatchesResponse, useInfiniteMatches } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -15,36 +14,38 @@ export default () => {
   const t = useTranslate('play')
   const [dateFilter, setDateFilter] = useState(date.now())
 
-  const { filters } = useFiltersContext()
+  // const { filters } = useFiltersContext()
 
-  const [min, max] = [filters.level_min, filters.level_max]
+  // const [min, max] = [filters.level_min, filters.level_max]
 
   const isToday = dateFilter.isSame(date.now(), 'day')
 
   const {
-    data: matches,
+    data: matchesPages,
     isLoading,
     refetch,
     isRefetching,
-  } = useMatches({
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteMatches({
     params: {
-      dates: {
-        start: isToday
-          ? dateFilter.toISOString()
-          : dateFilter.startOf('day').toISOString(),
-        end: dateFilter.endOf('day').toISOString(),
-      },
-      level: {
-        min,
-        max,
-      },
-      ...filters,
+      start_datetime: isToday
+        ? dateFilter.toISOString()
+        : dateFilter.startOf('day').toISOString(),
+      end_datetime: dateFilter.endOf('day').toISOString(),
+      // ...filters,
     },
   })
 
+  const matches = matchesPages?.pages.reduce<MatchesResponse['results']>(
+    (acc, curr) => [...acc, ...curr.results],
+    []
+  )
+
   const renderItem = ({
     item,
-  }: ListRenderItemInfo<MatchesResponse[number]>) => (
+  }: ListRenderItemInfo<MatchesResponse['results'][number]>) => (
     <MatchListItem
       {...item}
       onPress={() => router.push(routing.match.path(item.id))}
@@ -63,7 +64,7 @@ export default () => {
         />
       </HStack>
 
-      <VirtualizedList<MatchesResponse[number]>
+      <VirtualizedList<MatchesResponse['results'][number]>
         data={matches}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
@@ -72,6 +73,8 @@ export default () => {
         isLoading={isLoading}
         onRefresh={refetch}
         refreshing={isRefetching}
+        onEndReached={() => hasNextPage && fetchNextPage()}
+        isLoadingNext={isFetchingNextPage}
       />
       <Button
         title={t('createNewMatch')}

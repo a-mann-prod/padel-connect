@@ -11,7 +11,7 @@ import {
 } from './selfDeleteAlertContent.services'
 
 import { Alert } from '@/designSystem'
-import { useDeleteMe } from '@/hooks/useDeleteMe'
+import { useDeleteMe } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = selfDeleteAlertServices
@@ -37,7 +37,9 @@ export const SelfDeleteContent = ({
   }
 
   const { mutate, isPending } = useDeleteMe({
-    onSuccess: handleClose,
+    options: {
+      onSuccess: handleClose,
+    },
   })
 
   const onSubmit = (data: SelfDeleteFormValues) => mutate(data)
@@ -55,7 +57,7 @@ export const SelfDeleteContent = ({
 
           <FormInputControlled
             formControlProps={{ title: tGlobal('password') }}
-            name="password"
+            name="current_password"
             type="password"
           />
         </VStack>

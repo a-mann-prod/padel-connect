@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+
+  api:
+    extends:
+      file: common.yml
+      service: api
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+      args:
+        - PYTHON_VERSION=${PYTHON_VERSION}
+    volumes:
+      - ../:/app
+      - ../logs:/app/logs
+      - ../mediafiles:/mediafiles
+    environment:
+      - DEBUG=1
+    ports:
+      - ${API_PORT}:${API_PORT}
+    depends_on:
+      - db
+    networks:
+      - local
+    secrets:
+      - db_password
+      - api_email_host_password
+      - api_secret_key
+
+  db:
+    extends:
+      file: common.yml
+      service: db
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    networks:
+      - local
+    secrets:
+      - db_password
+
+  adminer:
+    extends:
+      file: common.yml
+      service: adminer
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  api_email_host_password:
+    file: ./secrets/api_email_host_password.txt
+  api_secret_key:
+    file: ./secrets/api_secret_key.txt
+
+volumes:
+  db_data:

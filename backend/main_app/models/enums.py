@@ -25,3 +25,7 @@ class SidePreference(models.TextChoices):
     LEFT = "LEFT"
     RIGHT = "RIGHT"
     BOTH = "BOTH"
+
+class Language(models.TextChoices): 
+    EN = "EN"
+    FR = "FR"

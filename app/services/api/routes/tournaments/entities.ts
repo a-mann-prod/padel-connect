@@ -1,10 +1,12 @@
-import { Tables } from '@/services/supabase/database.types'
+import { Entity, MatchType, PaginatedResponse } from '../../types'
+import { ComplexResponse } from '../complexes'
 
-export type TournamentResponse = Tables<'tournaments'> & {
-  complex: Pick<Tables<'complexes'>, 'name'> | null
-}
+export type TournamentResponse = Entity<{
+  complex: ComplexResponse
+  datetime: string
+  title: string
+  description: string
+  type: MatchType
+}>
 
-export type TournamentsResponse = TournamentResponse[]
-
-export const getTournamentsQueryCols =
-  'id, title, description, complex_id, complex:complexes(name), datetime, type, created_at'
+export type TournamentsResponse = PaginatedResponse<TournamentResponse>

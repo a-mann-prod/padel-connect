@@ -1,21 +1,9 @@
-from rest_framework import viewsets, permissions as rf_permissions
-from main_app.serializers import MatchFilterSerializer
+from .generic_views import MeRelatedObjectView
 from main_app.models import MatchFilter
-from main_app import permissions, mixins
+from main_app.serializers import MatchFilterSerializer
 
-class MatchFilterViewSet(mixins.BlockCreateDestroyMixin, viewsets.ModelViewSet):
-    queryset = MatchFilter.objects.all()
+class MeMatchFilterView(MeRelatedObjectView):
+    model = MatchFilter
     serializer_class = MatchFilterSerializer
-    permission_classes = [permissions.IsOwner, permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        """
-        Only current user can show their own match filter
-        """
-        return MatchFilter.objects.filter(user=self.request.user)
-
-    def perform_update(self, serializer):
-        """
-        Only current user can update his match filter
-        """
-        serializer.save(user=self.request.user)
+    user_related_field = 'match_filter'
+    

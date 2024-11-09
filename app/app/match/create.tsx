@@ -10,7 +10,7 @@ import {
 import { ScrollView } from '@/designSystem'
 import { formDateTimePickerServices } from '@/designSystem/Forms/FormDateTimePicker/FormDateTimePicker.services'
 import { useHandleError } from '@/hooks/useHandleError'
-import { useInsertMatch } from '@/services/api'
+import { useCreateMatch } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -33,19 +33,21 @@ export default WithAuth(() => {
     ).toISOString(),
   }
 
-  const { mutate, isPending } = useInsertMatch({
-    onSuccess: (data) => {
-      const newItem = data?.[0]
-      router.replace(routing.match.path(newItem?.id))
+  const { mutate, isPending } = useCreateMatch({
+    options: {
+      onSuccess: (data) => {
+        const newItem = data
+        router.replace(routing.match.path(newItem?.id))
+      },
+      onError,
     },
-    onError,
   })
 
   return (
     <ScrollView>
       <VStack gap="$3" m="$5">
         <MatchForm
-          onSubmit={(data) => mutate([formatToParams(data)])}
+          onSubmit={(data) => mutate(formatToParams(data))}
           defaultValues={defaultValues}
           buttonTitle={t('create')}
           isLoading={isPending}

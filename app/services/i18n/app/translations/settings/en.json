@@ -1,7 +1,6 @@
 {
   "dangerZone": "Danger zone",
   "deleteAccountWarningMessage": "You are about to permanently delete your account. This action is irreversible and all associated data will be lost permanently. Are you sure you want to continue?",
-  "emailSent": "An email has been sent to your new address, please click on the link to validate it",
   "general": {
     "biometricAuth": "Biometric authentication",
     "darkmode": {

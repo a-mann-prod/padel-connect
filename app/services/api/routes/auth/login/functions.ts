@@ -1,44 +1,10 @@
-import * as AuthSession from 'expo-auth-session'
-import * as WebBrowser from 'expo-web-browser'
-
-import { handleSupabaseAuthError, handleUnverifiedUser } from '../shared'
 import { LoginResponse } from './entities'
-import { LoginParams, LoginWithOAuthParams } from './params'
+import { LoginParams } from './params'
 
-import { supabase } from '@/services/supabase'
+import api from '@/services/api/axiosConfig'
 
 export const loginFn = async (params: LoginParams): Promise<LoginResponse> => {
-  const { data, error } = await supabase.auth.signInWithPassword(params)
+  const response = await api.post('/auth/jwt/create/', params)
 
-  if (error) {
-    handleSupabaseAuthError(error)
-  }
-
-  if (!data.session) {
-    handleUnverifiedUser()
-  }
-
-  return data
-}
-
-export const loginWithOAuthFn = async (params: LoginWithOAuthParams) => {
-  WebBrowser.maybeCompleteAuthSession() // required for web only
-  const redirectTo = AuthSession.makeRedirectUri()
-
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: params,
-    options: {
-      redirectTo,
-      skipBrowserRedirect: true,
-    },
-  })
-
-  if (error) {
-    handleSupabaseAuthError(error)
-  }
-
-  const res = await WebBrowser.openAuthSessionAsync(data?.url ?? '', redirectTo)
-
-  if (res.type === 'success') {
-  }
+  return response.data
 }

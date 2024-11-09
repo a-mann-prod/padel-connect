@@ -1,6 +1,5 @@
 import { Text, VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { router } from 'expo-router'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -12,7 +11,6 @@ import { FormInputControlled, FormProvider } from '@/components'
 import { Button } from '@/designSystem/'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useToast } from '@/hooks/useToast'
-import { useUpdateUser } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = passwordResetFormServices
@@ -24,13 +22,14 @@ export const PasswordResetForm = () => {
 
   const onError = useHandleError()
 
-  const { mutate: updateUser, isPending } = useUpdateUser({
-    onSuccess: () => {
-      toast.show({ title: t('success') })
-      router.navigate('/')
-    },
-    onError,
-  })
+  // TODO A REVOIR
+  // const { mutate: updateUser, isPending } = useUpdateUser({
+  //   onSuccess: () => {
+  //     toast.show({ title: t('success') })
+  //     router.navigate('/')
+  //   },
+  //   onError,
+  // })
 
   const methods = useForm<PasswordResetFormValues>({
     defaultValues: getDefaultValues(),
@@ -39,8 +38,11 @@ export const PasswordResetForm = () => {
 
   const { handleSubmit } = methods
 
-  const onSubmit = ({ password }: PasswordResetFormValues) =>
-    updateUser({ password })
+  const onSubmit = ({ password }: PasswordResetFormValues) => {
+    // TODO A REVOIR
+    // updateUser({ password })
+    return
+  }
 
   return (
     <VStack gap="$2">
@@ -66,7 +68,8 @@ export const PasswordResetForm = () => {
       <Button
         title={tGlobal('save')}
         onPress={handleSubmit(onSubmit)}
-        isLoading={isPending}
+        // TODO A REVOIR
+        isLoading={false}
       />
     </VStack>
   )
