@@ -1,25 +1,16 @@
-import * as AuthSession from 'expo-auth-session'
-
-import { ResetPasswordResponse } from './entities'
 import { ResetPasswordParams } from './params'
-import { handleSupabaseAuthError } from '../shared'
 
-import { supabase } from '@/services/supabase'
+import api from '@/services/api/axiosConfig'
 
 export const resetPasswordFn = async ({
   email,
-}: ResetPasswordParams): Promise<ResetPasswordResponse> => {
-  const redirectTo = AuthSession.makeRedirectUri({
-    path: '/(modals)/root/password-reset',
-  })
+}: ResetPasswordParams): Promise<void> => {
+  // TODO: handle redirection
+  // const redirectTo = AuthSession.makeRedirectUri({
+  //   path: '/(modals)/root/password-reset',
+  // })
 
-  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo,
-  })
-
-  if (error) {
-    handleSupabaseAuthError(error)
-  }
+  const { data } = await api.post('/users/reset_password/')
 
   return data
 }

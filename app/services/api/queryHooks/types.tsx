@@ -1,86 +1,30 @@
 import {
-  UploadFetcherConfig,
-  UploadFileResponse,
-  UseUploadInput,
-} from '@supabase-cache-helpers/storage-react-query'
-import { FileObject, StorageError } from '@supabase/storage-js'
-import { PostgrestError, PostgrestSingleResponse } from '@supabase/supabase-js'
-import {
+  DefaultError,
+  InfiniteData,
   QueryKey,
+  UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
 } from '@tanstack/react-query'
 
-import { UseSubscriptionOpts } from '@supabase-cache-helpers/postgrest-react-query'
-import { StorageType } from '../routes/image'
-import { InfiniteQueryOptions } from './useInfiniteQuery'
+export type UseQueryProps<TData, TParams = undefined> = {
+  options?: Omit<UseQueryOptions<TData>, 'queryKey'>
+} & (TParams extends undefined ? object : { params: TParams })
 
-// QueryOptions from Supa cache helper
-export type QueryOptions<TResponse, TError> = Omit<
-  UseQueryOptions<
-    PostgrestSingleResponse<TResponse>,
-    TError,
-    PostgrestSingleResponse<TResponse>,
-    QueryKey
-  >,
-  'queryKey' | 'queryFn'
->
-
-// MutationOptions from Supa cache helper
-export type MutationOptions<TResponse, TParams, TError> = Omit<
-  UseMutationOptions<TResponse, TError, TParams>,
-  'mutationFn'
->
-
-// FileUrlOptions from Supa cache helper
-export type FileUrlOptions = Omit<
-  UseQueryOptions<
-    string | undefined,
-    StorageError,
-    string | undefined,
-    QueryKey
-  >,
-  'queryKey' | 'queryFn'
->
-
-export type UploadOptions = UploadFetcherConfig &
-  Omit<
-    UseMutationOptions<UploadFileResponse[], StorageError, UseUploadInput>,
-    'mutationFn'
+export type UseInfiniteQueryProps<TData, TParams = undefined> = {
+  options?: Omit<
+    UseInfiniteQueryOptions<
+      TData,
+      Error,
+      InfiniteData<TData, number>,
+      TData,
+      QueryKey,
+      number
+    >,
+    'queryKey' | 'getNextPageParam' | 'initialPageParam'
   >
+} & (TParams extends undefined ? object : { params: TParams })
 
-// Hooks props from Supa cache helper
-export type UseQueryProps<TResponse, TParams, TError = PostgrestError> = {
-  params: TParams
-  options?: QueryOptions<TResponse, TError>
-}
-
-export type UseInfiniteQueryProps<
-  TResponse,
-  TParams,
-  TError = PostgrestError,
-> = {
-  params: TParams
-  options?: InfiniteQueryOptions<TResponse, TError>
-}
-
-export type UseMutationProps<TResponse, TParams, TError> = Partial<
-  MutationOptions<TResponse, Partial<TParams>, TError>
->
-
-export type UseFileUrlProps<TParams> = {
-  params: TParams
-  options?: FileUrlOptions
-}
-
-export type UseUploadProps = {
-  storageType: StorageType
-} & Partial<UploadOptions>
-
-export type UseRemoveFilesProps = {
-  storageType: StorageType
-} & Partial<MutationOptions<FileObject[], string[], StorageError>>
-
-export type UseSubscriptionProps = {
-  options?: UseSubscriptionOpts<any>
+export type UseMutationProps<TData, TVariables = void> = {
+  options?: UseMutationOptions<TData, DefaultError, TVariables>
 }

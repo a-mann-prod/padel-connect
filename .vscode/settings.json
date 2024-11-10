@@ -1,12 +1,10 @@
 {
-  "deno.enablePaths": ["supabase/functions"],
-  "deno.lint": true,
-  "deno.unstable": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "deno.enable": true,
-  "deno.importMap": "./supabase/functions/import_map.json"
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
 }

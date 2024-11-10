@@ -1,10 +1,10 @@
 import { useComplexes } from '@/services/api'
 
 export const useComplexItems = () => {
-  const { data: complexes } = useComplexes({ params: {} })
+  const { data: complexes } = useComplexes()
 
   return (
-    complexes?.map(({ id, name }) => ({
+    complexes?.results?.map(({ id, name }) => ({
       value: id.toString(),
       label: name,
     })) || []

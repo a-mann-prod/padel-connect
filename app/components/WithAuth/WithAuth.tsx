@@ -4,7 +4,6 @@ import { FC } from 'react'
 
 import { useAuthContext } from '@/contexts'
 import { Button, Divider } from '@/designSystem'
-import { useLoginWithOAuth } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -13,9 +12,9 @@ const WithAuthWrapper: FC<{ Component: FC; segment: any }> = ({
   Component,
   segment,
 }) => {
-  const { session, user } = useAuthContext()
+  const { me } = useAuthContext()
 
-  if (session && user) return <Component />
+  if (me) return <Component />
 
   return <LoginMenu redirectTo={segment} />
 }
@@ -34,9 +33,6 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('auth')
 
-  const { mutate: loginWithOAuth, isPending: isPendingOAuth } =
-    useLoginWithOAuth()
-
   const params = redirectTo ? { redirectTo } : undefined
 
   return (
@@ -50,16 +46,16 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
           title={t('appleLogin')}
           icon="FAS-apple"
           variant="outline"
-          onPress={() => loginWithOAuth('apple')}
-          isLoading={isPendingOAuth}
+          onPress={() => console.log('apple')}
+          isLoading={false}
           isDisabled
         />
         <Button
           title={t('googleLogin')}
           icon="FAS-google"
           variant="outline"
-          onPress={() => loginWithOAuth('google')}
-          isLoading={isPendingOAuth}
+          onPress={() => console.log('google')}
+          isLoading={false}
           isDisabled
         />
         <Divider title={tGlobal('or')} />

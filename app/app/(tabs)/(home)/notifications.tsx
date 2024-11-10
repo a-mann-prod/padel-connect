@@ -5,73 +5,42 @@ import { ListRenderItemInfo } from 'react-native'
 import { NotificationListItem, NotificationListItemProps } from '@/components'
 import { VirtualizedList } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
-import { useInvalidatePostgrestQuery } from '@/hooks/useInvalidateQuery'
-import { useMe } from '@/hooks/useMe'
 import {
-  useInfiniteAllNotifications,
-  useUnreadNotifications,
+  NotificationsResponse,
+  useInfiniteNotifications,
+  useReadAllNotifications,
+  useReadNotification,
+  useUnreadNotificationsCount,
 } from '@/services/api'
-import { supabase } from '@/services/supabase'
 
 export default () => {
-  const { data: me } = useMe()
-
   const {
-    data: notifications,
+    data: notificationPages,
     isLoading,
-    isLoadingNext,
-    fetchNext,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
     refetch,
     isRefetching,
-  } = useInfiniteAllNotifications({
-    params: { user_id: me?.id as string },
-  })
+  } = useInfiniteNotifications()
 
-  const empiledNotifications = notifications?.reduce<
-    Omit<NotificationListItemProps, 'onPress'>[]
-  >((acc, curr) => {
-    if (curr.type !== 'NEW_MESSAGE') {
-      acc.push(curr)
-      return acc
-    }
+  const notifications = notificationPages?.pages.reduce<
+    NotificationsResponse['results']
+  >((prev, acc) => [...prev, ...acc.results], [])
 
-    const prevItem = acc[acc.length - 1]
+  const { mutate: readAllNotifications } = useReadAllNotifications()
 
-    if (
-      !prevItem ||
-      prevItem.type !== 'NEW_MESSAGE' ||
-      prevItem.url !== curr.url
-    ) {
-      acc.push(curr)
-    } else {
-      if (!curr.is_read) {
-        if (!prevItem.unread_ids) {
-          prevItem.unread_ids = []
-        }
-        prevItem.unread_ids.push(curr.id)
-      }
-    }
+  const { mutate: readNotification } = useReadNotification()
 
-    return acc
-  }, [])
-
-  const invalidatePotsgrestQuery = useInvalidatePostgrestQuery()
-
-  const readAllNotifications = async () => {
-    await supabase.rpc('mark_all_notifications_as_read')
-    invalidatePotsgrestQuery('notifications')
-  }
-
-  const { count: unreadNotificationsCount } = useUnreadNotifications({
-    params: { user_id: me?.id as string },
-  })
+  const { data: unreadNotificationsCount } = useUnreadNotificationsCount()
 
   useHeaderButton(
     [
       {
         icon: 'FAS-check',
-        onPress: readAllNotifications,
-        disabled: !unreadNotificationsCount,
+        onPress: () => readAllNotifications(),
+        condition: true,
+        isDisabled: !unreadNotificationsCount,
       },
     ],
     'headerRight'
@@ -85,14 +54,11 @@ export default () => {
       onPress={() => {
         const hasUnread = !item.is_read || !!item?.unread_ids?.length
         if (hasUnread) {
+          // TODO: reflechir aux notifications imbriquées ?
           const ids = [item.id, ...(item?.unread_ids || [])]
-          supabase
-            .rpc('mark_notifications_as_read', {
-              ids,
-            })
-            .then(() => invalidatePotsgrestQuery('notifications'))
+          readNotification({ id: item.id })
         }
-        if (item?.url) router.push(item.url)
+        if (item?.associated_data?.url) router.push(item.associated_data.url)
       }}
     />
   )
@@ -100,7 +66,7 @@ export default () => {
   return (
     <VStack flex={1} gap="$3" m="$3">
       <VirtualizedList<NotificationListItemProps>
-        data={empiledNotifications}
+        data={notifications}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}
@@ -108,8 +74,8 @@ export default () => {
         isLoading={isLoading}
         onRefresh={refetch}
         refreshing={isRefetching}
-        isLoadingNext={isLoadingNext}
-        onEndReached={fetchNext}
+        isLoadingNext={isFetchingNextPage}
+        onEndReached={() => hasNextPage && fetchNextPage()}
       />
     </VStack>
   )

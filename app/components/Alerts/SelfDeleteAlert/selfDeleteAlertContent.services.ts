@@ -1,15 +1,16 @@
 import { z } from 'zod'
 
+import { DeleteMeParams } from '@/services/api'
 import { validators } from '@/services/formValidator'
 
-export type SelfDeleteFormValues = z.infer<typeof schema>
+export type SelfDeleteFormValues = DeleteMeParams
 
 const getDefaultValues = (): SelfDeleteFormValues => ({
-  password: '',
+  current_password: '',
 })
 
 const schema = z.object({
-  password: validators.string.required(),
+  current_password: validators.string.required(),
 })
 
 export const selfDeleteAlertServices = {

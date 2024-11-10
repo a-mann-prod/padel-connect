@@ -1,10 +1,7 @@
 import { IconNameProp } from '@/designSystem'
-import { Database } from '@/services/supabase/database.types'
+import { MatchType } from '@/services/api/types'
 
-export const mapTypeToIcon: Record<
-  Database['public']['Enums']['match_type'],
-  IconNameProp
-> = {
+export const mapTypeToIcon: Record<MatchType, IconNameProp> = {
   COMPETITION: 'FAS-trophy',
   LEISURE: 'FAR-hand-peace',
 }

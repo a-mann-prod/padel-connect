@@ -14,7 +14,7 @@ import { useEffect } from 'react'
 import { Button, HeaderButton } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { useNavigationBadgeCount } from '@/hooks/useNavigationBadgeCount'
-import { useUnreadNotifications } from '@/services/api'
+import { useUnreadNotificationsCount } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -24,19 +24,17 @@ export default () => {
 
   const isFocused = useIsFocused()
 
-  const { count: badgeCount } = useUnreadNotifications({
-    params: { user_id: me?.id as string },
-  })
+  const { data: badgeCount } = useUnreadNotificationsCount()
 
   useEffect(() => {
-    if (badgeCount !== null) Notifications.setBadgeCountAsync(badgeCount)
+    if (badgeCount) Notifications.setBadgeCountAsync(badgeCount)
   }, [badgeCount])
 
   useNavigationBadgeCount(badgeCount)
 
   return (
     <>
-      {isFocused && <StatusBar barStyle="dark-content" />}
+      {isFocused && <StatusBar barStyle="light-content" />}
       <SafeAreaView flex={1} position="absolute" zIndex={1} w="$full">
         <HStack mx="$3" justifyContent="flex-end">
           {me && (

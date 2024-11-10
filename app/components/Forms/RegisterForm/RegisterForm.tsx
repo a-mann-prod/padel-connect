@@ -25,19 +25,15 @@ export const RegisterForm = () => {
   const onError = useHandleError()
 
   const { mutate: register, isPending } = useRegister({
-    onSuccess: ({ user, session }) => {
-      // if session, no need to verify email
-      if (session) {
-        router.canGoBack() && router.back() // need to go back one time because of navigation to login
-        // router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
-        return
-      }
-      if (user?.email) {
-        toast.show({ title: t('emailSent'), action: 'info' })
-        router.back()
-      }
+    options: {
+      onSuccess: ({ email }) => {
+        if (email) {
+          toast.show({ title: t('emailSent'), action: 'info' })
+          router.back()
+        }
+      },
+      onError,
     },
-    onError,
   })
 
   const methods = useForm<RegisterFormValues>({

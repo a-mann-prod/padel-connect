@@ -33,10 +33,12 @@
   "cancel": "Cancel",
   "captain": "Captain",
   "complex": "Sports complex",
+  "confirmNewEmail": "Confirm new email",
   "confirmNewPassword": "Confirm new password",
   "confirmPassword": "Confirm password",
   "continue": "Continue",
   "create": "Create",
+  "currentPassword": "Current password",
   "date": "Date",
   "datetime": {
     "minute": "{{count}} minute",

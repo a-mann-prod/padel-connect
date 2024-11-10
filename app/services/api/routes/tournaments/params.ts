@@ -1,11 +1,11 @@
-import { Database } from '@/services/supabase/database.types'
+import { MatchType } from '../../types'
 
 export type GetTournamentParams = {
   id: number
 }
 
-export type GetTournamentsParams = {
-  type?: Database['public']['Enums']['match_type']
-  complex_id?: number
+export type GetInfiniteTournamentsParams = {
+  type?: MatchType
+  complex?: number
   month?: string
 }

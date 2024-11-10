@@ -7,10 +7,7 @@ import { PlayerListItem } from '@/components'
 import { VirtualizedList } from '@/designSystem'
 import { SearchInput } from '@/designSystem/SearchInput/SearchInput'
 import { useDebounce } from '@/hooks/useDebounce'
-import { useMe } from '@/hooks/useMe'
-import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
-import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
-import { ProfileResponse } from '@/services/api'
+import { ProfilesResponse, useInfiniteProfiles } from '@/services/api'
 import { routing } from '@/services/routing'
 
 export default () => {
@@ -20,14 +17,29 @@ export default () => {
 
   const enableSearch = !!search
 
-  const { data: me } = useMe()
-
-  const { data: users, isLoading } = useProfilesWithAvatar({
-    params: { current_user_id: me?.id, search },
+  const {
+    data: profilesPages,
+    isLoading,
+    isRefetching,
+    refetch,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteProfiles({
+    params: { search },
     options: { enabled: enableSearch },
   })
 
-  const renderItem = ({ item }: ListRenderItemInfo<ProfileWithAvatar>) => (
+  const profiles = enableSearch
+    ? profilesPages?.pages.reduce<ProfilesResponse['results']>(
+        (prev, acc) => [...prev, ...acc.results],
+        []
+      )
+    : undefined
+
+  const renderItem = ({
+    item,
+  }: ListRenderItemInfo<ProfilesResponse['results'][number]>) => (
     <PlayerListItem
       {...item}
       onPress={() =>
@@ -40,13 +52,17 @@ export default () => {
     <VStack flex={1} gap="$3" m="$3">
       <SearchInput onChangeText={setSearchDebounced} />
 
-      <VirtualizedList<ProfileResponse>
-        data={users}
+      <VirtualizedList<ProfilesResponse['results'][number]>
+        data={profiles}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         isLoading={isLoading || isDebouncing}
+        refreshing={isRefetching}
+        onRefresh={refetch}
+        onEndReached={() => hasNextPage && fetchNextPage()}
+        isLoadingNext={isFetchingNextPage}
       />
     </VStack>
   )

@@ -3,12 +3,10 @@
 ## Included Libraries
 
 - [Expo](https://expo.dev/)
-- [Supabase](https://supabase.io/)
 - [React Hook Form](https://github.com/react-hook-form/react-hook-form)
 - [Zod](https://github.com/colinhacks/zod)
 - [GlueStack](https://github.com/Raathigesh/gluestack)
 - [React Native Async Storage](https://github.com/react-native-async-storage/async-storage)
-- [Supabase Cache Helpers](https://github.com/supabase/supabase-js/tree/master/src/cache)
 - [React Query](https://github.com/tannerlinsley/react-query)
 - [Day.js](https://github.com/iamkun/dayjs)
 - [Moti](https://github.com/wcandillon/moti)
@@ -20,7 +18,6 @@
 ## Project Structure
 
 - The repository consists of two main folders:
-  - **supabase**: Contains configurations and scripts related to Supabase.
   - **app**: Contains the application code.
 
 ## Get started
@@ -29,9 +26,7 @@ Update Application name and slug in `app.config.ts`
 
 Update env token in `eas.json`
 
-Create a `.env` in app racine from `.env.dist` (in general : supabase, contact email, privacy policy & terms of use)
-
-Update `project_id` in `supabase:config.toml`
+Create a `.env` in app racine from `.env.dist` (in general : contact email, privacy policy & terms of use)
 
 ## Build app
 

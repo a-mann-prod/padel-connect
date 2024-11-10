@@ -1,34 +1,31 @@
-import { formatSearch } from '../utils'
-import { profilesQueryCols } from './entities'
-import { GetProfileParams, GetProfilesParams } from './params'
+import api from '../../axiosConfig'
+import { ProfileResponse, ProfilesResponse } from './entities'
+import {
+  GetInfiniteProfilesParams,
+  GetProfileParams,
+  GetProfilesParams,
+} from './params'
 
-import { supabase } from '@/services/supabase'
+const ENDPOINT = '/profiles'
 
-export const getProfileFn = (params: GetProfileParams) =>
-  supabase
-    .from('profiles')
-    .select(profilesQueryCols)
-    .eq('id', params.id)
-    .single()
+export const getProfileFn = async (params: GetProfileParams) => {
+  const { data } = await api.get<ProfileResponse>(`${ENDPOINT}/${params.id}/`)
 
-export const getProfilesFn = (params: GetProfilesParams) => {
-  let query = supabase.from('profiles').select(profilesQueryCols)
-
-  if (params.current_user_id) {
-    query = query.neq('id', params.current_user_id)
-  }
-
-  if (params.search) {
-    query = query.or(
-      `first_name.ilike.${formatSearch(params.search)}, last_name.ilike.${formatSearch(params.search)}`
-    )
-  }
-
-  if (params.ids) {
-    query = query.in('id', params.ids)
-  }
-
-  return query
+  return data
 }
 
-export const setProfileFn = () => supabase.from('profiles')
+export const getProfilesFn = async (params: GetProfilesParams) => {
+  const { data } = await api.get<ProfilesResponse>(`${ENDPOINT}`, { params })
+
+  return data
+}
+
+export const getInfiniteProfilesFn = async (
+  params: GetInfiniteProfilesParams,
+  pageParam: number
+) => {
+  const { data } = await api.get<ProfilesResponse>(`${ENDPOINT}/`, {
+    params: { ...params, page: pageParam },
+  })
+  return data
+}

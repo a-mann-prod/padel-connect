@@ -3,10 +3,8 @@ import { router } from 'expo-router'
 
 import { useOnboardingContext } from '@/contexts'
 import { Button } from '@/designSystem'
-import { useUpdateAvatarMe } from '@/hooks/useUpdateAvatarMe'
-import { useUpdateMe } from '@/hooks/useUpdateMe'
+import { useUpdateMeProfile } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
-import { prepareFile } from '@/utils/file'
 
 export default () => {
   const t = useTranslate('onboarding', { keyPrefix: 'getStarted' })
@@ -15,25 +13,24 @@ export default () => {
   const { personalInfo, avatar, level, notificationAlerts } =
     useOnboardingContext()
 
-  const { mutate: updateAvatarMe, isPending: isPendingUpdateAvatarMe } =
-    useUpdateAvatarMe()
-  const { mutate: updateMe, isPending: isPendingUpdateMe } = useUpdateMe({
-    onSuccess: async () => {
-      if (avatar?.avatar) {
-        const file = await prepareFile(avatar?.avatar)
-        updateAvatarMe(file)
-      }
-      router.replace('/')
-    },
-    //TODO error here
-    onError: (e) => console.log(e),
-  })
+  const { mutate: updateMe, isPending: isPendingUpdateMe } = useUpdateMeProfile(
+    {
+      options: {
+        onSuccess: async () => {
+          router.replace('/')
+        },
+        onError: (e: any) => console.log(e),
+      },
+    }
+  )
 
+  // gerer avatar via formdata
   const onSubmit = async () =>
     updateMe({
       ...personalInfo,
       ...level,
       ...notificationAlerts,
+      ...avatar,
       is_onboarding_completed: true,
     })
 
@@ -43,7 +40,7 @@ export default () => {
       <Button
         title={tGlobal('letsGo')}
         onPress={onSubmit}
-        isLoading={isPendingUpdateAvatarMe || isPendingUpdateMe}
+        isLoading={isPendingUpdateMe}
       />
     </VStack>
   )

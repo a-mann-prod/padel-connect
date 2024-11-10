@@ -1,47 +1,47 @@
 import { z } from 'zod'
 
-import { UpdateMatchFilterParams } from '@/services/api'
+import { GetInfiniteTournamentsParams } from '@/services/api'
+import { MatchType } from '@/services/api/types'
 import { validators } from '@/services/formValidator'
-import { Database } from '@/services/supabase/database.types'
-import { Nillable } from '@/types'
 import { isNilOrEmpty } from '@/utils/global'
 
 export type TournamentsFiltersFormValues = z.infer<typeof schema>
 
 const getDefaultValues = (
-  props?: Nillable<TournamentsFiltersFormValues> | null
+  props?: TournamentsFiltersFormValues
 ): TournamentsFiltersFormValues => ({
-  complex_id: props?.complex_id || '',
+  complex: props?.complex || '',
   type: props?.type || '',
   month: props?.month || '',
 })
 
 const schema = z.object({
-  complex_id: validators.string.optional(),
+  complex: validators.string.optional(),
   type: validators.string.optional(),
   month: validators.string.optional(),
 })
 
 const formatToParams = (
   props: TournamentsFiltersFormValues
-): UpdateMatchFilterParams => ({
+): GetInfiniteTournamentsParams => ({
   ...props,
-  type: props?.type as Database['public']['Enums']['match_type'],
-  complex_id: !isNilOrEmpty(props.complex_id) ? Number(props.complex_id) : null,
+  month: props?.month || undefined,
+  type: props?.type as MatchType,
+  complex: !isNilOrEmpty(props.complex) ? Number(props.complex) : undefined,
 })
 
 const formatToFormValues = (
-  props: any //MatchTournamentsFilters
-): Nillable<TournamentsFiltersFormValues> => {
+  props: GetInfiniteTournamentsParams
+): TournamentsFiltersFormValues => {
   if (!props) return {}
 
   return {
     ...props,
-    complex_id: props.complex_id?.toString(),
+    complex: props.complex?.toString(),
   }
 }
 
-export const TournamentsFiltersFormServices = {
+export const tournamentsFiltersFormServices = {
   getDefaultValues,
   schema,
   formatToParams,

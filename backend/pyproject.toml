@@ -1,0 +1,28 @@
+[tool.black]
+line-length = 150
+include = '\.pyi?$'
+exclude = '''
+(
+    /(\.|_)nox/
+  | /build/
+  | /dist/
+  | /venv/
+  | _build/
+  | buck-out/
+  | cache/
+  | docs/
+  | lib/
+  | logs/
+  | node_modules/
+  | sandboxes/
+  | target/
+  | test/
+  | venv/
+  | migrations/
+)
+'''
+
+[tool.ruff]
+line-length = 150
+include = ["backend/**/*.py", "chat/**/*.py", "main_app/**/*.py"]
+exclude = ["**/migrations/**/*"]

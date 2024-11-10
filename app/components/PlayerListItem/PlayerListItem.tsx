@@ -8,17 +8,17 @@ import {
   Pressable,
   PressableProps,
 } from '@/designSystem'
-import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
+import { ProfileResponse } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { getUsername } from '@/utils/user'
 
-export type PlayerListItemProps = ProfileWithAvatar & {
+export type PlayerListItemProps = ProfileResponse & {
   onPress: PressableProps['onPress']
-  isFavorite?: boolean
+  displayStar?: boolean
   matchRequest?: {
     isLoading: boolean
-    onAcceptPress: (id: string | undefined) => void
-    onRefusePress: (id: string | undefined) => void
+    onAcceptPress: (id: number | undefined) => void
+    onRefusePress: (id: number | undefined) => void
   }
 }
 
@@ -28,19 +28,20 @@ export const PlayerListItem = ({
   last_name,
   manual_preference,
   side_preference,
-  avatar,
+  avatar_url,
   onPress,
-  isFavorite = false,
+  is_favorite = false,
+  displayStar = true,
   matchRequest,
 }: PlayerListItemProps) => {
   return (
     <Pressable onPress={onPress}>
       <HStack gap="$5" variant="colored" rounded="$lg" p="$3">
-        <Avatar size="md" imageUrl={avatar} />
+        <Avatar size="md" imageUrl={avatar_url} />
         <VStack flex={1} gap="$2">
           <HStack alignItems="center">
             <Text flex={1}>{getUsername(first_name, last_name)}</Text>
-            {isFavorite && <Icon name="FAS-star" size="xs" />}
+            {displayStar && is_favorite && <Icon name="FAS-star" size="xs" />}
           </HStack>
           <HStack gap="$3">
             <SubItem

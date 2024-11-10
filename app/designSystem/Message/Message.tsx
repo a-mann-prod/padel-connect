@@ -3,8 +3,8 @@ import { Dayjs } from 'dayjs'
 
 import { Avatar } from '../Avatar/Avatar'
 
-import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
-import { MessageResponse } from '@/services/api'
+import { MatchConversationMessagesResponse } from '@/services/api/routes/matches'
+import { DefaultProfileResponse } from '@/services/api/types'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { getUsername } from '@/utils/user'
@@ -12,13 +12,14 @@ import { when } from '@/utils/when'
 
 export type MessageProps = {
   content: string
-  sender?: ProfileWithAvatar
+  sender?: DefaultProfileResponse
   createdDate: Dayjs
   isMe: boolean
   isLast: boolean
 
-  prevMessage?: MessageResponse
-  nextMessage?: MessageResponse
+  // TODO A REVOIR
+  prevMessage?: MatchConversationMessagesResponse['results'][number]
+  nextMessage?: MatchConversationMessagesResponse['results'][number]
 }
 export const Message = ({
   content,
@@ -31,7 +32,7 @@ export const Message = ({
 }: MessageProps) => {
   const t = useTranslate()
 
-  const isSameUser = nextMessage?.sender_id === sender?.id
+  const isSameUser = nextMessage?.user === sender?.id
 
   const isSameDay = isSameDayFn(createdDate, prevMessage, nextMessage)
 
@@ -54,7 +55,7 @@ export const Message = ({
         alignItems="flex-end"
       >
         {!isMe && !isSameUser ? (
-          <Avatar size="xs" imageUrl={sender?.avatar} />
+          <Avatar size="xs" imageUrl={sender?.avatar_url} />
         ) : (
           <Box w="$6" />
         )}
@@ -83,8 +84,9 @@ export const Message = ({
 
 const isSameDayFn = (
   date: Dayjs,
-  prevMessage?: MessageResponse,
-  nextMessage?: MessageResponse
+  // TODO A REVOIR
+  prevMessage?: any,
+  nextMessage?: any
 ) => {
   // first message
   if (!prevMessage) {

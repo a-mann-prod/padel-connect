@@ -3,10 +3,10 @@ import { HStack, Text, VStack } from '@gluestack-ui/themed'
 import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 
 import { Pressable, PressableProps } from '@/designSystem'
-import { TournamentResponse } from '@/services/api'
+import { TournamentsResponse } from '@/services/api'
 import { date } from '@/services/date'
 
-export type TournamentListItemProps = TournamentResponse & {
+export type TournamentListItemProps = TournamentsResponse['results'][number] & {
   onPress: PressableProps['onPress']
 }
 

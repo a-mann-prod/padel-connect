@@ -22,12 +22,14 @@ export const LoginForm = () => {
   const onError = useHandleError()
 
   const { mutate: login, isPending } = useLogin({
-    onSuccess: () => {
-      router.canGoBack() && router.back() // need to go back one time because of navigation to login
-      // router.dismissAll()
-      // router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
+    options: {
+      onSuccess: () => {
+        router.canGoBack() && router.back() // need to go back one time because of navigation to login
+        // router.dismissAll()
+        // router.replace((redirectTo ? `/${redirectTo}` : '/') as any)
+      },
+      onError,
     },
-    onError,
   })
 
   const methods = useForm<LoginFormValues>({

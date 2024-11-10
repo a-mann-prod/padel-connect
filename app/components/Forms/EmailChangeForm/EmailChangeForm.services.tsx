@@ -1,15 +1,20 @@
 import { z } from 'zod'
 
+import { UpdateMeEmailParams } from '@/services/api'
 import { validators } from '@/services/formValidator'
 
-export type EmailChangeFormValues = z.infer<typeof schema>
+export type EmailChangeFormValues = UpdateMeEmailParams
 
 const getDefaultValues = (): EmailChangeFormValues => ({
-  email: '',
+  new_email: '',
+  re_new_email: '',
+  current_password: '',
 })
 
 const schema = z.object({
-  email: validators.string.email(),
+  new_email: validators.string.email(),
+  re_new_email: validators.string.email(),
+  current_password: validators.string.required(),
 })
 
 export const emailChangeFormServices = {

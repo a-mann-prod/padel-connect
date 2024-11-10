@@ -1,0 +1,71 @@
+# https://stackoverflow.com/questions/53093487/multi-stage-build-in-docker-compose/53101932#53101932
+ARG PYTHON_VERSION
+
+###########
+# BUILDER #
+###########
+
+# pull official base image
+FROM python:${PYTHON_VERSION} AS builder
+
+# set work directory
+WORKDIR /app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc
+
+# install python dependencies
+COPY requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+COPY ./docker/entrypoint.prod.sh /docker/entrypoint.prod.sh
+
+
+#########
+# FINAL #
+#########
+
+# pull official base image
+FROM python:${PYTHON_VERSION}
+
+# install netcat
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends netcat
+
+ENV APP_FOLDER=/home/app
+
+# create the app user
+RUN addgroup --system app && adduser --system --group app
+
+# create the appropriate directories
+RUN mkdir -p $APP_FOLDER && mkdir -p $APP_FOLDER/logs && mkdir -p $APP_FOLDER/mediafiles && mkdir -p $APP_FOLDER/staticfiles
+
+WORKDIR $APP_FOLDER
+
+# install dependencies
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache /wheels/*
+
+COPY --from=builder /docker/entrypoint.prod.sh /docker/entrypoint.prod.sh
+RUN chmod +x /docker/entrypoint.prod.sh
+
+# copy project
+COPY ./backend $APP_FOLDER//backend
+COPY ./chat $APP_FOLDER//chat
+COPY ./main_app $APP_FOLDER//main_app
+COPY ./manage.py $APP_FOLDER/manage.py
+
+# set permissions for the directories
+RUN chown -R app:app $APP_FOLDER
+
+# change to the app user
+USER app
+
+ENTRYPOINT ["/docker/entrypoint.prod.sh"]

@@ -1,44 +1,28 @@
-import { useMe } from './useMe'
-
 import {
-  useDeleteFavoriteUser,
-  useFavoriteUser,
-  useInsertFavoriteUser,
+  ProfileResponse,
+  useAddFavoriteUser,
+  useRemoveFavoriteUser,
 } from '@/services/api'
 
-export const useManageFavoriteUser = (favUserId?: string) => {
-  const { data: me } = useMe()
-
-  const { data: fav, isLoading } = useFavoriteUser({
-    params: {
-      user_id: me?.id as string,
-      favorite_user_id: favUserId as string,
-    },
-    options: {
-      enabled: !!(me?.id && favUserId),
-    },
-  })
-
-  const { mutate: insertFav, isPending: isPendingInsert } =
-    useInsertFavoriteUser()
+export const useManageFavoriteUser = (user?: ProfileResponse) => {
+  const { mutate: insertFav, isPending: isPendingInsert } = useAddFavoriteUser()
   const { mutate: deleteFav, isPending: isPendingDelete } =
-    useDeleteFavoriteUser()
+    useRemoveFavoriteUser()
 
-  const isFavorite = !!fav
+  const isFavorite = user?.is_favorite
 
   const toggleFavorite = () => {
+    if (!user?.id) return
+
     if (isFavorite) {
-      deleteFav({ user_id: me?.id, favorite_user_id: favUserId })
+      deleteFav({ id: user.id })
     } else {
-      me?.id &&
-        favUserId &&
-        insertFav([{ user_id: me?.id, favorite_user_id: favUserId }])
+      insertFav({ id: user.id })
     }
   }
 
   return {
-    isFavorite,
     toggleFavorite,
-    isLoading: isLoading || isPendingInsert || isPendingDelete,
+    isLoading: isPendingInsert || isPendingDelete,
   }
 }

@@ -1,28 +1,18 @@
-import * as AuthSession from 'expo-auth-session'
-
-import { handleSupabaseAuthError } from '../shared'
 import { RegisterResponse } from './entities'
 import { RegisterParams } from './params'
 
-import { supabase } from '@/services/supabase'
+import api from '@/services/api/axiosConfig'
 
-export const registerFn = async ({
-  email,
-  password,
-}: RegisterParams): Promise<RegisterResponse> => {
-  const emailRedirectTo = AuthSession.makeRedirectUri({
-    path: '/(modals)/root/email-verified',
-  })
+export const registerFn = async (
+  params: RegisterParams
+): Promise<RegisterResponse> => {
+  // handle redirection
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { emailRedirectTo },
-  })
+  // const emailRedirectTo = AuthSession.makeRedirectUri({
+  //   path: '/(modals)/root/email-verified',
+  // })
 
-  if (error) {
-    handleSupabaseAuthError(error)
-  }
+  const { data } = await api.post('/auth/users/', params)
 
   return data
 }

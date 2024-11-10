@@ -3,13 +3,12 @@ import { Fragment } from 'react'
 import { chunk } from 'remeda'
 
 import { Avatar, AvatarProps, Divider } from '@/designSystem'
-import { ProfileWithAvatar } from '@/hooks/useProfileWithAvatar'
-import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
+import { ProfileResponse } from '@/services/api'
+import { DefaultProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { iterate } from '@/utils/array'
 
 const MAX_PLAYER_NB = 4
-const EMPTY_PREFIX = 'empty_'
 
 const mapIndexToTeam: Record<number, string> = {
   0: 'A',
@@ -17,11 +16,11 @@ const mapIndexToTeam: Record<number, string> = {
 }
 
 export type MatchPlayersProps = {
-  data?: ProfilesWithAvatar
-  onPress?: (userId: string) => void
+  data?: DefaultProfileResponse[]
+  onPress?: (userId: number) => void
   onEmptyPress?: () => void
   displayTeam?: boolean
-  hasPayedUserIds: string[]
+  hasPayedUserIds: number[]
   isMatchPassed: boolean
 } & Pick<AvatarProps, 'size'>
 
@@ -35,8 +34,8 @@ export const MatchPlayers = ({
 
   const avatarItems = [
     ...(data || []),
-    ...iterate(emptySlots).map<ProfileWithAvatar>((i) => ({
-      id: `${EMPTY_PREFIX}${i.toString()}`,
+    ...iterate(emptySlots).map<Partial<ProfileResponse>>((i) => ({
+      id: -1 + -i,
     })),
   ]
 
@@ -69,17 +68,17 @@ export const MatchPlayers = ({
 
 const AvatarItem = ({
   id,
-  avatar,
   first_name,
   last_name,
   onPress,
   onEmptyPress,
   hasPayedUserIds,
   isMatchPassed,
+  avatar_url,
   ...props
-}: ProfileWithAvatar & Omit<MatchPlayersProps, 'data'>) => {
+}: Partial<ProfileResponse> & Omit<MatchPlayersProps, 'data'>) => {
   const colorMode = useColorMode()
-  const isEmpty = id?.startsWith(EMPTY_PREFIX)
+  const isEmpty = (id || -1) < 0
 
   const defaultBorderColor =
     colorMode === 'light' ? 'white' : 'backgroundDark950'
@@ -119,7 +118,7 @@ const AvatarItem = ({
     <Avatar
       key={id}
       {...sharedProps}
-      imageUrl={avatar}
+      imageUrl={avatar_url}
       onPress={id && onPress ? () => onPress(id) : undefined}
       firstname={first_name}
       lastname={last_name}

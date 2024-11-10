@@ -4,8 +4,7 @@ import { router } from 'expo-router'
 
 import { MatchPlayers, MatchTypeTile } from '@/components'
 import { Section, SectionRow, Tile } from '@/designSystem'
-import { useProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
-import { MatchResponse } from '@/services/api'
+import { MatchResponse, useProfiles } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -19,7 +18,7 @@ type MatchInfoProps = {
 
   isParticipant: boolean
 
-  hasPayedUserIds: string[]
+  hasPayedUserIds: number[]
 
   onEmptyPress?: () => void
 }
@@ -38,18 +37,23 @@ export const MatchInfo = ({
   const tGlobal = useTranslate()
   const t = useTranslate('match')
 
-  const userIds = match.match_requests.map(({ user_id }) => user_id) || []
-  const ownerId = match.match_requests.find(({ is_owner }) => is_owner)?.user_id
+  // TODO A REVOIR
+  // const userIds = match.match_requests.map(({ user_id }) => user_id) || []
 
-  const { data: players } = useProfilesWithAvatar({
+  const ownerId = match.user
+  const userIds = [ownerId] as number[]
+
+  const { data: playersResults } = useProfiles({
     params: { ids: userIds },
     options: { enabled: !!userIds.length },
   })
 
+  const players = playersResults?.results
+
   const owner = players?.find(({ id }) => id === ownerId)
 
   const sortedPlayers = players?.sort(
-    (a, b) => userIds.indexOf(a.id || '') - userIds.indexOf(b.id || '')
+    (a, b) => userIds.indexOf(a.id) - userIds.indexOf(b.id)
   )
 
   return (

@@ -66,6 +66,14 @@ export const MatchActionButtons = ({
           <Button title={t('playersManage')} />
         </Link>
       )}
+      {/* TODO: TEST, TO REMOVE */}
+      <Button
+        title="Test chat"
+        icon="FAS-message"
+        iconRight
+        action="warning"
+        onPress={() => router.navigate(routing.matchChat.path(matchId))}
+      />
       {isParticipant && (
         <>
           <Button

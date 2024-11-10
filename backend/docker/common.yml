@@ -1,0 +1,44 @@
+version: "3.8"
+
+name: padel-connect
+services:
+  api:
+    container_name: api
+    environment:
+      - ALLOWED_HOSTS=${API_ALLOWED_HOST}
+      - SECRET_KEY_FILE=/run/secrets/api_secret_key
+      - API_PORT=${API_PORT}
+      - API_CSRF_TRUSTED_ORIGINS=${API_CSRF_TRUSTED_ORIGINS}
+
+      # DB VAR
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD_FILE=/run/secrets/db_password
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+
+      # EMAIL VAR
+      - EMAIL_HOST=${API_EMAIL_HOST}
+      - EMAIL_PORT=${API_EMAIL_PORT}
+      - DEFAULT_FROM_EMAIL=${API_DEFAULT_FROM_EMAIL}
+      - EMAIL_HOST_USER=${API_EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD_FILE=/run/secrets/api_email_host_password
+    #links:
+    #  - db:db
+
+  db:
+    container_name: db
+    image: postgres:${POSTGRES_VERSION}
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

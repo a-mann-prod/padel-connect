@@ -1,25 +1,17 @@
-import { getComplexesQueryCols } from './entities'
-import { GetComplexParams, GetComplexesParams } from './params'
+import api from '../../axiosConfig'
+import { ComplexesResponse, ComplexResponse } from './entities'
+import { GetComplexParams } from './params'
 
-import { supabase } from '@/services/supabase'
+export const getComplexFn = async (
+  params: GetComplexParams
+): Promise<ComplexResponse> => {
+  const { data } = await api.get(`/complexes/${params.id}`)
 
-export const getComplexFn = (params: GetComplexParams) =>
-  supabase
-    .from('complexes')
-    .select(getComplexesQueryCols)
-    .eq('id', params.id)
-    .single()
+  return data
+}
 
-export const getComplexesFn = (params: GetComplexesParams) => {
-  let query = supabase.from('complexes').select(getComplexesQueryCols)
+export const getComplexesFn = async (): Promise<ComplexesResponse> => {
+  const { data } = await api.get('/complexes/')
 
-  // if (params.current_user_id) {
-  //   query = query.neq('id', params.current_user_id)
-  // }
-
-  // if (params.search) {
-  //   query = query.like('first_name', formatSearch(params.search))
-  // }
-
-  return query
+  return data
 }

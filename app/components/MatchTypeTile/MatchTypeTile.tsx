@@ -1,10 +1,10 @@
 import { Tile, TileProps } from '@/designSystem'
+import { MatchType } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
-import { Database } from '@/services/supabase/database.types'
 import { mapTypeToIcon } from '@/utils/matchType'
 
 type MatchTypeTileProps = {
-  type: Database['public']['Enums']['match_type']
+  type: MatchType
 } & Omit<TileProps, 'title'>
 
 export const MatchTypeTile = ({ type }: MatchTypeTileProps) => {

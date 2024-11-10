@@ -1,5 +1,6 @@
 import { HStack, Heading, Text, VStack } from '@gluestack-ui/themed'
 
+import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 import { PlayersAvatars } from '../PlayersAvatars/PlayersAvatars'
 
 import {
@@ -10,24 +11,24 @@ import {
   PressableProps,
 } from '@/designSystem'
 import { isMatchReserved } from '@/hooks/useManageMatch'
-import { ProfilesWithAvatar } from '@/hooks/useProfilesWithAvatar'
 import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
-import { getPublicAvatarUrl } from '@/utils/avatar'
-import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']
-} & MatchesResponse[number]
+} & MatchesResponse['results'][number]
 
 export const MatchListItem = ({ onPress, ...match }: MatchlistItemProps) => {
   const tGlobal = useTranslate()
 
-  const players: ProfilesWithAvatar = match.match_requests.map(({ user }) => ({
-    id: user?.id,
-    avatar: user?.avatar_url ? getPublicAvatarUrl(user.avatar_url) : undefined,
-  }))
+  // TODO A REVOIR
+  // const players: ProfilesResponse = match.match_requests.map(({ user }) => ({
+  //   id: user?.id,
+  //   avatar: user?.avatar_url ? getPublicAvatarUrl(user.avatar_url) : undefined,
+  // }))
+
+  const players = [] as any[]
 
   const isReserved = isMatchReserved(match)
 

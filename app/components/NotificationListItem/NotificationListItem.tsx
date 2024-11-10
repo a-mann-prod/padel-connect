@@ -2,15 +2,14 @@ import { HStack, Text, VStack } from '@gluestack-ui/themed'
 
 import { Icon, Pressable, PressableProps } from '@/designSystem'
 import { FontAwesomeProps } from '@/designSystem/Icon/FontAwesome/FontAwesome'
-import { NotificationResponse } from '@/services/api'
+import { NotificationResponse, NotificationsResponse } from '@/services/api'
 import { date } from '@/services/date'
 
-export type NotificationType = 'MESSAGE' | 'OTHER'
-
-export type NotificationListItemProps = NotificationResponse & {
-  onPress: PressableProps['onPress']
-  unread_ids?: number[]
-}
+export type NotificationListItemProps =
+  NotificationsResponse['results'][number] & {
+    onPress: PressableProps['onPress']
+    unread_ids?: number[]
+  }
 
 const mapTypeToIcon: Record<
   NotificationResponse['type'],
@@ -25,7 +24,7 @@ const mapTypeToIcon: Record<
 
 export const NotificationListItem = ({
   title,
-  subtitle,
+  message,
   onPress,
   created_at,
   is_read,
@@ -55,7 +54,7 @@ export const NotificationListItem = ({
               variant="subtitle"
               {...unreadStyle}
             >
-              {subtitle}
+              {message}
             </Text>
             <Text
               alignSelf="flex-end"
