@@ -108,7 +108,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(env("REDIS_HOST"), env("REDIS_PORT", default=6379))],
         },
     },
 }
@@ -252,5 +252,5 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # PUSH NOTIF TOKEN
-PUSH_NOTIF_URL = 'https://exp.host/--/api/v2/push/send'
-PUSH_NOTIF_TOKEN = 'YXKXlYOERAdXingopojtGHG-HGmsYWDrJzm8YvEg'
+PUSH_NOTIF_URL = env("PUSH_NOTIF_URL")
+PUSH_NOTIF_TOKEN = env("PUSH_NOTIF_TOKEN")

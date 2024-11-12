@@ -1,6 +1,7 @@
 version: "3.8"
-services:
+name: "padel_connect_dev"
 
+services:
   api:
     extends:
       file: common.yml
@@ -37,6 +38,14 @@ services:
       - local
     secrets:
       - db_password
+
+  redis:
+    extends:
+      file: common.yml
+      service: redis
+    networks:
+      - local
+
 
   adminer:
     extends:

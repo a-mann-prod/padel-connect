@@ -6,7 +6,7 @@ ARG PYTHON_VERSION
 ###########
 
 # pull official base image
-FROM python:${PYTHON_VERSION} AS builder
+FROM python:$PYTHON_VERSION AS builder
 
 # set work directory
 WORKDIR /app
@@ -31,7 +31,7 @@ COPY ./docker/entrypoint.prod.sh /docker/entrypoint.prod.sh
 #########
 
 # pull official base image
-FROM python:${PYTHON_VERSION}
+FROM python:$PYTHON_VERSION
 
 # install netcat
 RUN apt-get update && \

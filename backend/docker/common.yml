@@ -23,8 +23,16 @@ services:
       - DEFAULT_FROM_EMAIL=${API_DEFAULT_FROM_EMAIL}
       - EMAIL_HOST_USER=${API_EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD_FILE=/run/secrets/api_email_host_password
-    #links:
-    #  - db:db
+
+      # PUSH VAR
+      - PUSH_NOTIF_URL=${PUSH_NOTIF_URL}
+      - PUSH_NOTIF_TOKEN=${PUSH_NOTIF_TOKEN}
+
+      # REDIS
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+
+      - DJANGO_SETTINGS_MODULE=backend.settings
 
   db:
     container_name: db
@@ -36,6 +44,16 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "${DB_PORT}:5432"
+
+  redis:
+    container_name: redis
+    image: redis:${REDIS_VERSION}
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"    
+
+    networks:
+      - local
 
   adminer:
     image: adminer

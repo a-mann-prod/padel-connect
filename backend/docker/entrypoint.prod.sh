@@ -14,4 +14,4 @@ python manage.py migrate
 echo 'Collecting static files...'
 python manage.py collectstatic --no-input
 
-exec gunicorn backend.wsgi:application --bind 0.0.0.0:${API_PORT} "$@"
+exec "$@"
