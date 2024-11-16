@@ -66,8 +66,8 @@ const getDefaultValues = (
 ): PersonalInfoFormValues => ({
   first_name: props?.first_name || '',
   last_name: props?.last_name || '',
-  manual_preference: props?.manual_preference || null,
-  side_preference: props?.side_preference || null,
+  manual_preference: props?.manual_preference || ('' as ManualPreference),
+  side_preference: props?.side_preference || ('' as SidePreference),
 })
 
 const schema = z.object({

@@ -67,8 +67,6 @@ export default WithMatch(() => {
       ).sort()
     : []
 
-  console.log(userIds)
-
   const { data: profiles, isLoading: isLoadingProfiles } = useProfiles({
     params: { ids: userIds },
     options: { enabled: !!userIds.length },
@@ -118,10 +116,7 @@ export default WithMatch(() => {
             renderItem={renderItem}
             isLoading={isLoading}
             isLoadingNext={isFetchingNextPage}
-            onEndReached={() => {
-              console.log('ici', hasNextPage)
-              return hasNextPage && fetchNextPage()
-            }}
+            onEndReached={() => hasNextPage && fetchNextPage()}
             inverted
           />
           <Box>

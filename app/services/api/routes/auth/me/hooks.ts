@@ -49,9 +49,15 @@ export const useUpdateMeEmail = ({
 export const useUpdateMe = ({
   options,
 }: UseMutationProps<MeResponse, UpdateMeParams> = {}) => {
+  const queryClient = useQueryClient()
+
   return useMutation({
     ...options,
     mutationFn: updateMeFn,
+    onSuccess: (data, variables, context) => {
+      queryClient.setQueryData(['me'], data)
+      options?.onSuccess?.(data, variables, context)
+    },
   })
 }
 

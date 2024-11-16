@@ -22,8 +22,6 @@ export const FormRangeSliderControlled = ({
     field: { onChange: onChangeMax, value: maxValue },
   } = useController({ name: maxName })
 
-  console.log(minName, maxName, [minValue, maxValue])
-
   return (
     <FormRangeSlider
       formControlProps={{ ...formControlProps, error }}

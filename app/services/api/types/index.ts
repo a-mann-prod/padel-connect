@@ -34,6 +34,11 @@ export enum SidePreference {
   BOTH = 'BOTH',
 }
 
+export enum Language {
+  EN = 'EN',
+  FR = 'FR',
+}
+
 export type Params<T> = T &
   Partial<{
     orderBy: Partial<Record<keyof T, 'ASC' | 'DESC'>>

@@ -4,11 +4,8 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
 import { useInvalidateQuery } from '@/hooks/useInvalidateQuery'
 import { useMe } from '@/hooks/useMe'
-import {
-  GetMatchesParams,
-  useReadNotification,
-  useUpdateMe,
-} from '@/services/api'
+import { useReadNotification, useUpdateMe } from '@/services/api'
+import { Language } from '@/services/api/types'
 import { buildContext } from '@/services/buildContext'
 import { i18n } from '@/services/i18n'
 import {
@@ -16,8 +13,6 @@ import {
   sendNotification,
 } from '@/services/notifications'
 import { isNilOrEmpty } from '@/utils/global'
-
-export type Notifications = Omit<GetMatchesParams, 'dates'>
 
 type NotificationsContextProps = {
   sendNotification: () => void
@@ -37,7 +32,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
 
   const { mutate: readNotification } = useReadNotification()
 
-  const [expoPushToken, setExpoPushToken] = useState('')
+  const [expoPushToken, setExpoPushToken] = useState<string | null>(null)
   const [notification, setNotification] = useState<
     ExpoNotifications.Notification | undefined
   >(undefined)
@@ -46,9 +41,9 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
   const responseListener = useRef<ExpoNotifications.Subscription>()
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token ?? '')
-    )
+    registerForPushNotificationsAsync()
+      .then((token) => setExpoPushToken(token ?? ''))
+      .finally(() => setExpoPushToken(''))
 
     // listener when notification appears
     notificationListener.current =
@@ -83,18 +78,23 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
 
   // add push token and langage to backend
   useEffect(() => {
-    if (!me?.id) return
+    if (!me?.id || expoPushToken !== '') return
 
-    if (isNilOrEmpty(expoPushToken)) mutate({ language: i18n().language })
+    if (isNilOrEmpty(expoPushToken))
+      mutate({ language: i18n().language.toLocaleUpperCase() as Language })
 
-    mutate({ push_token: expoPushToken, language: i18n().language })
+    mutate({
+      push_token: expoPushToken,
+      language: i18n().language.toLocaleUpperCase() as Language,
+    })
   }, [expoPushToken, me?.id, mutate])
 
   return (
     <Provider
       value={{
         notification,
-        sendNotification: () => sendNotification(expoPushToken),
+        sendNotification: () =>
+          expoPushToken && sendNotification(expoPushToken),
       }}
     >
       {children}

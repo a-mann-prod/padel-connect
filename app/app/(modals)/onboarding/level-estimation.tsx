@@ -62,7 +62,8 @@ export default () => {
           isDisabled={!level}
           title={tGlobal('next')}
           onPress={() =>
-            router.navigate(routing.onboardingNotificationAlerts.path())
+            // router.navigate(routing.onboardingNotificationAlerts.path())
+            router.navigate(routing.onboardingFilters.path())
           }
         />
       </VStack>

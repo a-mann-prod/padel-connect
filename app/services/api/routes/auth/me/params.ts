@@ -17,5 +17,5 @@ export type DeleteMeParams = {
 }
 
 export type UpdateMeParams = Partial<
-  Pick<MeResponse, 'language' | 'push_token'>
+  Pick<MeResponse, 'language' | 'push_token' | 'is_onboarding_completed'>
 >

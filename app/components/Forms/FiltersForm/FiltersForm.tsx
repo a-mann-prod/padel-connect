@@ -72,7 +72,7 @@ export const FiltersForm = ({
           />
           <FormSelectControlled
             formControlProps={{ title: tGlobal('complex') }}
-            name="complex_id"
+            name="complex"
             items={[{ label: tGlobal('all'), value: '' }, ...complexItems]}
           />
           <FormSelectControlled
