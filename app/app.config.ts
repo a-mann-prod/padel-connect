@@ -50,7 +50,7 @@ export default ({ config }: ConfigContext) => ({
     [
       'expo-asset',
       {
-        assets: ['./assets/images/homeHeaderBackground.jpg'],
+        assets: ['./assets/images/home_header_background.jpg'],
       },
     ],
     [
