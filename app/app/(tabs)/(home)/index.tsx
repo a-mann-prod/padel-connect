@@ -56,8 +56,8 @@ export default () => {
         <Image
           h="40%"
           w="$full"
-          alt="home-header-background"
-          source={require('../../../assets/images/home-header-background.jpg')}
+          alt="homeHeaderBackground"
+          source={require('../../../assets/images/homeHeaderBackground.jpg')}
           resizeMode="cover"
         />
         <Box
