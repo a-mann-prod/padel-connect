@@ -2,13 +2,14 @@ import { HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
 import { router } from 'expo-router'
 
-import { MatchPlayers, MatchTypeTile } from '@/components'
 import { Section, SectionRow, Tile } from '@/designSystem'
 import { MatchResponse, useProfiles } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { getUsername } from '@/utils/user'
+import { MatchPlayers } from '../MatchPlayers/MatchPlayers'
+import { MatchTypeTile } from '../MatchTypeTile/MatchTypeTile'
 
 type MatchInfoProps = {
   match: MatchResponse

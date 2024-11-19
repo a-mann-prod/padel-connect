@@ -42,7 +42,7 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
           imageUrl={user.avatar_url}
           viewerEnabled
         />
-        {external && (
+        {external && me && (
           <HStack gap="$3" justifyContent="center">
             <IconButton
               icon={user.is_favorite ? 'FAS-star' : 'FAR-star'}

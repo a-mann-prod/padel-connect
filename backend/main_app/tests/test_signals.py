@@ -43,7 +43,7 @@ def test_handle_match_creation(mock_conversation_create, mock_match_request_crea
     handle_match_creation(Match, match, created=True)
 
     # Check
-    mock_match_request_create.assert_called_once_with(match=match, user=match_owner, is_owner=True, status=enums.MatchRequestStatus.ACCEPTED)
+    mock_match_request_create.assert_called_once_with(match=match, user=match_owner, is_owner=True, status=enums.RequestStatus.ACCEPTED)
     mock_conversation_create.assert_called_once_with(match=match)
     mock_notification_create.assert_called_once_with(
         title="New Match Created",

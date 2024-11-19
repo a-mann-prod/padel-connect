@@ -32,7 +32,9 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
 
   const { mutate: readNotification } = useReadNotification()
 
-  const [expoPushToken, setExpoPushToken] = useState<string | null>(null)
+  const [expoPushToken, setExpoPushToken] = useState<string>('')
+  const [hasRegisteredPushNotifications, setHasRegisteredPushNotifications] =
+    useState(false)
   const [notification, setNotification] = useState<
     ExpoNotifications.Notification | undefined
   >(undefined)
@@ -43,7 +45,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     registerForPushNotificationsAsync()
       .then((token) => setExpoPushToken(token ?? ''))
-      .finally(() => setExpoPushToken(''))
+      .finally(() => setHasRegisteredPushNotifications(true))
 
     // listener when notification appears
     notificationListener.current =
@@ -78,7 +80,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
 
   // add push token and langage to backend
   useEffect(() => {
-    if (!me?.id || expoPushToken !== '') return
+    if (!me?.id || !hasRegisteredPushNotifications) return
 
     if (isNilOrEmpty(expoPushToken))
       mutate({ language: i18n().language.toLocaleUpperCase() as Language })
@@ -87,14 +89,13 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
       push_token: expoPushToken,
       language: i18n().language.toLocaleUpperCase() as Language,
     })
-  }, [expoPushToken, me?.id, mutate])
+  }, [expoPushToken, hasRegisteredPushNotifications, me?.id, mutate])
 
   return (
     <Provider
       value={{
         notification,
-        sendNotification: () =>
-          expoPushToken && sendNotification(expoPushToken),
+        sendNotification: () => sendNotification(expoPushToken),
       }}
     >
       {children}

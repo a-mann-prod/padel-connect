@@ -5,6 +5,7 @@ import { ListRenderItemInfo } from 'react-native'
 import { NotificationListItem, NotificationListItemProps } from '@/components'
 import { VirtualizedList } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
+import { useMe } from '@/hooks/useMe'
 import {
   NotificationsResponse,
   useInfiniteNotifications,
@@ -14,6 +15,8 @@ import {
 } from '@/services/api'
 
 export default () => {
+  const { data: me } = useMe()
+
   const {
     data: notificationPages,
     isLoading,
@@ -32,7 +35,9 @@ export default () => {
 
   const { mutate: readNotification } = useReadNotification()
 
-  const { data: unreadNotificationsCount } = useUnreadNotificationsCount()
+  const { data: unreadNotificationsCount } = useUnreadNotificationsCount({
+    options: { enabled: !!me?.id },
+  })
 
   useHeaderButton(
     [

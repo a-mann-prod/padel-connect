@@ -5,3 +5,4 @@ from .profile import ProfileSerializer
 from .match_filter import MatchFilterSerializer
 from .match import MatchSerializer, MatchDetailSerializer
 from .notification import NotificationSerializer
+from .team import TeamSerializer

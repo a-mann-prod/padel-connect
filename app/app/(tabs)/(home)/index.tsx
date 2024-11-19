@@ -24,7 +24,9 @@ export default () => {
 
   const isFocused = useIsFocused()
 
-  const { data: badgeCount } = useUnreadNotificationsCount()
+  const { data: badgeCount } = useUnreadNotificationsCount({
+    options: { enabled: !!me?.id },
+  })
 
   useEffect(() => {
     if (badgeCount) Notifications.setBadgeCountAsync(badgeCount)

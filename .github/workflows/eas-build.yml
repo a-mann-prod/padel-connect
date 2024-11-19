@@ -3,6 +3,15 @@ name: EAS Build
 on:
   workflow_dispatch:
     inputs:
+      platform:
+        description: "Platform"
+        type: choice
+        default: all
+        required: true
+        options:
+          - all
+          - android
+          - ios
       profile:
         description: "Profile"
         type: choice
@@ -45,7 +54,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: 📢 EAS Build
-        run: eas build -e ${{ inputs.profile }} -p ios --non-interactive --no-wait
+        run: eas build -e ${{ inputs.profile }} -p ${{ inputs.plateform }} --non-interactive --no-wait
         working-directory: app
         if: ${{ inputs.profile == 'local' || inputs.profile == 'preview' || !inputs.submit }}
 

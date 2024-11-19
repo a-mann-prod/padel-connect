@@ -8,7 +8,8 @@ import {
   registerFormServices,
 } from './registerForm.services'
 
-import { FormInputControlled, FormProvider } from '@/components'
+import { FormProvider } from '@/components/FormProvider/FormProvider'
+import { FormInputControlled } from '@/components/FormsControlled'
 import { Button } from '@/designSystem/'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useToast } from '@/hooks/useToast'

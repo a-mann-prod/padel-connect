@@ -9,9 +9,9 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    defense_level = models.IntegerField(null=True, blank=True)
-    offense_level = models.IntegerField(null=True, blank=True)
-    service_level = models.IntegerField(null=True, blank=True)
+    defense_level = models.FloatField(null=True, blank=True)
+    offense_level = models.FloatField(null=True, blank=True)
+    service_level = models.FloatField(null=True, blank=True)
     side_preference = models.CharField(max_length=10, choices=enums.SidePreference.choices, null=True, blank=True)
     manual_preference = models.CharField(max_length=20, choices=enums.ManualPreference.choices, null=True, blank=True)
 

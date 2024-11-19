@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main_app.models import Match, Complex
+from main_app.models import Match, Complex, MatchPlayer
 from main_app import mixins
 from main_app.serializers import ComplexSerializer
 
@@ -22,4 +22,11 @@ class MatchDetailSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSer
 
     class Meta:
         model = Match
+        fields = '__all__'
+
+
+class MatchPlayerSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerializer):
+
+    class Meta:
+        model = MatchPlayer
         fields = '__all__'

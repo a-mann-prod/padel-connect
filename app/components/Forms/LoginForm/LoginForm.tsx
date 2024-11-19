@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form'
 
 import { LoginFormValues, loginFormServices } from './LoginForm.services'
 
-import { FormInputControlled, FormProvider } from '@/components'
+import { FormProvider } from '@/components/FormProvider/FormProvider'
+import { FormInputControlled } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useLogin } from '@/services/api'

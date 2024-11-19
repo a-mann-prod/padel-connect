@@ -7,7 +7,8 @@ import {
   emailChangeFormServices,
 } from './EmailChangeForm.services'
 
-import { FormInputControlled, FormProvider } from '@/components'
+import { FormProvider } from '@/components/FormProvider/FormProvider'
+import { FormInputControlled } from '@/components/FormsControlled'
 import { Button } from '@/designSystem/'
 import { useUpdateMeEmail } from '@/services/api'
 import { useTranslate } from '@/services/i18n'

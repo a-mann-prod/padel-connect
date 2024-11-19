@@ -5,7 +5,7 @@ class ManualPreference(models.TextChoices):
     LEFT_HANDED = "LEFT_HANDED"
     RIGHT_HANDED = "RIGHT_HANDED"
 
-class MatchRequestStatus(models.TextChoices):
+class RequestStatus(models.TextChoices):
     ACCEPTED = "ACCEPTED"
     REFUSED = "REFUSED"
     PENDING = "PENDING"

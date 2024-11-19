@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { useAuthContext } from '@/contexts'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { UseMutationProps, UseQueryProps } from '@/services/api/queryHooks'
+import { useAuthContext } from '../../../../../contexts/AuthContext'
 import { MeResponse } from './entities'
 import {
   deleteMeFn,

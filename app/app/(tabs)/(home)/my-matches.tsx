@@ -6,11 +6,10 @@ import { ListRenderItemInfo } from 'react-native'
 import { MatchListItem, WithAuth } from '@/components'
 import { Button, VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
-import { MatchesResponse, useMatches, useUserMatches } from '@/services/api'
+import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
-import { isNilOrEmpty } from '@/utils/global'
 
 export default WithAuth(() => {
   const t = useTranslate()
@@ -23,30 +22,36 @@ export default WithAuth(() => {
     []
   )
 
-  const { data: userMatches, isLoading: isLoadingMatchIds } = useUserMatches({
-    params: { user_id: me?.id as string, dates },
-    options: { enabled: !isNilOrEmpty(me?.id) },
-  })
+  // const { data: userMatches, isLoading: isLoadingMatchIds } = useUserMatches({
+  //   params: { user_id: me?.id as string, dates },
+  //   options: { enabled: !isNilOrEmpty(me?.id) },
+  // })
 
-  const matchIds = userMatches?.map(({ id }) => id) || []
+  // const matchIds = userMatches?.map(({ id }) => id) || []
 
-  const {
-    data: matches,
-    isLoading,
-    refetch,
-    isRefetching,
-  } = useMatches({
-    params: {
-      match_ids: matchIds,
-    },
-    options: {
-      enabled: !isNilOrEmpty(matchIds),
-    },
-  })
+  // const {
+  //   data: matches,
+  //   isLoading,
+  //   refetch,
+  //   isRefetching,
+  // } = useMatches({
+  //   params: {
+  //     match_ids: matchIds,
+  //   },
+  //   options: {
+  //     enabled: !isNilOrEmpty(matchIds),
+  //   },
+  // })
+
+  const matches = [] as any[]
+  const isLoading = false
+  const isRefetching = false
+  const isLoadingMatchIds = false
+  const refetch = () => console.log('refetch')
 
   const renderItem = ({
     item,
-  }: ListRenderItemInfo<MatchesResponse[number]>) => (
+  }: ListRenderItemInfo<MatchesResponse['results'][number]>) => (
     <MatchListItem
       {...item}
       onPress={() => router.push(routing.match.path(item.id))}
@@ -57,7 +62,7 @@ export default WithAuth(() => {
     <VStack flex={1} gap="$3" m="$3">
       <Heading size="sm">{t('incomingMatches')}</Heading>
       <Box flex={1}>
-        <VirtualizedList<MatchesResponse[number]>
+        <VirtualizedList<MatchesResponse['results'][number]>
           data={matches}
           getItem={(data, index) => data[index]}
           getItemCount={(data) => data.length}

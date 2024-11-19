@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
 
+import { useAuthContext } from '../../../../../contexts/AuthContext'
 import { LoginResponse } from './entities'
 import { loginFn } from './functions'
 import { LoginParams } from './params'
 
-import { useAuthContext } from '@/contexts'
 import { UseMutationProps } from '@/services/api/queryHooks'
 
 // login with email / password
