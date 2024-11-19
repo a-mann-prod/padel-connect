@@ -54,11 +54,11 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: 📢 EAS Build
-        run: eas build -e ${{ inputs.profile }} -p ${{ inputs.plateform }} --non-interactive --no-wait
+        run: eas build -e ${{ inputs.profile }} -p ${{ inputs.platform }} --non-interactive --no-wait
         working-directory: app
         if: ${{ inputs.profile == 'local' || inputs.profile == 'preview' || !inputs.submit }}
 
       - name: 📢 EAS Build and Submit
-        run: eas build -e ${{ inputs.profile }} -p ios --non-interactive --no-wait --auto-submit
+        run: eas build -e ${{ inputs.profile }} -p ${{ inputs.platform }} --non-interactive --no-wait --auto-submit
         working-directory: app
         if: ${{ inputs.submit && inputs.profile == 'production' }}
