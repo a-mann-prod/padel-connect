@@ -1,7 +1,7 @@
 import { IconNameProp } from '@/designSystem'
-import { MatchType } from '@/services/api/types'
 
-export const mapTypeToIcon: Record<MatchType, IconNameProp> = {
-  COMPETITION: 'FAS-trophy',
-  LEISURE: 'FAR-hand-peace',
-}
+export const getMatchTypeIcon = (isCompetitive: boolean): IconNameProp =>
+  isCompetitive ? 'FAS-trophy' : 'FAR-hand-peace'
+
+export const getMatchTypeKey = (isCompetitive: boolean): string =>
+  `matchType.${isCompetitive ? 'competition' : 'leisure'}`

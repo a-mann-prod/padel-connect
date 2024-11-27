@@ -56,6 +56,8 @@ class BlockCRUDMixin:
         return Response({"detail": "Deletion is not allowed."}, status=status.HTTP_403_FORBIDDEN)
     
 
+    
+
 class ExcludeDatesFieldsMixin:
     """
     Mixin to exclude dates fields (like 'created_at' and 'updated_at') from being updated.

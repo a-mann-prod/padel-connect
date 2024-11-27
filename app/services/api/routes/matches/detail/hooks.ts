@@ -58,6 +58,7 @@ export const useCreateMatch = ({
   options,
 }: UseMutationProps<MatchResponse, CreateMatchParams> = {}) => {
   const queryClient = useQueryClient()
+  const onError = useHandleError()
 
   return useMutation({
     ...options,
@@ -87,6 +88,7 @@ export const useCreateMatch = ({
         }
       )
     },
+    onError,
   })
 }
 

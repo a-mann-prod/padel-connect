@@ -15,7 +15,7 @@ export const TournamentListItem = ({
   complex,
   datetime,
   title,
-  type,
+  is_competitive,
   onPress,
 }: TournamentListItemProps) => {
   return (
@@ -27,7 +27,11 @@ export const TournamentListItem = ({
         p="$3"
         alignItems="center"
       >
-        <MatchTypeIcon type={type} size="xl" color="$primary500" />
+        <MatchTypeIcon
+          isCompetitive={is_competitive}
+          size="xl"
+          color="$primary500"
+        />
 
         <VStack flex={1} gap="$2">
           <HStack alignItems="center">

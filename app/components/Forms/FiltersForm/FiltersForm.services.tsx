@@ -30,8 +30,10 @@ const formatToParams = (
   props: FiltersFormValues
 ): UpdateMatchFiltersParams => ({
   ...props,
-  type: props.type as MatchType,
-  complex: !isNilOrEmpty(props.complex) ? Number(props.complex) : null,
+  type: (!isNilOrEmpty ? props.type : null) as MatchType,
+  complex: (!isNilOrEmpty(props.complex) ? Number(props.complex) : null) as
+    | number
+    | undefined,
 })
 
 const formatToFormValues = (

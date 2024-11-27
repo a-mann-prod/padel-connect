@@ -3,7 +3,11 @@
   "callComplex": "Call center",
   "cancelRequest": "Cancel request",
   "chat": "Chat",
+  "chooseMyPartner": "Choose my partner",
   "competitionMatch": "Type de match",
+  "competitiveMatch": "Competitive Match",
+  "competitiveMatchHelpMessage": "Will allow adding the score at the end of the match",
+  "createMatchWithoutSharing": "Create match without sharing",
   "datetime": "Date and time",
   "deleteMatch": "Delete match",
   "deleteMatchMessage": "Are you sure you want to delete the match?",
@@ -19,7 +23,10 @@
   "privateMatch": "Private match",
   "privateMatchHelpMessage": "Will not appear in the list of available matches and will not send notifications",
   "seeRequest": "See my request",
+  "sendInvitationAndCreateMatch": "Send invitation and create match",
   "share": "Share",
+  "shareAndCreateMatch": "Share and create match",
+  "shareMatch": "Share match",
   "shareMessage": "Hey! Up for a game of padel? You can join by clicking the following link",
   "team": "Team"
 }

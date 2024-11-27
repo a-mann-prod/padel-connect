@@ -54,6 +54,12 @@ export default WithMatch(() => {
       {
         icon: 'FAS-share',
         onPress: () =>
+          match?.id && router.navigate(routing.matchShareMatch.path(match.id)),
+        condition: !isMatchPassed,
+      },
+      {
+        icon: 'FAS-share-from-square',
+        onPress: () =>
           Share.share({
             url: AuthSession.makeRedirectUri({ path: pathname }),
             message: t('shareMessage'),

@@ -1,10 +1,10 @@
 import { createStyle } from '@gluestack-style/react'
 
 export const CheckboxLabel = createStyle({
-  color: '$textLight600',
-  ':checked': {
-    color: '$textLight900',
-  },
+  color: '$textLight900',
+  // ':checked': {
+  //   color: '$textLight900',
+  // },
   ':hover': {
     color: '$textLight900',
     ':checked': {
@@ -36,10 +36,10 @@ export const CheckboxLabel = createStyle({
     userSelect: 'none',
   },
   _dark: {
-    color: '$textDark400',
-    ':checked': {
-      color: '$textDark100',
-    },
+    color: '$textDark100',
+    // ':checked': {
+    //   color: '$textDark100',
+    // },
     ':hover': {
       color: '$textDark100',
       ':checked': {

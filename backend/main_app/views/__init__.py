@@ -6,3 +6,5 @@ from .match_filter import MeMatchFilterView
 from .favorite_user import MeFavoriteUsersView
 from .match import MatchViewSet
 from .notification import MeNotificationViewSet
+from .match_team import MatchTeamModelViewSet
+from .match_team_invite import MatchTeamInviteModelViewSet

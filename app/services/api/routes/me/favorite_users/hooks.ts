@@ -12,18 +12,27 @@ import { ProfileResponse, ProfilesResponse } from '../../profiles'
 import { FavoriteUsersResponse } from './entities'
 import {
   addFavoriteUser,
-  getFavoriteUsersFn,
+  getInfiniteFavoriteUsersFn,
   removeFavoriteUser,
 } from './functions'
-import { AddOrRemoveFavoriteUserParams } from './params'
+import {
+  AddOrRemoveFavoriteUserParams,
+  GetInfiniteFavoriteUsersParams,
+} from './params'
 
 export const useInfiniteFavoriteUsers = (
-  { options }: UseInfiniteQueryProps<FavoriteUsersResponse> = { options: {} }
+  {
+    params,
+    options,
+  }: UseInfiniteQueryProps<
+    FavoriteUsersResponse,
+    GetInfiniteFavoriteUsersParams
+  > = { params: {}, options: {} }
 ) =>
   useInfiniteQuery({
     ...options,
-    queryKey: ['favorite_users'],
-    queryFn: getFavoriteUsersFn,
+    queryKey: ['favorite_users', params],
+    queryFn: ({ pageParam }) => getInfiniteFavoriteUsersFn(params, pageParam),
     getNextPageParam: (lastPage) => lastPage.next_page,
     initialPageParam: 1,
   })

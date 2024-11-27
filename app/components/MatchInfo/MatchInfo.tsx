@@ -38,11 +38,12 @@ export const MatchInfo = ({
   const tGlobal = useTranslate()
   const t = useTranslate('match')
 
-  // TODO A REVOIR
-  // const userIds = match.match_requests.map(({ user_id }) => user_id) || []
-
   const ownerId = match.user
-  const userIds = [ownerId] as number[]
+
+  const userIds = match.teams.reduce<number[]>(
+    (acc, curr) => [...acc, ...curr.participants],
+    []
+  )
 
   const { data: playersResults } = useProfiles({
     params: { ids: userIds },
@@ -73,7 +74,7 @@ export const MatchInfo = ({
           icon="FAS-lock"
         />
       )}
-      <MatchTypeTile type={match.type} />
+      <MatchTypeTile isCompetitive={match.is_competitive} />
       <Section>
         <SectionRow
           title={tGlobal('location')}
@@ -127,7 +128,7 @@ export const MatchInfo = ({
           onPress={(id) =>
             router.navigate(routing.matchUser.path(match.id, id))
           }
-          displayTeam={match.type === 'COMPETITION'}
+          displayTeam={match.is_competitive}
           hasPayedUserIds={hasPayedUserIds}
           isMatchPassed={isMatchPassed}
         />

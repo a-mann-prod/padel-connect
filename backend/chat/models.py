@@ -10,7 +10,7 @@ class Conversation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.messages.order_by('-created_at').first()
+        return f"{self.messages.order_by('-created_at').first()} from {self.match}"
     
     def last_message(self):
         return self.messages.order_by('-created_at').first()

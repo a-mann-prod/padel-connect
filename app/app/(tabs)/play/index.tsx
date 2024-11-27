@@ -4,8 +4,13 @@ import { useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { DateCarouselFilter, MatchListItem } from '@/components'
+import { useFiltersContext } from '@/contexts'
 import { Button, VirtualizedList } from '@/designSystem'
-import { MatchesResponse, useInfiniteMatches } from '@/services/api'
+import {
+  MatchesResponse,
+  useComplexes,
+  useInfiniteMatches,
+} from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -14,9 +19,7 @@ export default () => {
   const t = useTranslate('play')
   const [dateFilter, setDateFilter] = useState(date.now())
 
-  // const { filters } = useFiltersContext()
-
-  // const [min, max] = [filters.level_min, filters.level_max]
+  const { filters } = useFiltersContext()
 
   const isToday = dateFilter.isSame(date.now(), 'day')
 
@@ -34,7 +37,7 @@ export default () => {
         ? dateFilter.toISOString()
         : dateFilter.startOf('day').toISOString(),
       end_datetime: dateFilter.endOf('day').toISOString(),
-      // ...filters,
+      ...filters,
     },
   })
 
@@ -43,11 +46,14 @@ export default () => {
     []
   )
 
+  const { data: complexes, isLoading: isLoadingComplexes } = useComplexes()
+
   const renderItem = ({
     item,
   }: ListRenderItemInfo<MatchesResponse['results'][number]>) => (
     <MatchListItem
       {...item}
+      complexes={complexes}
       onPress={() => router.push(routing.match.path(item.id))}
     />
   )
@@ -70,7 +76,7 @@ export default () => {
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        isLoading={isLoading}
+        isLoading={isLoading || isLoadingComplexes}
         onRefresh={refetch}
         refreshing={isRefetching}
         onEndReached={() => hasNextPage && fetchNextPage()}
@@ -79,11 +85,17 @@ export default () => {
       <Button
         title={t('createNewMatch')}
         icon="FAS-plus"
-        onPress={() =>
-          router.navigate(
-            routing.matchCreate.path({ datetime: dateFilter.toISOString() })
-          )
-        }
+        onPress={() => {
+          const currentTime = date.now()
+
+          const datetime = dateFilter
+            .set('hour', currentTime.hour()) // Met à jour l'heure
+            .set('minute', currentTime.minute()) // Met à jour la minute
+            .set('second', currentTime.second()) // Met à jour la seconde
+            .toISOString() // Transforme en chaîne ISO
+
+          router.navigate(routing.matchCreate.path({ datetime }))
+        }}
       />
     </VStack>
   )

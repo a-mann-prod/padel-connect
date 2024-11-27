@@ -36,7 +36,10 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
   const { mutate: updateMatchFilter } = useUpdateMatchFilters()
 
   useEffect(() => {
-    if (serverFilters && me?.id) setFilters(serverFilters)
+    if (serverFilters && me?.id) {
+      const { created_at, updated_at, ...rest } = serverFilters
+      setFilters(rest)
+    }
   }, [serverFilters, me?.id])
 
   const saveFilters = (value: MatchFilters) => updateMatchFilter(value)

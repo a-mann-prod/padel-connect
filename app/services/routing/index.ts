@@ -12,9 +12,17 @@ const root = {
     path: (matchId: string | number) => `/match/${matchId}`,
   },
   matchCreate: {
-    name: 'match/create',
+    name: 'match/(create)',
     path: ({ datetime }: { datetime?: string } = {}) =>
-      datetime ? `/match/create?datetime=${datetime}` : '/match/create',
+      datetime ? `/match/(create)?datetime=${datetime}` : '/match/(create)',
+  },
+  matchCreateAddPartner: {
+    name: 'add-partner',
+    path: () => '/match/(create)/add-partner',
+  },
+  matchCreateShareMatch: {
+    name: 'share-match',
+    path: () => '/match/(create)/share-match',
   },
 }
 
@@ -155,10 +163,6 @@ export const routing = {
     name: '[user]',
     path: (userId: string | number) => `${tabsRoot.community.path()}/${userId}`,
   },
-  communityFavoriteUsers: {
-    name: 'favorite-users',
-    path: () => `${tabsRoot.community.path()}/favorite-users`,
-  },
 
   // (tabs)/profile
   profileSettings,
@@ -216,5 +220,10 @@ export const routing = {
     name: 'join-request',
     path: (matchId: string | number) =>
       `${root.match.path(matchId)}/join-request`,
+  },
+  matchShareMatch: {
+    name: 'share-match',
+    path: (matchId: string | number) =>
+      `${root.match.path(matchId)}/share-match`,
   },
 }

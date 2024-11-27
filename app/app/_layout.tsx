@@ -17,9 +17,7 @@ import {
   ThemeProvider,
 } from '@/contexts'
 import { NotificationsProvider } from '@/contexts/NotificationsContext'
-import { HeaderBackButton } from '@/designSystem'
 import { useInit } from '@/hooks/useInit'
-import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
@@ -100,8 +98,6 @@ const RootProvider = () => {
 }
 
 const RootLayoutNav = () => {
-  const t = useTranslate(undefined, { keyPrefix: 'navigation' })
-
   return (
     <Stack initialRouteName={unstable_settings.initialRouteName}>
       <Stack.Screen
@@ -119,9 +115,8 @@ const RootLayoutNav = () => {
       <Stack.Screen
         name={routing.matchCreate.name}
         options={{
-          title: t('matchCreate'),
-          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
           presentation: 'containedModal',
+          headerShown: false,
         }}
       />
     </Stack>

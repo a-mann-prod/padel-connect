@@ -1,4 +1,3 @@
-import { VStack } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 
 import { FiltersForm, KeyboardAvoidingView } from '@/components'
@@ -7,7 +6,7 @@ import {
   FiltersFormValues,
 } from '@/components/Forms/FiltersForm/FiltersForm.services'
 import { useFiltersContext } from '@/contexts'
-import { ScrollView } from '@/designSystem'
+import { Container } from '@/designSystem'
 
 const { formatToParams, formatToFormValues } = FiltersFormServices
 
@@ -21,14 +20,12 @@ export default () => {
 
   return (
     <KeyboardAvoidingView>
-      <ScrollView>
-        <VStack gap="$5" m="$5">
-          <FiltersForm
-            onSubmit={handleOnSubmit}
-            defaultValues={formatToFormValues(filters)}
-          />
-        </VStack>
-      </ScrollView>
+      <Container>
+        <FiltersForm
+          onSubmit={handleOnSubmit}
+          defaultValues={formatToFormValues(filters)}
+        />
+      </Container>
     </KeyboardAvoidingView>
   )
 }

@@ -41,7 +41,7 @@ export default () => {
   return (
     <ScrollView>
       <VStack p="$3" gap="$3">
-        <MatchTypeTile type={tournament.type} />
+        <MatchTypeTile isCompetitive={tournament.is_competitive} />
         <Section title={tournament.title}>
           <Text>{tournament.description}</Text>
         </Section>

@@ -11,26 +11,25 @@ import {
   PressableProps,
 } from '@/designSystem'
 import { isMatchReserved } from '@/hooks/useManageMatch'
-import { MatchesResponse } from '@/services/api'
+import { ComplexesResponse, MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']
+  complexes?: ComplexesResponse
 } & MatchesResponse['results'][number]
 
-export const MatchListItem = ({ onPress, ...match }: MatchlistItemProps) => {
+export const MatchListItem = ({
+  onPress,
+  complexes,
+  ...match
+}: MatchlistItemProps) => {
   const tGlobal = useTranslate()
 
-  // TODO A REVOIR
-  // const players: ProfilesResponse = match.match_requests.map(({ user }) => ({
-  //   id: user?.id,
-  //   avatar: user?.avatar_url ? getPublicAvatarUrl(user.avatar_url) : undefined,
-  // }))
-
-  const players = [] as any[]
-
   const isReserved = isMatchReserved(match)
+
+  const complex = complexes?.results.find(({ id }) => id === match.complex)
 
   return (
     <Pressable onPress={onPress}>
@@ -40,7 +39,7 @@ export const MatchListItem = ({ onPress, ...match }: MatchlistItemProps) => {
             <DateFlag isoDate={match.datetime} />
             <VStack flex={1}>
               <Heading size="sm" lineHeight="$xs">
-                {match.complex?.name}
+                {complex?.name}
               </Heading>
               <Text variant="subtitle">
                 {tGlobal('level')} {match.level}
@@ -48,12 +47,12 @@ export const MatchListItem = ({ onPress, ...match }: MatchlistItemProps) => {
             </VStack>
           </HStack>
           <HStack gap="$3">
-            <MatchTypeIcon type={match.type} />
+            <MatchTypeIcon isCompetitive={match.is_competitive} />
             <SlotStatusIcon status={isReserved ? 'BOOKED' : 'AVAILABLE'} />
           </HStack>
         </HStack>
         <HStack>
-          <PlayersAvatars data={players} />
+          <PlayersAvatars teams={match.teams} />
           <DurationFlag value={match.duration} />
         </HStack>
       </VStack>

@@ -1,4 +1,8 @@
-import { Entity, MatchType, PaginatedResponse } from '../../../types'
+import {
+  DefaultProfileResponse,
+  Entity,
+  PaginatedResponse,
+} from '../../../types'
 import { ComplexResponse } from '../../complexes'
 
 export type MatchResponse = Entity<{
@@ -7,8 +11,22 @@ export type MatchResponse = Entity<{
   duration: number
   is_private: boolean
   level: number
-  type: MatchType
+  is_competitive: boolean
   user: number
+  teams: {
+    id: number
+    participants: number[]
+    user: number
+  }[]
 }>
 
-export type MatchesResponse = PaginatedResponse<MatchResponse>
+export type MatchesResponse = PaginatedResponse<
+  Omit<MatchResponse, 'complex' | 'teams'> & {
+    complex: number
+    teams: {
+      id: number
+      participants: Pick<DefaultProfileResponse, 'id' | 'avatar_url'>[]
+      user: number
+    }[]
+  }
+>

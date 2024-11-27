@@ -1,13 +1,21 @@
 import { ProfileResponse } from '../../profiles'
 import { FavoriteUsersResponse } from './entities'
-import { AddOrRemoveFavoriteUserParams } from './params'
+import {
+  AddOrRemoveFavoriteUserParams,
+  GetInfiniteFavoriteUsersParams,
+} from './params'
 
 import api from '@/services/api/axiosConfig'
 
 const ENDPOINT = '/me/favorite_users'
 
-export const getFavoriteUsersFn = async () => {
-  const { data } = await api.get<FavoriteUsersResponse>(`${ENDPOINT}/`)
+export const getInfiniteFavoriteUsersFn = async (
+  params: GetInfiniteFavoriteUsersParams,
+  pageParam: number
+) => {
+  const { data } = await api.get<FavoriteUsersResponse>(`${ENDPOINT}/`, {
+    params: { ...params, page: pageParam },
+  })
 
   return data
 }

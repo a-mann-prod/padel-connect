@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
 import { CreateMatchParams, MatchResponse } from '@/services/api'
-import { MatchType } from '@/services/api/types'
 import { validators } from '@/services/formValidator'
 import { Nillable } from '@/types'
 
-export type MatchFormValues = z.infer<typeof schema>
+export type MatchFormValues = z.infer<typeof schema> &
+  Pick<CreateMatchParams, 'players'>
 
 const getDefaultValues = (
   props?: Nillable<MatchFormValues>
@@ -15,7 +15,7 @@ const getDefaultValues = (
   duration: props?.duration || '',
   level: props?.level || '',
   is_private: props?.is_private || false,
-  type: props?.type || '',
+  is_competitive: props?.is_competitive || false,
 })
 
 const schema = z.object({
@@ -24,12 +24,11 @@ const schema = z.object({
   duration: validators.string.required(),
   level: validators.string.required(),
   is_private: validators.boolean.required(),
-  type: validators.string.required(),
+  is_competitive: validators.boolean.required(),
 })
 
 const formatToParams = (props: MatchFormValues): CreateMatchParams => ({
   ...props,
-  type: props.type as MatchType,
   complex_id: Number(props.complex_id),
   duration: Number(props.duration),
   level: Number(props.level),

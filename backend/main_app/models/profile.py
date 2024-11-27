@@ -40,7 +40,7 @@ class Profile(models.Model):
         super().delete(*args, **kwargs)
 
     def __str__(self):
-        return self.user.email 
+        return self.user 
         
     class Meta:
         verbose_name = 'Profile' 

@@ -1,15 +1,16 @@
 import { date } from '@/services/date'
 
-const formatWithMinuteInterval = (value: Date): Date => {
+const formatWithNextMinuteInterval = (value: Date, interval = 30): Date => {
   const currentDate = date.dayjs(value)
 
   const minute = currentDate.minute()
   let newDate = currentDate.clone().second(0).millisecond(0)
 
-  if (minute % 15 !== 0) {
-    newDate = newDate.minute(minute - (minute % 15))
-  }
+  const minutesToAdd = interval - (minute % interval)
+
+  newDate = newDate.add(minutesToAdd, 'minute')
+
   return newDate.toDate()
 }
 
-export const formDateTimePickerServices = { formatWithMinuteInterval }
+export const formDateTimePickerServices = { formatWithNextMinuteInterval }

@@ -1,4 +1,4 @@
-import { Entity, MatchType, PaginatedResponse } from '../../types'
+import { Entity, PaginatedResponse } from '../../types'
 import { ComplexResponse } from '../complexes'
 
 export type TournamentResponse = Entity<{
@@ -6,7 +6,7 @@ export type TournamentResponse = Entity<{
   datetime: string
   title: string
   description: string
-  type: MatchType
+  is_competitive: boolean
 }>
 
 export type TournamentsResponse = PaginatedResponse<TournamentResponse>

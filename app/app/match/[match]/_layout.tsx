@@ -50,6 +50,12 @@ export default () => {
           title: '',
         }}
       />
+      <Stack.Screen
+        name={routing.matchShareMatch.name}
+        options={{
+          title: '',
+        }}
+      />
     </Stack>
   )
 }

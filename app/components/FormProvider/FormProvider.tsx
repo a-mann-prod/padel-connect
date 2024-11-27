@@ -25,14 +25,14 @@ export const FormProvider = <
 >) => {
   if (Platform.OS !== 'web')
     return (
-      <VStack gap="$2">
+      <VStack flex={1} gap="$2">
         <RFormProvider {...props}>{children}</RFormProvider>
       </VStack>
     )
 
   return (
     <form>
-      <VStack gap="$2">
+      <VStack flex={1} gap="$2">
         <RFormProvider {...props}>{children}</RFormProvider>
       </VStack>
     </form>

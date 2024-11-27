@@ -22,3 +22,10 @@ class ProfileSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSeriali
         return False
 
 
+class ProfileAvatarSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.ImageField(use_url=True, required=False)
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'avatar_url']
+

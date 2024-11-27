@@ -8,7 +8,7 @@ class Tournament(models.Model):
     datetime = models.DateTimeField()
     title = models.CharField(max_length=255)
     description = models.TextField()
-    type = models.CharField(max_length=20, choices=enums.MatchType.choices)
+    is_competitive = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Tournament' 

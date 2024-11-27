@@ -1,6 +1,6 @@
 import { VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { MatchFormValues, matchFormServices } from './MatchForm.services'
@@ -15,7 +15,6 @@ import { Button } from '@/designSystem'
 import { useComplexItems } from '@/hooks/useComplexItems'
 import { useDurationItems } from '@/hooks/useDurationItems'
 import { useLevelItems } from '@/hooks/useLevelItems'
-import { useMatchTypeItems } from '@/hooks/useMatchTypeItems'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
@@ -27,6 +26,7 @@ export type MatchFormProps = {
   onSubmit: (values: MatchFormValues) => void
   isLoading?: boolean
   buttonTitle?: string
+  onCompetitionChange?: (newValue: boolean) => void
 }
 
 export const MatchForm = ({
@@ -34,6 +34,7 @@ export const MatchForm = ({
   defaultValues,
   isLoading,
   buttonTitle,
+  onCompetitionChange,
 }: MatchFormProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
@@ -48,17 +49,22 @@ export const MatchForm = ({
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit } = methods
+  const { handleSubmit, watch } = methods
 
   const levelItems = useLevelItems()
   const durationItems = useDurationItems()
   const complexItems = useComplexItems()
-  const typeItems = useMatchTypeItems()
+
+  const isCompetitive = watch('is_competitive')
+
+  useEffect(() => {
+    onCompetitionChange?.(isCompetitive)
+  }, [onCompetitionChange, isCompetitive])
 
   return (
-    <>
+    <VStack flex={1}>
       <FormProvider {...methods}>
-        <VStack gap="$2">
+        <VStack flex={1} gap="$3">
           <FormDateTimePickerControlled
             name="datetime"
             formControlProps={{ title: t('datetime') }}
@@ -82,11 +88,12 @@ export const MatchForm = ({
             formControlProps={{ title: t('duration') }}
             items={durationItems}
           />
-          <FormSelectControlled
-            displayPlaceHolder
-            name="type"
-            formControlProps={{ title: t('matchType') }}
-            items={typeItems}
+          <FormCheckboxControlled
+            name="is_competitive"
+            formControlProps={{
+              title: t('competitiveMatch'),
+              helpMessage: t('competitiveMatchHelpMessage'),
+            }}
           />
           <FormCheckboxControlled
             name="is_private"
@@ -102,6 +109,6 @@ export const MatchForm = ({
         onPress={handleSubmit(onSubmit)}
         isLoading={isLoading}
       />
-    </>
+    </VStack>
   )
 }

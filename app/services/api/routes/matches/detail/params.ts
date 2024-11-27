@@ -5,8 +5,8 @@ export type GetMatchParams = {
 }
 
 export type GetInfiniteMatchesParams = {
-  min_level?: number
-  max_level?: number
+  level_min?: number
+  level_max?: number
 
   start_datetime?: string
   end_datetime?: string
@@ -37,7 +37,8 @@ export type CreateMatchParams = {
   duration: number
   is_private: boolean
   level: number
-  type: MatchType
+  is_competitive: boolean
+  players?: number[]
 }
 
 export type UpdateMatchParams = CreateMatchParams & {

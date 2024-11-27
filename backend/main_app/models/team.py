@@ -1,17 +1,15 @@
 from django.db import models
-from . import enums
+from . import enums, Match
 from django.conf import settings
 
 
 class Team(models.Model):    
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='teams')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    status = models.CharField(choices=enums.RequestStatus.choices, default=enums.RequestStatus.CREATING)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def get_members(self):
-        """
-        Retourne les membres de l'équipe en fonction des invitations acceptées.
-        """
-        return settings.AUTH_USER_MODEL.objects.filter(team_invites__team=self, team_invites__status=enums.RequestStatus.ACCEPTED)
 
 
     def __str__(self):
@@ -23,8 +21,8 @@ class Team(models.Model):
         
 
 class TeamInvite(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='invites')
-    invited_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='team_invites')
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='invitations')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='participants')
     status = models.CharField(choices=enums.RequestStatus.choices, default=enums.RequestStatus.PENDING)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -32,7 +30,7 @@ class TeamInvite(models.Model):
 
 
     class Meta:
-        unique_together = ('team', 'invited_user')  # Un utilisateur ne peut recevoir qu'une seule invitation pour une équipe.
+        unique_together = ('team', 'user')  # Un utilisateur ne peut recevoir qu'une seule invitation pour une équipe.
 
     def __str__(self):
-        return f"Invite to {self.invited_user.email} (Status: {self.status})"
+        return f"Invite to {self.user} (Status: {self.status})"

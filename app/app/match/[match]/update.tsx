@@ -1,9 +1,8 @@
-import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
 import { Linking } from 'react-native'
 
 import { MatchForm, WithMatch, matchFormServices } from '@/components'
-import { Button, ScrollView } from '@/designSystem'
+import { Button, Container } from '@/designSystem'
 import { isMatchReserved } from '@/hooks/useManageMatch'
 import {
   MatchResponse,
@@ -48,39 +47,37 @@ export default WithMatch(() => {
   })
 
   return (
-    <ScrollView>
-      <VStack gap="$3" m="$5">
-        <MatchForm
-          onSubmit={(data) => mutate({ id: matchId, ...formatToParams(data) })}
-          defaultValues={defaultValues}
-          isLoading={isPending}
-        />
+    <Container>
+      <MatchForm
+        onSubmit={(data) => mutate({ id: matchId, ...formatToParams(data) })}
+        defaultValues={defaultValues}
+        isLoading={isPending}
+      />
 
-        {isReserved ? (
-          <Button
-            title={t('callComplex')}
-            action="negative"
-            onPress={() =>
-              match?.complex?.phone_number &&
-              Linking.openURL(`tel:${match?.complex?.phone_number}`)
-            }
-            isLoading={isPendingDelete}
-            isDisabled={!match?.complex?.phone_number}
-          />
-        ) : (
-          <Button
-            title={t('deleteMatch')}
-            action="negative"
-            onPress={() =>
-              show('defaultAlert', {
-                message: t('deleteMatchMessage'),
-                onContinueCallback: () => deleteMatch({ id: matchId }),
-              })
-            }
-            isLoading={isPendingDelete}
-          />
-        )}
-      </VStack>
-    </ScrollView>
+      {isReserved ? (
+        <Button
+          title={t('callComplex')}
+          action="negative"
+          onPress={() =>
+            match?.complex?.phone_number &&
+            Linking.openURL(`tel:${match?.complex?.phone_number}`)
+          }
+          isLoading={isPendingDelete}
+          isDisabled={!match?.complex?.phone_number}
+        />
+      ) : (
+        <Button
+          title={t('deleteMatch')}
+          action="negative"
+          onPress={() =>
+            show('defaultAlert', {
+              message: t('deleteMatchMessage'),
+              onContinueCallback: () => deleteMatch({ id: matchId }),
+            })
+          }
+          isLoading={isPendingDelete}
+        />
+      )}
+    </Container>
   )
 })

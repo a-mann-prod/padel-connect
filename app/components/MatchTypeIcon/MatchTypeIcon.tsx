@@ -1,11 +1,14 @@
 import { Icon, IconProps } from '@/designSystem'
-import { MatchType } from '@/services/api/types'
-import { mapTypeToIcon } from '@/utils/matchType'
 
 type MatchTypeIconProps = {
-  type: MatchType
+  isCompetitive: boolean
 } & IconProps
 
-export const MatchTypeIcon = ({ type, ...props }: MatchTypeIconProps) => {
-  return <Icon name={mapTypeToIcon[type]} {...props} />
+export const MatchTypeIcon = ({
+  isCompetitive,
+  ...props
+}: MatchTypeIconProps) => {
+  return (
+    <Icon name={isCompetitive ? 'FAS-trophy' : 'FAR-hand-peace'} {...props} />
+  )
 }
