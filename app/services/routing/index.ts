@@ -207,10 +207,10 @@ export const routing = {
     path: (matchId: string | number, userId: string | number) =>
       `${root.match.path(matchId)}/user/${userId}`,
   },
-  matchPlayersManage: {
-    name: 'players-manage',
+  matchTeamsManage: {
+    name: 'teams-manage',
     path: (matchId: string | number) =>
-      `${root.match.path(matchId)}/players-manage`,
+      `${root.match.path(matchId)}/teams-manage`,
   },
   matchChat: {
     name: 'chat',

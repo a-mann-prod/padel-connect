@@ -1,5 +1,7 @@
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from main_app.models import Team, enums
+from main_app.serializers import MatchTeamSerializer
+from main_app.pagination import CustomPageNumberPagination
 
 
 def get_team_requests(request, match):
@@ -7,7 +9,9 @@ def get_team_requests(request, match):
 
     if current_user != match.user:
         raise PermissionDenied()
+    
     return Team.objects.filter(match=match, status=enums.RequestStatus.PENDING).exclude(user=current_user)
+
     
 
 def validate_match_creation(request, match):

@@ -3,22 +3,21 @@ import { FC } from 'react'
 
 import { Loader } from '@/designSystem'
 import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
-import { getMatchTimes, useManageMatch } from '@/hooks/useManageMatch'
+import { useManageMatch } from '@/hooks/useManageMatch'
 import { useTranslate } from '@/services/i18n'
 
 const WithMatchWrapper: FC<{ Component: FC }> = ({ Component }) => {
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
-  const { match, isPlayer, isOwner, isLoading } = useManageMatch(matchId)
+  const { match, isPlayer, isOwner, isLoading, isMatchPassed } =
+    useManageMatch(matchId)
 
   const isParticipant = isOwner || isPlayer
 
   if (isLoading) return <Loader />
 
   if (!match) return <MatchNotFound />
-
-  const { isMatchPassed } = getMatchTimes(match)
 
   if (isMatchPassed && !isParticipant) return <MatchNotFound />
 

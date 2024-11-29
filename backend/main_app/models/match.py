@@ -9,6 +9,7 @@ class Match(models.Model):
     duration = models.IntegerField()
     is_private = models.BooleanField(default=False)
     is_competitive = models.BooleanField(default=False)
+    is_reserved = models.BooleanField(default=False)
     level = models.IntegerField()
 
     created_at = models.DateTimeField(auto_now_add=True)

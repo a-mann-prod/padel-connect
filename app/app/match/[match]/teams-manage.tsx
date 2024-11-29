@@ -2,30 +2,37 @@ import { VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
 
-import { PlayerListItem, WithMatch } from '@/components'
+import { TeamListItem, WithMatch } from '@/components'
 import { VirtualizedList } from '@/designSystem'
-import { ProfileResponse } from '@/services/api'
+import { MatchTeamsResponse, useInfiniteMatchTeams } from '@/services/api'
 import { routing } from '@/services/routing'
 
 export default WithMatch(() => {
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
-  // TODO A REVOIR
-  // const {
-  //   data: matchRequests,
-  //   isLoading,
-  //   refetch,
-  //   isRefetching,
-  // } = useMatchRequests({
-  //   params: { match_id: matchId },
-  //   options: { enabled: !!matchId, staleTime: 0 },
-  // })
+  const {
+    data: matchTeamsPages,
+    isLoading,
+    refetch,
+    isRefetching,
 
-  const data = [] as any[]
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteMatchTeams({
+    params: { id: matchId },
+    options: { enabled: !!matchId },
+  })
 
-  const renderItem = ({ item }: ListRenderItemInfo<ProfileResponse>) => (
-    <PlayerListItem
+  const matchTeams = matchTeamsPages?.pages.reduce<
+    MatchTeamsResponse['results']
+  >((prev, acc) => [...prev, ...acc.results], [])
+
+  const renderItem = ({
+    item,
+  }: ListRenderItemInfo<MatchTeamsResponse['results'][number]>) => (
+    <TeamListItem
       {...item}
       onPress={() =>
         item.id && router.navigate(routing.matchUser.path(matchId, item.id))
@@ -41,16 +48,17 @@ export default WithMatch(() => {
 
   return (
     <VStack flex={1} gap="$3" m="$3">
-      <VirtualizedList<ProfileResponse>
-        data={data}
+      <VirtualizedList<MatchTeamsResponse['results'][number]>
+        data={matchTeams}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        // A Revoir
-        isLoading={false}
-        refreshing={false}
-        onRefresh={() => console.log('a revoir')}
+        isLoading={isLoading}
+        onRefresh={refetch}
+        refreshing={isRefetching}
+        isLoadingNext={isFetchingNextPage}
+        onEndReached={() => hasNextPage && fetchNextPage()}
       />
     </VStack>
   )

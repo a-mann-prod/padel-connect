@@ -11,11 +11,7 @@ import {
 } from '@/components'
 import { Loader, ScrollView } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
-import {
-  getMatchTimes,
-  isMatchReserved,
-  useManageMatch,
-} from '@/hooks/useManageMatch'
+import { useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -41,13 +37,9 @@ export default WithMatch(() => {
     isPayMatchPending,
     refetch,
     isRefetching,
-  } = useManageMatch(matchId)
 
-  const { isMatchPassed } = match
-    ? getMatchTimes(match)
-    : {
-        isMatchPassed: true,
-      }
+    isMatchPassed,
+  } = useManageMatch(matchId)
 
   useHeaderButton(
     [
@@ -80,8 +72,6 @@ export default WithMatch(() => {
 
   if (!match) return
 
-  const { matchStartTime, matchEndTime } = getMatchTimes(match)
-
   // TODO A revoir
   const hasPayedUserIds = [] as number[]
   // match.match_requests
@@ -105,10 +95,7 @@ export default WithMatch(() => {
           <MatchInfo
             match={match}
             isMatchPassed={isMatchPassed}
-            matchStartTime={matchStartTime}
-            matchEndTime={matchEndTime}
             hasPayedUserIds={hasPayedUserIds}
-            isParticipant={isParticipant}
           />
           {!isMatchPassed && (
             <MatchActionButtons
@@ -120,7 +107,7 @@ export default WithMatch(() => {
               isLeaveButtonLoading={isCancelRequestMatchPending}
               onPayButtonPress={payMatch}
               isPayButtonLoading={isPayMatchPending}
-              isReserved={isMatchReserved(match)}
+              isReserved={match.is_reserved}
             />
           )}
 

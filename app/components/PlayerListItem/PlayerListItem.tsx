@@ -2,21 +2,21 @@ import { HStack, Text, VStack } from '@gluestack-ui/themed'
 
 import {
   Avatar,
-  Icon,
   IconButton,
   IconButtonProps,
-  IconNameProp,
   Pressable,
   PressableProps,
 } from '@/designSystem'
 import { ProfileResponse } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { getUsername } from '@/utils/user'
+import { SubItem } from '../SubItem/SubItem'
 
 export type PlayerListItemProps = ProfileResponse & {
   onPress?: PressableProps['onPress']
   onSelectButtonPress?: IconButtonProps['onPress']
   displayStar?: boolean
+  is_request?: boolean
   matchRequest?: {
     isLoading: boolean
     onAcceptPress: (id: number | undefined) => void
@@ -33,22 +33,30 @@ export const PlayerListItem = ({
   last_name,
   manual_preference,
   side_preference,
+  calculated_level,
   avatar_url,
 
   is_favorite = false,
   displayStar = true,
 
+  is_request = false,
+
   matchRequest,
+
   onPress,
   onSelectButtonPress,
   isSelected,
   isDisabled,
   isSelectDisabled,
 }: PlayerListItemProps) => {
-  console.log(isSelectDisabled)
+  const t = useTranslate()
   return (
     <HStack flex={1}>
-      <Pressable flex={1} onPress={isDisabled ? undefined : onPress}>
+      <Pressable
+        flex={1}
+        onPress={isDisabled ? undefined : onPress}
+        displayDisabledOpacity
+      >
         <HStack
           flex={1}
           gap="$3"
@@ -70,26 +78,29 @@ export const PlayerListItem = ({
           )}
           <Avatar size="md" imageUrl={avatar_url} />
           <VStack flex={1} gap="$2">
-            <HStack alignItems="center">
-              <Text flex={1}>{getUsername(first_name, last_name)}</Text>
-              {displayStar && (
-                <Icon
-                  name={is_favorite ? 'FAS-star' : 'FAR-star'}
-                  size="xs"
-                  color="$primary500"
-                />
-              )}
+            <HStack flex={1} alignItems="center" gap="$2">
+              <Text>{getUsername(first_name, last_name)}</Text>
+              {displayStar && is_favorite && <SubItem icon="FAS-star" />}
             </HStack>
             <HStack gap="$3">
+              {manual_preference && (
+                <SubItem
+                  text={t(
+                    `manualPreference.${manual_preference.toLowerCase()}`
+                  )}
+                  icon="FAR-hand"
+                />
+              )}
+              {side_preference && (
+                <SubItem
+                  text={t(`sidePreference.${side_preference.toLowerCase()}`)}
+                  icon="FAS-arrows-left-right"
+                />
+              )}
+
               <SubItem
-                i18nParentKey="manualPreference"
-                i18nKey={manual_preference}
-                icon="FAR-hand"
-              />
-              <SubItem
-                i18nParentKey="sidePreference"
-                i18nKey={side_preference}
-                icon="FAS-arrows-left-right"
+                text={calculated_level?.toString()}
+                icon="FAS-dumbbell"
               />
             </HStack>
           </VStack>
@@ -116,38 +127,6 @@ export const PlayerListItem = ({
           )}
         </HStack>
       </Pressable>
-      {/* {onUserViewPress && (
-        <IconButton
-          icon="FAS-user"
-          borderRadius="$lg"
-          borderTopLeftRadius="$none"
-          borderBottomLeftRadius="$none"
-          //@ts-ignore:next-line
-          height="$none"
-          onPress={onUserViewPress}
-        />
-      )} */}
-    </HStack>
-  )
-}
-
-type SubItemProps = {
-  i18nParentKey: string
-  i18nKey?: string | null
-  icon: IconNameProp
-}
-
-const SubItem = ({ i18nParentKey, i18nKey, icon }: SubItemProps) => {
-  const t = useTranslate()
-
-  if (!i18nKey) return
-
-  return (
-    <HStack gap="$1" alignItems="center">
-      <Icon name={icon} size="xs" />
-      <Text variant="subtitle">
-        {t(`${i18nParentKey}.${i18nKey?.toLowerCase()}`)}
-      </Text>
     </HStack>
   )
 }

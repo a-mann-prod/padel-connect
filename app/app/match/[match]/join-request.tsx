@@ -1,95 +1,73 @@
-import { VStack } from '@gluestack-ui/themed'
 import { useLocalSearchParams } from 'expo-router'
-
-import {
-  MatchRequestButton,
-  PlayerListItem,
-  WithAuth,
-  WithMatch,
-} from '@/components'
-import { SearchInput, VirtualizedList } from '@/designSystem'
-import { useDebounce } from '@/hooks/useDebounce'
-import { useManageMatch } from '@/hooks/useManageMatch'
-import { ProfilesResponse, useInfiniteProfiles } from '@/services/api'
 import { useState } from 'react'
-import { ListRenderItemInfo } from 'react-native'
+
+import { SearchUser, WithAuth, WithMatch } from '@/components'
+import { Button, Container } from '@/designSystem'
+import { useMatch } from '@/services/api'
+import { useTranslate } from '@/services/i18n'
 
 export default WithAuth(
   WithMatch(() => {
+    const t = useTranslate('match')
+
     const local = useLocalSearchParams()
     const matchId = Number(local?.match)
 
-    const [search, setSearch] = useState<string | undefined>(undefined)
-    const { isDebouncing, debouncedCallback: setSearchDebounced } =
-      useDebounce(setSearch)
-
-    const enableSearch = !!search
-
-    const {
-      data: profilesPages,
-      isLoading,
-      isRefetching,
-      refetch,
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-    } = useInfiniteProfiles({
-      params: { search },
-      options: { enabled: enableSearch },
+    const { data: match } = useMatch({
+      params: { id: matchId },
+      options: { enabled: !!matchId },
     })
 
-    const profiles = enableSearch
-      ? profilesPages?.pages.reduce<ProfilesResponse['results']>(
-          (prev, acc) => [...prev, ...acc.results],
-          []
-        )
-      : undefined
+    const [userIds, setUserIds] = useState<number[]>([])
 
-    const {
-      isRequesting,
-      requestMatch,
-      cancelRequestMatch,
-      isRequestMatchPending,
-      isCancelRequestMatchPending,
-    } = useManageMatch(matchId)
-
-    const renderItem = ({
-      item,
-    }: ListRenderItemInfo<ProfilesResponse['results'][number]>) => (
-      <PlayerListItem
-        {...item}
-        onPress={() => item.id && console.log('click')}
-      />
+    const players = match?.teams.reduce<number[]>(
+      (acc, curr) => [...acc, ...curr.participants],
+      []
     )
 
-    //match compet -> ajouter un partenaire
-    //other match Ajouter un ou plusieurs partenaires
+    console.log(players)
+
+    const maxSelectedUserIds = match?.is_competitive
+      ? 1
+      : 3 - (players?.length || 0)
 
     return (
-      <VStack flex={1} gap="$3" m="$3">
-        {/* Listing des joueurs ajoutés avec possibilité de les supprimer */}
-        <SearchInput onChangeText={setSearchDebounced} />
+      <Container>
+        <SearchUser
+          disabledUserIds={players}
+          selectedUserIds={userIds}
+          maxSelectedUserIds={maxSelectedUserIds}
+          onSelectButtonPress={(id) =>
+            setUserIds((prev) => {
+              const index = prev.indexOf(id)
+              if (index !== -1) {
+                return [...prev.slice(0, index), ...prev.slice(index + 1)]
+              }
 
-        <VirtualizedList<ProfilesResponse['results'][number]>
-          data={profiles}
-          getItem={(data, index) => data[index]}
-          getItemCount={(data) => data.length}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-          isLoading={isLoading || isDebouncing}
-          refreshing={isRefetching}
-          onRefresh={refetch}
-          onEndReached={() => hasNextPage && fetchNextPage()}
-          isLoadingNext={isFetchingNextPage}
+              return [...prev, id]
+            })
+          }
         />
 
-        <MatchRequestButton
-          onPress={requestMatch}
-          onCancelPress={cancelRequestMatch}
-          isRequesting={isRequesting}
-          isLoading={isRequestMatchPending || isCancelRequestMatchPending}
+        <Button
+          title={t('sendAloneRequest')}
+          isDisabled={userIds.length !== 0}
+          onPress={() => {
+            // TODO: ADD INVITATION with userId
+            // createMatch()
+          }}
+          // isLoading={isPendingCreateMatch}
         />
-      </VStack>
+        <Button
+          title={t('sendGroupRequest')}
+          isDisabled={userIds.length === 0}
+          onPress={() => {
+            // TODO: ADD INVITATION with userId
+            // createMatch()
+          }}
+          // isLoading={isPendingCreateMatch}
+        />
+      </Container>
     )
   })
 )

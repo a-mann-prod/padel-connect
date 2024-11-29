@@ -1,16 +1,18 @@
 from rest_framework import viewsets, status
 from main_app.models import Match, Team, enums
-from main_app.serializers import MatchTeamSerializer
+from main_app.serializers import MatchTeamSerializer, MatchTeamListSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from main_app.business.match_team import get_team_requests, validate_match_creation, team_request_answer
 
-class MatchTeamModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.ModelViewSet):
+class MatchTeamModelViewSet(mixins.CustomModelViewSet, mixins.ExcludeDatesFieldsMixin, viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = MatchTeamSerializer
+    list_serializer_class = MatchTeamListSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsOwner]
+
 
     def get_queryset(self):
         # Récupérer l'objet Match via le match_pk dans l'URL
@@ -18,10 +20,7 @@ class MatchTeamModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.ModelViewSe
         match = get_object_or_404(Match, pk=match_pk)
 
         if self.action == 'list':
-            try:
-                return get_team_requests(self.request, match)
-            except Exception as e:
-                return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return get_team_requests(self.request, match)
 
         return Team.objects.filter(match=match)
 

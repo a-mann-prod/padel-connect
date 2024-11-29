@@ -7,6 +7,10 @@ class CustomModelViewSet:
         if self.action == 'retrieve':
             if hasattr(self, 'detail_serializer_class'):
                 return self.detail_serializer_class
+            
+        if self.action == 'list':
+            if hasattr(self, 'list_serializer_class'):
+                return self.list_serializer_class
 
         return super(CustomModelViewSet, self).get_serializer_class()
 

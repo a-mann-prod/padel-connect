@@ -10,7 +10,6 @@ import {
   Pressable,
   PressableProps,
 } from '@/designSystem'
-import { isMatchReserved } from '@/hooks/useManageMatch'
 import { ComplexesResponse, MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
@@ -26,8 +25,6 @@ export const MatchListItem = ({
   ...match
 }: MatchlistItemProps) => {
   const tGlobal = useTranslate()
-
-  const isReserved = isMatchReserved(match)
 
   const complex = complexes?.results.find(({ id }) => id === match.complex)
 
@@ -48,7 +45,9 @@ export const MatchListItem = ({
           </HStack>
           <HStack gap="$3">
             <MatchTypeIcon isCompetitive={match.is_competitive} />
-            <SlotStatusIcon status={isReserved ? 'BOOKED' : 'AVAILABLE'} />
+            <SlotStatusIcon
+              status={match.is_reserved ? 'BOOKED' : 'AVAILABLE'}
+            />
           </HStack>
         </HStack>
         <HStack>

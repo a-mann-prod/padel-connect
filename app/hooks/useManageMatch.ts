@@ -43,11 +43,18 @@ export const useManageMatch = (matchId: number) => {
   const cancelRequestMatch = (data: any) => {}
   const updateMatchRequest = (data: any) => {}
 
+  const players = match?.teams.reduce<number[]>(
+    (acc, curr) => [...acc, ...curr.participants],
+    []
+  )
+
   return {
     match,
-    isRequesting: matchRequest?.status === 'PENDING',
-    isPlayer: matchRequest?.status === 'ACCEPTED' && !matchRequest?.is_owner,
+    isPlayer: !!(me?.id && players?.includes(me.id)),
     isOwner: match?.user === me?.id,
+    isMatchPassed: !!(match && getMatchTimes(match).isMatchPassed),
+
+    isRequesting: matchRequest?.status === 'PENDING',
     isLoading: isLoadingMatchRequest || isLoadingMatch,
     requestMatch: () =>
       me?.id && requestMatch([{ match_id: matchId, user_id: me.id }]),
@@ -78,9 +85,3 @@ export const getMatchTimes = (match: MatchResponse) => {
     isMatchPassed,
   }
 }
-
-export const isMatchReserved = (match: MatchResponse) => true
-// TODO A REVOIR
-// !!match?.match_requests?.some(
-//   ({ is_owner, has_payed }) => is_owner && has_payed
-// )

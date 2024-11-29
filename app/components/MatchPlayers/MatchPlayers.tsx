@@ -2,7 +2,7 @@ import { HStack, Heading, VStack, useColorMode } from '@gluestack-ui/themed'
 import { Fragment } from 'react'
 import { chunk } from 'remeda'
 
-import { Avatar, AvatarProps, Divider } from '@/designSystem'
+import { Avatar, AvatarProps } from '@/designSystem'
 import { ProfileResponse } from '@/services/api'
 import { DefaultProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
@@ -57,9 +57,9 @@ export const MatchPlayers = ({
               ))}
             </VStack>
           </VStack>
-          {index % 2 === 0 && index !== avatarColumns.length && (
-            <Divider orientation="vertical" />
-          )}
+          {/* {index % 2 === 0 && index !== avatarColumns.length && (
+             <Divider orientation="vertical" />
+          )} */}
         </Fragment>
       ))}
     </HStack>

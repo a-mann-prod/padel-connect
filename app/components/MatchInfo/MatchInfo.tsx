@@ -1,42 +1,33 @@
 import { HStack, Text, VStack } from '@gluestack-ui/themed'
-import { Dayjs } from 'dayjs'
 import { router } from 'expo-router'
 
+import { MatchPlayers } from '../MatchPlayers/MatchPlayers'
+import { MatchTypeTile } from '../MatchTypeTile/MatchTypeTile'
+
 import { Section, SectionRow, Tile } from '@/designSystem'
+import { getMatchTimes } from '@/hooks/useManageMatch'
 import { MatchResponse, useProfiles } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { getUsername } from '@/utils/user'
-import { MatchPlayers } from '../MatchPlayers/MatchPlayers'
-import { MatchTypeTile } from '../MatchTypeTile/MatchTypeTile'
 
 type MatchInfoProps = {
   match: MatchResponse
   isMatchPassed: boolean
-  matchStartTime: Dayjs
-  matchEndTime: Dayjs
-
-  isParticipant: boolean
 
   hasPayedUserIds: number[]
-
-  onEmptyPress?: () => void
 }
 export const MatchInfo = ({
   match,
   isMatchPassed,
-  matchStartTime,
-  matchEndTime,
-
-  isParticipant,
 
   hasPayedUserIds,
-
-  onEmptyPress,
 }: MatchInfoProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
+
+  const { matchStartTime, matchEndTime } = getMatchTimes(match)
 
   const ownerId = match.user
 

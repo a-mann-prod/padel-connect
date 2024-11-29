@@ -24,7 +24,7 @@ export const useProfiles = ({
   options,
 }: UseQueryProps<ProfilesResponse, GetProfilesParams>) =>
   useQuery<ProfilesResponse>({
-    queryKey: ['profiles'],
+    queryKey: ['profiles', params],
     queryFn: () => getProfilesFn(params),
     ...options,
   })

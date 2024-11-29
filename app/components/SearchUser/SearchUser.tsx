@@ -20,6 +20,7 @@ export type SearchUserProps = {
   selectedUserIds?: number[]
   displayFavHeaderButton?: boolean
   maxSelectedUserIds?: number
+  disabledUserIds?: number[]
 }
 
 export const SearchUser = ({
@@ -28,6 +29,7 @@ export const SearchUser = ({
   selectedUserIds,
   displayFavHeaderButton = true,
   maxSelectedUserIds,
+  disabledUserIds = [],
 }: SearchUserProps) => {
   const { data: me } = useMe()
   const [isFavMode, setIsFavMode] = useState(false)
@@ -91,8 +93,6 @@ export const SearchUser = ({
     []
   )
 
-  console.log(selectedUserIds?.length, maxSelectedUserIds)
-
   const isSelectDisabled = (currentId: number) => {
     if (maxSelectedUserIds === null || maxSelectedUserIds === undefined) {
       return false
@@ -116,6 +116,7 @@ export const SearchUser = ({
       onPress={onPress ? () => onPress(item.id) : undefined}
       isSelected={selectedUserIds?.includes(item.id)}
       isSelectDisabled={isSelectDisabled(item.id)}
+      isDisabled={disabledUserIds.includes(item.id)}
     />
   )
 

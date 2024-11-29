@@ -3,7 +3,6 @@ import { Linking } from 'react-native'
 
 import { MatchForm, WithMatch, matchFormServices } from '@/components'
 import { Button, Container } from '@/designSystem'
-import { isMatchReserved } from '@/hooks/useManageMatch'
 import {
   MatchResponse,
   useDeleteMatch,
@@ -27,8 +26,6 @@ export default WithMatch(() => {
     params: { id: matchId },
     options: { enabled: !!matchId },
   })
-
-  const isReserved = match && isMatchReserved(match)
 
   const defaultValues = formatToFormValues(match as MatchResponse)
 
@@ -54,7 +51,7 @@ export default WithMatch(() => {
         isLoading={isPending}
       />
 
-      {isReserved ? (
+      {match?.is_reserved ? (
         <Button
           title={t('callComplex')}
           action="negative"

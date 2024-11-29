@@ -47,7 +47,7 @@ export type Params<T> = T &
 export type DefaultProfileResponse = Entity<{
   last_name: string
   first_name: string
-  avatar_url: string
+  avatar_url?: string
   manual_preference: ManualPreference
   side_preference: SidePreference
   offense_level?: number

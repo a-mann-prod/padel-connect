@@ -62,8 +62,8 @@ export const MatchActionButtons = ({
       )}
 
       {isOwner && (
-        <Link asChild href={routing.matchPlayersManage.path(matchId)}>
-          <Button title={t('playersManage')} />
+        <Link asChild href={routing.matchTeamsManage.path(matchId)}>
+          <Button title={t('teamsManage')} />
         </Link>
       )}
       {isParticipant && (

@@ -18,14 +18,16 @@
   "matchFinished": "Match terminé",
   "matchNotFound": "Match introuvable",
   "pay": "Payer sa part",
-  "playersManage": "Gérer les joueurs",
   "privateMatch": "Match privé",
   "privateMatchHelpMessage": "N'apparaitra pas dans la liste des matches disponibles et n'enverra pas de notifications",
   "seeRequest": "Voir ma demande",
+  "sendAloneRequest": "Envoyer la demande seul(e)",
+  "sendGroupRequest": "Envoyer la demande groupée",
   "sendInvitationAndCreateMatch": "Envoyer l'invitation et créer le match",
   "share": "Partager",
   "shareAndCreateMatch": "Partager et créer le match",
   "shareMatch": "Partager le match",
   "shareMessage": "Hey ! Chaud pour un match de padel ? Tu peux le rejoindre en cliquant sur le lien suivant",
-  "team": "Equipe"
+  "team": "Equipe",
+  "teamsManage": "Gérer les demandes"
 }

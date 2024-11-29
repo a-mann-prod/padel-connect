@@ -12,6 +12,23 @@ class Team(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+    def calculate_level(self):
+        accepted_invitations = self.invitations.filter(status=enums.RequestStatus.ACCEPTED)
+
+        player_levels = [
+            invite.user.profile.calculate_level()
+            for invite in accepted_invitations
+            if invite.user.profile.calculate_level() is not None
+        ]
+        
+        if not player_levels:
+            return None
+
+        level_average = sum(player_levels) / len(player_levels)
+
+        return round(level_average, 1)
+    
+
     def __str__(self):
         return f"Team {self.id}"
 

@@ -14,7 +14,6 @@ export default () => {
       <VStack flex={1} m="$3">
         <SearchUser
           selectedUserIds={userIds}
-          onPress={() => console.log('test')}
           onSelectButtonPress={(id) =>
             setUserIds((prev) => {
               const index = prev.indexOf(id)

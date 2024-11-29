@@ -19,14 +19,16 @@
   "matchFinished": "Match finished",
   "matchNotFound": "Match not found",
   "pay": "Pay your share",
-  "playersManage": "Manager players",
   "privateMatch": "Private match",
   "privateMatchHelpMessage": "Will not appear in the list of available matches and will not send notifications",
   "seeRequest": "See my request",
+  "sendAloneRequest": "Send alone request",
+  "sendGroupRequest": "Send group request",
   "sendInvitationAndCreateMatch": "Send invitation and create match",
   "share": "Share",
   "shareAndCreateMatch": "Share and create match",
   "shareMatch": "Share match",
   "shareMessage": "Hey! Up for a game of padel? You can join by clicking the following link",
-  "team": "Team"
+  "team": "Team",
+  "teamsManage": "Manage requests"
 }

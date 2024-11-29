@@ -19,10 +19,7 @@ class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.Model
         team = get_object_or_404(Team, pk=team_pk)
 
         if self.action == 'list':
-            try:
-                return get_team_invite_requests(self.request, team)
-            except Exception as e:
-                return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return get_team_invite_requests(self.request, team)
 
         return TeamInvite.objects.filter(team=team)
     

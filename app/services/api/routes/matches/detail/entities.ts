@@ -12,6 +12,7 @@ export type MatchResponse = Entity<{
   is_private: boolean
   level: number
   is_competitive: boolean
+  is_reserved: boolean
   user: number
   teams: {
     id: number

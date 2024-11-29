@@ -17,7 +17,6 @@ export default () => {
       <VStack flex={1} m="$3">
         <SearchUser
           selectedUserIds={userIds}
-          onPress={() => console.log('test')}
           maxSelectedUserIds={1}
           onSelectButtonPress={(id) =>
             setUserIds((prev) => {
