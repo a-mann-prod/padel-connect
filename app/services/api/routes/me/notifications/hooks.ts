@@ -1,3 +1,4 @@
+import { useQueryCache } from '@/services/api/queryCacheHooks'
 import {
   UseInfiniteQueryProps,
   UseMutationProps,
@@ -36,39 +37,14 @@ export const useInfiniteNotifications = ({
 export const useReadNotification = ({
   options,
 }: UseMutationProps<void, ReadNotificationParams> = {}) => {
+  const querycache = useQueryCache()
   const queryClient = useQueryClient()
 
   return useMutation({
     ...options,
     mutationFn: readNotificationFn,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(
-        ['notifications', 'infinite'],
-        (oldData: InfiniteData<NotificationsResponse, number>) => {
-          if (!oldData) return
-
-          const updatedPages = oldData.pages.map((page) => {
-            const updatedResults = page.results.map((notification) => {
-              if (notification.id === variables.id) {
-                return {
-                  ...notification,
-                  is_read: true,
-                }
-              }
-              return notification
-            })
-            return {
-              ...page,
-              results: updatedResults,
-            }
-          })
-
-          return {
-            ...oldData,
-            pages: updatedPages,
-          }
-        }
-      )
+      querycache.updateItem(['notifications', 'infinite'], { is_read: true })
       queryClient.setQueryData(['notifications', 'count'], (oldData: number) =>
         oldData ? oldData - 1 : oldData
       )

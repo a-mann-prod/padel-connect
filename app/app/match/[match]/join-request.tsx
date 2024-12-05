@@ -1,10 +1,11 @@
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import { useState } from 'react'
 
 import { SearchUser, WithAuth, WithMatch } from '@/components'
 import { Button, Container } from '@/designSystem'
-import { useMatch } from '@/services/api'
+import { useCreateMatchTeam, useMatch } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default WithAuth(
   WithMatch(() => {
@@ -18,14 +19,19 @@ export default WithAuth(
       options: { enabled: !!matchId },
     })
 
+    const { mutate: createMatchTeam, isPending } = useCreateMatchTeam({
+      options: {
+        onSuccess: () =>
+          router.replace(routing.matchManageRequest.path(matchId)),
+      },
+    })
+
     const [userIds, setUserIds] = useState<number[]>([])
 
     const players = match?.teams.reduce<number[]>(
       (acc, curr) => [...acc, ...curr.participants],
       []
     )
-
-    console.log(players)
 
     const maxSelectedUserIds = match?.is_competitive
       ? 1
@@ -37,6 +43,7 @@ export default WithAuth(
           disabledUserIds={players}
           selectedUserIds={userIds}
           maxSelectedUserIds={maxSelectedUserIds}
+          onPress={(id) => router.navigate(routing.matchUser.path(matchId, id))}
           onSelectButtonPress={(id) =>
             setUserIds((prev) => {
               const index = prev.indexOf(id)
@@ -53,19 +60,17 @@ export default WithAuth(
           title={t('sendAloneRequest')}
           isDisabled={userIds.length !== 0}
           onPress={() => {
-            // TODO: ADD INVITATION with userId
-            // createMatch()
+            createMatchTeam({ matchId })
           }}
-          // isLoading={isPendingCreateMatch}
+          isLoading={isPending}
         />
         <Button
           title={t('sendGroupRequest')}
           isDisabled={userIds.length === 0}
           onPress={() => {
-            // TODO: ADD INVITATION with userId
-            // createMatch()
+            createMatchTeam({ matchId, send_invitations: userIds })
           }}
-          // isLoading={isPendingCreateMatch}
+          isLoading={isPending}
         />
       </Container>
     )

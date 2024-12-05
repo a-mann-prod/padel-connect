@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react'
 
 import { LoginResponse, MeResponse, useMe } from '@/services/api'
+import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { buildContext } from '@/services/buildContext'
 import {
   ACCESS_TOKEN_KEY,
@@ -25,6 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoadingSignOut, setIsLoadingSignOut] = useState(false)
   const [isLoadingSignIn, setIsLoadingSignIn] = useState(false)
   const [signedIn, setSignedIn] = useState(false)
+  const queryCache = useQueryCache()
 
   const [me, setMe] = useState<MeResponse>()
 
@@ -60,6 +62,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       storage.removeItem(REFRESH_TOKEN_KEY)
       setMe(undefined)
       setSignedIn(false)
+      queryCache.removeItem(['me'])
+      queryCache.removeItem(['me-profile'])
+      queryCache.removeItem(['match_filter'])
     } catch (error) {
       console.error('Error signing out:', error)
     } finally {

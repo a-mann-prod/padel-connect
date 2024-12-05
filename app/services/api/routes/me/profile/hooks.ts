@@ -1,7 +1,8 @@
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
+import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { UseMutationProps, UseQueryProps } from '@/services/api/queryHooks'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { MeProfileResponse } from './entities'
 import {
   deleteMeAvatarFn,
@@ -23,7 +24,7 @@ export const useMeProfile = ({
 export const useUpdateMeProfile = ({
   options,
 }: UseMutationProps<MeProfileResponse, UpdateMeProfileParams> = {}) => {
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
 
@@ -31,7 +32,7 @@ export const useUpdateMeProfile = ({
     ...options,
     mutationFn: updateMeProfileFn,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(['me-profile'], data)
+      queryCache.updateItem(['me-profile'], data)
       onSuccess()
       options?.onSuccess?.(data, variables, context)
     },
@@ -42,14 +43,14 @@ export const useUpdateMeProfile = ({
 export const useUpdateMeAvatar = ({
   options,
 }: UseMutationProps<MeProfileResponse, UpdateMeAvatarParams> = {}) => {
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
   const onError = useHandleError()
 
   return useMutation({
     ...options,
     mutationFn: updateMeAvatarFn,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(['me-profile'], data)
+      queryCache.updateItem(['me-profile'], data)
       options?.onSuccess?.(data, variables, context)
     },
     onError,
@@ -57,7 +58,7 @@ export const useUpdateMeAvatar = ({
 }
 
 export const useDeleteMeAvatar = ({ options }: UseMutationProps<void> = {}) => {
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
 
@@ -65,14 +66,7 @@ export const useDeleteMeAvatar = ({ options }: UseMutationProps<void> = {}) => {
     ...options,
     mutationFn: deleteMeAvatarFn,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(['me-profile'], (oldData: MeProfileResponse) =>
-        oldData
-          ? {
-              ...oldData,
-              avatar_url: null,
-            }
-          : oldData
-      )
+      queryCache.updateItem(['me-profile'], { avatar_url: null })
       onSuccess()
       options?.onSuccess?.(data, variables, context)
     },

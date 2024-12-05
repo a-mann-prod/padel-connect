@@ -17,7 +17,7 @@ export const getMeFn = async () => {
 }
 
 export const updateMeEmailFn = async (params: UpdateMeEmailParams) => {
-  const { data } = await api.post<void>(`${ENDPOINT}/set_email/`, params)
+  const { data } = await api.post<MeResponse>(`${ENDPOINT}/set_email/`, params)
 
   return data
 }

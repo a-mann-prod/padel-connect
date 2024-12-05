@@ -35,3 +35,10 @@ def team_invite_request_answer(request, team_invite, next_status):
     
     team_invite.status = next_status
     team_invite.save()
+
+
+def validate_team_invite_destruction(request, team_invite):
+    current_user = request.user
+
+    if team_invite.user != current_user and team_invite.team.user != current_user:
+        raise PermissionDenied()

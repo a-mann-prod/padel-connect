@@ -1,11 +1,6 @@
 import { useHandleError } from '@/hooks/useHandleError'
-import {
-  InfiniteData,
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query'
+import { useQueryCache } from '@/services/api/queryCacheHooks'
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 import {
   UseInfiniteQueryProps,
   UseMutationProps,
@@ -57,36 +52,15 @@ export const useInfiniteMatches = (
 export const useCreateMatch = ({
   options,
 }: UseMutationProps<MatchResponse, CreateMatchParams> = {}) => {
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
   const onError = useHandleError()
 
   return useMutation({
     ...options,
     mutationFn: createMatchFn,
     onSuccess: (data, variables, context) => {
+      queryCache.addItem(['matches', 'infinite'], data)
       options?.onSuccess?.(data, variables, context)
-
-      queryClient.setQueryData(
-        ['matches', 'infinite'],
-        (oldData: InfiniteData<MatchesResponse, number>) => {
-          if (!oldData) return
-
-          const newData = {
-            ...oldData,
-            pages: oldData.pages.map((page, index) => {
-              if (index === oldData.pages.length - 1) {
-                return {
-                  ...page,
-                  results: [...page.results, data],
-                }
-              }
-              return page
-            }),
-          }
-
-          return newData
-        }
-      )
     },
     onError,
   })
@@ -96,48 +70,14 @@ export const useUpdateMatch = ({
   options,
 }: UseMutationProps<MatchResponse, UpdateMatchParams>) => {
   const onError = useHandleError()
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
 
   return useMutation({
     ...options,
     mutationFn: updateMatchFn,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(
-        ['matches', 'infinite'],
-        (oldData: InfiniteData<MatchesResponse, number>) => {
-          if (!oldData) return
-          const updatedPages = oldData.pages.map((page) => {
-            const updatedResults = page.results.map((match) => {
-              if (match.id === variables.id) {
-                return {
-                  ...match,
-                  ...data,
-                }
-              }
-              return match
-            })
-            return {
-              ...page,
-              results: updatedResults,
-            }
-          })
-
-          return {
-            ...oldData,
-            pages: updatedPages,
-          }
-        }
-      )
-      queryClient.setQueryData(
-        ['matches', variables.id],
-        (oldData: MatchResponse) =>
-          oldData
-            ? {
-                ...oldData,
-                ...data,
-              }
-            : oldData
-      )
+      queryCache.updateItem(['matches', 'infinite'], data)
+      queryCache.updateItem(['matches', variables.id], data)
       options?.onSuccess?.(data, variables, context)
     },
     onError,

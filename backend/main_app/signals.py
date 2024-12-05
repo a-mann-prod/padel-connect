@@ -4,7 +4,7 @@ from main_app.models import Profile, MatchFilter, CustomUser, Match, Notificatio
 from chat.models import Conversation
 from main_app.tasks import async_send_notification
 from django.core.exceptions import ValidationError
-from chat.models import Message
+from django.conf import settings
 
 from django.utils import translation
 from django.utils.translation import gettext as _
@@ -20,6 +20,18 @@ def handle_user_creation(sender, instance, created, **kwargs):
 def handle_team_creation(sender, instance, created, **kwargs):
     if created:
         TeamInvite.objects.create(team=instance, user=instance.user, status=enums.RequestStatus.ACCEPTED)
+
+        send_invitations = getattr(instance, "_send_invitations", [])
+
+        print(send_invitations)
+        for user_id in send_invitations:
+            user = CustomUser.objects.get(pk=user_id)
+            TeamInvite.objects.create(
+                team=instance,
+                user=user,
+                status=enums.RequestStatus.PENDING
+            )
+
 
 @receiver(post_save, sender=Match)
 def handle_match_creation(sender, instance, created, **kwargs):

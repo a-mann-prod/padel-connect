@@ -4,7 +4,7 @@ from main_app.models import Match, Team, TeamInvite, enums
 from main_app.serializers import MatchTeamSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins
-from main_app.business.match_team_invite import get_team_invite_requests, validate_team_invite_creation, team_invite_request_answer
+from main_app.business.match_team_invite import get_team_invite_requests, validate_team_invite_creation, team_invite_request_answer, validate_team_invite_destruction
 from rest_framework.decorators import action
 
 
@@ -22,6 +22,14 @@ class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.Model
             return get_team_invite_requests(self.request, team)
 
         return TeamInvite.objects.filter(team=team)
+    
+    def get_permissions(self):
+        """
+        Override pour retirer les permissions générales sur `destroy`.
+        """
+        if self.action == 'destroy':
+            return [permissions.IsAuthenticated()]
+        return super().get_permissions()
     
 
     def create(self, request, team_pk=None):
@@ -45,6 +53,19 @@ class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.Model
         Block update (403 Forbidden).
         """
         return Response({"detail": "Update is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+    
+    def destroy(self, request, pk=None, *args, **kwargs):
+        """
+        Allow deletion only by the invitation's user or the team's user.
+        """
+        team_invite = get_object_or_404(TeamInvite, pk=pk)
+
+        try:
+            validate_team_invite_destruction(request, team_invite)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return super().destroy(request, *args, **kwargs)
     
 
     @action(detail=True, methods=['post'], url_path='accept', permission_classes=[permissions.IsAuthenticated])

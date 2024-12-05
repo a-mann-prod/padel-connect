@@ -21,6 +21,7 @@ export type SearchUserProps = {
   displayFavHeaderButton?: boolean
   maxSelectedUserIds?: number
   disabledUserIds?: number[]
+  displaySearchBar?: boolean
 }
 
 export const SearchUser = ({
@@ -30,6 +31,7 @@ export const SearchUser = ({
   displayFavHeaderButton = true,
   maxSelectedUserIds,
   disabledUserIds = [],
+  displaySearchBar = true,
 }: SearchUserProps) => {
   const { data: me } = useMe()
   const [isFavMode, setIsFavMode] = useState(false)
@@ -122,7 +124,7 @@ export const SearchUser = ({
 
   return (
     <VStack gap="$3" flex={1}>
-      <SearchInput onChangeText={setSearchDebounced} />
+      {displaySearchBar && <SearchInput onChangeText={setSearchDebounced} />}
 
       <VirtualizedList<ProfilesResponse['results'][number]>
         data={isFavMode ? favUsers : profiles}

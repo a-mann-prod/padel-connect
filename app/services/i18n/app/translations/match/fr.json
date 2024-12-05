@@ -1,4 +1,5 @@
 {
+  "addPlayer": "Ajouter un partenaire",
   "book": "Réserver le match",
   "callComplex": "Appeler le centre",
   "cancelRequest": "Annuler la demande",
@@ -20,6 +21,11 @@
   "pay": "Payer sa part",
   "privateMatch": "Match privé",
   "privateMatchHelpMessage": "N'apparaitra pas dans la liste des matches disponibles et n'enverra pas de notifications",
+  "requestAccepted": "Demande acceptée",
+  "requestCanceled": "Demande annulée",
+  "requestCreated": "Demande créée",
+  "requestDeleted": "Demande supprimée",
+  "requestRefused": "Demande refusée",
   "seeRequest": "Voir ma demande",
   "sendAloneRequest": "Envoyer la demande seul(e)",
   "sendGroupRequest": "Envoyer la demande groupée",

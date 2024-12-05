@@ -169,7 +169,7 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
     'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1), #default 5 mns
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=365), #default 5 mns
     'REFRESH_TOKEN_LIFETIME': timedelta(days=365), #default 1 day
 }
 

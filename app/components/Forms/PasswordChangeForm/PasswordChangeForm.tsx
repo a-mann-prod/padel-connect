@@ -38,7 +38,7 @@ export const PasswordChangeForm = () => {
 
   return (
     <>
-      <VStack gap="$2">
+      <VStack flex={1} gap="$2">
         <FormProvider {...methods}>
           <FormInputControlled
             name="new_password"

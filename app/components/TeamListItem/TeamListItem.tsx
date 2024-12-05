@@ -19,6 +19,7 @@ import {
 import { MatchTeamResponse } from '@/services/api'
 import { routing } from '@/services/routing'
 import { router } from 'expo-router'
+import { ActivityIndicator } from 'react-native'
 import { PlayerListItem } from '../PlayerListItem/PlayerListItem'
 import { SubItem } from '../SubItem/SubItem'
 
@@ -43,7 +44,7 @@ export const TeamListItem = ({
     return (
       <PlayerListItem
         {...participants[0]}
-        is_request
+        isRequest
         matchRequest={matchRequest}
         onPress={() =>
           router.navigate(routing.matchUser.path(10, participants[0].id))
@@ -104,23 +105,35 @@ export const TeamListItem = ({
                   </HStack>
 
                   {matchRequest && (
-                    <HStack gap="$4" alignItems="center">
-                      <IconButton
-                        icon="FAR-circle-check"
-                        action="positive"
-                        onPress={() => matchRequest.onAcceptPress(id)}
-                        iconProps={{ size: '2xl' }}
-                        variant="link"
-                        isLoading={matchRequest.isLoading}
-                      />
-                      <IconButton
-                        icon="FAR-circle-xmark"
-                        action="negative"
-                        onPress={() => matchRequest.onRefusePress(id)}
-                        iconProps={{ size: '2xl' }}
-                        variant="link"
-                        isLoading={matchRequest.isLoading}
-                      />
+                    <HStack
+                      gap="$4"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      {matchRequest.isLoading ? (
+                        <ActivityIndicator />
+                      ) : (
+                        <>
+                          <IconButton
+                            icon="FAR-circle-check"
+                            action="positive"
+                            onPress={() => matchRequest.onAcceptPress(id)}
+                            iconProps={{ size: '2xl' }}
+                            variant="link"
+                            //@ts-ignore:next-line
+                            h="none"
+                          />
+                          <IconButton
+                            icon="FAR-circle-xmark"
+                            action="negative"
+                            onPress={() => matchRequest.onRefusePress(id)}
+                            iconProps={{ size: '2xl' }}
+                            variant="link"
+                            //@ts-ignore:next-line
+                            h="none"
+                          />
+                        </>
+                      )}
                     </HStack>
                   )}
                 </HStack>
@@ -137,7 +150,7 @@ export const TeamListItem = ({
             <PlayerListItem
               key={participant.id}
               {...participant}
-              is_request
+              isRequest
               onPress={() =>
                 router.navigate(routing.matchUser.path(10, participant.id))
               }

@@ -7,6 +7,14 @@ export const BaseIcon = createStyle({
   },
   variants: {
     size: {
+      '3xs': {
+        h: '$2',
+        w: '$2',
+        props: {
+          // @ts-ignore
+          size: 10,
+        },
+      },
       '2xs': {
         h: '$3',
         w: '$3',

@@ -38,7 +38,7 @@ export const MainSettings = () => {
           lastname={me.last_name}
           value={me.avatar_url ? { uri: me.avatar_url } : undefined}
           onChange={handleAvatarChange}
-          displayBadge
+          badgeType="edit"
           isLoading={isPending}
         />
         {settings.map(({ rows, ...sectionProps }, index) => (

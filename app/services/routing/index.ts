@@ -221,6 +221,11 @@ export const routing = {
     path: (matchId: string | number) =>
       `${root.match.path(matchId)}/join-request`,
   },
+  matchManageRequest: {
+    name: 'manage-request',
+    path: (matchId: string | number) =>
+      `${root.match.path(matchId)}/manage-request`,
+  },
   matchShareMatch: {
     name: 'share-match',
     path: (matchId: string | number) =>

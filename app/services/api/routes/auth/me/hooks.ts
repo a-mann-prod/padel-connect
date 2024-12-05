@@ -1,7 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
+import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { UseMutationProps, UseQueryProps } from '@/services/api/queryHooks'
 import { useAuthContext } from '../../../../../contexts/AuthContext'
 import { MeResponse } from './entities'
@@ -29,8 +30,8 @@ export const useMe = ({ options }: UseQueryProps<MeResponse>) => {
 
 export const useUpdateMeEmail = ({
   options,
-}: UseMutationProps<void, UpdateMeEmailParams> = {}) => {
-  const queryClient = useQueryClient()
+}: UseMutationProps<MeResponse, UpdateMeEmailParams> = {}) => {
+  const queryCache = useQueryCache()
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
 
@@ -38,7 +39,7 @@ export const useUpdateMeEmail = ({
     ...options,
     mutationFn: updateMeEmailFn,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(['me'], data)
+      queryCache.updateItem(['me'], data)
       options?.onSuccess?.(data, variables, context)
       onSuccess()
     },
@@ -49,13 +50,13 @@ export const useUpdateMeEmail = ({
 export const useUpdateMe = ({
   options,
 }: UseMutationProps<MeResponse, UpdateMeParams> = {}) => {
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
 
   return useMutation({
     ...options,
     mutationFn: updateMeFn,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(['me'], data)
+      queryCache.updateItem(['me'], data)
       options?.onSuccess?.(data, variables, context)
     },
   })
@@ -81,12 +82,14 @@ export const useUpdateMePassword = ({
 export const useDeleteMe = ({
   options,
 }: UseMutationProps<void, DeleteMeParams> = {}) => {
+  const queryCache = useQueryCache()
   const { signOut, isLoadingSignOut } = useAuthContext()
 
   const { isPending, ...rest } = useMutation({
     ...options,
     onSuccess: (data, variables, context) => {
       signOut()
+      queryCache.removeItem(['me'])
       options?.onSuccess?.(data, variables, context)
     },
     mutationFn: deleteMeFn,

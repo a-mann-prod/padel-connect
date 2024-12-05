@@ -4,7 +4,11 @@ import { ListRenderItemInfo } from 'react-native'
 
 import { TeamListItem, WithMatch } from '@/components'
 import { VirtualizedList } from '@/designSystem'
-import { MatchTeamsResponse, useInfiniteMatchTeams } from '@/services/api'
+import {
+  MatchTeamsResponse,
+  useInfiniteMatchTeams,
+  useManageMatchTeam,
+} from '@/services/api'
 import { routing } from '@/services/routing'
 
 export default WithMatch(() => {
@@ -25,6 +29,8 @@ export default WithMatch(() => {
     options: { enabled: !!matchId },
   })
 
+  const { mutate: manage, isPending } = useManageMatchTeam()
+
   const matchTeams = matchTeamsPages?.pages.reduce<
     MatchTeamsResponse['results']
   >((prev, acc) => [...prev, ...acc.results], [])
@@ -39,9 +45,11 @@ export default WithMatch(() => {
       }
       // TODO A REVOIR
       matchRequest={{
-        isLoading: false,
-        onAcceptPress: () => item.id && console.log(item.id),
-        onRefusePress: () => item.id && console.log(item.id),
+        isLoading: isPending,
+        onAcceptPress: () =>
+          item.id && manage({ matchId, id: item.id, action: 'accept' }),
+        onRefusePress: () =>
+          item.id && manage({ matchId, id: item.id, action: 'refuse' }),
       }}
     />
   )

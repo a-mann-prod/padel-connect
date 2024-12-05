@@ -1,8 +1,6 @@
 import {
-  AvatarBadge,
   AvatarFallbackText,
   AvatarImage,
-  Center,
   Avatar as GAvatar,
   Heading,
   VStack,
@@ -12,6 +10,7 @@ import { ComponentProps, useRef, useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { isEmpty } from 'remeda'
 
+import { AvatarBadge, AvatarBadgeProps } from '../AvatarBadge/AvatarBadge'
 import { Icon, IconNameProp } from '../Icon/Icon'
 import { ImageViewer } from '../ImageViewer/ImageViewer'
 import { ImageWrapper } from '../ImageViewer/ImageWrapper'
@@ -32,7 +31,7 @@ export type AvatarProps = {
   isLoading?: boolean
   fallBackIcon?: IconNameProp
   containerProps?: typeof VStack.defaultProps
-  displayBadge?: boolean
+  badgeType?: AvatarBadgeProps['type']
   viewerEnabled?: boolean
   border?: Partial<{
     color: ColorsToken
@@ -48,7 +47,7 @@ export const Avatar = ({
   isLoading,
   fallBackIcon,
   containerProps,
-  displayBadge,
+  badgeType,
   viewerEnabled,
   border,
   ...props
@@ -107,13 +106,7 @@ export const Avatar = ({
                 ) : (
                   displayFallback()
                 )}
-                {onPress && displayBadge && (
-                  <AvatarBadge bgColor="$blueGray500">
-                    <Center flex={1}>
-                      <Icon name="FAS-pen" color="$white" size="xs" />
-                    </Center>
-                  </AvatarBadge>
-                )}
+                {badgeType && <AvatarBadge type={badgeType} />}
               </GAvatar>
             </ImageWrapper>
           </Skeleton>

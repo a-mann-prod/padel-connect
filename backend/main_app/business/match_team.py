@@ -1,7 +1,7 @@
-from rest_framework.exceptions import PermissionDenied, ValidationError
+
+from rest_framework.exceptions import PermissionDenied, ValidationError, NotFound
 from main_app.models import Team, enums
-from main_app.serializers import MatchTeamSerializer
-from main_app.pagination import CustomPageNumberPagination
+from main_app.serializers import MatchTeamRequestSerializer
 
 
 def get_team_requests(request, match):
@@ -12,9 +12,21 @@ def get_team_requests(request, match):
     
     return Team.objects.filter(match=match, status=enums.RequestStatus.PENDING).exclude(user=current_user)
 
+
+def get_team_request_current_user(request, match):
+    current_user = request.user
+    
+    team = Team.objects.filter(match=match, user=current_user).first()
+
+    if not team:
+        raise NotFound()
+
+    serializer = MatchTeamRequestSerializer(team, context={'request': request})
+    return serializer.data
+
     
 
-def validate_match_creation(request, match):
+def validate_match_team_creation(request, match):
     current_user = request.user
 
     # Vérifiez si l'utilisateur est le capitaine du match
@@ -38,3 +50,4 @@ def team_request_answer(request, match, team, next_status):
     
     team.status = next_status
     team.save()
+    

@@ -14,10 +14,11 @@ export enum ManualPreference {
   RIGHT_HANDED = 'RIGHT_HANDED',
 }
 
-export enum MatchRequestStatus {
+export enum RequestStatus {
   ACCEPTED = 'ACCEPTED',
   REFUSED = 'REFUSED',
   PENDING = 'PENDING',
+  CREATING = 'CREATING',
 }
 
 export enum NotificationType {

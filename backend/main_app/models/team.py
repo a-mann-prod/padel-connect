@@ -35,6 +35,8 @@ class Team(models.Model):
     class Meta:
         verbose_name = 'Team' 
         verbose_name_plural = 'Teams'
+        unique_together = ('match', 'user')  # Un utilisateur ne peut créer qu'une seule team par match
+
         
 
 class TeamInvite(models.Model):
@@ -47,6 +49,7 @@ class TeamInvite(models.Model):
 
 
     class Meta:
+        ordering = ['id']
         unique_together = ('team', 'user')  # Un utilisateur ne peut recevoir qu'une seule invitation pour une équipe.
 
     def __str__(self):

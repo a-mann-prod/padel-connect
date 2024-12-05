@@ -2,29 +2,33 @@ import { HStack, Text, VStack } from '@gluestack-ui/themed'
 
 import {
   Avatar,
+  BadgeType,
   IconButton,
   IconButtonProps,
   Pressable,
   PressableProps,
 } from '@/designSystem'
 import { ProfileResponse } from '@/services/api'
+import { RequestStatus } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { getUsername } from '@/utils/user'
+import { ActivityIndicator } from 'react-native'
 import { SubItem } from '../SubItem/SubItem'
 
 export type PlayerListItemProps = ProfileResponse & {
   onPress?: PressableProps['onPress']
   onSelectButtonPress?: IconButtonProps['onPress']
   displayStar?: boolean
-  is_request?: boolean
+  isRequest?: boolean
   matchRequest?: {
     isLoading: boolean
-    onAcceptPress: (id: number | undefined) => void
-    onRefusePress: (id: number | undefined) => void
+    onAcceptPress?: (id: number | undefined) => void
+    onRefusePress?: (id: number | undefined) => void
   }
   isSelected?: boolean
   isDisabled?: boolean
   isSelectDisabled?: boolean
+  requestStatus?: RequestStatus
 }
 
 export const PlayerListItem = ({
@@ -39,7 +43,7 @@ export const PlayerListItem = ({
   is_favorite = false,
   displayStar = true,
 
-  is_request = false,
+  isRequest = false,
 
   matchRequest,
 
@@ -48,8 +52,16 @@ export const PlayerListItem = ({
   isSelected,
   isDisabled,
   isSelectDisabled,
+  requestStatus,
 }: PlayerListItemProps) => {
   const t = useTranslate()
+
+  const mapRequestToBadge: Partial<Record<RequestStatus, BadgeType>> = {
+    ACCEPTED: 'accepted',
+    PENDING: 'pending',
+    REFUSED: 'refused',
+  }
+
   return (
     <HStack flex={1}>
       <Pressable
@@ -76,13 +88,25 @@ export const PlayerListItem = ({
               isDisabled={isSelectDisabled}
             />
           )}
-          <Avatar size="md" imageUrl={avatar_url} />
+          <Avatar
+            size="md"
+            imageUrl={avatar_url}
+            badgeType={
+              requestStatus ? mapRequestToBadge[requestStatus] : undefined
+            }
+          />
           <VStack flex={1} gap="$2">
             <HStack flex={1} alignItems="center" gap="$2">
               <Text>{getUsername(first_name, last_name)}</Text>
               {displayStar && is_favorite && <SubItem icon="FAS-star" />}
             </HStack>
             <HStack gap="$3">
+              {isRequest && (
+                <SubItem
+                  text={calculated_level?.toString()}
+                  icon="FAS-dumbbell"
+                />
+              )}
               {manual_preference && (
                 <SubItem
                   text={t(
@@ -97,32 +121,39 @@ export const PlayerListItem = ({
                   icon="FAS-arrows-left-right"
                 />
               )}
-
-              <SubItem
-                text={calculated_level?.toString()}
-                icon="FAS-dumbbell"
-              />
             </HStack>
           </VStack>
 
           {matchRequest && (
-            <HStack gap="$4" alignItems="center">
-              <IconButton
-                icon="FAR-circle-check"
-                action="positive"
-                onPress={() => matchRequest.onAcceptPress(id)}
-                iconProps={{ size: '2xl' }}
-                variant="link"
-                isLoading={matchRequest.isLoading}
-              />
-              <IconButton
-                icon="FAR-circle-xmark"
-                action="negative"
-                onPress={() => matchRequest.onRefusePress(id)}
-                iconProps={{ size: '2xl' }}
-                variant="link"
-                isLoading={matchRequest.isLoading}
-              />
+            <HStack gap="$4" justifyContent="center" alignItems="center">
+              {matchRequest.isLoading ? (
+                <ActivityIndicator />
+              ) : (
+                <>
+                  {matchRequest.onAcceptPress && (
+                    <IconButton
+                      icon="FAR-circle-check"
+                      action="positive"
+                      onPress={() => matchRequest.onAcceptPress?.(id)}
+                      iconProps={{ size: '2xl' }}
+                      variant="link"
+                      //@ts-ignore:next-line
+                      h="none"
+                    />
+                  )}
+                  {matchRequest.onRefusePress && (
+                    <IconButton
+                      icon="FAR-circle-xmark"
+                      action="negative"
+                      onPress={() => matchRequest.onRefusePress?.(id)}
+                      iconProps={{ size: '2xl' }}
+                      variant="link"
+                      //@ts-ignore:next-line
+                      h="none"
+                    />
+                  )}
+                </>
+              )}
             </HStack>
           )}
         </HStack>

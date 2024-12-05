@@ -50,7 +50,7 @@ export const useManageMatch = (matchId: number) => {
 
   return {
     match,
-    isPlayer: !!(me?.id && players?.includes(me.id)),
+    isPlayer: match?.user !== me?.id && !!(me?.id && players?.includes(me.id)),
     isOwner: match?.user === me?.id,
     isMatchPassed: !!(match && getMatchTimes(match).isMatchPassed),
 

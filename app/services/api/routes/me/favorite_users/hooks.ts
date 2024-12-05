@@ -1,14 +1,10 @@
+import { useQueryCache } from '@/services/api/queryCacheHooks'
 import {
   UseInfiniteQueryProps,
   UseMutationProps,
 } from '@/services/api/queryHooks'
-import {
-  InfiniteData,
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query'
-import { ProfileResponse, ProfilesResponse } from '../../profiles'
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query'
+import { ProfileResponse } from '../../profiles'
 import { FavoriteUsersResponse } from './entities'
 import {
   addFavoriteUser,
@@ -44,66 +40,16 @@ export const useAddFavoriteUser = (
     options: {},
   }
 ) => {
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
 
   return useMutation({
     ...options,
     mutationFn: addFavoriteUser,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(
-        ['profiles', 'infinite'],
-        (oldData: InfiniteData<ProfilesResponse, number>) => {
-          if (!oldData) return
-          const updatedPages = oldData.pages.map((page) => {
-            const updatedResults = page.results.map((profile) => {
-              if (profile.id === variables.id) {
-                return {
-                  ...profile,
-                  is_favorite: true,
-                }
-              }
-              return profile
-            })
-            return {
-              ...page,
-              results: updatedResults,
-            }
-          })
+      queryCache.updateItem(['profiles', 'infinite'], { is_favorite: true })
+      queryCache.updateItem(['profiles', variables.id], { is_favorite: true })
+      queryCache.addItem(['favorite_users'], data)
 
-          return {
-            ...oldData,
-            pages: updatedPages,
-          }
-        }
-      )
-      queryClient.setQueryData(
-        ['favorite_users'],
-        (oldData: InfiniteData<FavoriteUsersResponse, number>) => {
-          if (!oldData) return
-
-          const newData = {
-            ...oldData,
-            pages: oldData.pages.map((page, index) => {
-              if (index === oldData.pages.length - 1) {
-                return {
-                  ...page,
-                  results: [...page.results, data],
-                }
-              }
-              return page
-            }),
-          }
-
-          return newData
-        }
-      )
-      queryClient.setQueryData(
-        ['profiles', variables.id],
-        (oldData: ProfileResponse) => ({
-          ...oldData,
-          is_favorite: true,
-        })
-      )
       options?.onSuccess?.(data, variables, context)
     },
   })
@@ -114,67 +60,16 @@ export const useRemoveFavoriteUser = (
     options: {},
   }
 ) => {
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
 
   return useMutation({
     ...options,
     mutationFn: removeFavoriteUser,
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(
-        ['profiles', 'infinite'],
-        (oldData: InfiniteData<ProfilesResponse, number>) => {
-          if (!oldData) return
-          const updatedPages = oldData.pages.map((page) => {
-            const updatedResults = page.results.map((profile) => {
-              if (profile.id === variables.id) {
-                return {
-                  ...profile,
-                  is_favorite: false,
-                }
-              }
-              return profile
-            })
-            return {
-              ...page,
-              results: updatedResults,
-            }
-          })
+      queryCache.updateItem(['profiles', 'infinite'], { is_favorite: false })
+      queryCache.updateItem(['profiles', variables.id], { is_favorite: false })
+      queryCache.removeItem(['favorite_users'], variables.id)
 
-          return {
-            ...oldData,
-            pages: updatedPages,
-          }
-        }
-      )
-      queryClient.setQueryData(
-        ['favorite_users'],
-        (oldData: InfiniteData<FavoriteUsersResponse, number>) => {
-          if (!oldData) return
-          const updatedPages = oldData.pages.map((page) => {
-            const updatedResults = page.results.filter(
-              (profile) => profile.id !== variables.id
-            )
-            return {
-              ...page,
-              results: updatedResults,
-            }
-          })
-          return {
-            ...oldData,
-            pages: updatedPages,
-          }
-        }
-      )
-      queryClient.setQueryData(
-        ['profiles', variables.id],
-        (oldData: ProfileResponse) =>
-          oldData
-            ? {
-                ...oldData,
-                is_favorite: false,
-              }
-            : oldData
-      )
       options?.onSuccess?.(data, variables, context)
     },
   })

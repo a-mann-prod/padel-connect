@@ -3,6 +3,7 @@ from main_app.models import Team, TeamInvite, Match, enums
 from main_app import mixins
 from main_app.serializers.match_team_invite import MinimalMatchTeamInviteSerializer
 from main_app.serializers.profile import ProfileSerializer
+from main_app.serializers.match_team_invite import MatchTeamInviteSerializer
 
 
 class MatchTeamListSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerializer):
@@ -12,7 +13,7 @@ class MatchTeamListSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelS
 
     class Meta:
         model = Team
-        fields = ['id', 'participants', 'user', 'match', 'calculated_level']
+        fields = ['id', 'participants', 'user', 'match', 'calculated_level', 'status']
 
     def get_calculated_level(self, obj):
         return obj.calculate_level()
@@ -26,13 +27,23 @@ class MatchTeamListSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelS
         return []
 
 
+class MatchTeamRequestSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerializer):
+    invitations = MatchTeamInviteSerializer(read_only=True, many=True)
+    match = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Match.objects.all())
+
+    class Meta:
+        model = Team
+        fields = '__all__'
+    
+
 class MatchTeamSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerializer):
     participants = serializers.SerializerMethodField()
     match = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Match.objects.all())
 
     class Meta:
         model = Team
-        fields = ['id', 'participants', 'user', 'match']
+        fields = ['id', 'participants', 'match']
+        read_only_fields = ['user']
 
     def get_participants(self, obj):
         invites = TeamInvite.objects.filter(team=obj, status=enums.RequestStatus.ACCEPTED)

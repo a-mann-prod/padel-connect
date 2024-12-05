@@ -37,7 +37,7 @@ export const EmailChangeForm = () => {
 
   return (
     <>
-      <VStack gap="$2">
+      <VStack gap="$2" flex={1}>
         <FormProvider {...methods}>
           <FormInputControlled
             name="new_email"

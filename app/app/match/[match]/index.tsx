@@ -13,6 +13,7 @@ import { Loader, ScrollView } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
+import { useMatchTeamRequest } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -41,13 +42,16 @@ export default WithMatch(() => {
     isMatchPassed,
   } = useManageMatch(matchId)
 
+  const { data: matchTeamRequest, isLoading: isLoadingMatchTeamRequest } =
+    useMatchTeamRequest({ params: { id: matchId } })
+
   useHeaderButton(
     [
       {
         icon: 'FAS-share',
         onPress: () =>
           match?.id && router.navigate(routing.matchShareMatch.path(match.id)),
-        condition: !isMatchPassed,
+        condition: false && !isMatchPassed,
       },
       {
         icon: 'FAS-share-from-square',
@@ -113,10 +117,9 @@ export default WithMatch(() => {
 
           {!isParticipant && (
             <PreMatchRequestButton
-              isRequesting={isRequesting}
-              onPress={() =>
-                router.navigate(routing.matchJoinRequest.path(matchId))
-              }
+              isLoading={isLoadingMatchTeamRequest}
+              matchId={matchId}
+              isRequesting={!!matchTeamRequest?.id}
             />
           )}
         </VStack>

@@ -1,4 +1,6 @@
 {
+  "addPlayer": "Add partner",
+
   "book": "Book match",
   "callComplex": "Call center",
   "cancelRequest": "Cancel request",
@@ -21,6 +23,11 @@
   "pay": "Pay your share",
   "privateMatch": "Private match",
   "privateMatchHelpMessage": "Will not appear in the list of available matches and will not send notifications",
+  "requestAccepted": "Request accepted",
+  "requestCanceled": "Request canceled",
+  "requestCreated": "Request created",
+  "requestDeleted": "Request deleted",
+  "requestRefused": "Request refused",
   "seeRequest": "See my request",
   "sendAloneRequest": "Send alone request",
   "sendGroupRequest": "Send group request",

@@ -51,6 +51,12 @@ export default () => {
         }}
       />
       <Stack.Screen
+        name={routing.matchManageRequest.name}
+        options={{
+          title: t('manageRequest'),
+        }}
+      />
+      <Stack.Screen
         name={routing.matchShareMatch.name}
         options={{
           title: '',

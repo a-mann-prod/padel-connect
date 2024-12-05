@@ -5,5 +5,5 @@ from .profile import ProfileSerializer, ProfileAvatarSerializer
 from .match_filter import MatchFilterSerializer
 from .match import MatchSerializer, MatchDetailSerializer
 from .notification import NotificationSerializer
-from .match_team import MatchTeamSerializer, MinimalMatchTeamSerializer, MatchTeamListSerializer
+from .match_team import MatchTeamSerializer, MinimalMatchTeamSerializer, MatchTeamListSerializer, MatchTeamRequestSerializer
 from .match_team_invite import MinimalMatchTeamInviteSerializer, MatchTeamInviteSerializer

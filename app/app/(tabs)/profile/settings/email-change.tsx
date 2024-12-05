@@ -4,7 +4,7 @@ import { EmailChangeForm } from '@/components'
 
 export default () => {
   return (
-    <VStack gap="$3" m="$5">
+    <VStack flex={1} gap="$3" m="$5">
       <EmailChangeForm />
     </VStack>
   )

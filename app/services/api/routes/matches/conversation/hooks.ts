@@ -1,11 +1,7 @@
-import {
-  InfiniteData,
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 
+import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { ACCESS_TOKEN_KEY, storage } from '@/services/storage'
 import { UseInfiniteQueryProps, UseQueryProps } from '../../../queryHooks'
 import {
@@ -61,7 +57,7 @@ export const useMatchConversationMessagesWebSocket = (
 ) => {
   const { data: conversation } = useMatchConversation({ params: { id: match } })
   const socketRef = useRef<WebSocket | null>(null)
-  const queryClient = useQueryClient()
+  const queryCache = useQueryCache()
 
   useEffect(() => {
     const initializedWebSocket = async () => {
@@ -80,29 +76,7 @@ export const useMatchConversationMessagesWebSocket = (
       socket.onmessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data) as MatchConversationMessageResponse
 
-        queryClient.setQueryData(
-          ['matches', match, 'conversation', 'messages'],
-          (
-            oldData: InfiniteData<MatchConversationMessagesResponse, number>
-          ) => {
-            if (!oldData) return
-
-            const newData = {
-              ...oldData,
-              pages: oldData.pages.map((page, index) => {
-                if (index === oldData.pages.length - 1) {
-                  return {
-                    ...page,
-                    results: [data, ...page.results],
-                  }
-                }
-                return page
-              }),
-            }
-
-            return newData
-          }
-        )
+        queryCache.addItem(['matches', match, 'conversation', 'messages'], data)
         onMessageReceived?.(data)
       }
 
@@ -116,7 +90,7 @@ export const useMatchConversationMessagesWebSocket = (
     }
 
     initializedWebSocket()
-  }, [conversation, match, onMessageReceived, queryClient])
+  }, [conversation, match, onMessageReceived, queryCache])
 
   return {
     send: (message: SendMatchMessage) => {

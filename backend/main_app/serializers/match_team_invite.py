@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from main_app.models import TeamInvite
+from main_app.models import TeamInvite, Team
 from main_app import mixins
+from main_app.serializers import ProfileSerializer
 
 
 class MinimalMatchTeamInviteSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerializer):
@@ -13,6 +14,9 @@ class MinimalMatchTeamInviteSerializer(mixins.ExcludeDatesFieldsMixin, serialize
         
 
 class MatchTeamInviteSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerializer):
+    team = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Team.objects.all())
+    user = ProfileSerializer(read_only=True, source='user.profile')
+
     class Meta:
         model = TeamInvite
-        fields = ['user']
+        fields = '__all__'

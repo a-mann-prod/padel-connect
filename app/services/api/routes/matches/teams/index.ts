@@ -1,4 +1,2 @@
-export * from './entities'
-export * from './functions'
-export * from './hooks'
-export * from './params'
+export * from './detail'
+export * from './invitations'

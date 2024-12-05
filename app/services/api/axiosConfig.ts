@@ -45,7 +45,7 @@ api.interceptors.response.use(
           const { data } = await axios.post(
             `${process.env.EXPO_PUBLIC_API_URL as string}/auth/jwt/refresh/`,
             {
-              refreshToken,
+              refresh: refreshToken,
             }
           )
           const newAccessToken = data.access

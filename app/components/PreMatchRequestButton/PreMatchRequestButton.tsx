@@ -1,14 +1,17 @@
+import { router } from 'expo-router'
+
 import { Button, ButtonProps } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export type PreMatchRequestButtonProps = {
   isRequesting: boolean
-  onPress: ButtonProps['onPress']
+  matchId: number
 } & Pick<ButtonProps, 'isLoading' | 'isDisabled'>
 
 export const PreMatchRequestButton = ({
   isRequesting,
-  onPress,
+  matchId,
   ...props
 }: PreMatchRequestButtonProps) => {
   const t = useTranslate('match')
@@ -18,7 +21,13 @@ export const PreMatchRequestButton = ({
       title={t(isRequesting ? 'seeRequest' : 'joinRequest')}
       icon={isRequesting ? 'FAS-eye' : 'FAS-handshake'}
       iconRight={isRequesting}
-      onPress={onPress}
+      onPress={() =>
+        router.navigate(
+          isRequesting
+            ? routing.matchManageRequest.path(matchId)
+            : routing.matchJoinRequest.path(matchId)
+        )
+      }
       action="primary"
       {...props}
     />
