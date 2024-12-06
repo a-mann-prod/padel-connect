@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { MatchListItem, WithAuth } from '@/components'
-import { Button, VirtualizedList } from '@/designSystem'
+import { VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { MatchesResponse } from '@/services/api'
 import { date } from '@/services/date'
@@ -73,10 +73,6 @@ export default WithAuth(() => {
           refreshing={isRefetching}
         />
       </Box>
-      <Button
-        title={t('showPastMatches')}
-        onPress={() => router.push(routing.homeMyOldMatches.path())}
-      />
     </VStack>
   )
 })

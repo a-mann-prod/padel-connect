@@ -19,7 +19,9 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
 
         current_user = self.request.user
         if current_user.is_authenticated:
-            queryset = queryset.exclude(user=current_user)
+            return queryset.exclude(user=current_user)
+        
+        return queryset
 
 
 class MeProfileView(MeRelatedObjectView):

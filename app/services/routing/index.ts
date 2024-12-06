@@ -60,6 +60,11 @@ const tabsRoot = {
   },
 }
 
+const homeMyMatches = {
+  name: 'my-matches',
+  path: () => `${tabsRoot.home.path()}/my-matches`,
+}
+
 const profileSettings = {
   name: 'settings',
   path: () => `${tabsRoot.profile.path()}/settings`,
@@ -126,14 +131,6 @@ export const routing = {
   ...tabsRoot,
 
   // (tabs)/(home)
-  homeMyMatches: {
-    name: 'my-matches',
-    path: () => `${tabsRoot.home.path()}/my-matches`,
-  },
-  homeMyOldMatches: {
-    name: 'my-old-matches',
-    path: () => `${tabsRoot.home.path()}/my-old-matches`,
-  },
   homeNotifications: {
     name: 'notifications',
     path: () => `${tabsRoot.home.path()}/notifications`,
@@ -195,6 +192,25 @@ export const routing = {
   profileSettingsDangerZone: {
     name: 'danger-zone',
     path: () => `${profileSettings.path()}/danger-zone`,
+  },
+
+  // (tabs)/home/my-matches
+  homeMyMatches,
+  homeMyMatchesIncomingMatches: {
+    name: 'incoming-matches',
+    path: () => `${homeMyMatches.path()}/incoming-matches`,
+  },
+  homeMyMatchesMatchRequests: {
+    name: 'match-requests',
+    path: () => `${homeMyMatches.path()}/match-requests`,
+  },
+  homeMyMatchesOldMatches: {
+    name: 'old-matches',
+    path: () => `${homeMyMatches.path()}/old-matches`,
+  },
+  homeMyMatchesReceivedInvitations: {
+    name: 'received-invitations',
+    path: () => `${homeMyMatches.path()}/received-invitations`,
   },
 
   // match

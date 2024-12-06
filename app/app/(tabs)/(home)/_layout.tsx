@@ -18,11 +18,7 @@ export default () => {
       />
       <Stack.Screen
         name={routing.homeMyMatches.name}
-        options={{ title: t('myMatches') }}
-      />
-      <Stack.Screen
-        name={routing.homeMyOldMatches.name}
-        options={{ title: t('myOldMatches') }}
+        options={{ title: t('myMatches'), headerShown: false }}
       />
       <Stack.Screen
         name={routing.homeNotifications.name}
