@@ -68,7 +68,8 @@ INSTALLED_APPS = [
     'djoser',
     'channels',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -254,3 +255,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # PUSH NOTIF TOKEN
 PUSH_NOTIF_URL = env("PUSH_NOTIF_URL")
 PUSH_NOTIF_TOKEN = env("PUSH_NOTIF_TOKEN")
+
+# CELERY (TASKS)
+CELERY_BROKER_URL = f"redis://{env('REDIS_HOST')}:{env('REDIS_PORT', default=6379)}/0"
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

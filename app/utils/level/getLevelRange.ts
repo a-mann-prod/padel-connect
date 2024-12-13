@@ -1,8 +1,25 @@
-export const getLevelRange = (level = 0): [number, number] => {
-  const integerPart = Math.floor(level)
+export const getLevelRange = (
+  level = 0,
+  allowDecimals = false
+): [number, number] => {
+  const baseLevel = allowDecimals ? level : Math.floor(level)
 
-  const min = integerPart === 0 ? 0 : integerPart - 1
-  const max = integerPart === 10 ? 10 : integerPart + 1
+  let min: number
+  let max: number
+
+  if (baseLevel < 1) {
+    // Cas spécial pour les niveaux entre 0 et 1 (1 non inclus)
+    min = 0
+    max = Math.min(10, baseLevel + 1)
+  } else if (baseLevel > 9) {
+    // Cas spécial pour les niveaux entre 9 et 10 (10 inclus)
+    min = Math.max(0, baseLevel - 1)
+    max = 10
+  } else {
+    // Cas général pour les niveaux entre 1 et 9
+    min = Math.max(0, Math.floor(baseLevel - 1))
+    max = Math.min(10, Math.ceil(baseLevel + 1))
+  }
 
   return [min, max]
 }

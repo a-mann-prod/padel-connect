@@ -16,6 +16,7 @@ const getDefaultValues = (
   level: props?.level || '',
   is_private: props?.is_private || false,
   is_competitive: props?.is_competitive || false,
+  is_open_to_all_level: props?.is_open_to_all_level || false,
 })
 
 const schema = z.object({
@@ -25,6 +26,7 @@ const schema = z.object({
   level: validators.string.required(),
   is_private: validators.boolean.required(),
   is_competitive: validators.boolean.required(),
+  is_open_to_all_level: validators.boolean.required(),
 })
 
 const formatToParams = (props: MatchFormValues): CreateMatchParams => ({

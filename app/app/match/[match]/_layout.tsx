@@ -17,13 +17,6 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name={routing.matchTeamsManage.name}
-        options={{
-          title: t('teamsManage'),
-          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
-        }}
-      />
-      <Stack.Screen
         name={routing.matchUpdate.name}
         options={{
           title: '',

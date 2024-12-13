@@ -7,6 +7,7 @@ class ProfileSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSeriali
     calculated_level = serializers.SerializerMethodField()
     avatar_url = serializers.ImageField(use_url=True, required=False)
     is_favorite = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
     
     class Meta:
         model = Profile
@@ -20,12 +21,19 @@ class ProfileSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSeriali
         if request and request.user.is_authenticated:
             return request.user.favorite_users.filter(id=obj.user.id).exists()
         return False
+    
+
+    def get_last_name(self, obj):
+        return obj.last_name[:1]
 
 
-class ProfileAvatarSerializer(serializers.ModelSerializer):
+class MinimalProfileSerializer(serializers.ModelSerializer):
     avatar_url = serializers.ImageField(use_url=True, required=False)
+    last_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ['id', 'avatar_url']
+        fields = ['id', 'first_name', 'last_name', 'avatar_url']
 
+    def get_last_name(self, obj):
+        return obj.last_name[:1]

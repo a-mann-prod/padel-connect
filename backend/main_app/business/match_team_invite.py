@@ -28,7 +28,7 @@ def team_invite_request_answer(request, team_invite, next_status):
     current_user = request.user
     
     if (team_invite.user != current_user):
-        raise ValidationError("Only invited usercan accept/refuse team invitation")
+        raise ValidationError("Only invited user can accept/refuse team invitation")
     
     if (team_invite.status != enums.RequestStatus.PENDING):
         raise ValidationError("Team invitation has already been accepted/refused")

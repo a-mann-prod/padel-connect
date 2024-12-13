@@ -15,11 +15,15 @@
   "deleteMatchMessage": "Are you sure you want to delete the match?",
   "duration": "Duration",
   "enterScore": "Enter score",
+  "inadaptedLevel": "(inadapted level)",
+
   "joinRequest": "Join",
   "joinRequestWithPartners": "Propose to one or more partners",
   "leave": "Leave",
   "matchFinished": "Match finished",
   "matchNotFound": "Match not found",
+  "openToAllLevel": "Open to all level",
+  "openToAllLevelHelpMessage": "By default, your match will be open to level range: {{level_min}} - {{level_max}} (your level +1 / -1).",
   "pay": "Pay your share",
   "privateMatch": "Private match",
   "privateMatchHelpMessage": "Will not appear in the list of available matches and will not send notifications",
@@ -36,6 +40,5 @@
   "shareAndCreateMatch": "Share and create match",
   "shareMatch": "Share match",
   "shareMessage": "Hey! Up for a game of padel? You can join by clicking the following link",
-  "team": "Team",
-  "teamsManage": "Manage requests"
+  "team": "Team"
 }

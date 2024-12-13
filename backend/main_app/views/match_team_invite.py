@@ -1,16 +1,15 @@
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from main_app.models import Match, Team, TeamInvite, enums
-from main_app.serializers import MatchTeamSerializer
+from main_app.models import Team, TeamInvite
+from main_app.serializers import MatchTeamInviteSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins
-from main_app.business.match_team_invite import get_team_invite_requests, validate_team_invite_creation, team_invite_request_answer, validate_team_invite_destruction
-from rest_framework.decorators import action
+from main_app.business.match_team_invite import get_team_invite_requests, validate_team_invite_creation, validate_team_invite_destruction
 
 
 class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.ModelViewSet):
-    queryset = Team.objects.all()
-    serializer_class = MatchTeamSerializer
+    queryset = TeamInvite.objects.all()
+    serializer_class = MatchTeamInviteSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsOwner]
 
 
@@ -66,29 +65,3 @@ class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.Model
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         return super().destroy(request, *args, **kwargs)
-    
-
-    @action(detail=True, methods=['post'], url_path='accept', permission_classes=[permissions.IsAuthenticated])
-    def accept_invitation(self, request, team_pk=None, pk=None):
-        team_invite = get_object_or_404(TeamInvite, pk=pk)
-
-        next_status = enums.RequestStatus.ACCEPTED
-
-        try:
-            team_invite_request_answer(request, team_invite, next_status)
-            return Response({"detail": "Team invitation has been accepted."}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
-
-    @action(detail=True, methods=['post'], url_path='refuse', permission_classes=[permissions.IsAuthenticated])
-    def refuse_invitation(self, request, team_pk=None, pk=None):
-        team_invite = get_object_or_404(TeamInvite, pk=pk)
-
-        next_status = enums.RequestStatus.REFUSED
-
-        try:
-            team_invite_request_answer(request, team_invite, next_status)
-            return Response({"detail": "Team invitation has been refused."}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)

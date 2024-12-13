@@ -24,7 +24,7 @@ export function CreateMatchProvider({ children }: { children: ReactNode }) {
     options: {
       onSuccess: (data) => {
         const newItem = data
-        router.replace(routing.match.path(newItem?.id))
+        router.replace(routing.match.path(newItem?.id, true))
       },
     },
   })

@@ -1,6 +1,7 @@
 {
   "add": "Ajouter",
   "all": "Tous",
+  "allLevel": "Tous niveaux",
   "api": {
     "errors": {
       "default": "Une erreur est survenue",
@@ -83,7 +84,6 @@
     "login": "Connexion",
     "manageRequest": "Ma demande de participation",
     "matchCreate": "Nouveau match",
-    "matchRequests": "Mes demandes de participation",
     "myMatches": "Mes matchs",
     "myProgress": "Ma progression",
     "notificationAlerts": "Notifications",
@@ -100,7 +100,6 @@
     "register": "Inscription",
     "settings": "Réglages",
     "shareMatch": "Partager le match",
-    "teamsManage": "Gestion des demandes",
     "termsOfUse": "Conditions d'utilisation",
     "tournaments": "Tournois à venir",
     "updatePersonalInformation": "Informations personnelles",
@@ -118,11 +117,15 @@
   "or": "ou",
   "participate": "Je participe",
   "password": "Mot de passe",
+  "pendingRequest": "Demande en attente",
   "previous": "Précédent",
   "resend": "Renvoyer",
   "save": "Enregistrer",
   "search": "Rechercher",
   "send": "Envoyer",
+  "shareInApp": "Partager dans l'app",
+  "shareMatchActionsheet": "Comment souhaitez-vous partager ce match ?",
+  "shareOutApp": "Partager autrement",
   "showPastMatches": "Afficher les matchs passés",
   "sidePreference": {
     "both": "Les deux",

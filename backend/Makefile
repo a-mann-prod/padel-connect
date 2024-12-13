@@ -15,3 +15,6 @@ migrations:
 
 superuser:
 		docker exec -it api sh -c "python manage.py createsuperuser"
+
+freeze:
+		pip freeze > requirements.txt

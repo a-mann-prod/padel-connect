@@ -1,5 +1,5 @@
 import { VStack } from '@gluestack-ui/themed'
-import { Link, router } from 'expo-router'
+import { router } from 'expo-router'
 
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
@@ -61,11 +61,6 @@ export const MatchActionButtons = ({
         />
       )}
 
-      {isOwner && (
-        <Link asChild href={routing.matchTeamsManage.path(matchId)}>
-          <Button title={t('teamsManage')} />
-        </Link>
-      )}
       {isParticipant && (
         <>
           <Button

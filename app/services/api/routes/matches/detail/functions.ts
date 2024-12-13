@@ -27,6 +27,17 @@ export const getInfiniteMatchesFn = async (
   return data
 }
 
+export const getInfiniteIncomingMatchesFn = async (
+  params: GetInfiniteMatchesParams,
+  pageParam: number
+) => {
+  const { data } = await api.get<MatchesResponse>(`${ENDPOINT}/incoming/`, {
+    params: { ...params, page: pageParam },
+  })
+
+  return data
+}
+
 export const createMatchFn = async (params: CreateMatchParams) => {
   const { data } = await api.post<MatchResponse>(`${ENDPOINT}/`, params)
 

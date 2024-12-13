@@ -14,7 +14,6 @@ import { FormCheckboxControlled } from '@/components/FormsControlled/FormCheckbo
 import { Button } from '@/designSystem'
 import { useComplexItems } from '@/hooks/useComplexItems'
 import { useDurationItems } from '@/hooks/useDurationItems'
-import { useLevelItems } from '@/hooks/useLevelItems'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
@@ -51,7 +50,6 @@ export const MatchForm = ({
 
   const { handleSubmit, watch } = methods
 
-  const levelItems = useLevelItems()
   const durationItems = useDurationItems()
   const complexItems = useComplexItems()
 
@@ -78,21 +76,18 @@ export const MatchForm = ({
           />
           <FormSelectControlled
             displayPlaceHolder
-            name="level"
-            formControlProps={{ title: tGlobal('level') }}
-            items={levelItems}
-          />
-          <FormSelectControlled
-            displayPlaceHolder
             name="duration"
             formControlProps={{ title: t('duration') }}
             items={durationItems}
           />
           <FormCheckboxControlled
-            name="is_competitive"
+            name="is_open_to_all_level"
             formControlProps={{
-              title: t('competitiveMatch'),
-              helpMessage: t('competitiveMatchHelpMessage'),
+              title: t('openToAllLevel'),
+              helpMessage: t('openToAllLevelHelpMessage', {
+                level_min: '3',
+                level_max: '6',
+              }),
             }}
           />
           <FormCheckboxControlled
@@ -100,6 +95,13 @@ export const MatchForm = ({
             formControlProps={{
               title: t('privateMatch'),
               helpMessage: t('privateMatchHelpMessage'),
+            }}
+          />
+          <FormCheckboxControlled
+            name="is_competitive"
+            formControlProps={{
+              title: t('competitiveMatch'),
+              helpMessage: t('competitiveMatchHelpMessage'),
             }}
           />
         </VStack>

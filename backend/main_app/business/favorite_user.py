@@ -1,6 +1,5 @@
 from main_app.models import CustomUser
 from rest_framework.exceptions import NotFound, ValidationError
-from main_app.serializers import ProfileSerializer
 
 
 def toggle_favorite_user(request, user_pk, action):
@@ -18,8 +17,7 @@ def toggle_favorite_user(request, user_pk, action):
             raise ValidationError("User is already in favorites.")
 
         current_user.favorite_users.add(user_to_modify)
-        serializer = ProfileSerializer(user_to_modify.profile, context={'request': request})
-        return serializer.data
+        return user_to_modify.profile
     
     elif action == 'remove':
         if user_to_modify not in current_user.favorite_users.all():

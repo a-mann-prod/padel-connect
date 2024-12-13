@@ -9,7 +9,6 @@ class RequestStatus(models.TextChoices):
     ACCEPTED = "ACCEPTED"
     REFUSED = "REFUSED"
     PENDING = "PENDING"
-    CREATING = "CREATING"
 
 class MatchType(models.TextChoices):
     LEISURE = "LEISURE"

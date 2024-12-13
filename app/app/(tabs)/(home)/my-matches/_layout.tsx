@@ -23,12 +23,6 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name={routing.homeMyMatchesMatchRequests.name}
-        options={{
-          title: t('matchRequests'),
-        }}
-      />
-      <Stack.Screen
         name={routing.homeMyMatchesOldMatches.name}
         options={{
           title: t('oldMatches'),

@@ -17,14 +17,17 @@ click-didyoumean==0.3.1
 click-plugins==1.1.1
 click-repl==0.3.0
 constantly==23.10.4
+cron-descriptor==1.4.5
 cryptography==43.0.1
 daphne==4.1.2
 defusedxml==0.8.0rc2
 Django==4.2.16
+django-celery-beat==2.7.0
 django-cors-headers==4.5.0
 django-environ==0.11.2
 django-filter==24.3
 django-templated-mail==1.1.1
+django-timezone-field==7.0
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
 djoser==2.2.3
@@ -52,6 +55,7 @@ PyJWT==2.9.0
 pyOpenSSL==24.2.1
 pytest==8.3.3
 pytest-django==4.9.0
+python-crontab==3.2.0
 python-dateutil==2.9.0.post0
 python3-openid==3.2.0
 redis==5.2.0
@@ -70,5 +74,5 @@ tzdata==2024.2
 urllib3==2.2.3
 vine==5.1.0
 wcwidth==0.2.13
-whitenoise==6.3.0
+whitenoise==6.8.2
 zope.interface==7.1.1

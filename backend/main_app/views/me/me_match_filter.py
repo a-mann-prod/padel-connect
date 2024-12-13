@@ -1,4 +1,4 @@
-from .generic_views import MeRelatedObjectView
+from ..generic_views import MeRelatedObjectView
 from main_app.models import MatchFilter
 from main_app.serializers import MatchFilterSerializer
 

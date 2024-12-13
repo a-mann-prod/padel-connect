@@ -7,20 +7,23 @@ import { routing } from '@/services/routing'
 export type PreMatchRequestButtonProps = {
   isRequesting: boolean
   matchId: number
+  inadaptedLevel: boolean
 } & Pick<ButtonProps, 'isLoading' | 'isDisabled'>
 
 export const PreMatchRequestButton = ({
   isRequesting,
   matchId,
+  inadaptedLevel,
   ...props
 }: PreMatchRequestButtonProps) => {
   const t = useTranslate('match')
 
   return (
     <Button
-      title={t(isRequesting ? 'seeRequest' : 'joinRequest')}
+      title={`${t(isRequesting ? 'seeRequest' : 'joinRequest')} ${inadaptedLevel && !isRequesting ? t('inadaptedLevel') : ''}`}
       icon={isRequesting ? 'FAS-eye' : 'FAS-handshake'}
       iconRight={isRequesting}
+      isDisabled={inadaptedLevel && !isRequesting}
       onPress={() =>
         router.navigate(
           isRequesting

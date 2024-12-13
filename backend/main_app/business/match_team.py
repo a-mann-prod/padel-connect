@@ -1,28 +1,23 @@
 
-from rest_framework.exceptions import PermissionDenied, ValidationError, NotFound
-from main_app.models import Team, enums
-from main_app.serializers import MatchTeamRequestSerializer
-
-
-def get_team_requests(request, match):
-    current_user = request.user
-
-    if current_user != match.user:
-        raise PermissionDenied()
-    
-    return Team.objects.filter(match=match, status=enums.RequestStatus.PENDING).exclude(user=current_user)
+from rest_framework.exceptions import ValidationError, NotFound
+from main_app.models import Team, enums, TeamInvite
+from main_app.models import Team, TeamInvite, enums
 
 
 def get_team_request_current_user(request, match):
     current_user = request.user
     
-    team = Team.objects.filter(match=match, user=current_user).first()
+    accepted_invitations = TeamInvite.objects.filter(team__match=match, user=current_user, status=enums.RequestStatus.ACCEPTED)
+
+    if not accepted_invitations:
+        raise NotFound()
+    
+    team = accepted_invitations.first().team
 
     if not team:
         raise NotFound()
-
-    serializer = MatchTeamRequestSerializer(team, context={'request': request})
-    return serializer.data
+    
+    return team
 
     
 
@@ -38,16 +33,9 @@ def validate_match_team_creation(request, match):
     if Team.objects.filter(match=match, user=current_user).exists():
         raise ValidationError("Your already have a team for this match.")
     
+    # Vérifie si l'utilisateur a le niveau pour ce match
+    [min_level, max_level] = match.calculate_level_range()
+    user_level = current_user.profile.calculate_level()
 
-def team_request_answer(request, match, team, next_status):
-    current_user = request.user
-    
-    if (match.user != current_user):
-        raise ValidationError("Only match owner can accept/refuse team")
-    
-    if (team.status != enums.RequestStatus.PENDING):
-        raise ValidationError("Team has already been accepted/refused")
-    
-    team.status = next_status
-    team.save()
-    
+    if not match.is_open_to_all_level and not (min_level <= user_level <= max_level):
+        raise ValidationError("You do not have level to join this match")

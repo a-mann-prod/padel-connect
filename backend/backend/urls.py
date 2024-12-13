@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet
+from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeTeamInvitateModelViewSet, MeMatchArchiveModelViewSet
 from chat.views import MatchMessagesView, MatchConversationView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -30,11 +30,11 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'users', CustomUserViewSet, basename='customuser')
 router.register(r'matches', MatchViewSet)
 router.register(r'me/notifications', MeNotificationViewSet, basename='notification')
+router.register(r'me/invitations', MeTeamInvitateModelViewSet, basename='me-invitation')
+router.register(r'me/matches-archive', MeMatchArchiveModelViewSet, basename='me-matche-archive')
+
 router.register(r'matches/(?P<match_pk>\d+)/teams', MatchTeamModelViewSet, basename='match-team')
 router.register(r'matches/(?P<match_pk>\d+)/teams/(?P<team_pk>\d+)/invitations', MatchTeamInviteModelViewSet, basename='match-team-invitation')
-
-
-
 
 
 urlpatterns = [
@@ -42,7 +42,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+
+
     path('me/match_filter/', MeMatchFilterView.as_view(), name='me-match-filter'),
+
     path('me/profile/', MeProfileView.as_view(), name='me-profile'),
     path('me/profile/delete_avatar/', MeProfileView.as_view(), name='delete-avatar'),
 

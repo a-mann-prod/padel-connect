@@ -11,6 +11,7 @@ import {
   useComplexes,
   useInfiniteMatches,
 } from '@/services/api'
+import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -53,6 +54,10 @@ export default () => {
   }: ListRenderItemInfo<MatchesResponse['results'][number]>) => (
     <MatchListItem
       {...item}
+      participants={item.teams.reduce<DefaultMinimalProfileResponse[]>(
+        (acc, curr) => [...acc, ...curr.participants],
+        []
+      )}
       complexes={complexes}
       onPress={() => router.push(routing.match.path(item.id))}
     />

@@ -32,6 +32,11 @@ class BlockCreateDestroyMixin:
     
 
 class BlockCRUDMixin:
+    block_create = True
+    block_retrieve = True
+    block_update = True
+    block_destroy = True
+
     """
     Mixin to block CRUD actions.
     """
@@ -39,25 +44,33 @@ class BlockCRUDMixin:
         """
         Block creation (403 Forbidden).
         """
-        return Response({"detail": "Creation is not allowed."}, status=status.HTTP_403_FORBIDDEN)
-    
+        if self.block_create: 
+            return Response({"detail": "Creation is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        return super().create(request, *args, **kwargs)
+        
     def retrieve(self, request, *args, **kwargs):
         """
         Block detail read (403 Forbidden).
         """
-        return Response({"detail": "Detail read is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        if self.block_retrieve: 
+            return Response({"detail": "Detail read is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        return super().retrieve(request, *args, **kwargs)
     
     def update(self, request, *args, **kwargs):
         """
         Block update (403 Forbidden).
         """
-        return Response({"detail": "Update is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        if self.block_update: 
+            return Response({"detail": "Update is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
         """
         Block deletion (403 Forbidden).
         """
-        return Response({"detail": "Deletion is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        if self.block_destroy: 
+            return Response({"detail": "Deletion is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        return super().destroy(request, *args, **kwargs)
     
 
     

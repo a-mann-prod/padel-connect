@@ -13,3 +13,4 @@ class Tournament(models.Model):
     class Meta:
         verbose_name = 'Tournament' 
         verbose_name_plural = 'Tournaments'
+        ordering = ['-datetime']

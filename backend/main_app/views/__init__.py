@@ -1,9 +1,12 @@
 from .complex import ComplexViewSet
 from .tournament import TournamentViewSet
-from .profile import ProfileViewSet, MeProfileView
+from .profile import ProfileViewSet
+from .me.me_profile import MeProfileView
 from .custom_user import CustomUserViewSet
-from .match_filter import MeMatchFilterView
-from .favorite_user import MeFavoriteUsersView
+from .me.me_match_filter import MeMatchFilterView
+from .me.me_favorite_user import MeFavoriteUsersView
+from .me.me_invitations import MeTeamInvitateModelViewSet
+from .me.me_match_archive import MeMatchArchiveModelViewSet
 from .match import MatchViewSet
 from .notification import MeNotificationViewSet
 from .match_team import MatchTeamModelViewSet

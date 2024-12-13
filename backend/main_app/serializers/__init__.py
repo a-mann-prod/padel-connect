@@ -1,9 +1,11 @@
 from .complex import ComplexSerializer
 from .tournament import TournamentSerializer
 from .custom_user import CustomUserCreateSerializer, CustomUserSerializer, CustomCurrentUserSerializer
-from .profile import ProfileSerializer, ProfileAvatarSerializer
+from .profile import ProfileSerializer, MinimalProfileSerializer
 from .match_filter import MatchFilterSerializer
 from .match import MatchSerializer, MatchDetailSerializer
 from .notification import NotificationSerializer
-from .match_team import MatchTeamSerializer, MinimalMatchTeamSerializer, MatchTeamListSerializer, MatchTeamRequestSerializer
-from .match_team_invite import MinimalMatchTeamInviteSerializer, MatchTeamInviteSerializer
+from .match_team import MatchTeamSerializer, MinimalMatchTeamSerializer, MatchTeamRequestSerializer
+from .match_team_invite import MatchTeamInviteSerializer
+from .me.me_invitations import MeMatchTeamInviteSerializer
+from .me.me_match_archive import MeMatchArchiveSerializer

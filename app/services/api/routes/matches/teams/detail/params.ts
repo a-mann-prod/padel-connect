@@ -1,7 +1,3 @@
-export type GetInfiniteMatchTeamsParams = {
-  id: number
-}
-
 export type GetMatchTeamRequestParams = {
   id: number
 }
@@ -14,10 +10,4 @@ export type DeleteMatchTeamParams = {
 export type CreateMatchTeamParams = {
   matchId: number
   send_invitations?: number[]
-}
-
-export type ManageMatchTeamParams = {
-  matchId: number
-  id: number
-  action: 'accept' | 'refuse'
 }

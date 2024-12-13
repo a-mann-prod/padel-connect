@@ -6,7 +6,7 @@ import { MatchTypeTile } from '../MatchTypeTile/MatchTypeTile'
 
 import { Section, SectionRow, Tile } from '@/designSystem'
 import { getMatchTimes } from '@/hooks/useManageMatch'
-import { MatchResponse, useProfiles } from '@/services/api'
+import { MatchResponse } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -14,12 +14,14 @@ import { getUsername } from '@/utils/user'
 
 type MatchInfoProps = {
   match: MatchResponse
+  participants?: MatchResponse['teams'][number]['participants']
   isMatchPassed: boolean
 
   hasPayedUserIds: number[]
 }
 export const MatchInfo = ({
   match,
+  participants,
   isMatchPassed,
 
   hasPayedUserIds,
@@ -31,23 +33,11 @@ export const MatchInfo = ({
 
   const ownerId = match.user
 
-  const userIds = match.teams.reduce<number[]>(
-    (acc, curr) => [...acc, ...curr.participants],
-    []
-  )
+  const owner = participants?.find(({ id }) => id === ownerId)
 
-  const { data: playersResults } = useProfiles({
-    params: { ids: userIds },
-    options: { enabled: !!userIds.length },
-  })
+  const sortedPlayers = participants || []
 
-  const players = playersResults?.results
-
-  const owner = players?.find(({ id }) => id === ownerId)
-
-  const sortedPlayers = players?.sort(
-    (a, b) => userIds.indexOf(a.id) - userIds.indexOf(b.id)
-  )
+  const [level_min, level_max] = match.calculated_level_range
 
   return (
     <VStack gap="$3">
@@ -106,7 +96,9 @@ export const MatchInfo = ({
           icon="FAS-dumbbell"
           rightComponent={() => (
             <Text>
-              {tGlobal('level')} {match.level}
+              {match.is_open_to_all_level
+                ? tGlobal('allLevel')
+                : `${level_min} - ${level_max}`}
             </Text>
           )}
         />

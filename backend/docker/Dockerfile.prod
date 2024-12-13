@@ -68,4 +68,4 @@ RUN chown -R app:app $APP_FOLDER
 # change to the app user
 USER app
 
-ENTRYPOINT ["/docker/entrypoint.prod.sh"]
+ENTRYPOINT ["/docker/entrypoint.sh"]

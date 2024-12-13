@@ -58,6 +58,12 @@ export type DefaultProfileResponse = Entity<{
   is_favorite: boolean
 }>
 
+export type DefaultMinimalProfileResponse = Entity<{
+  last_name: string
+  first_name: string
+  avatar_url?: string
+}>
+
 export type PaginatedResponse<T> = {
   count: number
   next_page: number

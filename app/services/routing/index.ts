@@ -9,7 +9,12 @@ const root = {
   },
   match: {
     name: 'match/[match]',
-    path: (matchId: string | number) => `/match/${matchId}`,
+    path: (matchId: string | number, isJustCreated?: boolean) => {
+      if (isJustCreated)
+        return `/match/${matchId}?isJustCreated=${isJustCreated}`
+
+      return `/match/${matchId}`
+    },
   },
   matchCreate: {
     name: 'match/(create)',
@@ -200,10 +205,6 @@ export const routing = {
     name: 'incoming-matches',
     path: () => `${homeMyMatches.path()}/incoming-matches`,
   },
-  homeMyMatchesMatchRequests: {
-    name: 'match-requests',
-    path: () => `${homeMyMatches.path()}/match-requests`,
-  },
   homeMyMatchesOldMatches: {
     name: 'old-matches',
     path: () => `${homeMyMatches.path()}/old-matches`,
@@ -222,11 +223,6 @@ export const routing = {
     name: 'user/[user]',
     path: (matchId: string | number, userId: string | number) =>
       `${root.match.path(matchId)}/user/${userId}`,
-  },
-  matchTeamsManage: {
-    name: 'teams-manage',
-    path: (matchId: string | number) =>
-      `${root.match.path(matchId)}/teams-manage`,
   },
   matchChat: {
     name: 'chat',

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SearchUser, WithAuth, WithMatch } from '@/components'
 import { Button, Container } from '@/designSystem'
 import { useCreateMatchTeam, useMatch } from '@/services/api'
+import { DefaultProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -21,17 +22,18 @@ export default WithAuth(
 
     const { mutate: createMatchTeam, isPending } = useCreateMatchTeam({
       options: {
-        onSuccess: () =>
-          router.replace(routing.matchManageRequest.path(matchId)),
+        onSuccess: () => router.canGoBack() && router.back(),
       },
     })
 
     const [userIds, setUserIds] = useState<number[]>([])
 
-    const players = match?.teams.reduce<number[]>(
-      (acc, curr) => [...acc, ...curr.participants],
-      []
-    )
+    const players = match?.teams.reduce<
+      Pick<
+        DefaultProfileResponse,
+        'id' | 'avatar_url' | 'first_name' | 'last_name'
+      >[]
+    >((acc, curr) => [...acc, ...curr.participants], [])
 
     const maxSelectedUserIds = match?.is_competitive
       ? 1
@@ -40,7 +42,7 @@ export default WithAuth(
     return (
       <Container>
         <SearchUser
-          disabledUserIds={players}
+          disabledUserIds={players?.map((p) => p.id)}
           selectedUserIds={userIds}
           maxSelectedUserIds={maxSelectedUserIds}
           onPress={(id) => router.navigate(routing.matchUser.path(matchId, id))}

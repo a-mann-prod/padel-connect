@@ -23,16 +23,6 @@ export default WithAuth(() => {
       />
       <Button
         justifyContent="flex-end"
-        title={t('navigation.matchRequests')}
-        iconRight
-        size="2xl"
-        rounded="$lg"
-        onPress={() =>
-          router.navigate(routing.homeMyMatchesMatchRequests.path())
-        }
-      />
-      <Button
-        justifyContent="flex-end"
         title={t('navigation.receivedInvitations')}
         iconRight
         size="2xl"

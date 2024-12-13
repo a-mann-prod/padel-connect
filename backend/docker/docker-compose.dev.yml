@@ -11,6 +11,7 @@ services:
       dockerfile: ./docker/Dockerfile
       args:
         - PYTHON_VERSION=${PYTHON_VERSION}
+    command: python manage.py runserver 0.0.0.0:${API_PORT}
     volumes:
       - ../:/app
       - ../logs:/app/logs
@@ -19,8 +20,8 @@ services:
       - DEBUG=1
     ports:
       - ${API_PORT}:${API_PORT}
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     networks:
       - local
     secrets:
@@ -45,7 +46,25 @@ services:
       service: redis
     networks:
       - local
+    
+  celery_worker:
+    extends:
+      service: api
+    container_name: celery_worker
+    command: celery -A backend worker --loglevel=info
+    ports: !reset []
+    networks:
+      - local
 
+  celery_beat:
+    extends:
+      service: api
+    container_name: celery_beat
+    command: celery -A backend beat --loglevel=info
+    ports: !reset []
+
+    networks:
+      - local
 
   adminer:
     extends:

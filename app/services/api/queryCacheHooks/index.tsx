@@ -22,7 +22,11 @@ const isArray = <T,>(data: OldData<T>): data is Results<T> => {
 export const useQueryCache = () => {
   const queryClient = useQueryClient()
 
-  const addItem = <T,>(queryKey: QueryKey, data: Obj<T>) => {
+  const addItem = <T,>(
+    queryKey: QueryKey,
+    data: Obj<T>,
+    sort?: (a: Obj<T>, b: Obj<T>) => number
+  ) => {
     queryClient.setQueryData(queryKey, (oldData: OldData<T>) => {
       if (!oldData) return
 
@@ -33,7 +37,7 @@ export const useQueryCache = () => {
             if (index === oldData.pages.length - 1) {
               return {
                 ...page,
-                results: [data, ...page.results],
+                results: [data, ...page.results].sort(sort),
               }
             }
             return page

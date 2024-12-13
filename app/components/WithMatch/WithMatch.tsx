@@ -10,10 +10,8 @@ const WithMatchWrapper: FC<{ Component: FC }> = ({ Component }) => {
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
 
-  const { match, isPlayer, isOwner, isLoading, isMatchPassed } =
+  const { match, isParticipant, isLoading, isMatchPassed } =
     useManageMatch(matchId)
-
-  const isParticipant = isOwner || isPlayer
 
   if (isLoading) return <Loader />
 

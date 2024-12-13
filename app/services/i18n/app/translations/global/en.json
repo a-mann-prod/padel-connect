@@ -1,6 +1,7 @@
 {
   "add": "Add",
   "all": "All",
+  "allLevel": "All level",
   "api": {
     "errors": {
       "default": "An error occurred",
@@ -84,7 +85,6 @@
     "login": "Login",
     "manageRequest": "My participation request",
     "matchCreate": "New match",
-    "matchRequests": "My match requests",
     "myMatches": "My matches",
     "myProgress": "My progress",
     "notificationAlerts": "Notifications",
@@ -101,7 +101,6 @@
     "register": "Register",
     "settings": "Settings",
     "shareMatch": "Share match",
-    "teamsManage": "Requests management",
     "termsOfUse": "Terms of use",
     "tournaments": "Incoming tournaments",
     "updatePersonalInformation": "Personal information",
@@ -119,11 +118,15 @@
   "or": "or",
   "participate": "I participate",
   "password": "Password",
+  "pendingRequest": "Pending request",
   "previous": "Previous",
   "resend": "Resend",
   "save": "Save",
   "search": "Search",
   "send": "Send",
+  "shareInApp": "Share in app",
+  "shareMatchActionsheet": "How do you want to share this match?",
+  "shareOutApp": "Other share",
   "showPastMatches": "Show past matches",
   "sidePreference": {
     "both": "Both",

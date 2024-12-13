@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from main_app.models import CustomUser, Profile
+from main_app.models import Profile
 from main_app.serializers import ProfileSerializer
 from main_app.pagination import CustomPageNumberPagination
 from django.conf import settings
@@ -32,7 +32,8 @@ class MeFavoriteUsersView(APIView):
         try:
             data = toggle_favorite_user(request, pk, action)
             if action == 'add':
-                return Response(data, status=status.HTTP_201_CREATED)
+                serializer = ProfileSerializer(data, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
             elif action == 'remove':
                 return Response({"detail": "Removed from favorites."}, status=status.HTTP_200_OK)
         except Exception as e:

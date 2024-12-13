@@ -16,7 +16,10 @@ const mapIndexToTeam: Record<number, string> = {
 }
 
 export type MatchPlayersProps = {
-  data?: DefaultProfileResponse[]
+  data?: Pick<
+    DefaultProfileResponse,
+    'id' | 'avatar_url' | 'first_name' | 'last_name'
+  >[]
   onPress?: (userId: number) => void
   onEmptyPress?: () => void
   displayTeam?: boolean

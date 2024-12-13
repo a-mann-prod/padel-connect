@@ -1,27 +1,21 @@
 import { HStack } from '@gluestack-ui/themed'
 
-import { MatchlistItemProps } from '../MatchListItem/MatchListItem'
-
 import { Avatar, AvatarProps } from '@/designSystem'
-import { ProfileResponse } from '@/services/api'
+import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { iterate } from '@/utils/array'
 
 const MAX_PLAYER_NB = 4
 
 export type PlayersAvatarsProps = {
-  teams: MatchlistItemProps['teams']
+  users: DefaultMinimalProfileResponse[]
 } & Pick<AvatarProps, 'size'>
 
-export const PlayersAvatars = ({ teams, ...props }: PlayersAvatarsProps) => {
-  const players = teams.reduce<
-    MatchlistItemProps['teams'][number]['participants']
-  >((acc, curr) => [...acc, ...curr.participants], [])
-
-  const emptySlots = MAX_PLAYER_NB - players.length
+export const PlayersAvatars = ({ users, ...props }: PlayersAvatarsProps) => {
+  const emptySlots = MAX_PLAYER_NB - users.length
 
   const avatarItems = [
-    ...players,
-    ...iterate(emptySlots).map<Partial<ProfileResponse>>((i) => ({
+    ...users,
+    ...iterate(emptySlots).map<Partial<DefaultMinimalProfileResponse>>((i) => ({
       id: -1 - i,
     })),
   ]
@@ -41,7 +35,8 @@ const AvatarItem = ({
   first_name,
   last_name,
   ...props
-}: Partial<ProfileResponse> & Omit<PlayersAvatarsProps, 'teams'>) => {
+}: Partial<DefaultMinimalProfileResponse> &
+  Omit<PlayersAvatarsProps, 'users'>) => {
   const sharedProps: AvatarProps = {
     size: 'md',
     bgColor: '$secondary300',

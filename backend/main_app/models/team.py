@@ -6,7 +6,7 @@ from django.conf import settings
 class Team(models.Model):    
     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='teams')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    status = models.CharField(choices=enums.RequestStatus.choices, default=enums.RequestStatus.CREATING)
+    is_ready = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -35,6 +35,7 @@ class Team(models.Model):
     class Meta:
         verbose_name = 'Team' 
         verbose_name_plural = 'Teams'
+        ordering = ['id']
         unique_together = ('match', 'user')  # Un utilisateur ne peut créer qu'une seule team par match
 
         
