@@ -13,13 +13,15 @@ import {
   deleteMatchFn,
   getInfiniteIncomingMatchesFn,
   getInfiniteMatchesFn,
+  getInfiniteMatchesInvitationsFn,
   getMatchFn,
   updateMatchFn,
 } from './functions'
 import {
   CreateMatchParams,
   DeleteMatchParams,
-  GetIncomingMatchesParams,
+  GetInfiniteIncomingMatchesParams,
+  GetInfiniteMatchesInvitationsParams,
   GetInfiniteMatchesParams,
   GetMatchParams,
   UpdateMatchParams,
@@ -52,11 +54,35 @@ export const useInfiniteMatches = (
     initialPageParam: 1,
   })
 
+export const useInfiniteMatchesInvitations = (
+  {
+    params,
+    options,
+  }: UseInfiniteQueryProps<
+    MatchesResponse,
+    GetInfiniteMatchesInvitationsParams
+  > = {
+    params: {},
+    options: {},
+  }
+) =>
+  useInfiniteQuery({
+    ...options,
+    queryKey: ['matches', 'invitations', 'infinite', params],
+    queryFn: ({ pageParam }) =>
+      getInfiniteMatchesInvitationsFn(params, pageParam),
+    getNextPageParam: (lastPage) => lastPage.next_page,
+    initialPageParam: 1,
+  })
+
 export const useInfiniteIncomingMatches = (
   {
     params,
     options,
-  }: UseInfiniteQueryProps<MatchesResponse, GetIncomingMatchesParams> = {
+  }: UseInfiniteQueryProps<
+    MatchesResponse,
+    GetInfiniteIncomingMatchesParams
+  > = {
     params: {},
     options: {},
   }

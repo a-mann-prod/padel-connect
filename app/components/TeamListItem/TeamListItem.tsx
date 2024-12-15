@@ -8,6 +8,11 @@ import {
   Box,
   HStack,
 } from '@gluestack-ui/themed'
+import { router } from 'expo-router'
+import { ActivityIndicator } from 'react-native'
+
+import { PlayerListItem } from '../PlayerListItem/PlayerListItem'
+import { SubItem } from '../SubItem/SubItem'
 
 import {
   Avatar,
@@ -16,44 +21,38 @@ import {
   IconButtonProps,
   PressableProps,
 } from '@/designSystem'
-import { MatchTeamResponse } from '@/services/api'
+import { MatchTeamInvitationResponse } from '@/services/api'
 import { routing } from '@/services/routing'
-import { router } from 'expo-router'
-import { ActivityIndicator } from 'react-native'
-import { PlayerListItem } from '../PlayerListItem/PlayerListItem'
-import { SubItem } from '../SubItem/SubItem'
 
-export type TeamListItemProps = MatchTeamResponse & {
+export type TeamListItemProps = {
   onPress?: PressableProps['onPress']
   onSelectButtonPress?: IconButtonProps['onPress']
-  matchRequest?: {
+  request?: {
     isLoading: boolean
-    onAcceptPress: (id: number | undefined) => void
-    onRefusePress: (id: number | undefined) => void
+    onAcceptPress: () => void
+    onRefusePress: () => void
   }
+  invitations: MatchTeamInvitationResponse[]
 }
 
-export const TeamListItem = ({
-  id,
-  participants,
-  calculated_level,
-
-  matchRequest,
-}: TeamListItemProps) => {
-  if (participants.length === 1) {
+export const TeamListItem = ({ invitations, request }: TeamListItemProps) => {
+  if (invitations.length === 1) {
     return (
       <PlayerListItem
-        {...participants[0]}
+        {...invitations[0].user}
+        requestStatus={invitations[0].status}
         isRequest
-        matchRequest={matchRequest}
+        request={request}
         onPress={() =>
-          router.navigate(routing.matchUser.path(10, participants[0].id))
+          router.navigate(routing.matchUser.path(10, invitations[0].user.id))
         }
       />
     )
   }
 
-  const favoritesCount = participants.reduce(
+  const users = invitations.map(({ user }) => user)
+
+  const favoritesCount = users.reduce(
     (acc, curr) => acc + (curr.is_favorite ? 1 : 0),
     0
   )
@@ -79,7 +78,7 @@ export const TeamListItem = ({
                   rounded="$lg"
                   alignItems="center"
                 >
-                  {participants.length > 1 && (
+                  {users.length > 1 && (
                     <Box w="$5" alignItems="center">
                       <Icon
                         name={isExpanded ? 'FAS-caret-down' : 'FAS-caret-right'}
@@ -89,35 +88,32 @@ export const TeamListItem = ({
                     </Box>
                   )}
                   <AvatarGroup>
-                    {participants.map(({ id, avatar_url }) => (
+                    {users.map(({ id, avatar_url }) => (
                       <Avatar key={id} size="md" imageUrl={avatar_url} />
                     ))}
                   </AvatarGroup>
                   <HStack flex={1} gap="$2" justifyContent="center">
-                    <SubItem
-                      text={calculated_level?.toString()}
-                      icon="FAS-dumbbell"
-                    />
                     <SubItem
                       text={favoritesCount?.toString()}
                       icon="FAS-star"
                     />
                   </HStack>
 
-                  {matchRequest && (
+                  {request && (
                     <HStack
                       gap="$4"
                       justifyContent="center"
                       alignItems="center"
+                      flex={2 / 3}
                     >
-                      {matchRequest.isLoading ? (
+                      {request.isLoading ? (
                         <ActivityIndicator />
                       ) : (
                         <>
                           <IconButton
                             icon="FAR-circle-check"
                             action="positive"
-                            onPress={() => matchRequest.onAcceptPress(id)}
+                            onPress={() => request.onAcceptPress()}
                             iconProps={{ size: '2xl' }}
                             variant="link"
                             //@ts-ignore:next-line
@@ -126,7 +122,7 @@ export const TeamListItem = ({
                           <IconButton
                             icon="FAR-circle-xmark"
                             action="negative"
-                            onPress={() => matchRequest.onRefusePress(id)}
+                            onPress={() => request.onRefusePress()}
                             iconProps={{ size: '2xl' }}
                             variant="link"
                             //@ts-ignore:next-line
@@ -146,13 +142,14 @@ export const TeamListItem = ({
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          {participants.map((participant) => (
+          {invitations.map(({ id, user, status }) => (
             <PlayerListItem
-              key={participant.id}
-              {...participant}
+              key={id}
+              {...user}
               isRequest
+              requestStatus={status}
               onPress={() =>
-                router.navigate(routing.matchUser.path(10, participant.id))
+                router.navigate(routing.matchUser.path(10, user.id))
               }
             />
           ))}

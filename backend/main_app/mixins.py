@@ -33,9 +33,11 @@ class BlockCreateDestroyMixin:
 
 class BlockCRUDMixin:
     block_create = True
+    block_list = True
     block_retrieve = True
     block_update = True
     block_destroy = True
+
 
     """
     Mixin to block CRUD actions.
@@ -47,6 +49,14 @@ class BlockCRUDMixin:
         if self.block_create: 
             return Response({"detail": "Creation is not allowed."}, status=status.HTTP_403_FORBIDDEN)
         return super().create(request, *args, **kwargs)
+    
+    def list(self, request, *args, **kwargs):
+        """
+        Block detail read (403 Forbidden).
+        """
+        if self.block_list: 
+            return Response({"detail": "Listing is not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        return super().list(request, *args, **kwargs)
         
     def retrieve(self, request, *args, **kwargs):
         """

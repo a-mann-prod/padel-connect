@@ -1,3 +1,4 @@
+export * from './Accordion/Accordion'
 export * from './Alerts'
 export * from './Carousel/Carousel'
 export * from './DateCarouselFilter/DateCarouselFilter'

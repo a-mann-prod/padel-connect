@@ -3,6 +3,8 @@ import { MatchesResponse, MatchResponse } from './entities'
 import {
   CreateMatchParams,
   DeleteMatchParams,
+  GetInfiniteIncomingMatchesParams,
+  GetInfiniteMatchesInvitationsParams,
   GetInfiniteMatchesParams,
   GetMatchParams,
   UpdateMatchParams,
@@ -28,10 +30,21 @@ export const getInfiniteMatchesFn = async (
 }
 
 export const getInfiniteIncomingMatchesFn = async (
-  params: GetInfiniteMatchesParams,
+  params: GetInfiniteIncomingMatchesParams,
   pageParam: number
 ) => {
   const { data } = await api.get<MatchesResponse>(`${ENDPOINT}/incoming/`, {
+    params: { ...params, page: pageParam },
+  })
+
+  return data
+}
+
+export const getInfiniteMatchesInvitationsFn = async (
+  params: GetInfiniteMatchesInvitationsParams,
+  pageParam: number
+) => {
+  const { data } = await api.get<MatchesResponse>(`${ENDPOINT}/invitations/`, {
     params: { ...params, page: pageParam },
   })
 

@@ -16,11 +16,10 @@ export type MatchResponse = Entity<{
   is_reserved: boolean
   is_open_to_all_level: boolean
   user: number
-  teams: {
-    id: number
+  teams: Entity<{
     participants: DefaultMinimalProfileResponse[]
     user: number
-  }[]
+  }>[]
 }>
 
 export type MatchesResponse = PaginatedResponse<

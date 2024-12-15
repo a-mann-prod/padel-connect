@@ -7,8 +7,8 @@ from .profile import MinimalProfileSerializer
 
 def get_participants(self, obj):
     invites = TeamInvite.objects.filter(team=obj, status=enums.RequestStatus.ACCEPTED)
-    users = [invite.user.profile for invite in invites]
     if invites.exists(): 
+        users = [invite.user.profile for invite in invites]
         return MinimalProfileSerializer(users, many=True, context=self.context).data
     return []
 

@@ -14,7 +14,10 @@ import { Loader, ScrollView } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
-import { useMatchTeamRequest } from '@/services/api'
+import {
+  useInfiniteMatchInvitations,
+  useMatchTeamRequest,
+} from '@/services/api'
 import { useTranslate } from '@/services/i18n'
 
 export default WithMatch(() => {
@@ -44,6 +47,15 @@ export default WithMatch(() => {
 
   const { data: matchTeamRequest, isLoading: isLoadingMatchTeamRequest } =
     useMatchTeamRequest({ params: { id: matchId } })
+
+  // disabled if match_request (cannot get a team and being invited)
+  const { data: matchInvitations, isLoading: isLoadingMatchInvitations } =
+    useInfiniteMatchInvitations({
+      params: { matchId },
+      options: { enabled: !matchTeamRequest },
+    })
+
+  console.log('ici', matchInvitations)
 
   useHeaderButton(
     [
@@ -109,9 +121,12 @@ export default WithMatch(() => {
 
             {!isParticipant && (
               <PreMatchRequestButton
-                isLoading={isLoadingMatchTeamRequest}
+                isLoading={
+                  isLoadingMatchTeamRequest || isLoadingMatchInvitations
+                }
                 matchId={matchId}
                 isRequesting={!!matchTeamRequest?.id}
+                hasMatchInvitations={!!matchInvitations?.pages.length}
                 inadaptedLevel={inadaptedLevel}
               />
             )}

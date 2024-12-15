@@ -35,7 +35,7 @@ export default WithAuth(() => {
   }: ListRenderItemInfo<MatchesResponse['results'][number]>) => (
     <MatchListItem
       {...item}
-      displayRequest
+      type="request"
       complexes={complexes}
       participants={item.teams.reduce<DefaultMinimalProfileResponse[]>(
         (acc, curr) => [...acc, ...curr.participants],

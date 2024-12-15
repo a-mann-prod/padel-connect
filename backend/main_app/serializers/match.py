@@ -2,13 +2,13 @@ from rest_framework import serializers
 from main_app.models import Match, Complex, Team, TeamInvite
 from main_app import mixins
 from main_app.serializers import ComplexSerializer
-from main_app.serializers.match_team import MinimalMatchTeamSerializer
+from main_app.serializers.match_team import MatchTeamSerializer
 
 
 def get_teams(self, obj):
     teams = Team.objects.filter(match=obj, is_ready=True) 
     if teams.exists(): 
-        return MinimalMatchTeamSerializer(teams, many=True, context=self.context).data
+        return MatchTeamSerializer(teams, many=True, context=self.context).data
 
     return []
 

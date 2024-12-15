@@ -11,6 +11,8 @@ import { ComplexesResponse } from '@/services/api'
 import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 
+export type MatchListItemType = 'match' | 'request' | 'invitation'
+
 export type MatchlistItemProps = {
   onPress: PressableProps['onPress']
   complexes?: ComplexesResponse
@@ -24,13 +26,14 @@ export type MatchlistItemProps = {
   is_open_to_all_level: boolean
   is_request?: boolean
   participants: DefaultMinimalProfileResponse[]
-  displayRequest?: boolean
+  type?: MatchListItemType
+  id: number
 }
 
 export const MatchListItem = ({
-  onPress,
   complexes,
-  displayRequest = false,
+  type,
+  onPress,
   ...match
 }: MatchlistItemProps) => {
   const tGlobal = useTranslate()
@@ -39,49 +42,49 @@ export const MatchListItem = ({
 
   const [level_min, level_max] = match.calculated_level_range
 
-  const containerProps: any =
-    displayRequest && match?.is_request
-      ? {
-          borderTopLeftRadius: '$lg',
-          borderTopRightRadius: '$lg',
-        }
-      : {
-          rounded: '$lg',
-        }
+  const isRequest = type === 'request' && match?.is_request
+
+  const containerProps: any = isRequest
+    ? {
+        borderTopLeftRadius: '$lg',
+        borderTopRightRadius: '$lg',
+      }
+    : {
+        rounded: '$lg',
+      }
 
   return (
-    <Pressable onPress={onPress}>
-      <VStack gap="$6" variant="colored" p="$3" {...containerProps}>
-        <HStack alignItems="flex-start">
-          <HStack flex={1} gap="$6">
-            <DateFlag isoDate={match.datetime} />
-            <VStack flex={1}>
-              <Heading size="sm" lineHeight="$xs">
-                {complex?.name}
-              </Heading>
-              <Text variant="subtitle">
-                {match.is_open_to_all_level
-                  ? tGlobal('allLevel')
-                  : `${tGlobal('level')} ${level_min} - ${level_max}`}
-              </Text>
-            </VStack>
+    <VStack flex={1}>
+      <Pressable onPress={onPress} flex={1}>
+        <VStack gap="$6" variant="colored" p="$3" {...containerProps}>
+          <HStack alignItems="flex-start">
+            <HStack flex={1} gap="$6">
+              <DateFlag isoDate={match.datetime} />
+              <VStack flex={1}>
+                <Heading size="sm" lineHeight="$xs">
+                  {complex?.name}
+                </Heading>
+                <Text variant="subtitle">
+                  {match.is_open_to_all_level
+                    ? tGlobal('allLevel')
+                    : `${tGlobal('level')} ${level_min} - ${level_max}`}
+                </Text>
+              </VStack>
+            </HStack>
+            <HStack gap="$3">
+              <MatchTypeIcon isCompetitive={match.is_competitive} />
+              <SlotStatusIcon
+                status={match.is_reserved ? 'BOOKED' : 'AVAILABLE'}
+              />
+            </HStack>
           </HStack>
-          <HStack gap="$3">
-            <MatchTypeIcon isCompetitive={match.is_competitive} />
-            <SlotStatusIcon
-              status={match.is_reserved ? 'BOOKED' : 'AVAILABLE'}
-            />
+          <HStack>
+            <PlayersAvatars users={match.participants} />
+            <DurationFlag value={match.duration} isRequest={isRequest} />
           </HStack>
-        </HStack>
-        <HStack>
-          <PlayersAvatars users={match.participants} />
-          <DurationFlag
-            value={match.duration}
-            isRequest={displayRequest && match?.is_request}
-          />
-        </HStack>
-      </VStack>
-      {displayRequest && match?.is_request && (
+        </VStack>
+      </Pressable>
+      {isRequest && (
         <VStack
           bgColor="$orange400"
           alignItems="center"
@@ -91,6 +94,6 @@ export const MatchListItem = ({
           <Text color="$white">{tGlobal('pendingRequest')}</Text>
         </VStack>
       )}
-    </Pressable>
+    </VStack>
   )
 }

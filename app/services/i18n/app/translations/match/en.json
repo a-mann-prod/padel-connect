@@ -1,6 +1,5 @@
 {
   "addPlayer": "Add partner",
-
   "book": "Book match",
   "callComplex": "Call center",
   "cancelRequest": "Cancel request",
@@ -16,7 +15,6 @@
   "duration": "Duration",
   "enterScore": "Enter score",
   "inadaptedLevel": "(inadapted level)",
-
   "joinRequest": "Join",
   "joinRequestWithPartners": "Propose to one or more partners",
   "leave": "Leave",
@@ -32,6 +30,7 @@
   "requestCreated": "Request created",
   "requestDeleted": "Request deleted",
   "requestRefused": "Request refused",
+  "seeInvitations": "See invitations",
   "seeRequest": "See my request",
   "sendAloneRequest": "Send alone request",
   "sendGroupRequest": "Send group request",

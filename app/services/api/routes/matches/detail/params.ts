@@ -16,7 +16,9 @@ export type GetInfiniteMatchesParams = {
   type?: MatchType
 }
 
-export type GetIncomingMatchesParams = object
+export type GetInfiniteMatchesInvitationsParams = object
+
+export type GetInfiniteIncomingMatchesParams = object
 
 export type GetUserMatchesParams = {
   user_id: string

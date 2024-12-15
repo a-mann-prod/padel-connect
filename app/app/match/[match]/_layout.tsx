@@ -50,6 +50,12 @@ export default () => {
         }}
       />
       <Stack.Screen
+        name={routing.matchManageInvitations.name}
+        options={{
+          title: t('receivedInvitations'),
+        }}
+      />
+      <Stack.Screen
         name={routing.matchShareMatch.name}
         options={{
           title: '',
