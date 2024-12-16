@@ -69,7 +69,7 @@ export default () => {
       <HStack gap="$3" pt="$3">
         {/* <IconButton icon="FAS-street-view" h="$full" /> */}
         <DateCarouselFilter
-          isRefetching={isRefetching}
+          // isRefetching={isRefetching}
           onChange={setDateFilter}
           value={dateFilter}
         />

@@ -29,6 +29,10 @@ const root = {
     name: 'share-match',
     path: () => '/match/(create)/share-match',
   },
+  matchCreateBookField: {
+    name: 'book-field',
+    path: () => '/match/(create)/book-field',
+  },
 }
 
 const modalsRoot = {

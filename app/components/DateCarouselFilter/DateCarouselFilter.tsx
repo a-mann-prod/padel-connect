@@ -16,13 +16,13 @@ import { capitalizeLetter } from '@/utils/string'
 export type DateCarouselFilterProps = {
   value: Dayjs | undefined
   onChange: (date: Dayjs) => void
-  isRefetching: boolean
+  // isRefetching: boolean
 }
 
 export const DateCarouselFilter = ({
   value,
   onChange,
-  isRefetching,
+  // isRefetching,
 }: DateCarouselFilterProps) => {
   const today = date.now()
   const [startDate, setStartDate] = useState(today)

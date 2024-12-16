@@ -27,6 +27,10 @@ export default WithAuth(() => {
           name={routing.matchCreateShareMatch.name}
           options={{ title: t('shareMatch') }}
         />
+        <Stack.Screen
+          name={routing.matchCreateBookField.name}
+          // options={{ title: t('shareMatch') }}
+        />
       </Stack>
     </CreateMatchProvider>
   )

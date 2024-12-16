@@ -56,7 +56,7 @@ class FourPadelAPIClient:
             self.token = self.login()
         return self.token
 
-    def get_booking_rules(self, date):
+    def get_booking_rules(self, complex_id, date):
         """
         Fetch booking rules with the token. Retry login if token is expired.
         """
@@ -77,7 +77,7 @@ class FourPadelAPIClient:
             "endingDateZuluTime": f"{date}T22:59:00.000Z",
             "durations": "60,90,120",
             "capacity": 4,
-            "center_id": 77,
+            "center_id": complex_id,
             "bookingType_id": "1",
             "sportType_id": 3,
             "isChannelWeb": True,
@@ -103,27 +103,46 @@ class FourPadelAPIClient:
 
     def clean_booking_data(self, data):
         """
-        Clean the booking data to match the required format.
+        Clean the booking data to match the required format, grouping by startingDateZuluTime
+        and merging fields with the same id.
         """
 
-        cleaned_data = []
+        grouped_data = {}
 
-        # Nettoyage des champs "fields"
+        # Regrouper les données par startingDateZuluTime
         for data_item in data:
-            cleaned_data_item = {
-                "startingDateZuluTime": data_item.get("startingDateZuluTime"),
-                "endingDateZuluTime": data_item.get("endingDateZuluTime"),
-                "fields": []
-            }
-            for field in data_item.get("fields", []):
-                cleaned_field = {
-                    "id": field.get("id"),
-                    "name": field.get("name"),
-                    "startingDateZuluTime": field.get("startingDateZuluTime"),
-                    "endingDateZuluTime": field.get("endingDateZuluTime"),
-                    "duration": field.get("duration"),
-                    "active": field.get("active")
+            starting_date = data_item.get("startingDateZuluTime")
+
+            if starting_date not in grouped_data:
+                # Initialiser un groupe pour cette date de début
+                grouped_data[starting_date] = {
+                    "startingDateZuluTime": starting_date,
+                    "fields": {}
                 }
-                cleaned_data_item["fields"].append(cleaned_field)
-            cleaned_data.append(cleaned_data_item)
+
+            # Ajouter les champs dans le groupe correspondant
+            for field in data_item.get("fields", []):
+                field_id = field.get("id")
+                if field_id not in grouped_data[starting_date]["fields"]:
+                    # Créer une nouvelle entrée pour cet id
+                    grouped_data[starting_date]["fields"][field_id] = {
+                        "id": field_id,
+                        "name": field.get("name"),
+                        "startingDateZuluTime": field.get("startingDateZuluTime"),
+                        "durations": []
+                    }
+
+                # Ajouter la durée dans la liste des durations
+                duration = field.get("duration")
+                if duration:
+                    grouped_data[starting_date]["fields"][field_id]["durations"].append(duration)
+
+        # Convertir les champs de dictionnaire en liste et structurer les données
+        cleaned_data = []
+        for starting_date, data_group in grouped_data.items():
+            cleaned_data.append({
+                "startingDateZuluTime": starting_date,
+                "fields": list(data_group["fields"].values())
+            })
+
         return cleaned_data

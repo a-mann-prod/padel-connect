@@ -6,6 +6,7 @@ class Complex(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
+    four_padel_id = models.IntegerField()
 
     def __str__(self):
         return self.name

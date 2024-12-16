@@ -1,18 +1,13 @@
-import { Entity } from '../../types'
-
 export type BookingsField = {
   id: number
   name: string
   startingDateZuluTime: string
-  endingDateZuluTime: string
-  duration: number
-  active: boolean
+  durations: number[]
 }
 
-export type BookingsResponse = Entity<{
+export type BookingsResponse = {
   startingDateZuluTime: string
-  endingDateZuluTime: string
   fields: BookingsField[]
-}>
+}
 
 export type BookingsResponses = BookingsResponse[]

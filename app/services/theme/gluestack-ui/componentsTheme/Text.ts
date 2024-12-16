@@ -116,6 +116,13 @@ export const Text = createStyle({
           color: '$textDark300',
         },
       },
+
+      inverted: {
+        color: '$textDark200',
+        _dark: {
+          color: '$textLight700',
+        },
+      },
     },
   },
 

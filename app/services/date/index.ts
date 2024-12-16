@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
 //plugins
+import Duration from 'dayjs/plugin/duration'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import RelativeTime from 'dayjs/plugin/relativeTime'
 
@@ -12,12 +13,15 @@ export type DateFormat = Date | string | undefined
 
 dayjs.extend(RelativeTime)
 dayjs.extend(LocalizedFormat)
+dayjs.extend(Duration)
 
 export const date = {
   fromNow: (date: DateFormat) => dayjs(date).fromNow(),
   setLocale: (locale: Language) => {
     dayjs.locale(locale)
   },
+  duration: (time: number, units: Duration.DurationUnitType) =>
+    dayjs.duration(time, units),
   format: (date: DateFormat) => dayjs(date).format('LL'),
   now: () => dayjs(),
   dayjs: (date?: DateFormat) =>

@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { MatchForm, MatchFormValues } from '@/components'
 import { useCreateMatchContext } from '@/contexts/CreateMatchContext'
-import { Container } from '@/designSystem'
+import { Button, Container } from '@/designSystem'
 import { formDateTimePickerServices } from '@/designSystem/Forms/FormDateTimePicker/FormDateTimePicker.services'
 import { useMe } from '@/hooks/useMe'
 import { date } from '@/services/date'
@@ -48,6 +48,10 @@ export default () => {
           defaultValues={defaultValues}
           buttonTitle={isCompetition ? t('chooseMyPartner') : tGlobal('create')}
           isLoading={isPendingCreateMatch}
+        />
+        <Button
+          title="test book fields"
+          onPress={() => router.navigate(routing.matchCreateBookField.path())}
         />
       </Container>
     </>

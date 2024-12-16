@@ -55,8 +55,6 @@ export default WithMatch(() => {
       options: { enabled: !matchTeamRequest },
     })
 
-  console.log('ici', matchInvitations)
-
   useHeaderButton(
     [
       {
