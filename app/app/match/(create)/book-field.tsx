@@ -42,7 +42,6 @@ export default () => {
           setFields(undefined)
           setSelectedItem(undefined)
         }}
-        onButtonPress={() => console.log('ici')}
       />
     </>
   )

@@ -6335,6 +6335,11 @@ expo-router@~3.5.11:
     react-native-helmet-async "2.0.4"
     schema-utils "^4.0.1"
 
+expo-screen-capture@~6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/expo-screen-capture/-/expo-screen-capture-6.0.1.tgz#b1e7c2b095cab8650f7a6e99ffc4e5d522550165"
+  integrity sha512-rJnwcKxZ6anfEx2xFeRo9MAVp2JgI4S+TuhUurHRf9rildPVorS2JvLey3i5xZPs7CxEe2xcijTmr5WT5Lw4dA==
+
 expo-splash-screen@0.27.4, expo-splash-screen@~0.27.4:
   version "0.27.4"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.27.4.tgz#d7a86a2a1a87824ed47388aa8836e91b61268c62"

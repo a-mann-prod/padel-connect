@@ -104,7 +104,7 @@ class FourPadelAPIClient:
     def clean_booking_data(self, data):
         """
         Clean the booking data to match the required format, grouping by startingDateZuluTime
-        and merging fields with the same id.
+        and merging fields with the same id. Fields are ordered by id.
         """
 
         grouped_data = {}
@@ -140,9 +140,11 @@ class FourPadelAPIClient:
         # Convertir les champs de dictionnaire en liste et structurer les données
         cleaned_data = []
         for starting_date, data_group in grouped_data.items():
+            # Trier les champs par id
+            sorted_fields = sorted(data_group["fields"].values(), key=lambda x: x["id"])
             cleaned_data.append({
                 "startingDateZuluTime": starting_date,
-                "fields": list(data_group["fields"].values())
+                "fields": sorted_fields
             })
 
         return cleaned_data

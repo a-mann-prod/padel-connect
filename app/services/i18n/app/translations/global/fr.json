@@ -46,6 +46,7 @@
     "minute_plural": "{{count}} minutes"
   },
   "delete": "Supprimer",
+  "description": "Description",
   "edit": "Modifier",
   "email": "Email",
   "firstname": "Prénom",
@@ -119,6 +120,7 @@
   "password": "Mot de passe",
   "pendingRequest": "Demande en attente",
   "previous": "Précédent",
+  "reportBug": "Reporter un problème ou une suggestion",
   "resend": "Renvoyer",
   "save": "Enregistrer",
   "search": "Rechercher",

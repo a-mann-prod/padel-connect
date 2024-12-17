@@ -6,10 +6,10 @@ import * as ExpoNotifications from 'expo-notifications'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import * as TaskManager from 'expo-task-manager'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Platform } from 'react-native'
 
-import { DefaultAlert, SelfDeleteAlert } from '@/components'
+import { DefaultAlert, ReportActionsheet, SelfDeleteAlert } from '@/components'
 import {
   AuthProvider,
   ColorSchemeProvider,
@@ -18,6 +18,8 @@ import {
 } from '@/contexts'
 import { NotificationsProvider } from '@/contexts/NotificationsContext'
 import { useInit } from '@/hooks/useInit'
+import { useMe } from '@/hooks/useMe'
+import useScreenCaptureCallback from '@/hooks/useScreenCaptureCallback'
 import { routing } from '@/services/routing'
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
@@ -98,27 +100,42 @@ const RootProvider = () => {
 }
 
 const RootLayoutNav = () => {
+  const { data: me } = useMe()
+  const [showReportActionsheet, setShowReportActionsheet] = useState(false)
+
+  useScreenCaptureCallback(
+    me ? () => setShowReportActionsheet(true) : undefined
+  )
   return (
-    <Stack initialRouteName={unstable_settings.initialRouteName}>
-      <Stack.Screen
-        name={routing.modals.name}
-        options={{
-          presentation: 'containedModal',
-          headerShown: false,
-        }}
+    <>
+      <Stack initialRouteName={unstable_settings.initialRouteName}>
+        <Stack.Screen
+          name={routing.modals.name}
+          options={{
+            presentation: 'containedModal',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={routing.tabs.name}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={routing.match.name}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={routing.matchCreate.name}
+          options={{
+            presentation: 'containedModal',
+            headerShown: false,
+          }}
+        />
+      </Stack>
+      <ReportActionsheet
+        isOpen={showReportActionsheet}
+        onClose={() => setShowReportActionsheet(false)}
       />
-      <Stack.Screen name={routing.tabs.name} options={{ headerShown: false }} />
-      <Stack.Screen
-        name={routing.match.name}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name={routing.matchCreate.name}
-        options={{
-          presentation: 'containedModal',
-          headerShown: false,
-        }}
-      />
-    </Stack>
+    </>
   )
 }

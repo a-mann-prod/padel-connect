@@ -46,6 +46,7 @@
     "minute_plural": "{{count}} minutes"
   },
   "delete": "Delete",
+  "description": "Description",
   "edit": "Edit",
   "email": "Email",
   "firstname": "Firstname",
@@ -54,7 +55,6 @@
   "letsGo": "Let's go! 🚀",
   "level": "Level",
   "levelRangeHelpMessage": "Searched levels range: {{min}} - {{max}}",
-
   "levelRevelation": "Congratulations, you are level",
   "location": "Location",
   "manualPreference": {
@@ -120,6 +120,7 @@
   "password": "Password",
   "pendingRequest": "Pending request",
   "previous": "Previous",
+  "reportBug": "Report a bug or a suggestion",
   "resend": "Resend",
   "save": "Save",
   "search": "Search",
