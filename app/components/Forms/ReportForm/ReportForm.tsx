@@ -6,7 +6,10 @@ import { useForm } from 'react-hook-form'
 import { reportFormServices, ReportFormValues } from './ReportForm.services'
 
 import { FormProvider } from '@/components/FormProvider/FormProvider'
-import { FormTextareaControlled } from '@/components/FormsControlled'
+import {
+  FormFileControlled,
+  FormTextareaControlled,
+} from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
@@ -47,6 +50,10 @@ export const ReportForm = ({
             displayPlaceHolder
             name="comments"
             formControlProps={{ title: tGlobal('description') }}
+          />
+          <FormFileControlled
+            name="attachment"
+            formControlProps={{ title: tGlobal('screenCapture') }}
           />
         </VStack>
       </FormProvider>

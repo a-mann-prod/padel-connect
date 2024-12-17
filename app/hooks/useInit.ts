@@ -34,6 +34,8 @@ export const useInit = () => {
   const routingInstrumentation = new Sentry.ReactNavigationInstrumentation()
   const ref = useNavigationContainerRef()
 
+  console.log(config.env === 'production', config.env)
+
   Sentry.init({
     enabled: config.env === 'production',
     dsn: config.sentryUrl,
@@ -45,6 +47,7 @@ export const useInit = () => {
         routingInstrumentation,
       }),
     ],
+    attachScreenshot: true,
   })
 
   useEffect(() => {

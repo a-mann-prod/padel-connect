@@ -1,6 +1,7 @@
 export * from './FormAvatarControlled/FormAvatarControlled'
 export * from './FormChoiceButtonControlled/FormChoiceButtonControlled'
 export * from './FormDateTimePickerControlled/FormDateTimePickerControlled'
+export * from './FormFileControlled/FormFileControlled'
 export * from './FormInputControlled/FormInputControlled'
 export * from './FormRadioControlled/FormRadioControlled'
 export * from './FormRangeSliderControlled/FormRangeSliderControlled'

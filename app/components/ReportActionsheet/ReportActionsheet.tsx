@@ -5,24 +5,40 @@ import { ReportForm, ReportFormValues } from '../Forms'
 
 import { Actionsheet, ActionsheetProps } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
+import { prepareFile } from '@/utils/file'
 
 export type ReportActionsheetProps = ActionsheetProps
 
 export const ReportActionsheet = ({ ...props }: ReportActionsheetProps) => {
   const { data: me } = useMe()
 
-  const event_id = Sentry.captureMessage('User Feedback')
+  const onSubmit = async ({ attachment, ...data }: ReportFormValues) => {
+    Sentry.withScope(async (scope) => {
+      scope.clearAttachments()
+      if (attachment) {
+        const file = await prepareFile(attachment)
+        scope.addAttachment({
+          data: file.array8,
+          filename: file.name,
+          contentType: file.type,
+        })
+      }
 
-  const isLoading = false
+      Sentry.captureMessage(`User feedback: ${data.comments}`, {
+        user: { email: data.email, username: data.name },
+        extra: {
+          comments: data.comments,
+        },
+      })
+    })
 
-  const onSubmit = (data: ReportFormValues) =>
-    Sentry.captureUserFeedback({ event_id, ...data })
+    props.onClose?.()
+  }
 
   return (
     <Actionsheet {...props}>
       <VStack py="$3" gap="$6">
         <ReportForm
-          isLoading={isLoading}
           onSubmit={onSubmit}
           defaultValues={{
             email: me?.email,

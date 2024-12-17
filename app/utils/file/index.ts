@@ -24,6 +24,7 @@ export type FileInput = {
   uri: string
   type: string
   name: string
+  array8: Uint8Array
 }
 
 export const prepareFile = async ({
@@ -32,10 +33,13 @@ export const prepareFile = async ({
   mimeType,
 }: File): Promise<FileInput> => {
   const fileExt = getFileExtension(FileExtension.JPEG, fileName)
+  const arrayBuffer = await fetch(uri).then((res) => res.arrayBuffer())
+  const array8 = new Uint8Array(arrayBuffer)
 
   return {
     uri,
     type: mimeType ?? MimeType.JPEG,
     name: `${uuid()}.${fileExt}`,
+    array8,
   }
 }

@@ -33,6 +33,7 @@
   "canReevaluateLevel": "This level is not final, you can reevaluate it later",
   "cancel": "Cancel",
   "captain": "Captain",
+  "chooseFile": "Choose file",
   "complex": "Sports complex",
   "confirmNewEmail": "Confirm new email",
   "confirmNewPassword": "Confirm new password",
@@ -123,6 +124,8 @@
   "reportBug": "Report a bug or a suggestion",
   "resend": "Resend",
   "save": "Save",
+  "screenCapture": "Screen capture",
+
   "search": "Search",
   "send": "Send",
   "shareInApp": "Share in app",
