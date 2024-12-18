@@ -91,6 +91,7 @@
     "notificationAlerts": "Notifications",
     "notifications": "Notifications",
     "oldMatches": "Mes matchs passés",
+    "paramMatch": "Paramètres du match",
     "passwordChange": "Changement mot de passe",
     "passwordReset": "Nouveau mot de passe",
     "personalInformation": "Informations personnelles",
@@ -127,9 +128,6 @@
   "screenCapture": "Capture d'écran",
   "search": "Rechercher",
   "send": "Envoyer",
-  "shareInApp": "Partager dans l'app",
-  "shareMatchActionsheet": "Comment souhaitez-vous partager ce match ?",
-  "shareOutApp": "Partager autrement",
   "showPastMatches": "Afficher les matchs passés",
   "sidePreference": {
     "both": "Les deux",

@@ -6,6 +6,8 @@ import {
 import { ComplexResponse } from '../../complexes'
 
 export type MatchResponse = Entity<{
+  four_padel_field_id: number
+  four_padel_field_name: string
   complex: ComplexResponse
   datetime: string
   duration: number

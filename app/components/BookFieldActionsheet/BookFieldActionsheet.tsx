@@ -1,13 +1,16 @@
 import { Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 
-import { Actionsheet, ActionsheetProps, Button } from '@/designSystem'
+import { Actionsheet, ActionsheetProps, Pressable } from '@/designSystem'
 import { BookingsField } from '@/services/api'
 import { date } from '@/services/date'
-import { useTranslate } from '@/services/i18n'
+
+export type BookingsFieldData = Omit<BookingsField, 'durations'> & {
+  duration: number
+}
 
 export type BookFieldActionsheetProps = Omit<ActionsheetProps, 'isOpen'> & {
   fields: BookingsField[] | undefined
-  onButtonPress: () => void
+  onButtonPress: (data: BookingsFieldData) => void
 }
 
 export const BookFieldActionsheet = ({
@@ -15,8 +18,6 @@ export const BookFieldActionsheet = ({
   onButtonPress,
   ...props
 }: BookFieldActionsheetProps) => {
-  const t = useTranslate()
-
   return (
     <Actionsheet isOpen={!!fields} {...props}>
       <VStack py="$3" gap="$6">
@@ -26,10 +27,10 @@ export const BookFieldActionsheet = ({
               key={field?.id}
               title={field?.name}
               durations={field.durations}
+              onPress={(duration) => onButtonPress({ ...field, duration })}
             />
           ))}
         </HStack>
-        <Button title={t('next')} onPress={onButtonPress} />
       </VStack>
     </Actionsheet>
   )
@@ -38,15 +39,16 @@ export const BookFieldActionsheet = ({
 type FieldItemProps = {
   title: string
   durations: number[]
+  onPress: (duration: number) => void
 }
 
-const FieldItem = ({ title, durations }: FieldItemProps) => {
+const FieldItem = ({ title, durations, onPress }: FieldItemProps) => {
   const formatTime = (totalMinutes: number) => {
     const timeDuration = date.duration(totalMinutes, 'minutes')
     const hours = timeDuration.hours()
     const minutes = timeDuration.minutes()
 
-    // Si les minutes sont 0, afficher uniquement les heures
+    // Si min = 0, afficher uniquement les heures
     return minutes === 0 ? `${hours}h` : `${hours}h${minutes}`
   }
 
@@ -62,12 +64,16 @@ const FieldItem = ({ title, durations }: FieldItemProps) => {
         <Text>{title}</Text>
         <HStack gap="$2">
           {durations.map((duration) => (
-            <Button
-              key={duration}
-              title={formatTime(duration)}
-              onPress={() => console.log('test')}
-              px="$2"
-            />
+            <Pressable onPress={() => onPress(duration)}>
+              <Box
+                variant="backgroundColored"
+                rounded="$lg"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Text p="$2">{formatTime(duration)}</Text>
+              </Box>
+            </Pressable>
           ))}
         </HStack>
       </VStack>

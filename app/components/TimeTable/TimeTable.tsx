@@ -1,7 +1,7 @@
 import { Badge, Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
 
-import { Pressable } from '@/designSystem'
+import { Loader, Pressable } from '@/designSystem'
 import { BookingsResponse, useBookings } from '@/services/api'
 import { date as dateService } from '@/services/date'
 
@@ -23,7 +23,7 @@ export const TimeTable = ({
   onButtonPress,
   selectedItem,
 }: TimeTableProps) => {
-  const { data: bookingFields } = useBookings({
+  const { data: bookingFields, isLoading } = useBookings({
     params: { date: date.format('YYYY-MM-DD'), complex },
   })
 
@@ -35,7 +35,6 @@ export const TimeTable = ({
       }
       acc[groupIndex].push(curr)
 
-      // Compléter la dernière ligne à la fin de la réduction
       if (index === bookingFields.length - 1) {
         while (acc[groupIndex].length < ITEMS_PER_ROW) {
           acc[groupIndex].push(null)
@@ -46,6 +45,8 @@ export const TimeTable = ({
     },
     []
   )
+
+  if (isLoading) return <Loader />
 
   return (
     <VStack gap="$3">

@@ -24,6 +24,7 @@ export type MatchlistItemProps = {
   is_competitive: boolean
   is_reserved?: boolean
   is_open_to_all_level: boolean
+  four_padel_field_name: string
   is_request?: boolean
   participants: DefaultMinimalProfileResponse[]
   type?: MatchListItemType
@@ -69,6 +70,7 @@ export const MatchListItem = ({
                     ? tGlobal('allLevel')
                     : `${tGlobal('level')} ${level_min} - ${level_max}`}
                 </Text>
+                <Text variant="subtitle">{match.four_padel_field_name}</Text>
               </VStack>
             </HStack>
             <HStack gap="$3">

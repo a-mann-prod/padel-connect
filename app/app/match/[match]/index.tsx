@@ -1,4 +1,3 @@
-import { routing } from '@/services/routing'
 import { RefreshControl, SafeAreaView, VStack } from '@gluestack-ui/themed'
 import { router, useLocalSearchParams, usePathname } from 'expo-router'
 import { useState } from 'react'
@@ -8,6 +7,7 @@ import {
   MatchInfo,
   PreMatchRequestButton,
   ShareMatchActionsheet,
+  UpdateMatchActionsheet,
   WithMatch,
 } from '@/components'
 import { Loader, ScrollView } from '@/designSystem'
@@ -19,6 +19,7 @@ import {
   useMatchTeamRequest,
 } from '@/services/api'
 import { useTranslate } from '@/services/i18n'
+import { routing } from '@/services/routing'
 
 export default WithMatch(() => {
   const t = useTranslate('match')
@@ -31,7 +32,9 @@ export default WithMatch(() => {
   const isJustCreated =
     local?.isJustCreated === 'undefined' ? false : Boolean(local?.isJustCreated)
 
-  const [showActionsheet, setShowActionsheet] = useState(!!isJustCreated)
+  const [showUpdateActionsheet, setShowUpdateActionsheet] = useState()
+  const [showShareActionsheet, setShowShareActionsheet] =
+    useState(!!isJustCreated)
 
   const {
     match,
@@ -59,13 +62,15 @@ export default WithMatch(() => {
     [
       {
         icon: 'FAS-share',
-        onPress: () => setShowActionsheet(true),
+        onPress: () => setShowShareActionsheet(true),
         condition: !isMatchPassed,
       },
       {
         icon: 'FAS-pencil',
         onPress: () =>
-          match?.id && router.navigate(routing.matchUpdate.path(match.id)),
+          match?.is_reserved
+            ? match?.id && router.navigate(routing.matchUpdate.path(match.id))
+            : setShowUpdateActionsheet(true),
         condition: isOwner && !isMatchPassed,
       },
     ],
@@ -134,11 +139,14 @@ export default WithMatch(() => {
       <ShareMatchActionsheet
         matchId={matchId}
         matchPath={pathname}
-        isOpen={showActionsheet}
-        onButtonPress={() => {
-          setShowActionsheet(false)
-        }}
-        onClose={() => setShowActionsheet(false)}
+        isOpen={showShareActionsheet}
+        onClose={() => setShowShareActionsheet(false)}
+      />
+      <UpdateMatchActionsheet
+        matchId={matchId}
+        matchPath={pathname}
+        isOpen={showUpdateActionsheet}
+        onClose={() => setShowUpdateActionsheet(false)}
       />
     </>
   )

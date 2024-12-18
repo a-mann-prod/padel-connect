@@ -1,4 +1,4 @@
-import { VStack } from '@gluestack-ui/themed'
+import { Text, VStack } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
@@ -6,15 +6,10 @@ import { useForm } from 'react-hook-form'
 import { MatchFormValues, matchFormServices } from './MatchForm.services'
 
 import { FormProvider } from '@/components/FormProvider/FormProvider'
-import {
-  FormDateTimePickerControlled,
-  FormSelectControlled,
-} from '@/components/FormsControlled'
+import { FormSelectControlled } from '@/components/FormsControlled'
 import { FormCheckboxControlled } from '@/components/FormsControlled/FormCheckboxControlled/FormCheckboxControlled'
 import { Button } from '@/designSystem'
-import { useComplexItems } from '@/hooks/useComplexItems'
-import { useDurationItems } from '@/hooks/useDurationItems'
-import { date } from '@/services/date'
+import { useDiversityItems } from '@/hooks/useDiversityItems'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
 
@@ -50,9 +45,7 @@ export const MatchForm = ({
 
   const { handleSubmit, watch } = methods
 
-  const durationItems = useDurationItems()
-  const complexItems = useComplexItems()
-
+  const diversityItems = useDiversityItems()
   const isCompetitive = watch('is_competitive')
 
   useEffect(() => {
@@ -63,23 +56,15 @@ export const MatchForm = ({
     <VStack flex={1}>
       <FormProvider {...methods}>
         <VStack flex={1} gap="$3">
-          <FormDateTimePickerControlled
-            name="datetime"
-            formControlProps={{ title: t('datetime') }}
-            minimumDate={date.now().toDate()}
-          />
-          <FormSelectControlled
-            displayPlaceHolder
-            name="complex_id"
-            formControlProps={{ title: tGlobal('complex') }}
-            items={complexItems}
-          />
-          <FormSelectControlled
-            displayPlaceHolder
-            name="duration"
-            formControlProps={{ title: t('duration') }}
-            items={durationItems}
-          />
+          {/* TODO */}
+          {false && (
+            <FormSelectControlled
+              displayPlaceHolder
+              name="diversity"
+              formControlProps={{ title: t('diversity') }}
+              items={diversityItems}
+            />
+          )}
           <FormCheckboxControlled
             name="is_open_to_all_level"
             formControlProps={{
@@ -104,6 +89,25 @@ export const MatchForm = ({
               helpMessage: t('competitiveMatchHelpMessage'),
             }}
           />
+          {isCompetitive && (
+            <>
+              <Text fontWeight="$semibold">{t('scoreCalcul')}</Text>
+              <FormCheckboxControlled
+                name="is_decisive_point"
+                formControlProps={{
+                  title: t('decisivePoint'),
+                  helpMessage: t('decisivePointHelpMessage'),
+                }}
+              />
+              <FormCheckboxControlled
+                name="is_super_tie_break"
+                formControlProps={{
+                  title: t('superTieBreak'),
+                  helpMessage: t('superTieBreakHelpMessage'),
+                }}
+              />
+            </>
+          )}
         </VStack>
       </FormProvider>
       <Button

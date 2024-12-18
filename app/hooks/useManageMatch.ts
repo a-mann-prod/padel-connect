@@ -27,7 +27,9 @@ export const useManageMatch = (matchId: number) => {
     match,
     participants,
 
-    isMatchPassed: !!(match && getMatchTimes(match).isMatchPassed),
+    isMatchPassed: !!(
+      match && getMatchTimes(match.datetime, match.duration).isMatchPassed
+    ),
 
     isOwner,
     isPlayer,
@@ -38,9 +40,9 @@ export const useManageMatch = (matchId: number) => {
   }
 }
 
-export const getMatchTimes = (match: MatchResponse) => {
-  const matchStartTime = date.dayjs(match.datetime)
-  const matchEndTime = matchStartTime.add(match.duration, 'm')
+export const getMatchTimes = (datetime: string, duration: number) => {
+  const matchStartTime = date.dayjs(datetime)
+  const matchEndTime = matchStartTime.add(duration, 'm')
   const isMatchPassed = matchEndTime.isBefore(date.now())
 
   return {

@@ -8,8 +8,22 @@ import { routing } from '@/services/routing'
 
 const { formatToParams } = matchFormServices
 
+export type BookingFieldFormValues = Pick<
+  MatchFormValues,
+  | 'complex_id'
+  | 'datetime'
+  | 'duration'
+  | 'four_padel_field_id'
+  | 'four_padel_field_name'
+>
+
 type CreateMatchContextProps = {
-  setFormValues: Dispatch<SetStateAction<MatchFormValues | undefined>>
+  bookingFieldFormValues: BookingFieldFormValues | undefined
+  setBookingFieldFormValues: Dispatch<
+    SetStateAction<BookingFieldFormValues | undefined>
+  >
+
+  setFormValues: Dispatch<SetStateAction<Partial<MatchFormValues> | undefined>>
   createMatch: (values?: Partial<MatchFormValues>) => void
   isPendingCreateMatch: boolean
 }
@@ -29,7 +43,9 @@ export function CreateMatchProvider({ children }: { children: ReactNode }) {
     },
   })
 
-  const [formValues, setFormValues] = useState<MatchFormValues>()
+  const [formValues, setFormValues] = useState<Partial<MatchFormValues>>()
+  const [bookingFieldFormValues, setBookingFieldFormValues] =
+    useState<BookingFieldFormValues>()
 
   const createMatch = (values?: Partial<MatchFormValues>) =>
     mutate(
@@ -39,6 +55,8 @@ export function CreateMatchProvider({ children }: { children: ReactNode }) {
   return (
     <Provider
       value={{
+        bookingFieldFormValues,
+        setBookingFieldFormValues,
         setFormValues,
         createMatch,
         isPendingCreateMatch: isPending,

@@ -11,7 +11,7 @@ export const useBookings = ({
   options,
 }: UseQueryProps<BookingsResponses, GetBookingsParams>) =>
   useQuery<BookingsResponses>({
-    queryKey: ['bookings', params.date],
+    queryKey: ['bookings', params],
     queryFn: () => getBookingsFn(params),
     ...options,
   })

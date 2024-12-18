@@ -1,16 +1,15 @@
-import { HStack, Text, VStack } from '@gluestack-ui/themed'
+import { Text, VStack } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 
 import { MatchPlayers } from '../MatchPlayers/MatchPlayers'
 import { MatchTypeTile } from '../MatchTypeTile/MatchTypeTile'
 
 import { Section, SectionRow, Tile } from '@/designSystem'
-import { getMatchTimes } from '@/hooks/useManageMatch'
 import { MatchResponse } from '@/services/api'
-import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { getUsername } from '@/utils/user'
+import { MatchRecap } from '../MatchRecap/MatchRecap'
 
 type MatchInfoProps = {
   match: MatchResponse
@@ -28,8 +27,6 @@ export const MatchInfo = ({
 }: MatchInfoProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
-
-  const { matchStartTime, matchEndTime } = getMatchTimes(match)
 
   const ownerId = match.user
 
@@ -56,32 +53,12 @@ export const MatchInfo = ({
         />
       )}
       <MatchTypeTile isCompetitive={match.is_competitive} />
-      <Section>
-        <SectionRow
-          title={tGlobal('location')}
-          icon="FAS-location-dot"
-          rightComponent={() => <Text>{match.complex?.name}</Text>}
-        />
-        <SectionRow
-          title={tGlobal('date')}
-          icon="FAR-calendar"
-          rightComponent={() => <Text>{date.format(match.datetime)}</Text>}
-        />
-        <SectionRow
-          title={t('duration')}
-          icon="FAR-clock"
-          rightComponent={() => (
-            <HStack gap="$1">
-              <Text>{matchStartTime.format('HH:mm')}</Text>
-              <Text>-</Text>
-              <Text>{matchEndTime.format('HH:mm')}</Text>
-              <Text>
-                ({tGlobal('datetime.minute', { count: match.duration })})
-              </Text>
-            </HStack>
-          )}
-        />
-      </Section>
+      <MatchRecap
+        complexName={match.complex.name}
+        datetime={match.datetime}
+        duration={match.duration}
+        fieldName={match.four_padel_field_name}
+      />
 
       <Section>
         <SectionRow

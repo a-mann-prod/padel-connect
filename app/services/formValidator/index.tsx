@@ -26,6 +26,7 @@ export const validators = {
   },
   boolean: {
     required: () => booleanRequired,
+    optional: () => z.boolean().optional(),
   },
 }
 

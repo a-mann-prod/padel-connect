@@ -10,21 +10,18 @@ import { routing } from '@/services/routing'
 export type ShareMatchActionsheetProps = ActionsheetProps & {
   matchPath: string
   matchId: number
-
-  onButtonPress: () => void
 }
 
 export const ShareMatchActionsheet = ({
   matchPath,
   matchId,
-  onButtonPress,
   ...props
 }: ShareMatchActionsheetProps) => {
-  const t = useTranslate()
+  const t = useTranslate('match')
 
   const onPressInApp = () => {
     router.navigate(routing.matchShareMatch.path(matchId))
-    onButtonPress()
+    props.onClose?.()
   }
 
   const onPressOutApp = () => {
@@ -32,7 +29,7 @@ export const ShareMatchActionsheet = ({
       url: AuthSession.makeRedirectUri({ path: matchPath }),
       message: t('shareMessage'),
     })
-    onButtonPress()
+    props.onClose?.()
   }
 
   return (

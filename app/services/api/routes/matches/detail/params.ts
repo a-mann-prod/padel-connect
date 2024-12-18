@@ -37,12 +37,16 @@ export type GetMatchesCountParams = {
 
 export type CreateMatchParams = {
   complex_id: number
+  four_padel_field_id: number
+  four_padel_field_name: string
   datetime: string
   duration: number
   is_private: boolean
   level: number
   is_competitive: boolean
   players?: number[]
+  is_super_tie_break?: boolean
+  is_decisive_point?: boolean
 }
 
 export type UpdateMatchParams = CreateMatchParams & {
