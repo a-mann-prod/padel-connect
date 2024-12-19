@@ -11,6 +11,7 @@ import {
   useInfiniteNotifications,
   useReadAllNotifications,
   useReadNotification,
+  useUnreadNotificationsCount,
 } from '@/services/api'
 
 export default () => {
@@ -34,9 +35,9 @@ export default () => {
 
   const { mutate: readNotification } = useReadNotification()
 
-  // const { data: unreadNotificationsCount } = useUnreadNotificationsCount({
-  //   options: { enabled: !!me?.id },
-  // })
+  const { data: unreadNotificationsCount } = useUnreadNotificationsCount({
+    options: { enabled: !!me?.id },
+  })
 
   useHeaderButton(
     [
@@ -44,7 +45,7 @@ export default () => {
         icon: 'FAS-check',
         onPress: () => readAllNotifications(),
         condition: true,
-        isDisabled: !notifications?.length,
+        isDisabled: !unreadNotificationsCount,
       },
     ],
     'headerRight'

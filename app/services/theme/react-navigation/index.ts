@@ -1,5 +1,5 @@
 import { useToken } from '@gluestack-style/react'
-import { Theme } from '@react-navigation/native'
+import { DarkTheme, DefaultTheme, Theme } from '@react-navigation/native'
 
 import { ColorScheme } from '@/contexts'
 
@@ -8,6 +8,7 @@ export const useNavigationTheme = (colorScheme: ColorScheme) => {
   const notification = useToken('colors', 'red600')
 
   const lightTheme: Theme = {
+    ...DefaultTheme,
     dark: false,
     colors: {
       background: useToken('colors', 'backgroundLight50'),
@@ -20,6 +21,7 @@ export const useNavigationTheme = (colorScheme: ColorScheme) => {
   }
 
   const darkTheme: Theme = {
+    ...DarkTheme,
     dark: true,
     colors: {
       background: useToken('colors', 'black'),
