@@ -16,7 +16,7 @@ export default ({ config }: ConfigContext) => ({
   userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/images/splash.png',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     backgroundColor: '#1D2CEF',
   },
   assetBundlePatterns: ['**/*'],

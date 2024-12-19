@@ -3,6 +3,8 @@ from main_app.models import Match, Complex, Team, TeamInvite
 from main_app import mixins
 from main_app.serializers import ComplexSerializer
 from main_app.serializers.match_team import MatchTeamSerializer
+from django.contrib.auth.models import AnonymousUser
+
 
 
 def get_teams(self, obj):
@@ -32,6 +34,8 @@ class MatchSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerialize
 
     def get_is_request(self, obj):
         current_user = self.context['request'].user
+        if current_user == AnonymousUser():
+            return False
 
         # Vérifier si une invitation existe pour cet utilisateur avec une équipe dans le match
         has_pending_invitation = TeamInvite.objects.filter(

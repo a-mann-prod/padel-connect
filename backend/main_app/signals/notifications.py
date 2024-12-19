@@ -18,7 +18,7 @@ def handle_match_creation(sender, instance, created, **kwargs):
             match_filter = user.match_filter
 
             if match_filter.level_min != None and match_filter.level_max != None:
-                if not (match_filter.level_min <= instance.level <= match_filter.level_max):
+                if not (match_filter.level_min <= instance.level <= match_filter.level_max) and not instance.is_open_to_all:
                         continue
                 
 
@@ -47,6 +47,7 @@ def handle_team_creation(sender, instance, created, **kwargs):
             return
 
         users = CustomUser.objects.filter(pk__in=send_invitations)
+        match = instance.match
 
         for user in users:
             user_language = user.language
@@ -56,5 +57,5 @@ def handle_team_creation(sender, instance, created, **kwargs):
                     message=_("%(captain_name)s has invited you to play 💪. Respond as soon as possible!") % {'captain_name': captain_profile.first_name},
                     type= enums.NotificationType.NEW_MATCH_INVITATION,
                     user=user,
-                    associated_data={"url": f"/match/{instance.pk}"}
+                    associated_data={"url": f"/match/{match.pk}"}
                 )
