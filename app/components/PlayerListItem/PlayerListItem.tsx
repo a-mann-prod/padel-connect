@@ -20,7 +20,6 @@ export type PlayerListItemProps = ProfileResponse & {
   onPress?: PressableProps['onPress']
   onSelectButtonPress?: IconButtonProps['onPress']
   displayStar?: boolean
-  isRequest?: boolean
   request?: {
     isLoading: boolean
     onAcceptPress?: () => void
@@ -42,8 +41,6 @@ export const PlayerListItem = ({
 
   is_favorite = false,
   displayStar = true,
-
-  isRequest = false,
 
   request,
 
@@ -101,12 +98,10 @@ export const PlayerListItem = ({
               {displayStar && is_favorite && <SubItem icon="FAS-star" />}
             </HStack>
             <HStack gap="$3">
-              {isRequest && (
-                <SubItem
-                  text={calculated_level?.toString()}
-                  icon="FAS-dumbbell"
-                />
-              )}
+              <SubItem
+                text={calculated_level?.toString()}
+                icon="FAS-dumbbell"
+              />
               {manual_preference && (
                 <SubItem
                   text={t(

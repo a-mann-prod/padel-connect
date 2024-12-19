@@ -12,12 +12,15 @@ import {
 
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
+import { useInvalidateQuery } from '@/hooks/useInvalidateQuery'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
 import {
   UseInfiniteQueryProps,
   UseMutationProps,
 } from '@/services/api/queryHooks'
+import { useFindMatchQueryKey } from '@/services/api/utills'
 import { useTranslate } from '@/services/i18n'
+import { MatchResponse } from '../detail'
 
 export const useInfiniteMatchInvitations = ({
   params,
@@ -28,7 +31,7 @@ export const useInfiniteMatchInvitations = ({
 >) =>
   useInfiniteQuery({
     ...options,
-    queryKey: ['matches', params.matchId, 'invitations', 'infinite', params],
+    queryKey: ['matches', params.matchId, 'invitations', 'infinite'],
     queryFn: ({ pageParam }) =>
       getInfiniteMatchInvitationsFn(params, pageParam),
     getNextPageParam: (lastPage) => lastPage.next_page,
@@ -44,15 +47,41 @@ export const useManageMatchInvitation = (
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
   const queryCache = useQueryCache()
+  const invalidateQuery = useInvalidateQuery()
+  const findMatchQK = useFindMatchQueryKey()
 
   return useMutation({
     ...options,
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
       queryCache.removeItem(
-        ['matches', variables.matchId, 'teams'],
+        ['matches', variables.matchId, 'invitations', 'infinite'],
         variables.id
       )
+      queryCache.removeItem(
+        ['matches', 'invitations', 'infinite'],
+        variables.matchId
+      )
+
+      if (variables.action === 'accept') {
+        // update matchRequest
+        invalidateQuery(['matches', variables.matchId, 'teams', 'request'])
+
+        // update current match
+        invalidateQuery(['matches', variables.matchId])
+
+        // update match listing
+        const match = queryCache.getItem<MatchResponse>([
+          'matches',
+          variables.matchId,
+        ])
+
+        if (match) {
+          const matchQueryKey = findMatchQK(match.datetime)
+          matchQueryKey && invalidateQuery(matchQueryKey)
+        }
+      }
+
       onSuccess({
         title: t(
           variables.action === 'accept' ? 'requestAccepted' : 'requestRefused'

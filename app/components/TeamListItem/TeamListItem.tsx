@@ -41,7 +41,6 @@ export const TeamListItem = ({ invitations, request }: TeamListItemProps) => {
       <PlayerListItem
         {...invitations[0].user}
         requestStatus={invitations[0].status}
-        isRequest
         request={request}
         onPress={() =>
           router.navigate(routing.matchUser.path(10, invitations[0].user.id))
@@ -146,7 +145,6 @@ export const TeamListItem = ({ invitations, request }: TeamListItemProps) => {
             <PlayerListItem
               key={id}
               {...user}
-              isRequest
               requestStatus={status}
               onPress={() =>
                 router.navigate(routing.matchUser.path(10, user.id))

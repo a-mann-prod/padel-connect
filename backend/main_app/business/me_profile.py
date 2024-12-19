@@ -10,5 +10,5 @@ def delete_avatar(profile):
         profile.save()
         return 
     
-    raise ValidationError("No avatar to delete.")
+    raise ValidationError(detail="No avatar to delete.")
     

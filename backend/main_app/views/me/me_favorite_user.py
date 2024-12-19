@@ -7,6 +7,7 @@ from main_app.serializers import ProfileSerializer
 from main_app.pagination import CustomPageNumberPagination
 from django.conf import settings
 from main_app.business.favorite_user import toggle_favorite_user
+from main_app.exceptions import handle_exception
 
 
 class MeFavoriteUsersView(APIView):
@@ -37,4 +38,4 @@ class MeFavoriteUsersView(APIView):
             elif action == 'remove':
                 return Response({"detail": "Removed from favorites."}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return handle_exception(e)

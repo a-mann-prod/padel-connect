@@ -7,7 +7,12 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 # Register your models here.
 admin.site.register(Complex)
 admin.site.register(MatchFilter)
-admin.site.register(Notification)
+
+class NotificationAdmin(admin.ModelAdmin):
+    model = Notification
+    list_display = ('id', 'user', 'title', 'message', 'type', 'is_read')
+
+admin.site.register(Notification, NotificationAdmin) 
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -55,20 +60,20 @@ admin.site.register(Tournament, TournamentAdmin)
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('id', 'email', 'first_name', 'last_name')
+        fields = ('id', 'email', 'first_name', 'last_name', 'four_padel_id')
 
 # Formulaire pour modifier un utilisateur
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name', 'four_padel_id')
 
 # Admin pour gérer les utilisateurs dans l'interface d'administration
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ('id', 'email', 'is_staff', 'is_active', 'is_onboarding_completed', 'language')
+    list_display = ('id', 'four_padel_id', 'email', 'is_staff', 'is_active', 'is_onboarding_completed', 'language')
     list_filter = ('is_staff', 'is_active')
     fieldsets = (
         ('General', {'fields': ('email', 'password', 'push_token', 'is_onboarding_completed', 'language')}),

@@ -8,23 +8,29 @@ import { routing } from '@/services/routing'
 export type UpdateMatchActionsheetProps = ActionsheetProps & {
   matchPath: string
   matchId: number
+  datetime?: string
+  complexId?: number
 }
 
 export const UpdateMatchActionsheet = ({
   matchPath,
   matchId,
+  datetime,
+  complexId,
   ...props
 }: UpdateMatchActionsheetProps) => {
   const t = useTranslate('match')
 
   const onPressUpdateField = () => {
-    router.navigate(routing.matchUpdateMatch.path(matchId))
+    router.navigate(
+      routing.matchUpdateField.path(matchId, { datetime, complexId })
+    )
     // a modif
     props.onClose?.()
   }
 
   const onPressUpdateMatchParam = () => {
-    router.navigate(routing.matchUpdateMatch.path(matchId))
+    router.navigate(routing.matchUpdateParam.path(matchId))
     // a modif
     props.onClose?.()
   }

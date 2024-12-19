@@ -2,59 +2,62 @@ import requests
 from django.conf import settings
 from django.core.cache import cache
 
+class Four_padel_user:
+    def __init__(self, id, email):
+        self.id = id
+        self.email = email
+
 class FourPadelAPIClient:
+    def __init__(self, id=None):
+        self.id = id
+        self.base_url = settings.FOUR_PADEL["BASE_URL"]
+        self.login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}"
+        self.booking_url = f"{self.base_url}{settings.FOUR_PADEL['BOOKING_ENDPOINT']}"
+        self.token = None
+
     SHARED_PARAMS = {
         "appId": 2
     }
     
-    TOKEN_CACHE_KEY = "four_padel_api_token"  # Clé pour le token dans le cache
     TOKEN_CACHE_TIMEOUT = 3600 * 24 * 30  # Durée de vie du token dans le cache (30j)
 
-    def __init__(self):
-        self.base_url = settings.FOUR_PADEL["BASE_URL"]
-        self.login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}"
-        self.booking_url = f"{self.base_url}{settings.FOUR_PADEL['BOOKING_ENDPOINT']}"
-        self.username = settings.FOUR_PADEL["USERNAME"]
-        self.password = settings.FOUR_PADEL["PASSWORD"]
-        self.token = None
 
-    def login(self):
-        """
-        Perform login to get a new token.
-        """
 
+    def login(self, username, password):
         headers = {
             "accept": "text/plain, */*",
             "content-type": "application/x-www-form-urlencoded"
         }
-
         params = {
             **self.SHARED_PARAMS
         }
-
         payload = {
-                "email": self.username,
-                "password": self.password,
-            }
+            "email": username,
+            "password": password
+        }
 
-        try:
-            response = requests.post(self.login_url, data=payload, headers=headers, params=params)
-            response.raise_for_status()
+        response = requests.post(self.login_url, data=payload, headers=headers, params=params)
+
+        if response.status_code == 200:
             data = response.json()
+            user = Four_padel_user(id=data.get('id'), email=data.get('email'))
             self.token = data.get("access_token")
-            cache.set(self.TOKEN_CACHE_KEY, self.token, timeout=self.TOKEN_CACHE_TIMEOUT)
-            return self.token
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Login failed: {e}")
+
+            cache.set(f"four_padel_token_{user.id}", self.token, self.TOKEN_CACHE_TIMEOUT)
+            
+            return user
+
+        # Lever une exception si la connexion échoue
+        response.raise_for_status()
         
     def get_token(self):
         """
-        Get the token from cache or perform a login if not available.
+        Récupère le token du cache ou lève une exception si non disponible.
         """
-        self.token = cache.get(self.TOKEN_CACHE_KEY)
-        if not self.token:  # If the token is not in the cache
-            self.token = self.login()
-        return self.token
+        token = cache.get(f"four_padel_token_{self.id}")
+        if not token:
+            raise ValueError("Four padel token not found")
+        return token
 
     def get_booking_rules(self, complex_id, date):
         """

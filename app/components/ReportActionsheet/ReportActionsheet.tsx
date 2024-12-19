@@ -5,7 +5,7 @@ import { ReportForm, ReportFormValues } from '../Forms'
 
 import { Actionsheet, ActionsheetProps } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
-import { prepareFile } from '@/utils/file'
+import { getArray8, prepareFile } from '@/utils/file'
 
 export type ReportActionsheetProps = ActionsheetProps
 
@@ -16,9 +16,10 @@ export const ReportActionsheet = ({ ...props }: ReportActionsheetProps) => {
     Sentry.withScope(async (scope) => {
       scope.clearAttachments()
       if (attachment) {
-        const file = await prepareFile(attachment)
+        const file = prepareFile(attachment)
+        const data = await getArray8(attachment.uri)
         scope.addAttachment({
-          data: file.array8,
+          data,
           filename: file.name,
           contentType: file.type,
         })

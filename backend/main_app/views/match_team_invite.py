@@ -5,7 +5,7 @@ from main_app.serializers import MatchTeamInviteSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins
 from main_app.business.match_team_invite import get_team_invite_requests, validate_team_invite_creation, validate_team_invite_destruction
-
+from main_app.exceptions import handle_exception
 
 class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.ModelViewSet):
     queryset = TeamInvite.objects.all()
@@ -38,7 +38,7 @@ class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.Model
             try:
                 validate_team_invite_creation(request, team)
             except Exception as e:
-                return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+                return handle_exception(e)
 
             return super().create(request)
     
@@ -62,6 +62,6 @@ class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.Model
         try:
             validate_team_invite_destruction(request, team_invite)
         except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return handle_exception(e)
 
         return super().destroy(request, *args, **kwargs)

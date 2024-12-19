@@ -38,7 +38,6 @@ export const InvitationList = ({
   }: ListRenderItemInfo<MatchTeamInvitationResponse>) => (
     <PlayerListItem
       {...item.user}
-      isRequest
       onPress={onPress ? () => onPress(item.user.id) : undefined}
       requestStatus={item.status}
       matchRequest={

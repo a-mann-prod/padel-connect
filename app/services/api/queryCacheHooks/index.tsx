@@ -1,4 +1,5 @@
 import { InfiniteData, QueryKey, useQueryClient } from '@tanstack/react-query'
+
 import { Entity } from '../types'
 
 type Obj<T> = { id?: number } & T
@@ -21,6 +22,9 @@ const isArray = <T,>(data: OldData<T>): data is Results<T> => {
 
 export const useQueryCache = () => {
   const queryClient = useQueryClient()
+
+  const getItem = <T,>(queryKey: QueryKey) =>
+    queryClient.getQueryData<T>(queryKey)
 
   const addItem = <T,>(
     queryKey: QueryKey,
@@ -87,6 +91,7 @@ export const useQueryCache = () => {
 
   const removeItem = <T,>(queryKey: QueryKey, id?: number) => {
     queryClient.setQueryData(queryKey, (oldData: OldData<T>) => {
+      console.log(queryKey, oldData)
       if (!oldData) return
 
       if (isInfiniteArray(oldData)) {
@@ -103,13 +108,16 @@ export const useQueryCache = () => {
           pages: updatedPages,
         }
       } else if (isArray(oldData)) {
+        const updatedData = oldData.results.filter((data) => data.id !== id)
+        return updatedData
       } else {
-        return undefined
+        return null
       }
     })
   }
 
   return {
+    getItem,
     addItem,
     updateItem,
     removeItem,

@@ -14,12 +14,13 @@ class BookingView(APIView):
     """
     View to fetch booking from an 4Padel API and expose them.
     """
-
     permission_classes = [IsAuthenticated]
 
 
     def get(self, request, *args, **kwargs):
-        client = FourPadelAPIClient()
+        user = request.user
+        print(user.four_padel_id)
+        client = FourPadelAPIClient(id=user.four_padel_id)
 
         date = request.query_params.get('date')
         complex_id = request.query_params.get('complex')

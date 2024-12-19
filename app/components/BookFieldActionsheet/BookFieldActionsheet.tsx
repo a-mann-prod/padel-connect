@@ -27,7 +27,10 @@ export const BookFieldActionsheet = ({
               key={field?.id}
               title={field?.name}
               durations={field.durations}
-              onPress={(duration) => onButtonPress({ ...field, duration })}
+              onPress={(duration) => {
+                props.onClose?.()
+                onButtonPress({ ...field, duration })
+              }}
             />
           ))}
         </HStack>
@@ -64,7 +67,7 @@ const FieldItem = ({ title, durations, onPress }: FieldItemProps) => {
         <Text>{title}</Text>
         <HStack gap="$2">
           {durations.map((duration) => (
-            <Pressable onPress={() => onPress(duration)}>
+            <Pressable key={duration} onPress={() => onPress(duration)}>
               <Box
                 variant="backgroundColored"
                 rounded="$lg"

@@ -68,7 +68,7 @@ export const useInfiniteMatchesInvitations = (
 ) =>
   useInfiniteQuery({
     ...options,
-    queryKey: ['matches', 'invitations', 'infinite', params],
+    queryKey: ['matches', 'invitations', 'infinite'],
     queryFn: ({ pageParam }) =>
       getInfiniteMatchesInvitationsFn(params, pageParam),
     getNextPageParam: (lastPage) => lastPage.next_page,
@@ -108,8 +108,6 @@ export const useCreateMatch = ({
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
 
-      if (data.is_private) return
-
       const querykey = findMatchQK(data.datetime)
 
       if (querykey) {
@@ -127,7 +125,7 @@ export const useCreateMatch = ({
 
 export const useUpdateMatch = ({
   options,
-}: UseMutationProps<MatchResponse, UpdateMatchParams>) => {
+}: UseMutationProps<MatchResponse, UpdateMatchParams> = {}) => {
   const findMatchQK = useFindMatchQueryKey()
   const onError = useHandleError()
   const queryCache = useQueryCache()
@@ -138,8 +136,6 @@ export const useUpdateMatch = ({
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
       queryCache.updateItem(['matches', variables.id], data)
-
-      if (data.is_private) return
 
       const querykey = findMatchQK(data.datetime)
 

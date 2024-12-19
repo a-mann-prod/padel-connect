@@ -28,7 +28,12 @@ export default WithAuth(
       params: { matchId },
     })
 
-    const { mutate: manageInvitation, isPending } = useManageMatchInvitation()
+    const { mutate: manageInvitation, isPending } = useManageMatchInvitation({
+      options: {
+        onSuccess: (_, variables) =>
+          variables.action === 'accept' && router.canGoBack() && router.back(),
+      },
+    })
 
     if (isLoading) return <Loader />
 

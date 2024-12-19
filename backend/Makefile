@@ -18,3 +18,9 @@ superuser:
 
 freeze:
 		pip freeze > requirements.txt
+
+translations:
+		docker exec -it api sh -c "python manage.py makemessages -l fr && python manage.py makemessages -l en"
+
+compile-translations:
+		docker exec -it api sh -c "python manage.py compilemessages"

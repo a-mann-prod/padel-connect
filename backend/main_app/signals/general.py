@@ -60,33 +60,6 @@ def handle_match_creation(sender, instance, created, **kwargs):
         Conversation.objects.create(match=instance)
         Team.objects.create(match=instance, user=instance.user, is_ready=True)
         
-        if instance.is_private:
-            return
-
-        users = CustomUser.objects.filter(is_new_match_notification_enabled=True).exclude(id=instance.user.id)
-
-        for user in users:
-            match_filter = user.match_filter
-
-            if match_filter.level_min != None and match_filter.level_max != None:
-                if not (match_filter.level_min <= instance.level <= match_filter.level_max):
-                        continue
-                
-
-            if match_filter.complex != None:
-                if match_filter.complex != instance.complex:
-                    continue
-
-            user_language = user.profile.language
-            with translation.override(user_language):
-                Notification.objects.create(
-                    title=_("New match available! 🎉"),
-                    message=_("New match await you! Ready to give it your all? 💪"),
-                    type= enums.NotificationType.NEW_MATCH_REQUEST,
-                    user=user,
-                    match=instance
-                )
-        
 
 @receiver(post_save, sender=Notification)
 def handle_notification(sender, instance, created, **kwargs):

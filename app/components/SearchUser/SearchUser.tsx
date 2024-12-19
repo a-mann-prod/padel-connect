@@ -13,6 +13,7 @@ import {
   useInfiniteFavoriteUsers,
   useInfiniteProfiles,
 } from '@/services/api'
+import { DefaultProfileResponse } from '@/services/api/types'
 
 export type SearchUserProps = {
   onSelectButtonPress?: (id: number) => void
@@ -20,7 +21,7 @@ export type SearchUserProps = {
   selectedUserIds?: number[]
   displayFavHeaderButton?: boolean
   maxSelectedUserIds?: number
-  disabledUserIds?: number[]
+  disableUser?: (user: DefaultProfileResponse) => boolean
   displaySearchBar?: boolean
 }
 
@@ -30,7 +31,7 @@ export const SearchUser = ({
   selectedUserIds,
   displayFavHeaderButton = true,
   maxSelectedUserIds,
-  disabledUserIds = [],
+  disableUser,
   displaySearchBar = true,
 }: SearchUserProps) => {
   const { data: me } = useMe()
@@ -117,8 +118,8 @@ export const SearchUser = ({
       }
       onPress={onPress ? () => onPress(item.id) : undefined}
       isSelected={selectedUserIds?.includes(item.id)}
-      isSelectDisabled={isSelectDisabled(item.id)}
-      isDisabled={disabledUserIds.includes(item.id)}
+      isSelectDisabled={disableUser?.(item) || isSelectDisabled(item.id)}
+      isDisabled={disableUser?.(item) || isSelectDisabled(item.id)}
     />
   )
 

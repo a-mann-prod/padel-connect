@@ -31,7 +31,6 @@ services:
       - api_email_host_password
       - api_secret_key
       - push_notif_token
-      - four_padel_password
 
   ws:
     extends:
@@ -106,8 +105,6 @@ secrets:
     file: ./secrets/api_secret_key.txt
   push_notif_token:
     file: ./secrets/push_notif_token.txt
-  four_padel_password:
-    file: ./secrets/four_padel_password.txt
 
 volumes:
   db_data:

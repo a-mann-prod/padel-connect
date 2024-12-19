@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { SearchUser, WithAuth, WithMatch } from '@/components'
 import { Button, Container } from '@/designSystem'
 import { useCreateMatchTeam, useMatch } from '@/services/api'
-import { DefaultProfileResponse } from '@/services/api/types'
+import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
+import { hasAdaptedLevel } from '@/utils/user'
 
 export default WithAuth(
   WithMatch(() => {
@@ -28,21 +29,28 @@ export default WithAuth(
 
     const [userIds, setUserIds] = useState<number[]>([])
 
-    const players = match?.teams.reduce<
-      Pick<
-        DefaultProfileResponse,
-        'id' | 'avatar_url' | 'first_name' | 'last_name'
-      >[]
-    >((acc, curr) => [...acc, ...curr.participants], [])
+    if (!match) return
 
-    const maxSelectedUserIds = match?.is_competitive
+    const players = match.teams.reduce<DefaultMinimalProfileResponse[]>(
+      (acc, curr) => [...acc, ...curr.participants],
+      []
+    )
+
+    const maxSelectedUserIds = match.is_competitive
       ? 1
       : 3 - (players?.length || 0)
 
     return (
       <Container>
         <SearchUser
-          disabledUserIds={players?.map((p) => p.id)}
+          disableUser={(user) =>
+            !!players?.some(({ id }) => id === user.id) ||
+            (!match.is_open_to_all_level &&
+              !hasAdaptedLevel(
+                user.calculated_level,
+                match.calculated_level_range
+              ))
+          }
           selectedUserIds={userIds}
           maxSelectedUserIds={maxSelectedUserIds}
           onPress={(id) => router.navigate(routing.matchUser.path(matchId, id))}

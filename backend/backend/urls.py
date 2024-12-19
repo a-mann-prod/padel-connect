@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, BookingView
+from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, BookingView, FourPadelLoginView
 from chat.views import MatchMessagesView, MatchConversationView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -42,6 +42,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+
+    path('login/', FourPadelLoginView.as_view(), name='four-padel-login'),
 
     path('me/match_filter/', MeMatchFilterView.as_view(), name='me-match-filter'),
 

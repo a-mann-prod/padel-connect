@@ -60,7 +60,7 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
         />
         <Divider title={tGlobal('or')} />
         <Link href={{ pathname: routing.authRegister.path(), params }} asChild>
-          <Button title={t('register')} variant="outline" />
+          <Button title={t('register')} variant="outline" isDisabled />
         </Link>
       </VStack>
     </Center>

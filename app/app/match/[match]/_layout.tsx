@@ -17,11 +17,10 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name={routing.matchUpdate.name}
+        name={routing.matchUpdateField.name}
         options={{
-          title: '',
           presentation: 'containedModal',
-          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -46,7 +45,7 @@ export default () => {
       <Stack.Screen
         name={routing.matchManageRequest.name}
         options={{
-          title: t('manageRequest'),
+          headerShown: false,
         }}
       />
       <Stack.Screen

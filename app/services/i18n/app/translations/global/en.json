@@ -72,6 +72,7 @@
   "message": "Message",
   "navigation": {
     "addPartner": "Choose my partner",
+    "addPartners": "Choose partner(s)",
     "avatar": "Avatar",
     "bookingDetails": "Booking details",
     "community": "Community",
@@ -105,6 +106,7 @@
     "shareMatch": "Share match",
     "termsOfUse": "Terms of use",
     "tournaments": "Incoming tournaments",
+    "updateMatch": "Update match",
     "updatePersonalInformation": "Personal information",
     "updatePreferences": "Preferences"
   },

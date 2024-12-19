@@ -79,6 +79,7 @@ export const FiltersForm = ({
             formControlProps={{ title: tGlobal('matchType.title') }}
             name="type"
             items={[{ label: tGlobal('all'), value: '' }, ...typeItems]}
+            isDisabled
           />
         </VStack>
       </FormProvider>

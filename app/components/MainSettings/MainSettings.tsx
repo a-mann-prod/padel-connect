@@ -18,13 +18,13 @@ export const MainSettings = () => {
 
   const { deleteAvatar, isPending, updateAvatar } = useManageMeAvatar()
 
-  const handleAvatarChange = async (value: ImageAsset | null) => {
+  const handleAvatarChange = (value: ImageAsset | null) => {
     if (!value) {
       deleteAvatar()
       return
     }
 
-    const file = await prepareFile(value)
+    const file = prepareFile(value)
     updateAvatar(file)
   }
 

@@ -1,7 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router'
 import { Linking } from 'react-native'
 
-import { MatchForm, WithMatch, matchFormServices } from '@/components'
+import { MatchForm, matchFormServices } from '@/components'
 import { Button, Container } from '@/designSystem'
 import {
   MatchResponse,
@@ -15,7 +15,7 @@ import { routing } from '@/services/routing'
 
 const { formatToParams, formatToFormValues } = matchFormServices
 
-export default WithMatch(() => {
+export default () => {
   const t = useTranslate('match')
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
@@ -32,7 +32,7 @@ export default WithMatch(() => {
   const { mutate, isPending } = useUpdateMatch({
     options: {
       onSuccess: () => {
-        router.back()
+        router.canGoBack() && router.back()
       },
     },
   })
@@ -77,4 +77,4 @@ export default WithMatch(() => {
       )}
     </Container>
   )
-})
+}

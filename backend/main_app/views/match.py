@@ -6,8 +6,6 @@ from main_app.filters import MatchFilter
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.utils.timezone import now
-from main_app.business.match_team_invite import team_invite_request_answer
-from django.shortcuts import get_object_or_404
 
 
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
@@ -23,6 +21,21 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+    # def update(self, request, *args, **kwargs):
+    #     # Cette méthode remplace la méthode `perform_update` pour effectuer la mise à jour
+    #     instance = self.get_object()  # Récupérer l'instance de l'objet à mettre à jour
+
+    #     # On met à jour l'objet avec les nouvelles données
+    #     serializer = self.get_serializer(instance, data=request.data, partial=True)
+    #     serializer.is_valid(raise_exception=True)
+
+    #     # Sauvegarder l'objet avec les nouvelles données
+    #     self.perform_update(serializer)
+
+    #     # Retourner la réponse avec le sérialiseur complet pour inclure le champ `complex` complet
+    #     return Response(MatchDetailSerializer(instance).data)
         
 
     @action(detail=False, methods=['get'], url_path='incoming')

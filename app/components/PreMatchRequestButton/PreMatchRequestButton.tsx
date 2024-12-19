@@ -31,9 +31,10 @@ export const PreMatchRequestButton = ({
 
   const getTitle = () => {
     let title = t('joinRequest')
-    if (isRequesting) title = t('seeRequest')
 
     if (hasMatchInvitations) title = t('seeInvitations')
+
+    if (isRequesting) title = t('seeRequest')
 
     if (inadaptedLevel && !hasSomething)
       return `${title} ${t('inadaptedLevel')}`

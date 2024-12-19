@@ -219,10 +219,38 @@ export const routing = {
   },
 
   // match
-  matchUpdate: {
+
+  // update
+  matchUpdateField: {
     name: 'update',
-    path: (matchId: string | number) => `${root.match.path(matchId)}/update`,
+    path: (
+      matchId: string | number,
+      { datetime, complexId }: { datetime?: string; complexId?: number } = {}
+    ) => {
+      // TODO a refacto pour la suite si besoin
+      const queryParams = []
+
+      if (datetime) {
+        queryParams.push(`datetime=${datetime}`)
+      }
+
+      if (complexId) {
+        queryParams.push(`complexId=${complexId}`)
+      }
+
+      // Construire la URL avec les query params, s'il y en a
+      const basePath = `${root.match.path(matchId)}/update`
+      return queryParams.length
+        ? `${basePath}?${queryParams.join('&')}`
+        : basePath
+    },
   },
+  matchUpdateParam: {
+    name: 'param',
+    path: (matchId: string | number) =>
+      `${root.match.path(matchId)}/update/param`,
+  },
+
   matchUser: {
     name: 'user/[user]',
     path: (matchId: string | number, userId: string | number) =>
@@ -237,11 +265,19 @@ export const routing = {
     path: (matchId: string | number) =>
       `${root.match.path(matchId)}/join-request`,
   },
+
+  // request
   matchManageRequest: {
     name: 'manage-request',
     path: (matchId: string | number) =>
       `${root.match.path(matchId)}/manage-request`,
   },
+  matchManageRequestAddPartners: {
+    name: 'add-partners',
+    path: (matchId: string | number) =>
+      `${root.match.path(matchId)}/manage-request/add-partners`,
+  },
+
   matchManageInvitations: {
     name: 'manage-invitations',
     path: (matchId: string | number) =>

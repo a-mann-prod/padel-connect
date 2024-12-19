@@ -214,7 +214,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('fr', 'French')
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 
 TIME_ZONE = 'UTC'
 
@@ -264,7 +273,5 @@ CELERY_TASK_SERIALIZER = 'json'
 FOUR_PADEL = {
     "BASE_URL": env('FOUR_PADEL_BASE_URL'),
     "BOOKING_ENDPOINT": env('FOUR_PADEL_BOOKING_ENDPOINT'),
-    "LOGIN_ENDPOINT": env('FOUR_PADEL_LOGIN_ENDPOINT'),
-    "USERNAME": env('FOUR_PADEL_USERNAME'),
-    "PASSWORD": get_secret_file("FOUR_PADEL_PASSWORD_FILE")
+    "LOGIN_ENDPOINT": env('FOUR_PADEL_LOGIN_ENDPOINT')
 }

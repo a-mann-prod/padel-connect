@@ -1,5 +1,6 @@
 export * from './AvatarForm/AvatarForm'
 export * from './AvatarForm/AvatarForm.services'
+export * from './BookingMatchFieldForm/BookingMatchFieldForm'
 export * from './EmailChangeForm/EmailChangeForm'
 export * from './EmailChangeForm/EmailChangeForm.services'
 export * from './FiltersForm/FiltersForm'

@@ -17,7 +17,7 @@ const mapTypeToIcon: Record<
 > = {
   NEW_MESSAGE: 'FAS-envelope',
   NEW_MATCH: 'FAS-baseball',
-  NEW_MATCH_REQUEST: 'FAS-circle-question',
+  NEW_MATCH_INVITATION: 'FAS-envelope',
   MATCH_REQUEST_RESPONSE_ACCEPTED: 'FAS-circle-check',
   MATCH_REQUEST_RESPONSE_REFUSED: 'FAS-circle-xmark',
 }

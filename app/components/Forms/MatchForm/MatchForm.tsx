@@ -81,6 +81,7 @@ export const MatchForm = ({
               title: t('privateMatch'),
               helpMessage: t('privateMatchHelpMessage'),
             }}
+            isDisabled
           />
           <FormCheckboxControlled
             name="is_competitive"
@@ -88,6 +89,7 @@ export const MatchForm = ({
               title: t('competitiveMatch'),
               helpMessage: t('competitiveMatchHelpMessage'),
             }}
+            isDisabled
           />
           {isCompetitive && (
             <>

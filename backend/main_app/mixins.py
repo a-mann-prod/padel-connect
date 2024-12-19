@@ -2,9 +2,13 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
+# add create ?
+DETAIL_ACTIONS = ['retrieve', 'update', 'partial_update']
+
+
 class CustomModelViewSet:
     def get_serializer_class(self):
-        if self.action == 'retrieve':
+        if self.action in DETAIL_ACTIONS:
             if hasattr(self, 'detail_serializer_class'):
                 return self.detail_serializer_class
             

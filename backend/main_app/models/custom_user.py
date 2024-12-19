@@ -35,9 +35,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     push_token = models.CharField(max_length=255, null=True, blank=True)
     favorite_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favorited_by', blank=True)
     language = models.CharField(max_length=10, choices=enums.Language.choices, null=True, blank=True)
-    is_new_match_notification_enabled = models.BooleanField(default=False)
-    is_new_message_notification_enabled = models.BooleanField(default=False)
 
+    # Notifications
+    is_new_match_notification_enabled = models.BooleanField(default=True)
+    is_new_message_notification_enabled = models.BooleanField(default=True)
+
+    #four_padel
+    four_padel_id = models.IntegerField(unique=True, null=True)
+    four_padel_last_sync = models.DateTimeField(null=True, blank=True)
 
     objects = CustomUserManager()
 

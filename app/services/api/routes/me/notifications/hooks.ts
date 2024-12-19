@@ -44,7 +44,10 @@ export const useReadNotification = ({
     ...options,
     mutationFn: readNotificationFn,
     onSuccess: (data, variables, context) => {
-      querycache.updateItem(['notifications', 'infinite'], { is_read: true })
+      querycache.updateItem(['notifications', 'infinite'], {
+        id: variables.id,
+        is_read: true,
+      })
       queryClient.setQueryData(['notifications', 'count'], (oldData: number) =>
         oldData ? oldData - 1 : oldData
       )

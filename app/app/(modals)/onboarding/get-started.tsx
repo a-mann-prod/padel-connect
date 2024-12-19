@@ -39,7 +39,7 @@ export default () => {
   const { mutateAsync: updateMeProfile, isPending: isPendingUpdateMeProfile } =
     useUpdateMeProfile()
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     const promises = [
       updateMeProfile({
         ...personalInfo,
@@ -48,9 +48,7 @@ export default () => {
       }),
       updateMe({ is_onboarding_completed: true }),
       ...(filters ? [updateMatchFilters(formatToParams(filters))] : []),
-      ...(avatar?.avatar
-        ? [updateAvatarMe(await prepareFile(avatar.avatar))]
-        : []),
+      ...(avatar?.avatar ? [updateAvatarMe(prepareFile(avatar.avatar))] : []),
     ]
 
     Promise.all(promises).then(() => router.replace('/'))

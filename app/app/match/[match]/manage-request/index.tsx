@@ -42,11 +42,6 @@ export default WithAuth(
           refreshing={isRefetching}
         />
         <Button
-          title={t('addPlayer')}
-          // isDisabled={(matchTeamRequest?.participants.length || 0) > 3}
-          // onPress={() => router.navigate(routing.match)}
-        />
-        <Button
           title={t('cancelRequest')}
           icon="FAS-xmark"
           action="negative"

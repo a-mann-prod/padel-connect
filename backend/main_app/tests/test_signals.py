@@ -48,7 +48,7 @@ def test_handle_match_creation(mock_conversation_create, mock_match_request_crea
     mock_notification_create.assert_called_once_with(
         title="New Match Created",
         message="A new match has been created.",
-        type=enums.NotificationType.NEW_MATCH_REQUEST,
+        type=enums.NotificationType.NEW_MATCH_INVITATION,
         user=user,
         match=match
     )

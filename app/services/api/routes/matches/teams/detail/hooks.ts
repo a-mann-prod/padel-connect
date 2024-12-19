@@ -1,11 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { useHandleError } from '@/hooks/useHandleError'
-import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
-import { useTranslate } from '@/services/i18n'
 
+import { useInvalidateQuery } from '@/hooks/useInvalidateQuery'
 import { UseMutationProps, UseQueryProps } from '@/services/api/queryHooks'
+import { useFindMatchQueryKey } from '@/services/api/utills'
+import { MatchResponse } from '../../detail'
 import { MatchTeamRequestResponse } from './entities'
 import {
   createMatchTeamFn,
@@ -34,30 +35,34 @@ export const useMatchTeamRequest = ({
 export const useCreateMatchTeam = ({
   options,
 }: UseMutationProps<MatchTeamRequestResponse, CreateMatchTeamParams> = {}) => {
-  const t = useTranslate('match')
-  const onSuccess = useHandleSuccess()
   const onError = useHandleError()
   const queryCache = useQueryCache()
+  const invalidateQuery = useInvalidateQuery()
+  const findMatchQK = useFindMatchQueryKey()
 
   return useMutation({
     ...options,
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
-      // auto add team to match
-      // if (!data.invitations.length) {
-      //   const cachedMatch = qc.getQueryData<MatchResponse>(['matches', variables.matchId])
-      //   queryCache.updateItem(['matches', variables.matchId], {...cachedMatch, teams: [...cachedMatch?.teams, data]})
-
-      //   //update match
-      //   //update matches
-      // }
 
       queryCache.updateItem(
         ['matches', variables.matchId, 'teams', 'request'],
         data
       )
 
-      onSuccess({ title: t('requestCreated') })
+      // update current match
+      invalidateQuery(['matches', variables.matchId])
+
+      // update match listing
+      const match = queryCache.getItem<MatchResponse>([
+        'matches',
+        variables.matchId,
+      ])
+
+      if (match) {
+        const matchQueryKey = findMatchQK(match.datetime)
+        matchQueryKey && invalidateQuery(matchQueryKey)
+      }
     },
     onError,
     mutationFn: createMatchTeamFn,
@@ -67,19 +72,32 @@ export const useCreateMatchTeam = ({
 export const useDeleteMatchTeam = ({
   options,
 }: UseMutationProps<void, DeleteMatchTeamParams> = {}) => {
-  const t = useTranslate('match')
-  const onSuccess = useHandleSuccess()
   const onError = useHandleError()
   const queryCache = useQueryCache()
+  const invalidateQuery = useInvalidateQuery()
+  const findMatchQK = useFindMatchQueryKey()
 
   return useMutation({
     ...options,
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
 
-      queryCache.removeItem(['matches', variables.matchId, 'teams', 'request'])
+      // update matchRequest
+      invalidateQuery(['matches', variables.matchId, 'teams', 'request'])
 
-      onSuccess({ title: t('requestCanceled') })
+      // update current match
+      invalidateQuery(['matches', variables.matchId])
+
+      // update match listing
+      const match = queryCache.getItem<MatchResponse>([
+        'matches',
+        variables.matchId,
+      ])
+
+      if (match) {
+        const matchQueryKey = findMatchQK(match.datetime)
+        matchQueryKey && invalidateQuery(matchQueryKey)
+      }
     },
     onError,
     mutationFn: deleteMatchTeamFn,

@@ -35,6 +35,7 @@ export const useSettingsItems = () => {
             onPress: () =>
               router.navigate(routing.profileSettingsEmailChange.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
+            isDisabled: true,
           },
           {
             title: t('general.passwordChange'),
@@ -42,6 +43,7 @@ export const useSettingsItems = () => {
             onPress: () =>
               router.navigate(routing.profileSettingsPasswordChange.path()),
             rightComponent: () => <Icon name="FAS-chevron-right" size="md" />,
+            isDisabled: true,
           },
           {
             title: t('general.updatePersonalInformation'),

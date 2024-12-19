@@ -15,15 +15,15 @@ import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
 import {
+  MatchInvitationsResponse,
+  useDeleteMatchTeam,
   useInfiniteMatchInvitations,
   useMatchTeamRequest,
 } from '@/services/api'
-import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
+import { hasAdaptedLevel } from '@/utils/user'
 
 export default WithMatch(() => {
-  const t = useTranslate('match')
-
   const { data: me } = useMe()
 
   const pathname = usePathname()
@@ -32,7 +32,7 @@ export default WithMatch(() => {
   const isJustCreated =
     local?.isJustCreated === 'undefined' ? false : Boolean(local?.isJustCreated)
 
-  const [showUpdateActionsheet, setShowUpdateActionsheet] = useState()
+  const [showUpdateActionsheet, setShowUpdateActionsheet] = useState(false)
   const [showShareActionsheet, setShowShareActionsheet] =
     useState(!!isJustCreated)
 
@@ -48,15 +48,28 @@ export default WithMatch(() => {
     isMatchPassed,
   } = useManageMatch(matchId)
 
-  const { data: matchTeamRequest, isLoading: isLoadingMatchTeamRequest } =
-    useMatchTeamRequest({ params: { id: matchId } })
+  const {
+    data: matchTeamRequest,
+    isLoading: isLoadingMatchTeamRequest,
+    refetch: refetchMatchTeamRequest,
+  } = useMatchTeamRequest({ params: { id: matchId } })
+
+  const { mutate: deleteMatchTeam, isPending: isPendingDeleteMatchTeam } =
+    useDeleteMatchTeam()
 
   // disabled if match_request (cannot get a team and being invited)
-  const { data: matchInvitations, isLoading: isLoadingMatchInvitations } =
-    useInfiniteMatchInvitations({
-      params: { matchId },
-      options: { enabled: !matchTeamRequest },
-    })
+  const {
+    data: matchInvitationsPages,
+    isLoading: isLoadingMatchInvitations,
+    refetch: refetchMatchInvitations,
+  } = useInfiniteMatchInvitations({
+    params: { matchId },
+    options: { enabled: !matchTeamRequest },
+  })
+
+  const matchInvitations = matchInvitationsPages?.pages.reduce<
+    MatchInvitationsResponse['results']
+  >((acc, curr) => [...acc, ...curr.results], [])
 
   useHeaderButton(
     [
@@ -69,7 +82,8 @@ export default WithMatch(() => {
         icon: 'FAS-pencil',
         onPress: () =>
           match?.is_reserved
-            ? match?.id && router.navigate(routing.matchUpdate.path(match.id))
+            ? match?.id &&
+              router.navigate(routing.matchUpdateParam.path(match.id))
             : setShowUpdateActionsheet(true),
         condition: isOwner && !isMatchPassed,
       },
@@ -88,11 +102,10 @@ export default WithMatch(() => {
   //   .filter(({ has_payed }) => !!has_payed)
   //   .map(({ user_id }) => user_id) || []
 
-  const [level_min, level_max] = match.calculated_level_range
-  const inadaptedLevel = !me?.calculated_level
-    ? true
-    : !match.is_open_to_all_level &&
-      (me.calculated_level < level_min || me.calculated_level > level_max)
+  const inadaptedLevel = !hasAdaptedLevel(
+    me?.calculated_level,
+    match.calculated_level_range
+  )
 
   return (
     <>
@@ -101,7 +114,11 @@ export default WithMatch(() => {
           refreshControl={
             <RefreshControl
               refreshing={isRefetching}
-              onRefresh={() => refetch()}
+              onRefresh={() => {
+                refetch()
+                refetchMatchInvitations()
+                refetchMatchTeamRequest()
+              }}
             />
           }
         >
@@ -119,6 +136,11 @@ export default WithMatch(() => {
                 isPlayer={isPlayer}
                 isReserved={match.is_reserved}
                 hasPayed={hasPayed}
+                isLeaveButtonLoading={isPendingDeleteMatchTeam}
+                onLeaveButtonPress={() =>
+                  matchTeamRequest &&
+                  deleteMatchTeam({ matchId, id: matchTeamRequest.id })
+                }
               />
             )}
 
@@ -129,7 +151,7 @@ export default WithMatch(() => {
                 }
                 matchId={matchId}
                 isRequesting={!!matchTeamRequest?.id}
-                hasMatchInvitations={!!matchInvitations?.pages.length}
+                hasMatchInvitations={!!matchInvitations?.length}
                 inadaptedLevel={inadaptedLevel}
               />
             )}
@@ -146,6 +168,8 @@ export default WithMatch(() => {
         matchId={matchId}
         matchPath={pathname}
         isOpen={showUpdateActionsheet}
+        datetime={match.datetime}
+        complexId={match.complex.id}
         onClose={() => setShowUpdateActionsheet(false)}
       />
     </>

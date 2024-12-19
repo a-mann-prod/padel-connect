@@ -10,6 +10,9 @@ class MeNotificationViewSet(mixins.BlockCRUDMixin, viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsOwner]
 
+    block_list = False
+
+
     def get_queryset(self):
         """Retrieve only notifications for the authenticated user."""
         return Notification.objects.filter(user=self.request.user)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 16:08+0200\n"
+"POT-Creation-Date: 2024-12-19 17:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main_app/signals.py:43
+#: main_app/signals/notifications.py:34
 msgid "New match available! 🎉"
-msgstr "New match available! 🎉"
+msgstr ""
 
-#: main_app/signals.py:44
+#: main_app/signals/notifications.py:35
 msgid "New match await you! Ready to give it your all? 💪"
-msgstr "New match await you! Ready to give it your all? 💪"
+msgstr ""
+
+#: main_app/signals/notifications.py:57
+msgid "New invitation! 🎉"
+msgstr ""
+
+#: main_app/signals/notifications.py:58
+#, python-format
+msgid ""
+"%(captain_name)s has invited you to play 💪. Respond as soon as possible!"
+msgstr ""
 
 #: venv/lib/python3.9/site-packages/_pytest/config/argparsing.py:474
 #, python-format
@@ -1531,4 +1541,8 @@ msgstr ""
 #: venv/lib/python3.9/site-packages/kombu/transport/qpid.py:1334
 #, python-format
 msgid "Unable to connect to qpid with SASL mechanism %s"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/timezone_field/rest_framework.py:10
+msgid "A valid timezone is required."
 msgstr ""

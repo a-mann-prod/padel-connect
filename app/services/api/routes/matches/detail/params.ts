@@ -49,7 +49,7 @@ export type CreateMatchParams = {
   is_decisive_point?: boolean
 }
 
-export type UpdateMatchParams = CreateMatchParams & {
+export type UpdateMatchParams = Partial<CreateMatchParams> & {
   id: number
 }
 
