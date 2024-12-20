@@ -115,7 +115,7 @@ const RootLayoutNav = () => {
     me ? () => setShowReportActionsheet(true) : undefined
   )
 
-  if (!isUpdateAvailable) {
+  if (isUpdateAvailable) {
     return <UpdateLoader />
   }
 
