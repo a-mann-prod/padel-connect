@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-19 17:09+0000\n"
+"POT-Creation-Date: 2024-12-19 22:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main_app/signals/notifications.py:34
+#: main_app/signals/notifications.py:32
 msgid "New match available! 🎉"
 msgstr ""
 
-#: main_app/signals/notifications.py:35
+#: main_app/signals/notifications.py:33
 msgid "New match await you! Ready to give it your all? 💪"
 msgstr ""
 
@@ -33,7 +33,25 @@ msgstr ""
 #: main_app/signals/notifications.py:58
 #, python-format
 msgid ""
-"%(captain_name)s has invited you to play 💪. Respond as soon as possible!"
+"%(team_captain_name)s has invited you to play 💪. Respond as soon as "
+"possible!"
+msgstr ""
+
+#: main_app/signals/notifications.py:88
+msgid "New players! 🎉"
+msgstr ""
+
+#: main_app/signals/notifications.py:89
+msgid "New players have joined your match 💪"
+msgstr ""
+
+#: main_app/signals/notifications.py:119
+msgid "New invitation response !"
+msgstr ""
+
+#: main_app/signals/notifications.py:120
+#, python-format
+msgid "%(user_first_name)s has %(status)s your invitation"
 msgstr ""
 
 #: venv/lib/python3.9/site-packages/_pytest/config/argparsing.py:474

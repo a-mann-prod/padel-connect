@@ -20,6 +20,8 @@ const mapTypeToIcon: Record<
   NEW_MATCH_INVITATION: 'FAS-envelope',
   MATCH_REQUEST_RESPONSE_ACCEPTED: 'FAS-circle-check',
   MATCH_REQUEST_RESPONSE_REFUSED: 'FAS-circle-xmark',
+  INVITATION_RESPONSE: 'FAS-envelope-open-text',
+  NEW_PLAYERS: 'FAS-users',
 }
 
 export const NotificationListItem = ({

@@ -3,18 +3,17 @@ from django.dispatch import receiver
 from main_app.models import Profile, MatchFilter, CustomUser, Match, Notification, enums, Team, TeamInvite
 from chat.models import Conversation
 from main_app.tasks import async_send_notification
-from django.conf import settings
 
-from django.utils import translation
 from django.utils.translation import gettext as _
 
 @receiver(post_save, sender=TeamInvite)
 def handle_team_update(sender, instance, created, **kwargs):
+
     if not created:
         team = instance.team
-
         accepted_invitations = team.invitations.filter(status=enums.RequestStatus.ACCEPTED)
 
+        # Si il n'y a plus d'invitations en cours
         if not team.invitations.filter(status=enums.RequestStatus.PENDING).exists():
                 
             # Si 2 invitations acceptées -> On passe la team à "is_ready" = True
@@ -33,7 +32,7 @@ def handle_user_creation(sender, instance, created, **kwargs):
         MatchFilter.objects.create(user=instance)
 
 @receiver(post_save, sender=Team)
-def handle_team_creation(sender, instance, created, **kwargs):
+def handle_team(sender, instance, created, **kwargs):    
     if created:
         TeamInvite.objects.create(team=instance, user=instance.user, status=enums.RequestStatus.ACCEPTED)
 

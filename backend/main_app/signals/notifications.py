@@ -1,6 +1,6 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-from main_app.models import CustomUser, Match, Notification, enums, Team
+from main_app.models import CustomUser, Match, Notification, enums, Team, TeamInvite
 
 from django.utils import translation
 from django.utils.translation import gettext as _
@@ -40,22 +40,85 @@ def handle_match_creation(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Team)
 def handle_team_creation(sender, instance, created, **kwargs):
     if created:
-        captain_profile = instance.user.profile
+        team_captain = instance.user
         send_invitations = getattr(instance, "_send_invitations", [])
+        match = instance.match
+
 
         if not send_invitations:
             return
 
         users = CustomUser.objects.filter(pk__in=send_invitations)
-        match = instance.match
 
         for user in users:
             user_language = user.language
             with translation.override(user_language):
                 Notification.objects.create(
                     title=_("New invitation! 🎉"),
-                    message=_("%(captain_name)s has invited you to play 💪. Respond as soon as possible!") % {'captain_name': captain_profile.first_name},
+                    message=_("%(team_captain_name)s has invited you to play 💪. Respond as soon as possible!") % {'team_captain_name': team_captain.profile.first_name},
                     type= enums.NotificationType.NEW_MATCH_INVITATION,
                     user=user,
+                    associated_data={"url": f"/match/{match.pk}"}
+                )
+
+
+
+# FONCTIONNE MAIS BANCAL UN PEU
+
+
+# Permet de récupérer l'état précédent de la Team
+@receiver(pre_save, sender=Team)
+def previous_team(sender, instance, **kwargs):
+    if instance.pk:
+        previous_instance = Team.objects.filter(pk=instance.pk).first()
+        if previous_instance:
+            instance._previous_is_ready = previous_instance.is_ready
+    else:
+        instance._previous_is_ready = None
+@receiver(post_save, sender=Team)
+def handle_team_ready(sender, instance, created, **kwargs):
+    match = instance.match
+    match_captain = match.user      
+
+    previous_is_ready = getattr(instance, '_previous_is_ready', None)
+
+    if previous_is_ready is False and instance.is_ready:
+        with translation.override(match_captain.language):
+            Notification.objects.create(
+                title=_("New players! 🎉"),
+                message=_("New players have joined your match 💪"),
+                type= enums.NotificationType.NEW_PLAYERS,
+                user=match_captain,
+                associated_data={"url": f"/match/{match.pk}"}
+            )
+
+
+# Permet de récupérer l'état précédent de la TeamInvite
+@receiver(pre_save, sender=TeamInvite)
+def previous_team_invite(sender, instance, **kwargs):
+    if instance.pk:
+        previous_instance = TeamInvite.objects.filter(pk=instance.pk).first()
+        if previous_instance:
+            instance._previous_status = previous_instance.status
+    else:
+        instance._previous_status = None
+@receiver(post_save, sender=TeamInvite)
+def handle_team_invite(sender, instance, created, **kwargs):
+    if not created:
+        team = instance.team
+        team_captain = team.user  
+        match = team.match
+
+        previous_status = getattr(instance, '_previous_status', enums.RequestStatus.PENDING)
+
+        if previous_status != instance.status:
+            status = 'refused' if instance.status == enums.RequestStatus.REFUSED else 'accepted'
+            user = instance.user
+            with translation.override(team_captain.language):
+                Notification.objects.create(
+                    title=_("New invitation response !"),
+                    message=_("%(user_first_name)s has %(status)s your invitation") % {'user_first_name': user.profile.first_name, 'status': status},
+                    type= enums.NotificationType.INVITATION_RESPONSE,
+                    user=team_captain,
                     associated_data={"url": f"/match/{match.pk}"}
                 )

@@ -83,6 +83,7 @@ export const useDeleteMatchTeam = ({
       options?.onSuccess?.(data, variables, context)
 
       // update matchRequest
+      queryCache.removeItem(['matches', variables.matchId, 'teams', 'request'])
       invalidateQuery(['matches', variables.matchId, 'teams', 'request'])
 
       // update current match
