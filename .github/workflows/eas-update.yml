@@ -13,7 +13,7 @@ on:
           - production
       message:
         description: "Message"
-        type: text
+        type: string
         default: ""
         required: true
 
