@@ -141,5 +141,8 @@
   "tournamentNotFound": "Tournoi introuvable",
   "tournamentType": "Type de tournoi",
   "unknown": "Inconnu",
+  "updateDownloading": "Mise à jour en cours de téléchargement",
+  "updateError": "Une erreur est survenue lors de la recherche de mise à jour",
+  "updateRestarting": "Mise à jour téléchargée, redémarrage de l'application",
   "warning": "Attention"
 }

@@ -141,5 +141,8 @@
   "tournamentNotFound": "Tournament not found",
   "tournamentType": "Tournament type",
   "unknown": "Unknown",
+  "updateDownloading": "Update is being downloaded",
+  "updateError": "An error occurred while checking for updates",
+  "updateRestarting": "Update downloaded, restarting the application",
   "warning": "Warning"
 }

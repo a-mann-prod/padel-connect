@@ -3,8 +3,10 @@ import * as Updates from 'expo-updates'
 import { useEffect } from 'react'
 
 import { Loader } from '@/designSystem'
+import { useTranslate } from '@/services/i18n'
 
 export const UpdateLoader = () => {
+  const t = useTranslate()
   const { isUpdateAvailable, isUpdatePending, checkError } =
     Updates.useUpdates()
 
@@ -22,9 +24,9 @@ export const UpdateLoader = () => {
   }, [])
 
   const getTitle = () => {
-    if (checkError) return `Error checking for updates: ${checkError.message}`
-    if (isUpdatePending) return 'Downloading update...'
-    if (isUpdateAvailable) return 'Update downloaded. Restarting app...'
+    if (checkError) return t('updateError')
+    if (isUpdatePending) return t('updateDownloading')
+    if (isUpdateAvailable) return t('updateRestarting')
   }
 
   return (

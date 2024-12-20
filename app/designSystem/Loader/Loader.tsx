@@ -1,4 +1,4 @@
-import { Center, Heading, Spinner } from '@gluestack-ui/themed'
+import { Center, Spinner, Text } from '@gluestack-ui/themed'
 import { ComponentProps } from 'react'
 
 export type LoaderProps = ComponentProps<typeof Center> & {
@@ -6,8 +6,8 @@ export type LoaderProps = ComponentProps<typeof Center> & {
 }
 
 export const Loader = ({ title, ...props }: LoaderProps) => (
-  <Center flex={1} {...props}>
-    {title && <Heading textAlign="center">{title}</Heading>}
+  <Center flex={1} {...props} gap="$3">
+    {title && <Text textAlign="center">{title}</Text>}
     <Spinner />
   </Center>
 )
