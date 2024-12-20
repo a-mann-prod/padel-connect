@@ -12,13 +12,15 @@
         "EXPO_PUBLIC_CONTACT_EMAIL_URL": "mailto:gregoire.amann@gmail.com",
         "EXPO_PUBLIC_PRIVACY_POLICY_URL": "https://expo.dev",
         "EXPO_PUBLIC_TERMS_OF_USE_URL": "https://expo.dev"
-      }
+      },
+      "channel": "local"
     },
     "local-simulator": {
       "extends": "local",
       "ios": {
         "simulator": true
-      }
+      },
+      "channel": "local-simulator"
     },
     "preview": {
       "channel": "preview",

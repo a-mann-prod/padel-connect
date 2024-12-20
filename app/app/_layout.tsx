@@ -6,10 +6,16 @@ import * as ExpoNotifications from 'expo-notifications'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import * as TaskManager from 'expo-task-manager'
+import * as Updates from 'expo-updates'
 import { useEffect, useState } from 'react'
 import { Platform } from 'react-native'
 
-import { DefaultAlert, ReportActionsheet, SelfDeleteAlert } from '@/components'
+import {
+  DefaultAlert,
+  ReportActionsheet,
+  SelfDeleteAlert,
+  UpdateLoader,
+} from '@/components'
 import {
   AuthProvider,
   ColorSchemeProvider,
@@ -103,9 +109,16 @@ const RootLayoutNav = () => {
   const { data: me } = useMe()
   const [showReportActionsheet, setShowReportActionsheet] = useState(false)
 
+  const { isUpdateAvailable } = Updates.useUpdates()
+
   useScreenCaptureCallback(
     me ? () => setShowReportActionsheet(true) : undefined
   )
+
+  if (!isUpdateAvailable) {
+    return <UpdateLoader />
+  }
+
   return (
     <>
       <Stack initialRouteName={unstable_settings.initialRouteName}>
