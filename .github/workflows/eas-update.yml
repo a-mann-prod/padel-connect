@@ -44,5 +44,5 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: 📢 EAS Update
-        run: eas update --channel ${{ inputs.channel }} --message ${{ inputs.message }} --non-interactive --no-wait
+        run: eas update --channel ${{ inputs.channel }} --message "${{ inputs.message }}" --non-interactive
         working-directory: app
