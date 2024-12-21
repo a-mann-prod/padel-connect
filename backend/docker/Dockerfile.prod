@@ -53,8 +53,8 @@ COPY --from=builder /app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
-COPY --from=builder /docker/entrypoint.prod.sh /docker/entrypoint.prod.sh
-RUN chmod +x /docker/entrypoint.prod.sh
+COPY --from=builder /docker/entrypoint.sh /docker/entrypoint.sh
+RUN chmod +x /docker/entrypoint.sh
 
 # copy project
 COPY ./backend $APP_FOLDER//backend
