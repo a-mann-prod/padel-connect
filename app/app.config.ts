@@ -27,7 +27,6 @@ export default ({ config }: ConfigContext) => ({
       UIBackgroundModes: ['remote-notification'],
     },
     bundleIdentifier: 'com.a-mann-prod.padel-connect',
-    googleServicesFile: process.env.GOOGLE_SERVICES_INFO_PLIST,
   },
   android: {
     adaptiveIcon: {
@@ -61,7 +60,12 @@ export default ({ config }: ConfigContext) => ({
         project: process.env.SENTRY_PROJECT,
       },
     ],
-    '@react-native-google-signin/google-signin',
+    [
+      '@react-native-google-signin/google-signin',
+      {
+        iosUrlScheme: process.env.IOS_REVERSED_CLIENT_ID,
+      },
+    ],
   ],
   locales: {
     en: './services/i18n/metadata/en.json',

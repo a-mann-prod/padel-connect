@@ -16,15 +16,12 @@
       "channel": "local"
     },
     "local-simulator": {
+      "channel": "local-simulator",
       "extends": "local",
       "ios": {
         "simulator": true
       },
-      "env": {
-        "GOOGLE_SERVICES_INFO_PLIST": "./GoogleService-Info.plist",
-        "GOOGLE_SERVICES_JSON": "./google-services.json"
-      },
-      "channel": "local-simulator"
+      "env": {}
     },
     "preview": {
       "channel": "preview",
