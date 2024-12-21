@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import { useAuthContext } from '../../../../../contexts/AuthContext'
 import { LoginResponse } from './entities'
-import { loginFn } from './functions'
+import { googleLoginFn, loginFn } from './functions'
 import { LoginParams } from './params'
 
 import { UseMutationProps } from '@/services/api/queryHooks'
@@ -20,5 +20,20 @@ export const useLogin = ({
       options?.onSuccess?.(data, variables, context)
     },
     mutationFn: loginFn,
+  })
+}
+
+export const useGoogleLogin = ({
+  options,
+}: UseMutationProps<LoginResponse, LoginParams> = {}) => {
+  const { signIn } = useAuthContext()
+
+  return useMutation({
+    ...options,
+    onSuccess: (data, variables, context) => {
+      signIn(data)
+      options?.onSuccess?.(data, variables, context)
+    },
+    mutationFn: googleLoginFn,
   })
 }

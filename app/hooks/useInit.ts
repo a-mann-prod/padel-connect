@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react-native'
+import Constants, { ExecutionEnvironment } from 'expo-constants'
 import { useFonts } from 'expo-font'
 import { useNavigationContainerRef } from 'expo-router'
 import { useEffect } from 'react'
@@ -8,6 +9,11 @@ import { date } from '@/services/date'
 import { i18n, useInitLanguage } from '@/services/i18n'
 
 export const useInit = () => {
+  if (Constants.executionEnvironment !== ExecutionEnvironment.StoreClient) {
+    const googleSigninModule = require('@react-native-google-signin/google-signin')
+    googleSigninModule.GoogleSignin.configure()
+  }
+
   const reactNavigationIntegration = Sentry.reactNavigationIntegration()
   const ref = useNavigationContainerRef()
 

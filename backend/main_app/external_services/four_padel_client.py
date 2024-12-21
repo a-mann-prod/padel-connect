@@ -1,6 +1,7 @@
 import requests
 from django.conf import settings
 from django.core.cache import cache
+from rest_framework.exceptions import ValidationError
 
 class Four_padel_user:
     def __init__(self, id, email):
@@ -12,6 +13,7 @@ class FourPadelAPIClient:
         self.id = id
         self.base_url = settings.FOUR_PADEL["BASE_URL"]
         self.login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}"
+        self.google_login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}/google"
         self.booking_url = f"{self.base_url}{settings.FOUR_PADEL['BOOKING_ENDPOINT']}"
         self.token = None
 
@@ -40,6 +42,39 @@ class FourPadelAPIClient:
 
         if response.status_code == 200:
             data = response.json()
+            user = Four_padel_user(id=data.get('id'), email=data.get('email'))
+            self.token = data.get("access_token")
+
+            cache.set(f"four_padel_token_{user.id}", self.token, self.TOKEN_CACHE_TIMEOUT)
+            
+            return user
+
+        # Lever une exception si la connexion échoue
+        response.raise_for_status()
+
+    def google_login(self, google_token):
+        headers = {
+            "accept": "text/plain, */*",
+            "content-type": "application/x-www-form-urlencoded"
+        }
+        params = {
+            **self.SHARED_PARAMS,
+            "createIfNotExist": False,
+            "newsletter": False,
+            "center": 1
+        }
+        payload = {
+            "GOOGLE_ID_TOKEN": google_token,
+        }
+
+        response = requests.post(self.google_login_url, data=payload, headers=headers, params=params)
+
+        if response.status_code == 200:
+            data = response.json()
+
+            if data is None:
+                raise ValidationError(detail="No user found", code="USER_NOT_FOUND")
+
             user = Four_padel_user(id=data.get('id'), email=data.get('email'))
             self.token = data.get("access_token")
 

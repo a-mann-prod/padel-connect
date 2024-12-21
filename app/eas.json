@@ -20,6 +20,10 @@
       "ios": {
         "simulator": true
       },
+      "env": {
+        "GOOGLE_SERVICES_INFO_PLIST": "./GoogleService-Info.plist",
+        "GOOGLE_SERVICES_JSON": "./google-services.json"
+      },
       "channel": "local-simulator"
     },
     "preview": {

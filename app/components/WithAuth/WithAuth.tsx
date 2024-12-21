@@ -4,6 +4,7 @@ import { FC } from 'react'
 
 import { useAuthContext } from '@/contexts'
 import { Button, Divider } from '@/designSystem'
+import { useGoogleSignin } from '@/hooks/useGoogleSignin'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -32,6 +33,7 @@ type LoginMenuProps = {
 const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('auth')
+  const googleSignin = useGoogleSignin()
 
   const params = redirectTo ? { redirectTo } : undefined
 
@@ -54,7 +56,7 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
           title={t('googleLogin')}
           icon="FAS-google"
           variant="outline"
-          onPress={() => console.log('google')}
+          onPress={() => googleSignin()}
         />
         <Divider title={tGlobal('or')} />
         <Link href={{ pathname: routing.authRegister.path(), params }} asChild>

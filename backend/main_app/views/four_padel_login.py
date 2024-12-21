@@ -38,3 +38,35 @@ class FourPadelLoginView(APIView):
 
         except Exception as e:
             return handle_exception(e)
+
+
+class FourPadelGoogleLoginView(APIView):
+    def post(self, request, *args, **kwargs):
+        google_token = request.data.get("google_token")
+
+        if not google_token:
+            return Response({"detail": "google_token param is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        client = FourPadelAPIClient()
+
+        try:
+            # Connexion à 4Padel pour récupérer le token
+            four_padel_user = client.google_login(google_token=google_token)
+
+            # Vérifie si l'utilisateur existe localement, sinon le crée
+            user, created = CustomUser.objects.get_or_create(
+                four_padel_id=four_padel_user.id,
+                defaults={
+                    "email": four_padel_user.email
+                }
+            )
+
+            # Crée un RefreshToken (via Djoser) pour le local user
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "access": str(refresh.access_token),
+                "refresh": str(refresh)            
+            })
+
+        except Exception as e:
+            return handle_exception(e)

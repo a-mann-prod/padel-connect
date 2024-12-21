@@ -3,7 +3,7 @@ import { ConfigContext } from 'expo/config'
 const name =
   process.env.EXPO_PUBLIC_ENV === 'production'
     ? 'Padel Connect'
-    : `Padel Connect (${process.env.EXPO_PUBLIC_ENV})`
+    : `PC (${process.env.EXPO_PUBLIC_ENV})`
 
 export default ({ config }: ConfigContext) => ({
   ...config,
