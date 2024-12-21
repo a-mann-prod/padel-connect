@@ -1,6 +1,6 @@
 import { router, Stack } from 'expo-router'
 
-import { HeaderButton } from '@/designSystem'
+import { HeaderBackButton, HeaderButton } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -24,12 +24,14 @@ export default () => {
         name={routing.homeNotifications.name}
         options={{
           title: t('notifications'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
         name={routing.homeTournaments.name}
         options={{
           title: t('tournaments'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
           headerRight: (props) => (
             <HeaderButton
               icon="FAS-sliders"

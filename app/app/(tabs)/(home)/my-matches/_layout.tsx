@@ -20,18 +20,21 @@ export default () => {
         name={routing.homeMyMatchesIncomingMatches.name}
         options={{
           title: t('incomingMatches'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
         name={routing.homeMyMatchesOldMatches.name}
         options={{
           title: t('oldMatches'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
         name={routing.homeMyMatchesReceivedInvitations.name}
         options={{
           title: t('receivedInvitations'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
     </Stack>

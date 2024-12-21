@@ -21,15 +21,24 @@ export default WithAuth(() => {
         />
         <Stack.Screen
           name={routing.matchCreateAddPartner.name}
-          options={{ title: t('addPartner') }}
+          options={{
+            title: t('addPartner'),
+            headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
+          }}
         />
         <Stack.Screen
           name={routing.matchCreateShareMatch.name}
-          options={{ title: t('shareMatch') }}
+          options={{
+            title: t('shareMatch'),
+            headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
+          }}
         />
         <Stack.Screen
           name={routing.matchParamMatch.name}
-          options={{ title: t('paramMatch') }}
+          options={{
+            title: t('paramMatch'),
+            headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
+          }}
         />
       </Stack>
     </CreateMatchProvider>

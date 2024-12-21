@@ -1,3 +1,4 @@
+import { useToken } from '@gluestack-style/react'
 import {
   HeaderBackButton as RNHeaderBackButton,
   HeaderBackButtonProps as RNHeaderBackButtonProps,
@@ -19,11 +20,16 @@ export const HeaderBackButton = ({
   isInModal,
 }: HeaderBackButtonProps) => {
   const t = useTranslate()
+  const color = useToken('colors', 'primary500')
   if (!canGoBack) return undefined
 
   return (
     <HeaderButtonContainer isInModal={isInModal}>
-      <RNHeaderBackButton onPress={router.back} label={t('back')} />
+      <RNHeaderBackButton
+        onPress={router.back}
+        label={t('back')}
+        tintColor={color}
+      />
     </HeaderButtonContainer>
   )
 }

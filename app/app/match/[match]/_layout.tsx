@@ -27,6 +27,7 @@ export default () => {
         name={routing.matchUser.name}
         options={{
           title: '',
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
@@ -40,24 +41,28 @@ export default () => {
         name={routing.matchJoinRequest.name}
         options={{
           title: '',
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
         name={routing.matchManageRequest.name}
         options={{
           headerShown: false,
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
         name={routing.matchManageInvitations.name}
         options={{
           title: t('receivedInvitations'),
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
       <Stack.Screen
         name={routing.matchShareMatch.name}
         options={{
           title: '',
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
     </Stack>
