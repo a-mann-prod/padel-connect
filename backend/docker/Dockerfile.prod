@@ -23,7 +23,7 @@ RUN apt-get update && \
 COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
-COPY ./docker/entrypoint.prod.sh /docker/entrypoint.prod.sh
+COPY ./docker/entrypoint.sh /docker/entrypoint.sh
 
 
 #########
