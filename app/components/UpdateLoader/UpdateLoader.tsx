@@ -25,8 +25,7 @@ export const UpdateLoader = () => {
 
   const getTitle = () => {
     if (checkError) return t('updateError')
-    if (isUpdatePending) return t('updateDownloading')
-    if (isUpdateAvailable) return t('updateRestarting')
+    if (isUpdatePending || isUpdateAvailable) return t('updateDownloading')
   }
 
   return (
