@@ -30,7 +30,7 @@ export const UpdateLoader = () => {
   }
 
   return (
-    <SafeAreaView flex={1}>
+    <SafeAreaView flex={1} variant="colored">
       <Loader title={getTitle()} />
     </SafeAreaView>
   )

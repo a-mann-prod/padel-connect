@@ -17,19 +17,22 @@ export const useHeaderButton = (
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      [side]: () => (
-        <HStack>
-          {arrayProps
-            .filter(({ condition }) => condition)
-            .map(({ badgeCount, ...props }, index) => (
-              <HeaderButton
-                key={index}
-                {...props}
-                badgeCount={when(!!badgeCount, badgeCount)}
-              />
-            ))}
-        </HStack>
-      ),
+      [side]: () => {
+        const array = arrayProps.filter(({ condition }) => condition)
+        if (array.length > 0) {
+          return (
+            <HStack>
+              {array.map(({ badgeCount, ...props }, index) => (
+                <HeaderButton
+                  key={index}
+                  {...props}
+                  badgeCount={when(!!badgeCount, badgeCount)}
+                />
+              ))}
+            </HStack>
+          )
+        }
+      },
     })
   }, [arrayProps, navigation, side])
 }
