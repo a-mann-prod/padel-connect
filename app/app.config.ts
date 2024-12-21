@@ -63,7 +63,7 @@ export default ({ config }: ConfigContext) => ({
     [
       '@react-native-google-signin/google-signin',
       {
-        iosUrlScheme: process.env.IOS_REVERSED_CLIENT_ID,
+        iosUrlScheme: process.env.EXPO_PUBLIC_REVERSED_CLIENT_ID,
       },
     ],
   ],

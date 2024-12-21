@@ -9,9 +9,18 @@ import { date } from '@/services/date'
 import { i18n, useInitLanguage } from '@/services/i18n'
 
 export const useInit = () => {
+  console.log(config)
   if (Constants.executionEnvironment !== ExecutionEnvironment.StoreClient) {
     const googleSigninModule = require('@react-native-google-signin/google-signin')
-    googleSigninModule.GoogleSignin.configure()
+    googleSigninModule.GoogleSignin.configure({
+      iosClientId: config.reversedClientId,
+      scopes: [
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'openid',
+        'https://www.googleapis.com/auth/plus.login',
+      ],
+    })
   }
 
   const reactNavigationIntegration = Sentry.reactNavigationIntegration()

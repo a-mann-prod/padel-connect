@@ -10,7 +10,6 @@ export const useGoogleSignin = () => {
 
     return async () => {
       try {
-        console.log('ici')
         await googleSigninModule.GoogleSignin.hasPlayServices()
         const response = await googleSigninModule.GoogleSignin.signIn()
 

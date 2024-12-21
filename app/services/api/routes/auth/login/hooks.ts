@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 
+import { UseMutationProps } from '@/services/api/queryHooks'
 import { useAuthContext } from '../../../../../contexts/AuthContext'
+
 import { LoginResponse } from './entities'
 import { googleLoginFn, loginFn } from './functions'
-import { LoginParams } from './params'
-
-import { UseMutationProps } from '@/services/api/queryHooks'
+import { GoogleLoginParams, LoginParams } from './params'
 
 // login with email / password
 export const useLogin = ({
@@ -25,7 +25,7 @@ export const useLogin = ({
 
 export const useGoogleLogin = ({
   options,
-}: UseMutationProps<LoginResponse, LoginParams> = {}) => {
+}: UseMutationProps<LoginResponse, GoogleLoginParams> = {}) => {
   const { signIn } = useAuthContext()
 
   return useMutation({

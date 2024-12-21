@@ -3,19 +3,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import 'expo-dev-client'
 import * as ExpoNotifications from 'expo-notifications'
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import * as TaskManager from 'expo-task-manager'
 import * as Updates from 'expo-updates'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
-import {
-  DefaultAlert,
-  ReportActionsheet,
-  SelfDeleteAlert,
-  UpdateLoader,
-} from '@/components'
+import { DefaultAlert, SelfDeleteAlert, UpdateLoader } from '@/components'
 import {
   AuthProvider,
   ColorSchemeProvider,
@@ -107,12 +102,11 @@ const RootProvider = () => {
 
 const RootLayoutNav = () => {
   const { data: me } = useMe()
-  const [showReportActionsheet, setShowReportActionsheet] = useState(false)
 
   const { isUpdateAvailable } = Updates.useUpdates()
 
   useScreenCaptureCallback(
-    me ? () => setShowReportActionsheet(true) : undefined
+    !me ? () => router.navigate(routing.report.path()) : undefined
   )
 
   if (isUpdateAvailable) {
@@ -145,10 +139,6 @@ const RootLayoutNav = () => {
           }}
         />
       </Stack>
-      <ReportActionsheet
-        isOpen={showReportActionsheet}
-        onClose={() => setShowReportActionsheet(false)}
-      />
     </>
   )
 }

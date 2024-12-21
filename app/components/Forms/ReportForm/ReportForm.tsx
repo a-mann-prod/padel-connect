@@ -19,11 +19,13 @@ const { getDefaultValues, schema } = reportFormServices
 export type ReportFormProps = {
   defaultValues?: Nillable<ReportFormValues>
   onSubmit: (values: ReportFormValues) => void
+  onCancelPress: () => void
   isLoading?: boolean
 }
 
 export const ReportForm = ({
   onSubmit,
+  onCancelPress,
   defaultValues,
   isLoading,
 }: ReportFormProps) => {
@@ -42,25 +44,33 @@ export const ReportForm = ({
   const { handleSubmit } = methods
 
   return (
-    <VStack gap="$4">
-      <Heading>{tGlobal('reportBug')}</Heading>
-      <FormProvider {...methods} containerProps={{ flex: 0 }}>
-        <VStack gap="$3">
-          <FormTextareaControlled
-            displayPlaceHolder
-            name="comments"
-            formControlProps={{ title: tGlobal('description') }}
-          />
-          <FormFileControlled
-            name="attachment"
-            formControlProps={{ title: tGlobal('screenCapture') }}
-          />
-        </VStack>
-      </FormProvider>
+    <VStack flex={1} gap="$3">
+      <VStack flex={1} gap="$4">
+        <Heading>{tGlobal('reportBug')}</Heading>
+        <FormProvider {...methods} containerProps={{ flex: 0 }}>
+          <VStack gap="$3">
+            <FormTextareaControlled
+              displayPlaceHolder
+              name="comments"
+              formControlProps={{ title: tGlobal('description') }}
+              h="$64"
+            />
+            <FormFileControlled
+              name="attachment"
+              formControlProps={{ title: tGlobal('screenCapture') }}
+            />
+          </VStack>
+        </FormProvider>
+      </VStack>
       <Button
         title={tGlobal('send')}
         onPress={handleSubmit(onSubmit)}
         isLoading={isLoading}
+      />
+      <Button
+        title={tGlobal('cancel')}
+        action="negative"
+        onPress={() => onCancelPress()}
       />
     </VStack>
   )

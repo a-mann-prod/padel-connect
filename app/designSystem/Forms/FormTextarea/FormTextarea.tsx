@@ -18,6 +18,7 @@ export const FormTextarea = ({
   formControlProps,
   onChangeText,
   type,
+  h,
   ...props
 }: FormTextareaProps) => {
   const handleOnChangeText = (text: string) => {
@@ -30,7 +31,7 @@ export const FormTextarea = ({
 
   return (
     <FormControl {...formControlProps}>
-      <Textarea>
+      <Textarea h={h}>
         <TextareaInput
           placeholder={when(displayPlaceHolder, formControlProps.title)}
           onChangeText={handleOnChangeText}

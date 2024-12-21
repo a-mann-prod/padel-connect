@@ -48,6 +48,10 @@ const modalsRoot = {
     name: 'root',
     path: () => `${root.modals.path()}/root`,
   },
+  report: {
+    name: 'report',
+    path: () => `${root.modals.path()}/report`,
+  },
 }
 
 const tabsRoot = {

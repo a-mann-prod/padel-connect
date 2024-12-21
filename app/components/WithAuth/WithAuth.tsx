@@ -57,6 +57,7 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
           icon="FAS-google"
           variant="outline"
           onPress={() => googleSignin()}
+          isDisabled
         />
         <Divider title={tGlobal('or')} />
         <Link href={{ pathname: routing.authRegister.path(), params }} asChild>
