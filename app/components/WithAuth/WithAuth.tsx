@@ -42,21 +42,19 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
         <Link href={{ pathname: routing.authLogin.path(), params }} asChild>
           <Button title={t('login')} />
         </Link>
-        <Button
+        {/* <Button
           title={t('appleLogin')}
           icon="FAS-apple"
           variant="outline"
           onPress={() => console.log('apple')}
           isLoading={false}
           isDisabled
-        />
+        /> */}
         <Button
           title={t('googleLogin')}
           icon="FAS-google"
           variant="outline"
           onPress={() => console.log('google')}
-          isLoading={false}
-          isDisabled
         />
         <Divider title={tGlobal('or')} />
         <Link href={{ pathname: routing.authRegister.path(), params }} asChild>
