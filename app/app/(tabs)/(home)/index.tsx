@@ -29,8 +29,8 @@ export default () => {
   })
 
   useEffect(() => {
-    console.log(badgeCount)
-    if (badgeCount) Notifications.setBadgeCountAsync(badgeCount)
+    if (badgeCount !== null && badgeCount !== undefined)
+      Notifications.setBadgeCountAsync(badgeCount)
   }, [badgeCount])
 
   useNavigationBadgeCount(badgeCount)
