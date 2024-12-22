@@ -29,6 +29,7 @@ export default ({ config }: ConfigContext) => ({
     bundleIdentifier: 'com.a-mann-prod.padel-connect',
   },
   android: {
+    permissions: ['android.permission.READ_MEDIA_IMAGES'],
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
