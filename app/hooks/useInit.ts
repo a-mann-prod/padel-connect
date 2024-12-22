@@ -27,7 +27,7 @@ export const useInit = () => {
   const ref = useNavigationContainerRef()
 
   Sentry.init({
-    enabled: config.env === 'production',
+    enabled: config.env === 'production' || config.env === 'preview',
     dsn: config.sentryUrl,
     debug: config.env === 'local',
     dist: config.version,
