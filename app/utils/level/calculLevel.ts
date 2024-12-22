@@ -1,6 +1,6 @@
 import { Level, LevelInput } from './types'
 
-const COEFF = 4
+const COEFF = 2
 
 export const calculLevel = (levelInputs: LevelInput[]): Level => {
   // Helper function to calculate the average with an additional coeff 4 to the minimum level
