@@ -2,7 +2,9 @@ export const getLevelRange = (
   level = 0,
   allowDecimals = true
 ): [number, number] => {
-  const baseLevel = allowDecimals ? level : Math.floor(level)
+  const baseLevel = allowDecimals
+    ? Math.round(level * 10) / 10
+    : Math.floor(level)
 
   let min: number
   let max: number
