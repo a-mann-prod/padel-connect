@@ -82,14 +82,12 @@ export const useUpdateMePassword = ({
 export const useDeleteMe = ({
   options,
 }: UseMutationProps<void, DeleteMeParams> = {}) => {
-  const queryCache = useQueryCache()
   const { signOut, isLoadingSignOut } = useAuthContext()
 
   const { isPending, ...rest } = useMutation({
     ...options,
     onSuccess: (data, variables, context) => {
       signOut()
-      queryCache.removeItem(['me'])
       options?.onSuccess?.(data, variables, context)
     },
     mutationFn: deleteMeFn,

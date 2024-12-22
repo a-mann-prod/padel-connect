@@ -12,7 +12,7 @@ export type UseMeProps = {
 export const useMe = (): UseMeProps => {
   const { me, isLoadingSignIn } = useAuthContext()
 
-  const { data: profile, isLoading: isLoadingProfile } = useMeProfile({
+  const { data: profile, isPending: isPendingProfile } = useMeProfile({
     options: { enabled: !!me },
   })
 
@@ -27,6 +27,6 @@ export const useMe = (): UseMeProps => {
 
   return {
     data,
-    isLoading: isLoadingProfile || isLoadingSignIn,
+    isLoading: isPendingProfile || isLoadingSignIn,
   }
 }

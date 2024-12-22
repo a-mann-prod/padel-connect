@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react'
 
+import { useInvalidateQuery } from '@/hooks/useInvalidateQuery'
 import { LoginResponse, MeResponse, useMe } from '@/services/api'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { buildContext } from '@/services/buildContext'
@@ -27,6 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoadingSignIn, setIsLoadingSignIn] = useState(false)
   const [signedIn, setSignedIn] = useState(false)
   const queryCache = useQueryCache()
+  const invalidateQuery = useInvalidateQuery()
 
   const [me, setMe] = useState<MeResponse>()
 
@@ -49,6 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await storage.setItem(REFRESH_TOKEN_KEY, refresh)
       setSignedIn(true)
       refetch()
+      invalidateQuery(['me-profile'])
     } catch (error) {
       console.error('Error signing in:', error)
       setIsLoadingSignIn(false)
@@ -64,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSignedIn(false)
       queryCache.removeItem(['me'])
       queryCache.removeItem(['me-profile'])
-      queryCache.removeItem(['match_filter'])
+      queryCache.removeItem(['match-filter'])
     } catch (error) {
       console.error('Error signing out:', error)
     } finally {
