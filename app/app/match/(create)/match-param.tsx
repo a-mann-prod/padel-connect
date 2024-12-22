@@ -47,7 +47,6 @@ export default () => {
         <MatchForm
           onCompetitionChange={setIsCompetition}
           onSubmit={(data) => {
-            console.log(data)
             if (isCompetition) {
               setFormValues(data)
               router.navigate(routing.matchCreateAddPartner.path())
