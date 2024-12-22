@@ -37,7 +37,7 @@ export default () => {
 
   return (
     <>
-      {isFocused && <StatusBar barStyle="light-content" />}
+      {isFocused && <StatusBar barStyle="dark-content" />}
       <SafeAreaView flex={1} position="absolute" zIndex={1} w="$full">
         <HStack mx="$3" justifyContent="flex-end">
           {me && (
