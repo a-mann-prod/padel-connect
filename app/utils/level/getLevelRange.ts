@@ -1,6 +1,6 @@
 export const getLevelRange = (
   level = 0,
-  allowDecimals = false
+  allowDecimals = true
 ): [number, number] => {
   const baseLevel = allowDecimals ? level : Math.floor(level)
 

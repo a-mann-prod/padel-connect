@@ -12,6 +12,7 @@ import { Button } from '@/designSystem'
 import { useDiversityItems } from '@/hooks/useDiversityItems'
 import { useTranslate } from '@/services/i18n'
 import { Nillable } from '@/types'
+import { getLevelRange } from '@/utils/level'
 
 const { getDefaultValues, schema } = matchFormServices
 
@@ -52,6 +53,8 @@ export const MatchForm = ({
     onCompetitionChange?.(isCompetitive)
   }, [onCompetitionChange, isCompetitive])
 
+  const [level_min, level_max] = getLevelRange(Number(defaultValues?.level))
+
   return (
     <VStack flex={1}>
       <FormProvider {...methods}>
@@ -70,8 +73,8 @@ export const MatchForm = ({
             formControlProps={{
               title: t('openToAllLevel'),
               helpMessage: t('openToAllLevelHelpMessage', {
-                level_min: '3',
-                level_max: '6',
+                level_min,
+                level_max,
               }),
             }}
           />
