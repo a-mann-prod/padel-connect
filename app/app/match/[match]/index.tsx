@@ -102,10 +102,9 @@ export default WithMatch(() => {
   //   .filter(({ has_payed }) => !!has_payed)
   //   .map(({ user_id }) => user_id) || []
 
-  const inadaptedLevel = !hasAdaptedLevel(
-    me?.calculated_level,
-    match.calculated_level_range
-  )
+  const inadaptedLevel =
+    !match.is_open_to_all_level &&
+    !hasAdaptedLevel(me?.calculated_level, match.calculated_level_range)
 
   return (
     <>
