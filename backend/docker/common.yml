@@ -39,6 +39,8 @@ services:
 
       - DJANGO_SETTINGS_MODULE=backend.settings
 
+      - DEBUG=${DEBUG}
+
   db:
     container_name: db
     image: postgres:${POSTGRES_VERSION}

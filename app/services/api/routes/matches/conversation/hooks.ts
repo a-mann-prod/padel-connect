@@ -2,6 +2,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 
 import { useQueryCache } from '@/services/api/queryCacheHooks'
+import { config } from '@/services/config'
 import { ACCESS_TOKEN_KEY, storage } from '@/services/storage'
 import { UseInfiniteQueryProps, UseQueryProps } from '../../../queryHooks'
 import {
@@ -61,13 +62,17 @@ export const useMatchConversationMessagesWebSocket = (
 
   useEffect(() => {
     const initializedWebSocket = async () => {
+      if (socketRef.current) {
+        socketRef.current.close()
+      }
+
       if (!conversation) return
 
       const accessToken = await storage.getItem(ACCESS_TOKEN_KEY)
       if (!accessToken) return
 
       const socket = new WebSocket(
-        `ws://localhost:8000/ws/chat/${conversation.id}/`,
+        `${config.wsUrl}/ws/chat/${conversation.id}/`,
         ['JWT', accessToken]
       )
       socketRef.current = socket
@@ -81,7 +86,10 @@ export const useMatchConversationMessagesWebSocket = (
       }
 
       socket.onclose = () => console.log('WebSocket deconnected')
-      socket.onerror = (error) => console.log('WebSocket error', error)
+      socket.onerror = (error) => {
+        console.log('WebSocket error', error)
+        console.log(error)
+      }
 
       return () => {
         socket.close()
@@ -90,7 +98,14 @@ export const useMatchConversationMessagesWebSocket = (
     }
 
     initializedWebSocket()
-  }, [conversation, match, onMessageReceived, queryCache])
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.close()
+        socketRef.current = null
+      }
+    }
+  }, [conversation, match, onMessageReceived])
 
   return {
     send: (message: SendMatchMessage) => {

@@ -16,8 +16,6 @@ services:
       - ../:/app
       - ../logs:/app/logs
       - ../mediafiles:/mediafiles
-    environment:
-      - DEBUG=1
     ports:
       - ${API_PORT}:${API_PORT}
     # depends_on:

@@ -9,7 +9,9 @@ from rest_framework_simplejwt.tokens import UntypedToken
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
+import logging
 
+logger = logging.getLogger('django')
 
 @sync_to_async
 def get_user_from_jwt(token):
@@ -37,8 +39,9 @@ class TokenAuthMiddleware(BaseMiddleware):
         scope['user'] = AnonymousUser()
 
         if b'sec-websocket-protocol' in headers:
-            token_name, token_key = headers[b'sec-websocket-protocol'].decode().replace(",", "").split()
+            token_name, token_key = headers[b'sec-websocket-protocol'].decode().replace(",", " ").split()
             if token_name == settings.SIMPLE_JWT['AUTH_HEADER_TYPES'][0]:
+                logger.info("User authenticated")
                 scope['user'] = await get_user_from_jwt(token_key)
         return await super().__call__(scope, receive, send)
 

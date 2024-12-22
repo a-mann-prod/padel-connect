@@ -38,7 +38,6 @@ DEBUG = env("DEBUG", default=False)
 
 # CORS
 # Dev only 
-# ALLOWED_HOSTS = ["*"] 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default=[])
 # Dev only
 # https://pypi.org/project/django-cors-headers/
@@ -275,4 +274,25 @@ FOUR_PADEL = {
     "BASE_URL": env('FOUR_PADEL_BASE_URL'),
     "BOOKING_ENDPOINT": env('FOUR_PADEL_BOOKING_ENDPOINT'),
     "LOGIN_ENDPOINT": env('FOUR_PADEL_LOGIN_ENDPOINT'),
+}
+
+#LOGS
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # Ou INFO, WARNING, etc.
+        },
+        'channels': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
 }

@@ -1,10 +1,11 @@
 import axios from 'axios'
 
+import { config } from '../config'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, storage } from '../storage'
 import { transformParams } from './queryHooks/utils'
 
 const api = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL as string,
+  baseURL: config.apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -17,7 +18,7 @@ api.interceptors.request.use(
     }
 
     const accessToken = await storage.getItem(ACCESS_TOKEN_KEY)
-    if (accessToken) {
+    if (accessToken && !config.url?.includes('login')) {
       config.headers.Authorization = `JWT ${accessToken}`
     }
     return config
@@ -43,7 +44,7 @@ api.interceptors.response.use(
       if (refreshToken) {
         try {
           const { data } = await axios.post(
-            `${process.env.EXPO_PUBLIC_API_URL as string}/auth/jwt/refresh/`,
+            `${config.apiUrl}/auth/jwt/refresh/`,
             {
               refresh: refreshToken,
             }

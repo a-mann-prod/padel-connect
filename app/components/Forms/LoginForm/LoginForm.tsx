@@ -1,4 +1,4 @@
-import { VStack } from '@gluestack-ui/themed'
+import { VStack, Text } from '@gluestack-ui/themed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, router } from 'expo-router'
 import { useForm } from 'react-hook-form'
@@ -46,6 +46,7 @@ export const LoginForm = () => {
     <>
       <VStack gap="$2">
         <FormProvider {...methods}>
+          <Text>{tGlobal('signinWithFourPadelAccount')}</Text>
           <FormInputControlled
             name="email"
             formControlProps={{ title: tGlobal('email') }}
@@ -61,11 +62,12 @@ export const LoginForm = () => {
             secureTextEntry
           />
         </FormProvider>
-        <Link href={routing.authPasswordResetRequest.path()} asChild>
+        <Link href={routing.authPasswordResetRequest.path()} asChild disabled>
           <Button
             alignSelf="flex-end"
             title={t('forgotPassword')}
             variant="link"
+            isDisabled
           />
         </Link>
       </VStack>

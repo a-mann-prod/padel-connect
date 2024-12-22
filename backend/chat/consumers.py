@@ -7,9 +7,12 @@ from django.contrib.auth.models import AnonymousUser
 from .models import Message, Conversation
 from .serializers import MessageSerializer
 
+import logging
 
+logger = logging.getLogger('django')
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
+        logger.info("connection")
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_{self.room_name}"
 
