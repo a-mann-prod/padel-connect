@@ -1,9 +1,11 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from main_app.models import CustomUser, Match, Notification, enums, Team, TeamInvite
+from chat.models import Message
 
 from django.utils import translation
 from django.utils.translation import gettext as _
+from django.db.models import Q
 
 
 @receiver(post_save, sender=Match)
@@ -122,3 +124,27 @@ def handle_team_invite(sender, instance, created, **kwargs):
                     user=team_captain,
                     associated_data={"url": f"/match/{match.pk}"}
                 )
+
+
+
+# handle message notifications (if >3 in x secondes, do not send anymore and send "you have many messages")
+# @receiver(post_save, sender=Message)
+# def handle_new_message(sender, instance, created, **kwargs):
+#     sender = instance.user
+#     match = instance.conversation.match
+
+#     users = CustomUser.objects.filter(
+#             Q(teaminvite__team__match=match) &  
+#             Q(teaminvite__status=enums.RequestStatus.ACCEPTED) &  
+#             Q(teaminvite__team__is_ready=True)  
+#         ).distinct()  
+
+#     for user in users:
+#         with translation.override(user.language):
+#             Notification.objects.create(
+#                 title=_(sender.profile.first_name),
+#                 message=_(instance.content),
+#                 type= enums.NotificationType.NEW_MESSAGE,
+#                 user=user,
+#                 associated_data={"url": f"/match/{match.pk}/chat"}
+#             )

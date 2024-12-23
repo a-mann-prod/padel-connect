@@ -21,6 +21,7 @@ RUN apt-get update && \
 COPY ./backend ./backend
 COPY ./chat ./chat
 COPY ./main_app ./main_app
+COPY ./locale ./locale
 COPY ./manage.py ./manage.py
 COPY docker/entrypoint.sh /docker/entrypoint.sh
 

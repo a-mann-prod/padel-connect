@@ -60,6 +60,7 @@ RUN chmod +x /docker/entrypoint.sh
 COPY ./backend $APP_FOLDER//backend
 COPY ./chat $APP_FOLDER//chat
 COPY ./main_app $APP_FOLDER//main_app
+COPY ./locale $APP_FOLDER//locale
 COPY ./manage.py $APP_FOLDER/manage.py
 
 # set permissions for the directories
