@@ -17,7 +17,7 @@ export default ({ config }: ConfigContext) => ({
   splash: {
     image: './assets/images/splash.png',
     resizeMode: 'cover',
-    backgroundColor: '#1D2CEF',
+    backgroundColor: '#004AAB',
   },
   assetBundlePatterns: ['**/*'],
   ios: {

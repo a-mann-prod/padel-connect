@@ -91,7 +91,7 @@ export default () => {
             <Button
               justifyContent="space-between"
               title={t('navigation.myProgress')}
-              icon="FAS-arrow-up-right-dots"
+              icon="FAS-chart-simple"
               iconRight
               size="2xl"
               action="positive"

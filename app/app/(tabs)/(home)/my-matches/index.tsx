@@ -12,7 +12,7 @@ export default WithAuth(() => {
   return (
     <VStack flex={1} gap="$3" m="$3" mt="$3">
       <Button
-        justifyContent="flex-end"
+        justifyContent="space-between"
         title={t('navigation.incomingMatches')}
         iconRight
         size="2xl"
@@ -20,9 +20,10 @@ export default WithAuth(() => {
         onPress={() =>
           router.navigate(routing.homeMyMatchesIncomingMatches.path())
         }
+        icon="FAS-calendar-check"
       />
       <Button
-        justifyContent="flex-end"
+        justifyContent="space-between"
         title={t('navigation.receivedInvitations')}
         iconRight
         size="2xl"
@@ -30,14 +31,16 @@ export default WithAuth(() => {
         onPress={() =>
           router.navigate(routing.homeMyMatchesReceivedInvitations.path())
         }
+        icon="FAS-envelope"
       />
       <Button
-        justifyContent="flex-end"
+        justifyContent="space-between"
         title={t('navigation.oldMatches')}
         iconRight
         size="2xl"
         rounded="$lg"
         onPress={() => router.navigate(routing.homeMyMatchesOldMatches.path())}
+        icon="FAS-clock-rotate-left"
       />
     </VStack>
   )
