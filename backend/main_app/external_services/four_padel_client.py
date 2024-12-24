@@ -91,6 +91,7 @@ class FourPadelAPIClient:
         """
         token = cache.get(f"four_padel_token_{self.id}")
         if not token:
+            return settings.FOUR_PADEL['DEFAULT_TOKEN']
             raise ValueError("Four padel token not found")
         return token
 
