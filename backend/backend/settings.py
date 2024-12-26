@@ -285,15 +285,26 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
         },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # Ou INFO, WARNING, etc.
+            'handlers': ['console', 'file'],
+            'level': env.get('DJANGO_LOG_LEVEL', 'INFO')
         },
         'channels': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
+            'handlers': ['console', 'file'],
+            'level': env.get('DJANGO_LOG_LEVEL', 'INFO')
         },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} ({levelname})- {name}- {message}',
+            'style': '{',
+        }
     },
 }
