@@ -73,7 +73,7 @@ export default () => {
       <VirtualizedList<NotificationListItemProps>
         data={notifications}
         getItem={(data, index) => data[index]}
-        getItemCount={(data) => data.length}
+        getItemCount={(data) => data?.length}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         isLoading={isLoading}
