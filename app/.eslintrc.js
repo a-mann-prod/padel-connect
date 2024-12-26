@@ -14,6 +14,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         semi: ['error', 'never'],
         'react-hooks/exhaustive-deps': ['warn'],
+        'import/order': 'off',
       },
     },
   ],
