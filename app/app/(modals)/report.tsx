@@ -33,12 +33,15 @@ export default () => {
         })
       }
 
-      Sentry.captureMessage(`User feedback: ${data.comments}`, {
-        user: { email: data.email, username: data.name },
-        extra: {
-          comments: data.comments,
-        },
-      })
+      const sentryId = Sentry.captureMessage('User feedback')
+      Sentry.captureUserFeedback({ event_id: sentryId, ...data })
+
+      // Sentry.captureMessage(`User feedback: ${data.comments}`, {
+      //   user: { email: data.email, username: data.name },
+      //   extra: {
+      //     comments: data.comments,
+      //   },
+      // })
     })
 
     show({ title: t('reportSent'), action: 'success' })
