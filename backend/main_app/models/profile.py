@@ -43,5 +43,6 @@ class Profile(models.Model):
         return self.user.email
         
     class Meta:
+        ordering = ['id']
         verbose_name = 'Profile' 
         verbose_name_plural = 'Profiles'

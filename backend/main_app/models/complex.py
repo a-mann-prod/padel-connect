@@ -12,5 +12,6 @@ class Complex(models.Model):
         return self.name
     
     class Meta:
+        ordering = ['id']
         verbose_name = 'Complex' 
         verbose_name_plural = 'Complexes'
