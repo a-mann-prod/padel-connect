@@ -294,11 +294,11 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console', 'file'],
-            'level': env.get('DJANGO_LOG_LEVEL', 'INFO')
+            'level': env.get('API_LOG_LEVEL', 'INFO')
         },
         'channels': {
             'handlers': ['console', 'file'],
-            'level': env.get('DJANGO_LOG_LEVEL', 'INFO')
+            'level': env.get('API_LOG_LEVEL', 'INFO')
         },
     },
     'formatters': {
