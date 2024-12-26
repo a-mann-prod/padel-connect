@@ -9,12 +9,16 @@ import {
 } from '@/components'
 import { ActionsheetProps, ScrollView } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
+import { useToast } from '@/hooks/useToast'
+import { useTranslate } from '@/services/i18n'
 import { getArray8, prepareFile } from '@/utils/file'
 
 export type ReportActionsheetProps = ActionsheetProps
 
 export default () => {
+  const t = useTranslate()
   const { data: me } = useMe()
+  const { show } = useToast()
 
   const onSubmit = async ({ attachment, ...data }: ReportFormValues) => {
     Sentry.withScope(async (scope) => {
@@ -36,6 +40,8 @@ export default () => {
         },
       })
     })
+
+    show({ title: t('reportSent'), action: 'success' })
 
     router.canGoBack() && router.back()
   }
