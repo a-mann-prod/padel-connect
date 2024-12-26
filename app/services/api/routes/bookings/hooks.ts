@@ -13,5 +13,6 @@ export const useBookings = ({
   useQuery<BookingsResponses>({
     queryKey: ['bookings', params],
     queryFn: () => getBookingsFn(params),
+    staleTime: 3600 * 1,
     ...options,
   })
