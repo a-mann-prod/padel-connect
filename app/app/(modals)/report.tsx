@@ -22,62 +22,24 @@ export default () => {
 
   const onSubmit = async ({ attachment, ...data }: ReportFormValues) => {
     Sentry.withScope(async (scope) => {
-      // Réinitialiser les attachments existants
       scope.clearAttachments()
-
       if (attachment) {
         const file = prepareFile(attachment)
-        const imageData = await getArray8(attachment.uri)
-
+        const data = await getArray8(attachment.uri)
         scope.addAttachment({
-          data: imageData,
+          data,
           filename: file.name,
           contentType: file.type,
         })
       }
 
-      // Ajout des informations utilisateur
-      scope.setUser({
-        email: data.email,
-      })
-
-      // Ajout de données supplémentaires
-      scope.setExtra('comments', data.comments)
-
-      // Capture de l'événement principal
-      const sentryId = Sentry.captureMessage('User feedback')
-
-      // Envoi du feedback utilisateur lié à l'événement
-      Sentry.captureUserFeedback({
-        event_id: sentryId,
-        name: data.name,
-        email: data.email,
-        comments: data.comments,
+      Sentry.captureMessage(`User feedback: ${data.comments}`, {
+        user: { email: data.email, username: data.name },
+        extra: {
+          comments: data.comments,
+        },
       })
     })
-
-    // Sentry.withScope(async (scope) => {
-    //   scope.clearAttachments()
-    //   if (attachment) {
-    //     const file = prepareFile(attachment)
-    //     const data = await getArray8(attachment.uri)
-    //     scope.addAttachment({
-    //       data,
-    //       filename: file.name,
-    //       contentType: file.type,
-    //     })
-    //   }
-
-    //   const sentryId = Sentry.captureMessage('User feedback')
-    //   Sentry.captureUserFeedback({ event_id: sentryId, ...data })
-
-    //   // Sentry.captureMessage(`User feedback: ${data.comments}`, {
-    //   //   user: { email: data.email, username: data.name },
-    //   //   extra: {
-    //   //     comments: data.comments,
-    //   //   },
-    //   // })
-    // })
 
     show({ title: t('reportSent'), action: 'success' })
 
