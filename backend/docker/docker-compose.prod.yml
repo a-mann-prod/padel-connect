@@ -63,6 +63,7 @@ services:
       service: api
     container_name: celery_worker
     command: celery -A backend worker --loglevel=info
+    ports: !reset []
     networks:
       - local
 

@@ -60,7 +60,6 @@ services:
       service: api
     container_name: celery_beat
     command: celery -A backend beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-
     ports: !reset []
     networks:
       - local
