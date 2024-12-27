@@ -40,7 +40,7 @@ export const InvitationList = ({
       {...item.user}
       onPress={onPress ? () => onPress(item.user.id) : undefined}
       requestStatus={item.status}
-      matchRequest={
+      request={
         me?.id !== item.user.id && item.status !== RequestStatus.REFUSED
           ? {
               onRefusePress: () =>

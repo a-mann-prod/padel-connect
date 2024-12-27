@@ -17,7 +17,12 @@ const schema = z
     re_new_password: validators.string.required(),
     current_password: validators.string.required(),
   })
-  .superRefine(refineFunctions.passwordsMatch)
+  .superRefine(({ new_password, re_new_password }, ctx) =>
+    refineFunctions.passwordsMatch(
+      { password1: new_password, password2: re_new_password },
+      ctx
+    )
+  )
 
 export const passwordChangeFormServices = {
   getDefaultValues,

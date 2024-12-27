@@ -73,7 +73,7 @@ export const BookingMatchFieldForm = ({
           setFields(undefined)
           setSelectedItem(undefined)
         }}
-        onButtonPress={(data) => onSubmit({ ...data, complex })}
+        onButtonPress={(data) => complex && onSubmit({ ...data, complex })}
       />
     </>
   )

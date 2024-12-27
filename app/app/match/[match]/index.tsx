@@ -130,6 +130,8 @@ export default WithMatch(() => {
             />
             {!isMatchPassed && (
               <MatchActionButtons
+                onPayButtonPress={() => console.log('pay')}
+                isPayButtonLoading={false}
                 matchId={matchId}
                 isOwner={isOwner}
                 isPlayer={isPlayer}

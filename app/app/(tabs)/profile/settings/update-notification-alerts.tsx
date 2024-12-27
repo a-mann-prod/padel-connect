@@ -9,7 +9,7 @@ import { ScrollView } from '@/designSystem'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useMe } from '@/hooks/useMe'
-import { useUpdateMeProfile } from '@/services/api'
+import { useUpdateMe } from '@/services/api'
 
 export default () => {
   const { data } = useMe()
@@ -17,7 +17,7 @@ export default () => {
   const onSuccess = useHandleSuccess()
   const onError = useHandleError()
 
-  const { mutate: updateMe, isPending } = useUpdateMeProfile({
+  const { mutate: updateMe, isPending } = useUpdateMe({
     options: {
       onSuccess: () => onSuccess(),
       onError,

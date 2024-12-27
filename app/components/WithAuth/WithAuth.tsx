@@ -41,7 +41,10 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
     <Center alignItems="stretch" flex={1}>
       <VStack gap="$3" m="$5">
         <Text>{t('loginNeeded')}</Text>
-        <Link href={{ pathname: routing.authLogin.path(), params }} asChild>
+        <Link
+          href={{ pathname: routing.authLogin.path() as any, params }}
+          asChild
+        >
           <Button title={t('login')} />
         </Link>
         {/* <Button
@@ -60,7 +63,10 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
           isDisabled
         />
         <Divider title={tGlobal('or')} />
-        <Link href={{ pathname: routing.authRegister.path(), params }} asChild>
+        <Link
+          href={{ pathname: routing.authRegister.path() as any, params }}
+          asChild
+        >
           <Button title={t('register')} variant="outline" isDisabled />
         </Link>
       </VStack>

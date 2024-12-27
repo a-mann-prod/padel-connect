@@ -1,21 +1,19 @@
 import { ConfigContext } from 'expo/config'
 
-const name =
-  process.env.EXPO_PUBLIC_ENV === 'production'
-    ? 'Padel Connect'
-    : `PC (${process.env.EXPO_PUBLIC_ENV})`
+const ENV = process.env.EXPO_PUBLIC_ENV
+const IS_DEV = ENV !== 'production'
 
 export default ({ config }: ConfigContext) => ({
   ...config,
-  name,
+  name: 'Padel Connect',
   slug: 'padel-connect',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './assets/images/icon.png',
+  icon: `./assets/images/${ENV}/icon.png`,
   scheme: 'a-mann-prod.padel-connect',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './assets/images/splash.png',
+    image: `./assets/images/${ENV}/splash.png`,
     resizeMode: 'cover',
     backgroundColor: '#004AAB',
   },
@@ -26,15 +24,19 @@ export default ({ config }: ConfigContext) => ({
       CFBundleAllowMixedLocalizations: true,
       UIBackgroundModes: ['remote-notification'],
     },
-    bundleIdentifier: 'com.a-mann-prod.padel-connect',
+    bundleIdentifier: IS_DEV
+      ? `com.a-mann-prod.padel-connect.${ENV}`
+      : 'com.a-mann-prod.padel-connect',
   },
   android: {
     permissions: ['android.permission.READ_MEDIA_IMAGES'],
     adaptiveIcon: {
-      foregroundImage: './assets/images/adaptive-icon.png',
+      foregroundImage: `./assets/images/${ENV}/adaptive-icon.png`,
       backgroundColor: '#ffffff',
     },
-    package: 'com.a_mann_prod.padel_connect',
+    package: IS_DEV
+      ? `com.a_mann_prod.padel_connect.${ENV}`
+      : 'com.a_mann_prod.padel_connect',
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
   },
   web: {
@@ -64,9 +66,7 @@ export default ({ config }: ConfigContext) => ({
     [
       '@react-native-google-signin/google-signin',
       {
-        iosUrlScheme:
-          process.env.EXPO_PUBLIC_REVERSED_CLIENT_ID ||
-          'com.googleusercontent.apps.898183396795-1tk1k1vlu70nl8hp3il70mnodf9sg1jk',
+        iosUrlScheme: process.env.EXPO_PUBLIC_REVERSED_CLIENT_ID,
       },
     ],
   ],

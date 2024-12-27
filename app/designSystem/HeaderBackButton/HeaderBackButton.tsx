@@ -13,7 +13,7 @@ import {
 import { useTranslate } from '@/services/i18n'
 
 export type HeaderBackButtonProps = RNHeaderBackButtonProps &
-  HeaderButtonContainerProps
+  HeaderButtonContainerProps & { canGoBack?: boolean }
 
 export const HeaderBackButton = ({
   canGoBack,

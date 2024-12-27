@@ -14,7 +14,12 @@ const schema = z
     password: validators.string.password(),
     confirmPassword: validators.string.required(),
   })
-  .superRefine(refineFunctions.passwordsMatch)
+  .superRefine(({ password, confirmPassword }, ctx) =>
+    refineFunctions.passwordsMatch(
+      { password1: password, password2: confirmPassword },
+      ctx
+    )
+  )
 
 export const passwordResetFormServices = {
   getDefaultValues,

@@ -1,5 +1,5 @@
 import { VStack } from '@gluestack-ui/themed'
-import { router } from 'expo-router'
+import { Href, router } from 'expo-router'
 import { ListRenderItemInfo } from 'react-native'
 
 import { NotificationListItem, NotificationListItemProps } from '@/components'
@@ -63,7 +63,8 @@ export default () => {
           const ids = [item.id, ...(item?.unread_ids || [])]
           readNotification({ id: item.id })
         }
-        if (item?.associated_data?.url) router.push(item.associated_data.url)
+        if (item?.associated_data?.url)
+          router.push(item.associated_data.url as Href)
       }}
     />
   )

@@ -31,11 +31,17 @@ export const validators = {
 }
 
 export const refineFunctions = {
-  passwordsMatch: <T extends { new_password: string; re_new_password: string }>(
-    { new_password, re_new_password }: T,
+  passwordsMatch: (
+    {
+      password1,
+      password2,
+    }: {
+      password1: string
+      password2: string
+    },
     ctx: RefinementCtx
   ) => {
-    if (new_password !== re_new_password) {
+    if (password1 !== password2) {
       ctx.addIssue({
         path: ['re_new_password'],
         code: z.ZodIssueCode.custom,

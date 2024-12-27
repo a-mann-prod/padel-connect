@@ -13,6 +13,7 @@ export type MatcheArchiveResponse = Entity<{
   calculated_level_range: [number, number]
   level: number
   participants: DefaultMinimalProfileResponse[]
+  four_padel_field_name: string
 }>
 
 export type MatchesArchiveResponse = PaginatedResponse<MatcheArchiveResponse>

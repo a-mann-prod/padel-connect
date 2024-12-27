@@ -1,5 +1,5 @@
 import { Box } from '@gluestack-ui/themed'
-import { ForwardedRef, Ref, forwardRef } from 'react'
+import { ForwardedRef, PropsWithoutRef, Ref, forwardRef } from 'react'
 import {
   VirtualizedList as RNVirtualizedList,
   VirtualizedListProps as RNVirtualizedListProps,
@@ -50,7 +50,13 @@ const VirtualizedListInner = <T,>(
   )
 }
 
-const VirtualizedListWithRef = forwardRef<any, any>(VirtualizedListInner)
+function fixedForwardRef<T, P extends PropsWithoutRef<any>>(
+  render: (props: P, ref: React.Ref<T>) => React.ReactNode
+): (props: P & React.RefAttributes<T>) => React.ReactNode {
+  return forwardRef(render) as any
+}
+
+const VirtualizedListWithRef = fixedForwardRef(VirtualizedListInner)
 
 type ClickableListWithRefProps<T> = VirtualizedListProps<T> & {
   mRef?: Ref<VirtualizedListRef<T>>
