@@ -10,8 +10,8 @@ class MatchArchive(models.Model):
     is_competitive = models.BooleanField(default=False)
     is_open_to_all_level = models.BooleanField(default=False)
 
-    four_padel_field_id = models.IntegerField()
-    four_padel_field_name = models.CharField()
+    four_padel_field_id = models.IntegerField(null=True)
+    four_padel_field_name = models.CharField(null=True)
 
     # score = models.JSONField(null=True, blank=True)  # Score du match
 

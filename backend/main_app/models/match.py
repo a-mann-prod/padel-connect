@@ -16,8 +16,8 @@ class Match(models.Model):
 
     is_decisive_point = models.BooleanField(default=False)
     is_super_tie_break = models.BooleanField(default=False)
-    four_padel_field_id = models.IntegerField()
-    four_padel_field_name = models.CharField()
+    four_padel_field_id = models.IntegerField(null=True)
+    four_padel_field_name = models.CharField(null=True)
 
 
     created_at = models.DateTimeField(auto_now_add=True)
