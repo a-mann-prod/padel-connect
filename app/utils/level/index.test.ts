@@ -4,7 +4,7 @@ import { calculLevel, getLevel, getLevelRange } from './index'
 import { Level, LevelInput } from './types'
 
 describe('calculLevel', () => {
-  it('should add coeff 4 to the minus level per inputs and return average (floor) per inputs', () => {
+  it('should add coeff 2 to the minus level per inputs and return average (floor) per inputs', () => {
     // ARRANGE
     const level: LevelInput[] = [
       { type: 'defense', value: 5 },
@@ -19,8 +19,8 @@ describe('calculLevel', () => {
     ]
 
     const expected: Level = {
-      defense_level: 3.4,
-      offense_level: 3.8,
+      defense_level: 3.6,
+      offense_level: 4.2,
       service_level: 5,
     }
 
@@ -31,7 +31,7 @@ describe('calculLevel', () => {
     expect(current).toEqual(expected)
   })
 
-  it('should add coeff 4 to the minus level (even if same values) per inputs and return average (floor) per inputs', () => {
+  it('should add coeff 2 to the minus level (even if same values) per inputs and return average (floor) per inputs', () => {
     // ARRANGE
     const level: LevelInput[] = [
       { type: 'defense', value: 5 },
@@ -58,7 +58,7 @@ describe('calculLevel', () => {
     expect(current).toEqual(expected)
   })
 
-  it('should add coeff 4 to the minus level (even if 2 same values) per inputs and return average (floor) per inputs, rounded', () => {
+  it('should add coeff 2 to the minus level (even if 2 same values) per inputs and return average (floor) per inputs, rounded', () => {
     // ARRANGE
 
     const level: LevelInput[] = [
@@ -74,8 +74,8 @@ describe('calculLevel', () => {
     ]
 
     const expected: Level = {
-      defense_level: 2.4,
-      offense_level: 3.1,
+      defense_level: 2.6,
+      offense_level: 3.2,
       service_level: 5,
     }
 
@@ -160,10 +160,22 @@ describe('getLevelRange', () => {
     expect(current).toEqual(expected)
   })
 
-  it('should return [4, 6] for level 5.5', () => {
+  it('should return [4, 6] for level 5.5 if rounded', () => {
     // ARRANGE
     const level = 5.5
     const expected = [4, 6]
+
+    // ACT
+    const current = getLevelRange(level, false)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+
+  it('should return [4.5, 6.5] for level 5.5 if not rounded', () => {
+    // ARRANGE
+    const level = 5.5
+    const expected = [4.5, 6.5]
 
     // ACT
     const current = getLevelRange(level)
@@ -172,10 +184,22 @@ describe('getLevelRange', () => {
     expect(current).toEqual(expected)
   })
 
-  it('should return [0, 1] for level 0.1', () => {
+  it('should return [0, 1] for level 0.1 if rounded', () => {
     // ARRANGE
     const level = 0.1
     const expected = [0, 1]
+
+    // ACT
+    const current = getLevelRange(level, false)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+
+  it('should return [0, 1.1] for level 0.1 if not rounded', () => {
+    // ARRANGE
+    const level = 0.1
+    const expected = [0, 1.1]
 
     // ACT
     const current = getLevelRange(level)

@@ -19,8 +19,8 @@ export const getLevelRange = (
     max = 10
   } else {
     // Cas général pour les niveaux entre 1 et 9
-    min = Math.max(0, Math.floor(baseLevel - 1))
-    max = Math.min(10, Math.ceil(baseLevel + 1))
+    min = Math.max(0, baseLevel - 1)
+    max = Math.min(10, baseLevel + 1)
   }
 
   return [min, max]
