@@ -4,6 +4,7 @@ import { Icon } from '../Icon/Icon'
 
 import { useTranslate } from '@/services/i18n'
 import { when } from '@/utils/when'
+import { Platform } from 'react-native'
 
 export type ListEmptyProps = {
   inverted?: boolean | null
@@ -14,7 +15,14 @@ export const ListEmpty = ({ title, inverted }: ListEmptyProps) => {
   const t = useTranslate()
 
   return (
-    <Center flex={1} gap="$3" transform={when(!!inverted, [{ scaleY: -1 }])}>
+    <Center
+      flex={1}
+      gap="$3"
+      transform={when(!!inverted, [
+        { scaleY: -1 },
+        ...(Platform.OS === 'android' ? [{ scaleX: -1 }] : []),
+      ])}
+    >
       <Text>{title || t('noData')}</Text>
       <Icon name="FAR-face-frown-open" size="xl" />
     </Center>
