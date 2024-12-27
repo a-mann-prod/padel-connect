@@ -1,11 +1,14 @@
 from rest_framework import viewsets
 from main_app.models import MatchArchive
-from main_app.serializers import MeMatchArchiveSerializer
+from main_app.serializers import MeMatchArchiveSerializer, MeMatchArchiveDetailSerializer
 from main_app.permissions import IsAuthenticated
+from main_app import mixins
 
-class MeMatchArchiveModelViewSet(viewsets.ReadOnlyModelViewSet):
+class MeMatchArchiveModelViewSet(mixins.CustomModelViewSet, viewsets.ReadOnlyModelViewSet):
     queryset = MatchArchive.objects.all()
     serializer_class = MeMatchArchiveSerializer
+    detail_serializer_class = MeMatchArchiveDetailSerializer
+
     permission_classes = [IsAuthenticated]
 
 

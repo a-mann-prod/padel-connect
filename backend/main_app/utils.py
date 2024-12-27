@@ -36,7 +36,9 @@ def archive_match(match: Match):
         complex=match.complex,
         level=match.level,
         is_competitive=match.is_competitive,
-        is_open_to_all_level=match.is_open_to_all_level
+        is_open_to_all_level=match.is_open_to_all_level,
+        four_padel_field_id = match.four_padel_field_id,
+        four_padel_field_name = match.four_padel_field_name
     )
 
     # Add users to the archived match

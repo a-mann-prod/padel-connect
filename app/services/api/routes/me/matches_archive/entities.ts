@@ -3,9 +3,10 @@ import {
   Entity,
   PaginatedResponse,
 } from '@/services/api/types'
+import { ComplexResponse } from '../../complexes'
 
-export type MatcheArchiveResponse = Entity<{
-  complex: number
+export type MatchArchiveResponse = Entity<{
+  complex: ComplexResponse
   datetime: string
   duration: number
   is_open_to_all_level: boolean
@@ -16,4 +17,8 @@ export type MatcheArchiveResponse = Entity<{
   four_padel_field_name: string
 }>
 
-export type MatchesArchiveResponse = PaginatedResponse<MatcheArchiveResponse>
+export type MatchesArchiveResponse = PaginatedResponse<
+  Omit<MatchArchiveResponse, 'complex'> & {
+    complex: number
+  }
+>

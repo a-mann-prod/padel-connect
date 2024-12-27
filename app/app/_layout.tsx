@@ -138,6 +138,10 @@ const RootLayoutNav = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name={routing.oldMatch.name}
+          options={{ headerShown: false }}
+        />
       </Stack>
     </>
   )

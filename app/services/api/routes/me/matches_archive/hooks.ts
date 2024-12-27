@@ -1,8 +1,11 @@
-import { UseInfiniteQueryProps } from '@/services/api/queryHooks'
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { MatchesArchiveResponse } from './entities'
-import { getInfiniteMatchesArchiveFn } from './functions'
-import { GetInfiniteMatchesArchiveParams } from './params'
+import { UseInfiniteQueryProps, UseQueryProps } from '@/services/api/queryHooks'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { MatchArchiveResponse, MatchesArchiveResponse } from './entities'
+import { getInfiniteMatchesArchiveFn, getMatchArchive } from './functions'
+import {
+  GetInfiniteMatchesArchiveParams,
+  GetMatchArchiveParams,
+} from './params'
 
 export const useInfiniteMatchesArchive = (
   {
@@ -22,4 +25,14 @@ export const useInfiniteMatchesArchive = (
     queryFn: ({ pageParam }) => getInfiniteMatchesArchiveFn(params, pageParam),
     getNextPageParam: (lastPage) => lastPage.next_page,
     initialPageParam: 1,
+  })
+
+export const useMatchArchive = ({
+  params,
+  options,
+}: UseQueryProps<MatchArchiveResponse, GetMatchArchiveParams>) =>
+  useQuery<MatchArchiveResponse>({
+    ...options,
+    queryKey: ['matches', 'archive', params.id],
+    queryFn: () => getMatchArchive(params),
   })

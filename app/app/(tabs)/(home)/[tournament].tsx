@@ -1,7 +1,7 @@
 import { Text, VStack } from '@gluestack-ui/themed'
 import { useLocalSearchParams } from 'expo-router'
 
-import { MatchTypeTile } from '@/components'
+import { MatchTiles } from '@/components'
 import { Button, Loader, ScrollView, Section, SectionRow } from '@/designSystem'
 import { ListEmpty } from '@/designSystem/ListEmpty/ListEmpty'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
@@ -41,7 +41,7 @@ export default () => {
   return (
     <ScrollView>
       <VStack p="$3" gap="$3">
-        <MatchTypeTile isCompetitive={tournament.is_competitive} />
+        <MatchTiles isCompetitive={tournament.is_competitive} />
         <Section title={tournament.title}>
           <Text>{tournament.description}</Text>
         </Section>

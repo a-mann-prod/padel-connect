@@ -33,7 +33,7 @@ export default () => {
   }: ListRenderItemInfo<MatchesArchiveResponse['results'][number]>) => (
     <MatchListItem
       {...item}
-      onPress={() => router.push(routing.match.path(item.id))}
+      onPress={() => router.push(routing.oldMatch.path(item.id))}
       complexes={complexes}
     />
   )

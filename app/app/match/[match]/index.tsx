@@ -5,6 +5,8 @@ import { useState } from 'react'
 import {
   MatchActionButtons,
   MatchInfo,
+  MatchPlayers,
+  MatchTiles,
   PreMatchRequestButton,
   ShareMatchActionsheet,
   UpdateMatchActionsheet,
@@ -122,11 +124,28 @@ export default WithMatch(() => {
           }
         >
           <VStack p="$3" gap="$3">
+            <MatchTiles
+              isPast={isMatchPassed}
+              isPrivate={match.is_private}
+              isCompetitive={match.is_competitive}
+            />
             <MatchInfo
-              match={match}
-              participants={participants}
-              isMatchPassed={isMatchPassed}
+              complexName={match.complex.name}
+              datetime={match.datetime}
+              duration={match.duration}
+              fieldName={match.four_padel_field_name}
+              isOpenToAll={match.is_open_to_all_level}
+              levelRange={match.calculated_level_range}
+              owner={participants?.find((p) => p.id === match.user)}
+            />
+            <MatchPlayers
+              data={participants}
+              onPress={(id) =>
+                router.navigate(routing.matchUser.path(match.id, id))
+              }
+              displayTeam={match.is_competitive}
               hasPayedUserIds={hasPayedUserIds}
+              isMatchPast={isMatchPassed}
             />
             {!isMatchPassed && (
               <MatchActionButtons

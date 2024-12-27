@@ -2,7 +2,7 @@ import { HStack, Heading, VStack, useColorMode } from '@gluestack-ui/themed'
 import { Fragment } from 'react'
 import { chunk } from 'remeda'
 
-import { Avatar, AvatarProps } from '@/designSystem'
+import { Avatar, AvatarProps, Section } from '@/designSystem'
 import { ProfileResponse } from '@/services/api'
 import { DefaultProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
@@ -23,13 +23,13 @@ export type MatchPlayersProps = {
   onPress?: (userId: number) => void
   onEmptyPress?: () => void
   displayTeam?: boolean
-  hasPayedUserIds: number[]
-  isMatchPassed: boolean
+  hasPayedUserIds?: number[]
+  isMatchPast: boolean
 } & Pick<AvatarProps, 'size'>
 
 export const MatchPlayers = ({
   data,
-  displayTeam = true,
+  displayTeam = false,
   ...props
 }: MatchPlayersProps) => {
   const t = useTranslate('match')
@@ -45,27 +45,34 @@ export const MatchPlayers = ({
   const avatarColumns = chunk(avatarItems, 2)
 
   return (
-    <HStack>
-      {avatarColumns.map((col, index) => (
-        <Fragment key={index}>
-          <VStack flex={1} gap="$3" alignItems="center">
-            {displayTeam && (
-              <Heading size="sm">
-                {t('team')} {mapIndexToTeam[index]}
-              </Heading>
-            )}
-            <VStack flex={1} gap="$3">
-              {col.map((avatar) => (
-                <AvatarItem key={avatar.id} {...avatar} {...props} />
-              ))}
+    <Section>
+      <HStack>
+        {avatarColumns.map((col, index) => (
+          <Fragment key={index}>
+            <VStack flex={1} gap="$3" alignItems="center">
+              {displayTeam && (
+                <Heading size="sm">
+                  {t('team')} {mapIndexToTeam[index]}
+                </Heading>
+              )}
+              <VStack flex={1} gap="$3">
+                {col.map((avatar) => (
+                  <AvatarItem
+                    key={avatar.id}
+                    size="lg"
+                    {...avatar}
+                    {...props}
+                  />
+                ))}
+              </VStack>
             </VStack>
-          </VStack>
-          {/* {index % 2 === 0 && index !== avatarColumns.length && (
+            {/* {index % 2 === 0 && index !== avatarColumns.length && (
              <Divider orientation="vertical" />
           )} */}
-        </Fragment>
-      ))}
-    </HStack>
+          </Fragment>
+        ))}
+      </HStack>
+    </Section>
   )
 }
 
@@ -76,7 +83,7 @@ const AvatarItem = ({
   onPress,
   onEmptyPress,
   hasPayedUserIds,
-  isMatchPassed,
+  isMatchPast,
   avatar_url,
   ...props
 }: Partial<ProfileResponse> & Omit<MatchPlayersProps, 'data'>) => {
@@ -90,9 +97,9 @@ const AvatarItem = ({
     border: {
       color: isEmpty
         ? undefined
-        : id && hasPayedUserIds.includes(id)
+        : id && hasPayedUserIds?.includes(id)
           ? 'success500'
-          : isMatchPassed
+          : isMatchPast
             ? defaultBorderColor
             : 'warning500',
     },

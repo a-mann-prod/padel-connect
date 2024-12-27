@@ -276,6 +276,12 @@ export const routing = {
       `${root.match.path(matchId)}/join-request` as Href,
   },
 
+  // old match
+  oldMatch: {
+    name: 'old-match',
+    path: (matchId: string | number) => `old-match/${matchId}` as Href,
+  },
+
   // request
   matchManageRequest: {
     name: 'manage-request',

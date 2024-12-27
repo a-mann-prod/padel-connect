@@ -30,7 +30,7 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'users', CustomUserViewSet, basename='customuser')
 router.register(r'matches', MatchViewSet)
 router.register(r'me/notifications', MeNotificationViewSet, basename='notification')
-router.register(r'me/matches-archive', MeMatchArchiveModelViewSet, basename='me-matche-archive')
+router.register(r'me/matches-archive', MeMatchArchiveModelViewSet, basename='me-matches-archive')
 
 router.register(r'matches/(?P<match_pk>\d+)/teams', MatchTeamModelViewSet, basename='match-team')
 router.register(r'matches/(?P<match_pk>\d+)/invitations', MatchInviteModelViewSet, basename='match-invitation')

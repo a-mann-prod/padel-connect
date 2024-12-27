@@ -7,5 +7,5 @@ from .match import MatchSerializer, MatchDetailSerializer
 from .notification import NotificationSerializer
 from .match_team import MatchTeamSerializer, MinimalMatchTeamSerializer, MatchTeamRequestSerializer
 from .match_team_invite import MatchTeamInviteSerializer
-from .me.me_match_archive import MeMatchArchiveSerializer
+from .me.me_match_archive import MeMatchArchiveSerializer, MeMatchArchiveDetailSerializer
 from .match_invite import MatchInviteSerializer
