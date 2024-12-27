@@ -16,5 +16,9 @@ def archive_past_matches():
         is_competitive=False
     )
     for match in matches_to_archive:
-        print(f"Archiving match {match.id}")
-        archive_match(match)
+        if match.is_reserved:
+            print(f"Archiving match {match.id}")
+            archive_match(match)
+        else:
+            print(f"Deleting match {match.id}")
+            match.delete()

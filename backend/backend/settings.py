@@ -69,7 +69,8 @@ INSTALLED_APPS = [
     'channels',
     'corsheaders',
     'django_filters',
-    'django_celery_beat'
+    'django_celery_beat',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -269,6 +270,7 @@ PUSH_NOTIF_TOKEN = get_secret_file("PUSH_NOTIF_TOKEN_FILE")
 CELERY_BROKER_URL = f"redis://{env('REDIS_HOST')}:{env('REDIS_PORT', default=6379)}/0"
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP= True
 
 FOUR_PADEL = {
     "BASE_URL": env('FOUR_PADEL_BASE_URL'),

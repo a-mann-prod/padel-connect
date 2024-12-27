@@ -64,3 +64,10 @@ docker/secrets/**
 staticfiles/
 logs/
 mediafiles/
+
+# logs
+**.log
+
+# celery
+celerybeat-schedule
+dump.rdb

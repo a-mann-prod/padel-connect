@@ -31,10 +31,12 @@ def archive_match(match: Match):
 
     # Create a MatchArchive instance
     archived_match = MatchArchive.objects.create(
+        duration=match.duration,
         datetime=match.datetime,
         complex=match.complex,
         level=match.level,
         is_competitive=match.is_competitive,
+        is_open_to_all_level=match.is_open_to_all_level
     )
 
     # Add users to the archived match
