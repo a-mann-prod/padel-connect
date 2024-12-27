@@ -1,6 +1,6 @@
-const dotenv = require('dotenv')
+// const dotenv = require('dotenv')
 const path = require('path')
-const fs = require('fs')
+// const fs = require('fs')
 
 const rootDir = path.join(__dirname, '..')
 

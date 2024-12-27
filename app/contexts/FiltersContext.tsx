@@ -20,6 +20,7 @@ type FiltersContextProps = {
   setTournamentsFilters: Dispatch<SetStateAction<GetInfiniteTournamentsParams>>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [_, Provider, useFiltersContext] =
   buildContext<FiltersContextProps>('FiltersContext')
 

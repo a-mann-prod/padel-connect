@@ -10,8 +10,6 @@ import {
 import { FormProvider } from '@/components/FormProvider/FormProvider'
 import { FormInputControlled } from '@/components/FormsControlled'
 import { Button } from '@/designSystem/'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useToast } from '@/hooks/useToast'
 import { useTranslate } from '@/services/i18n'
 
 const { getDefaultValues, schema } = passwordResetFormServices
@@ -19,9 +17,6 @@ const { getDefaultValues, schema } = passwordResetFormServices
 export const PasswordResetForm = () => {
   const t = useTranslate('auth', { keyPrefix: 'passwordResetForm' })
   const tGlobal = useTranslate()
-  const toast = useToast()
-
-  const onError = useHandleError()
 
   // TODO A REVOIR
   // const { mutate: updateUser, isPending } = useUpdateUser({
@@ -42,7 +37,6 @@ export const PasswordResetForm = () => {
   const onSubmit = ({ password }: PasswordResetFormValues) => {
     // TODO A REVOIR
     // updateUser({ password })
-    return
   }
 
   return (

@@ -40,7 +40,7 @@ export const useInit = () => {
     if (ref) {
       reactNavigationIntegration.registerNavigationContainer(ref)
     }
-  }, [ref])
+  }, [reactNavigationIntegration, ref])
 
   const [langLoaded] = useInitLanguage()
   const [loaded, error] = useFonts({

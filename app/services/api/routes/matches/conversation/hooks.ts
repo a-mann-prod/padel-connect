@@ -105,6 +105,7 @@ export const useMatchConversationMessagesWebSocket = (
         socketRef.current = null
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversation, match, onMessageReceived])
 
   return {

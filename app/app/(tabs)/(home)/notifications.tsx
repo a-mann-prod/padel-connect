@@ -60,7 +60,7 @@ export default () => {
         const hasUnread = !item.is_read || !!item?.unread_ids?.length
         if (hasUnread) {
           // TODO: reflechir aux notifications imbriquées ?
-          const ids = [item.id, ...(item?.unread_ids || [])]
+          // const ids = [item.id, ...(item?.unread_ids || [])]
           readNotification({ id: item.id })
         }
         if (item?.associated_data?.url)

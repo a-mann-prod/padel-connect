@@ -18,6 +18,7 @@ type ColorSchemeContextProps = {
   setColorScheme: (_: DeviceColorScheme) => void
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [_, Provider, useColorSchemeContext] =
   buildContext<ColorSchemeContextProps>('ColorSchemeContext')
 

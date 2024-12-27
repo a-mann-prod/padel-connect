@@ -22,6 +22,7 @@ type OnboardingContextProps = {
   setFilters: Dispatch<SetStateAction<FiltersFormValues | undefined>>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [_, Provider, useOnboardingContext] =
   buildContext<OnboardingContextProps>('OnboardingContext')
 

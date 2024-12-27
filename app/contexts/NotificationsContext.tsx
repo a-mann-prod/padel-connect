@@ -19,6 +19,7 @@ type NotificationsContextProps = {
   notification: ExpoNotifications.Notification | undefined
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [_, Provider, useNotificationsContext] =
   buildContext<NotificationsContextProps>('NotificationsContextProps')
 

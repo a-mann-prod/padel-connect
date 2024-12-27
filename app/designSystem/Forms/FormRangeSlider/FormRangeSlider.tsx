@@ -57,7 +57,7 @@ export const FormRangeSlider = ({
         // maxTrackStyle={undefined} // Override the tracks' style for the maximum range
         // vertical={false} // If true, the slider will be drawn vertically
         // inverted={false} // If true, min value will be on the right, and max on the left
-        enabled={true} // If false, the slider won't respond to touches anymore
+        enabled // If false, the slider won't respond to touches anymore
         trackHeight={4} // The track's height in pixel
         thumbSize={18} // The thumb's size in pixel
         // thumbImage={undefined} // An image that would represent the thumb
