@@ -98,7 +98,7 @@ export default WithMatch(() => {
 
   return (
     <SafeAreaView flex={1}>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView inModal>
         <VStack px="$3" pb="$3" gap="$3" flex={1}>
           <VirtualizedList<MatchConversationMessagesResponse['results'][number]>
             data={messages}
