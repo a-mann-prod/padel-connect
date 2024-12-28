@@ -15,7 +15,6 @@ export type MessageProps = {
   sender?: DefaultProfileResponse
   createdDate: Dayjs
   isMe: boolean
-  isLast: boolean
 
   // TODO A REVOIR
   prevMessage?: MatchConversationMessagesResponse['results'][number]
@@ -25,7 +24,6 @@ export const Message = ({
   content,
   sender,
   isMe,
-  isLast = false,
   createdDate,
   prevMessage,
   nextMessage,

@@ -11,6 +11,10 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = Profile.objects.all()
+        ids_param = self.request.query_params.get('ids')
+
+        if ids_param:
+            return queryset
 
         current_user = self.request.user
         if current_user.is_authenticated:

@@ -1,14 +1,13 @@
 import { Box, SafeAreaView, VStack } from '@gluestack-ui/themed'
 import * as Notifications from 'expo-notifications'
 import { useLocalSearchParams, usePathname } from 'expo-router'
-import { useEffect, useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 import { uniq } from 'remeda'
 
 import { KeyboardAvoidingView, WithMatch } from '@/components'
 import { Message, MessageInput, VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
-import { ProfilesResponse, useProfiles } from '@/services/api'
+import { useProfiles } from '@/services/api'
 import {
   MatchConversationMessagesResponse,
   useInfiniteMatchConversationMessages,
@@ -72,13 +71,7 @@ export default WithMatch(() => {
     options: { enabled: !!userIds.length },
   })
 
-  // needed to avoid global isLoading when fetching messages with a new user
-  const [senders, setSenders] = useState<ProfilesResponse['results']>([])
-  useEffect(() => {
-    if (profiles?.results.length) setSenders(profiles.results)
-  }, [profiles])
-
-  const isLoading = isLoadingMessages || (isLoadingProfiles && !senders?.length)
+  const isLoading = isLoadingMessages || isLoadingProfiles
 
   const { send } = useMatchConversationMessagesWebSocket(matchId)
 
@@ -88,18 +81,17 @@ export default WithMatch(() => {
   }: ListRenderItemInfo<
     MatchConversationMessagesResponse['results'][number]
   >) => {
-    const sender = senders.find(({ id }) => id === user)
+    const sender = profiles?.results.find(({ id }) => id === user)
 
     return (
       <Message
         key={id}
         content={content}
-        isMe={sender?.id === me?.id}
+        isMe={user === me?.id}
         sender={sender}
         createdDate={date.dayjs(created_at)}
-        prevMessage={messages?.[index + 1]} // because list is reversed
-        nextMessage={messages?.[index - 1]} // because list is reversed
-        isLast={index === 0} // because list is reversed
+        prevMessage={messages?.[index + 1]}
+        nextMessage={messages?.[index - 1]}
       />
     )
   }

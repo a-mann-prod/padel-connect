@@ -15,7 +15,7 @@ export const getProfileFn = async (params: GetProfileParams) => {
 }
 
 export const getProfilesFn = async (params: GetProfilesParams) => {
-  const { data } = await api.get<ProfilesResponse>(`${ENDPOINT}`, { params })
+  const { data } = await api.get<ProfilesResponse>(`${ENDPOINT}/`, { params })
 
   return data
 }
