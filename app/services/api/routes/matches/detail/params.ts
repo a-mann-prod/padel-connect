@@ -56,3 +56,8 @@ export type UpdateMatchParams = Partial<CreateMatchParams> & {
 export type DeleteMatchParams = {
   id: number
 }
+
+export type ShareMatchParams = {
+  id: number
+  user_ids: number[]
+}

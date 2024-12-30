@@ -47,7 +47,11 @@ export const SectionRow = ({
   if (isHidden) return
 
   return (
-    <Pressable disabled={!isActive} onPress={handleOnPress}>
+    <Pressable
+      displayDisabledOpacity={false}
+      isDisabled={!isActive}
+      onPress={handleOnPress}
+    >
       <HStack h="$10" alignItems="center" opacity={when(isDisabled, 0.5)}>
         <HStack flexGrow={1} alignItems="center">
           <Box w="$8" backgroundColor="">

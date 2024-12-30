@@ -10,6 +10,7 @@ import {
 import { ActionsheetProps, ScrollView } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { useToast } from '@/hooks/useToast'
+import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { getArray8, prepareFile } from '@/utils/file'
 
@@ -23,6 +24,7 @@ export default () => {
   const onSubmit = async ({ attachment, ...data }: ReportFormValues) => {
     Sentry.withScope(async (scope) => {
       scope.clearAttachments()
+      scope.clear()
       if (attachment) {
         const file = prepareFile(attachment)
         const data = await getArray8(attachment.uri)
@@ -34,6 +36,7 @@ export default () => {
       }
 
       Sentry.captureMessage(`User feedback: ${data.comments}`, {
+        fingerprint: [data.comments, date.now().toISOString()],
         user: { email: data.email, username: data.name },
         extra: {
           comments: data.comments,

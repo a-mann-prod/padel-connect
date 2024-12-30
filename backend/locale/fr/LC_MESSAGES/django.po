@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-19 22:08+0000\n"
+"POT-Creation-Date: 2024-12-30 10:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: main_app/signals/notifications.py:32
+#: main_app/signals/notifications.py:34
 msgid "New match available! 🎉"
 msgstr "Nouveau match dispo ! 🎉"
 
-#: main_app/signals/notifications.py:33
+#: main_app/signals/notifications.py:35
 msgid "New match await you! Ready to give it your all? 💪"
 msgstr "Un nouveau match t'attend ! Prêt(e) à donner le meilleur ? 💪"
 
-#: main_app/signals/notifications.py:57
+#: main_app/signals/notifications.py:59
 msgid "New invitation! 🎉"
 msgstr "Nouvelle invitation ! 🎉"
 
-#: main_app/signals/notifications.py:58
+#: main_app/signals/notifications.py:60
 #, fuzzy, python-format
 #| msgid ""
 #| "%(captain_name)s has invited you to play 💪. Respond as soon as possible!"
@@ -39,26 +39,43 @@ msgid ""
 "possible!"
 msgstr "%(captain_name)s t'as invité à jouer 💪. Réponds au plus vite !"
 
-#: main_app/signals/notifications.py:88
+#: main_app/signals/notifications.py:91
 #, fuzzy
 #| msgid "New match available! 🎉"
 msgid "New players! 🎉"
 msgstr "Nouveau match dispo ! 🎉"
 
-#: main_app/signals/notifications.py:89
+#: main_app/signals/notifications.py:92
 msgid "New players have joined your match 💪"
-msgstr ""
+msgstr "De nouveaux ont rejoint ton match 💪"
 
-#: main_app/signals/notifications.py:119
+#: main_app/signals/notifications.py:118
+msgid "refused"
+msgstr "refusé"
+
+#: main_app/signals/notifications.py:118
+msgid "accepted"
+msgstr "accepté"
+
+#: main_app/signals/notifications.py:122
 #, fuzzy
 #| msgid "New invitation! 🎉"
 msgid "New invitation response !"
 msgstr "Nouvelle invitation ! 🎉"
 
-#: main_app/signals/notifications.py:120
+#: main_app/signals/notifications.py:123
 #, python-format
 msgid "%(user_first_name)s has %(status)s your invitation"
 msgstr "%(user_first_name)s a %(status)s ton invitation"
+
+#: main_app/views/match.py:104
+msgid "New share!"
+msgstr "Nouveau partage!"
+
+#: main_app/views/match.py:105
+#, python-format
+msgid "%(sender)s has shared a match with you"
+msgstr "%(sender)s t'a partagé un match"
 
 #: venv/lib/python3.9/site-packages/_pytest/config/argparsing.py:474
 #, python-format

@@ -1,12 +1,15 @@
 from rest_framework import viewsets, status
 from main_app.serializers import MatchSerializer, MatchDetailSerializer
-from main_app.models import Match, enums, TeamInvite
+from main_app.models import Match, enums, Notification, CustomUser
 from main_app import permissions, mixins
 from main_app.filters import MatchFilter
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.utils.timezone import now
-
+from django.utils import translation
+from django.utils.translation import gettext as _
+from main_app.exceptions import handle_exception
+from rest_framework.exceptions import ValidationError
 
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -42,8 +45,7 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     def get_incoming_matches(self, request):
         user = request.user
         if not user.is_authenticated:
-            return Response({"detail": "Authentication credentials were not provided."}, status=401)
-        
+            return handle_exception(ValidationError(detail="Authentication credentials were not provided"), default_status=401)        
         
         incoming_matches = Match.objects.filter(
             teams__invitations__user=user,  # The current user has a team invite
@@ -64,7 +66,7 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     def get_incoming_invitations(self, request):
         user = request.user
         if not user.is_authenticated:
-            return Response({"detail": "Authentication credentials were not provided."}, status=401)
+            return handle_exception(ValidationError(detail="Authentication credentials were not provided"), default_status=401)        
         
         
         incoming_matches = Match.objects.filter(
@@ -80,3 +82,34 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
 
         serializer = self.get_serializer(incoming_matches, many=True)
         return Response(serializer.data)
+    
+
+    @action(detail=True, methods=['post'], url_path='share')
+    def post_share_match(self, request, pk=None):
+        user = request.user
+        if not user.is_authenticated:
+            return handle_exception(ValidationError(detail="Authentication credentials were not provided"), default_status=401)        
+        
+        user_ids = request.data.get('user_ids', [])
+        
+        if not user_ids:
+            return handle_exception(ValidationError(detail="'user_ids' parameter is required"))        
+        
+        invited_users = CustomUser.objects.filter(pk__in=user_ids)
+        
+        notifications = []
+        for invited_user in invited_users:
+            with translation.override(user.language):
+                notification = Notification(
+                    user=invited_user,
+                    title=_("New share!"),
+                    message=_("%(sender)s has shared a match with you") % {'sender': user.profile.first_name},
+                    type=enums.NotificationType.MATCH_SHARE, 
+                    associated_data={"url": f"/match/{pk}"}
+                )
+                notifications.append(notification)
+
+        # Bulk create notifications
+        Notification.objects.bulk_create(notifications)
+
+        return Response({"detail": "Match shared successfully."}, status=status.HTTP_200_OK)

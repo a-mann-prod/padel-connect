@@ -7,6 +7,7 @@ from datetime import datetime
 from main_app.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from main_app.models import Complex
+from main_app.exceptions import handle_exception
 
 
 
@@ -26,17 +27,16 @@ class BookingView(APIView):
         complex_id = request.query_params.get('complex')
 
         if not date:
-            raise ValidationError({"detail": "'date' parameter is required."})
+            return handle_exception(ValidationError(detail="'date' parameter is required") )
         
         if not complex_id:
-            raise ValidationError({"detail": "'complex' parameter is required."})
+            return handle_exception(ValidationError(detail="'complex' parameter is required") )
 
         # Check format
         try:
             datetime.strptime(date, "%Y-%m-%d")
         except ValueError:
-            raise ValidationError({"detail": "'date' parameter must be in 'YYYY-MM-DD' format"})
-        
+            return handle_exception(ValidationError(detail="date' parameter must be in 'YYYY-MM-DD' format") )        
 
         complex = get_object_or_404(Complex, pk=complex_id)
 

@@ -1,1 +1,1 @@
-export type ReadNotificationParams = { id: number }
+export type ReadNotificationsParams = { ids: number[] }

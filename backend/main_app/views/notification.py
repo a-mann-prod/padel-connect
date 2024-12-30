@@ -5,6 +5,8 @@ from main_app.models import Notification
 from main_app.serializers import NotificationSerializer
 from main_app import permissions
 from main_app import mixins
+from main_app.exceptions import handle_exception
+from rest_framework.exceptions import ValidationError
 
 class MeNotificationViewSet(mixins.BlockCRUDMixin, viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
@@ -31,17 +33,20 @@ class MeNotificationViewSet(mixins.BlockCRUDMixin, viewsets.ModelViewSet):
             return Response({"detail": "All notifications marked as read."}, status=status.HTTP_200_OK)
         return Response({"detail": "No unread notifications."}, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['post'], url_path='mark_as_read')
-    def mark_as_read(self, request, pk=None):
-        """POST /me/notifications/{id}/"""
-        try:
-            notification = Notification.objects.get(pk=pk, user=request.user)
-        except Notification.DoesNotExist:
-            return Response({"detail": "Notification not found."}, status=status.HTTP_404_NOT_FOUND)
+    @action(detail=False, methods=['post'], url_path='mark_as_read')
+    def mark_as_read(self, request):
+        """POST /me/notifications/mark_as_read/"""
+        # Récupérer la liste des IDs à marquer comme lues
+        notification_ids = request.data.get('ids', [])
 
-        if notification.is_read:
-            return Response({"detail": "Notification already marked as read."}, status=status.HTTP_400_BAD_REQUEST)
+        if not notification_ids:
+            return handle_exception(ValidationError(detail="'ids' parameter is required"))        
 
-        notification.is_read = True
-        notification.save()
-        return Response({"detail": "Notification marked as read."}, status=status.HTTP_200_OK)
+        notifications = Notification.objects.filter(id__in=notification_ids, user=request.user, is_read=False)
+
+        if not notifications.exists():
+            return Response(0, status=status.HTTP_200_OK)
+
+        updated_count = notifications.update(is_read=True)
+
+        return Response(updated_count, status=status.HTTP_200_OK)

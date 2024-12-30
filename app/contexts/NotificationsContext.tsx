@@ -4,7 +4,7 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
 import { useInvalidateQuery } from '@/hooks/useInvalidateQuery'
 import { useMe } from '@/hooks/useMe'
-import { useReadNotification, useUpdateMe } from '@/services/api'
+import { useReadNotifications, useUpdateMe } from '@/services/api'
 import { Language } from '@/services/api/types'
 import { buildContext } from '@/services/buildContext'
 import { i18n } from '@/services/i18n'
@@ -31,7 +31,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
 
   const invalidateQuery = useInvalidateQuery()
 
-  const { mutate: readNotification } = useReadNotification()
+  const { mutate: readNotifications } = useReadNotifications()
 
   const [expoPushToken, setExpoPushToken] = useState<string>('')
   const [hasRegisteredPushNotifications, setHasRegisteredPushNotifications] =
@@ -62,7 +62,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
         ({ notification }) => {
           const data = notification.request.content.data
 
-          if (data?.id) readNotification({ id: data.id })
+          if (data?.id) readNotifications({ ids: [data.id] })
           if (data?.url) router.navigate(data.url)
         }
       )
@@ -77,7 +77,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
           responseListener.current
         )
     }
-  }, [invalidateQuery, readNotification])
+  }, [invalidateQuery, readNotifications])
 
   // add push token and langage to backend
   useEffect(() => {

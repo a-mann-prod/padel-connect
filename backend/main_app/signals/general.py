@@ -32,7 +32,7 @@ def handle_user_creation(sender, instance, created, **kwargs):
         MatchFilter.objects.create(user=instance)
 
 @receiver(post_save, sender=Team)
-def handle_team(sender, instance, created, **kwargs):    
+def handle_team_creation(sender, instance, created, **kwargs):    
     if created:
         TeamInvite.objects.create(team=instance, user=instance.user, status=enums.RequestStatus.ACCEPTED)
 

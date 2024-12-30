@@ -4,24 +4,17 @@
   "allLevel": "Tous niveaux",
   "api": {
     "errors": {
-      "default": "Une erreur est survenue",
-      "email_not_confirmed": {
-        "message": "Pour te connecter, confirme ton adresse email",
-        "title": "Email non vérifié"
+      "ALREADY_INVITED": {
+        "title": "Tu as déjà une équipe ou tu as été invité"
       },
-      "invalid_login_credentials": {
-        "message": "Email et/ou mot de passe incorrect(s)",
-        "title": "Identifiants incorrects"
+      "LEVEL_NOT_MATCH": {
+        "message": "Ton niveau n'est pas cohérent avec celui du match",
+        "title": "Niveau incoréhent"
       },
-      "invalid_password": {
-        "title": "Mot de passe incorrect"
+      "MATCH_FULL": {
+        "title": "Le match est plein"
       },
-      "match_full": {
-        "title": "Match complet"
-      },
-      "new_password_should_be_different_from_the_old_password": {
-        "title": "Le nouveau mot de passe doit être différent de l'ancien"
-      }
+      "default": "Une erreur est survenue"
     },
     "success": {
       "default": "Enregistrement réussi"

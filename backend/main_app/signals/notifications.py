@@ -79,6 +79,7 @@ def previous_team(sender, instance, **kwargs):
         instance._previous_is_ready = None
 @receiver(post_save, sender=Team)
 def handle_team_ready(sender, instance, created, **kwargs):
+    print("debugggg")
     match = instance.match
     match_captain = match.user      
 
@@ -114,7 +115,7 @@ def handle_team_invite(sender, instance, created, **kwargs):
         previous_status = getattr(instance, '_previous_status', enums.RequestStatus.PENDING)
 
         if previous_status != instance.status:
-            status = 'refused' if instance.status == enums.RequestStatus.REFUSED else 'accepted'
+            status = _('refused') if instance.status == enums.RequestStatus.REFUSED else _('accepted')
             user = instance.user
             with translation.override(team_captain.language):
                 Notification.objects.create(
@@ -126,25 +127,31 @@ def handle_team_invite(sender, instance, created, **kwargs):
                 )
 
 
+@receiver(post_save, sender=Message)
+def handle_new_message(sender, instance, created, **kwargs):
+    if not created:
+        return
 
-# handle message notifications (if >3 in x secondes, do not send anymore and send "you have many messages")
-# @receiver(post_save, sender=Message)
-# def handle_new_message(sender, instance, created, **kwargs):
-#     sender = instance.user
-#     match = instance.conversation.match
+    match = instance.conversation.match
+    sender = instance.user
 
-#     users = CustomUser.objects.filter(
-#             Q(teaminvite__team__match=match) &  
-#             Q(teaminvite__status=enums.RequestStatus.ACCEPTED) &  
-#             Q(teaminvite__team__is_ready=True)  
-#         ).distinct()  
+    # Récupérer les participants
+    invitations = (
+        TeamInvite.objects.filter(
+            team__match=match,
+            team__is_ready=True,
+            status=enums.RequestStatus.ACCEPTED
+        )
+        .exclude(user=sender)
+    )
 
-#     for user in users:
-#         with translation.override(user.language):
-#             Notification.objects.create(
-#                 title=_(sender.profile.first_name),
-#                 message=_(instance.content),
-#                 type= enums.NotificationType.NEW_MESSAGE,
-#                 user=user,
-#                 associated_data={"url": f"/match/{match.pk}/chat"}
-#             )
+    for invitation in invitations:
+        user = invitation.user
+        with translation.override(user.language):
+            Notification.objects.create(
+                title=_(sender.profile.first_name),
+                message=_(instance.content),
+                type= enums.NotificationType.NEW_MESSAGE,
+                user=user,
+                associated_data={"url": f"/match/{match.pk}/chat"}
+            )

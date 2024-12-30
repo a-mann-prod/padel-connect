@@ -4,24 +4,17 @@
   "allLevel": "All level",
   "api": {
     "errors": {
-      "default": "An error occurred",
-      "email_not_confirmed": {
-        "message": "To log in, please confirm your email address",
-        "title": "Email not verified"
+      "ALREADY_INVITED": {
+        "title": "You already have a team or you have been invited"
       },
-      "invalid_login_credentials": {
-        "message": "Incorrect email and/or password",
-        "title": "Incorrect credentials"
+      "LEVEL_NOT_MATCH": {
+        "message": "Your level does not match the match's level",
+        "title": "Inconsistent level"
       },
-      "invalid_password": {
-        "title": "Incorrect password"
+      "MATCH_FULL": {
+        "title": "The match is full"
       },
-      "match_full": {
-        "title": "Match full"
-      },
-      "new_password_should_be_different_from_the_old_password": {
-        "title": "New password should be different from the old one"
-      }
+      "default": "An error occurred"
     },
     "success": {
       "default": "Recording completed"

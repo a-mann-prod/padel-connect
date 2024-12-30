@@ -1,9 +1,9 @@
 import { Text, VStack } from '@gluestack-ui/themed'
-import * as AuthSession from 'expo-auth-session'
 import { router } from 'expo-router'
 import { Share } from 'react-native'
 
 import { Actionsheet, ActionsheetProps, Button } from '@/designSystem'
+import { config } from '@/services/config'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 
@@ -26,15 +26,16 @@ export const ShareMatchActionsheet = ({
 
   const onPressOutApp = () => {
     Share.share({
-      url: AuthSession.makeRedirectUri({ path: matchPath }),
-      message: t('shareMessage'),
+      message: t('shareMessage', {
+        url: `${config.redirectUrl}${matchPath}`,
+      }),
     })
     props.onClose?.()
   }
 
   return (
     <Actionsheet {...props}>
-      <VStack py="$3" gap="$3">
+      <VStack p="$2" gap="$3">
         <Text>{t('shareMatchActionsheet')}</Text>
         <Button title={t('shareInApp')} onPress={onPressInApp} />
         <Button title={t('shareOutApp')} onPress={onPressOutApp} />

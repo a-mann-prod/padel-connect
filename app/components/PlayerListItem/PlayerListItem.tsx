@@ -61,11 +61,7 @@ export const PlayerListItem = ({
 
   return (
     <HStack flex={1}>
-      <Pressable
-        flex={1}
-        onPress={isDisabled ? undefined : onPress}
-        displayDisabledOpacity
-      >
+      <Pressable flex={1} isDisabled={isDisabled} onPress={onPress}>
         <HStack
           flex={1}
           gap="$3"
@@ -81,7 +77,7 @@ export const PlayerListItem = ({
               onPress={onSelectButtonPress}
               //@ts-ignore:next-line
               height="$full"
-              variant="headerIcon"
+              variant="header"
               isDisabled={isSelectDisabled}
             />
           )}

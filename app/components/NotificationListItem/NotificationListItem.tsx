@@ -1,4 +1,4 @@
-import { HStack, Text, VStack } from '@gluestack-ui/themed'
+import { Badge, HStack, Text, VStack } from '@gluestack-ui/themed'
 
 import { Icon, Pressable, PressableProps } from '@/designSystem'
 import { FontAwesomeProps } from '@/designSystem/Icon/FontAwesome/FontAwesome'
@@ -8,7 +8,7 @@ import { date } from '@/services/date'
 export type NotificationListItemProps =
   NotificationsResponse['results'][number] & {
     onPress: PressableProps['onPress']
-    unread_ids?: number[]
+    unread_ids: number[]
   }
 
 const mapTypeToIcon: Record<
@@ -22,6 +22,7 @@ const mapTypeToIcon: Record<
   MATCH_REQUEST_RESPONSE_REFUSED: 'FAS-circle-xmark',
   INVITATION_RESPONSE: 'FAS-envelope-open-text',
   NEW_PLAYERS: 'FAS-users',
+  MATCH_SHARE: 'FAS-share',
 }
 
 export const NotificationListItem = ({
@@ -29,11 +30,10 @@ export const NotificationListItem = ({
   message,
   onPress,
   created_at,
-  is_read,
   type,
   unread_ids = [],
 }: NotificationListItemProps) => {
-  const unreadCount = unread_ids.length + (is_read ? 0 : 1)
+  const unreadCount = unread_ids.length
 
   const unreadStyle = unreadCount
     ? {
@@ -47,9 +47,18 @@ export const NotificationListItem = ({
         <HStack flex={1} gap="$3">
           <Icon name={mapTypeToIcon[type]} color="$primary500" size="xl" />
           <VStack flex={1}>
-            <Text flex={1} {...unreadStyle} numberOfLines={1}>
-              {title}
-            </Text>
+            <HStack flex={1}>
+              <Text flex={1} {...unreadStyle} numberOfLines={1}>
+                {title}
+              </Text>
+              {unreadCount > 1 && (
+                <Badge rounded="$full" bgColor="$primary500">
+                  <Text size="sm" color="$white">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </Text>
+                </Badge>
+              )}
+            </HStack>
             <Text
               py="$0.5"
               numberOfLines={1}

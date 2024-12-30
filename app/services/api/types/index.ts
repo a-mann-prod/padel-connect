@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios'
+
 export type Entity<T> = T & {
   id: number
   created_at: string
@@ -29,6 +31,7 @@ export enum NotificationType {
   MATCH_REQUEST_RESPONSE_REFUSED = 'MATCH_REQUEST_RESPONSE_REFUSED',
   NEW_PLAYERS = 'NEW_PLAYERS',
   INVITATION_RESPONSE = 'INVITATION_RESPONSE',
+  MATCH_SHARE = 'MATCH_SHARE',
 }
 
 export enum SidePreference {
@@ -72,3 +75,7 @@ export type PaginatedResponse<T> = {
   previous_page: number
   results: T[]
 }
+
+export type BackendError = AxiosError<{
+  error: { code: [string]; detail: [string] }
+}>

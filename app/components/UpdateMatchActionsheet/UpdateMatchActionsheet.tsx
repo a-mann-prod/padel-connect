@@ -25,19 +25,17 @@ export const UpdateMatchActionsheet = ({
     router.navigate(
       routing.matchUpdateField.path(matchId, { datetime, complexId })
     )
-    // a modif
     props.onClose?.()
   }
 
   const onPressUpdateMatchParam = () => {
     router.navigate(routing.matchUpdateParam.path(matchId))
-    // a modif
     props.onClose?.()
   }
 
   return (
     <Actionsheet {...props}>
-      <VStack py="$3" gap="$3">
+      <VStack p="$2" gap="$3">
         <Text>{t('updateMatchActionsheet')}</Text>
         <Button title={t('updateField')} onPress={onPressUpdateField} />
         <Button

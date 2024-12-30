@@ -22,7 +22,7 @@ export const TileButton = ({
       rounded="$lg"
       p="$3"
       {...props}
-      bgColor={props.disabled ? '$backgroundLight300' : props.bgColor}
+      bgColor={props.isDisabled ? '$backgroundLight300' : props.bgColor}
     >
       <VStack flex={1} justifyContent="space-between">
         {icon && (

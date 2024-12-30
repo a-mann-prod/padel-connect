@@ -5,11 +5,6 @@ export type HeaderButtonProps = IconButtonProps
 
 export const HeaderButton = (props: HeaderButtonProps) => (
   <HeaderButtonContainer>
-    <IconButton
-      variant="headerIcon"
-      iconProps={{ size: 'md' }}
-      bg="transparent"
-      {...props}
-    />
+    <IconButton variant="header" iconProps={{ size: 'md' }} {...props} />
   </HeaderButtonContainer>
 )

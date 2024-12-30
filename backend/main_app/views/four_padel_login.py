@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from main_app.external_services.four_padel_client import FourPadelAPIClient
@@ -13,7 +14,7 @@ class FourPadelLoginView(APIView):
         password = request.data.get("password")
 
         if not email or not password:
-            return Response({"detail": "email and password fields required"}, status=status.HTTP_400_BAD_REQUEST)
+            return handle_exception(ValidationError(detail="'email' and 'password' parameters are required") )
 
         client = FourPadelAPIClient()
 

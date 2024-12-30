@@ -2,14 +2,15 @@ import * as Sentry from '@sentry/react-native'
 import Constants, { ExecutionEnvironment } from 'expo-constants'
 import { useFonts } from 'expo-font'
 import { useNavigationContainerRef } from 'expo-router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+import { COLOR_SCHEME_PERSISTENCE_KEY, DeviceColorScheme } from '@/contexts'
 import { config } from '@/services/config'
 import { date } from '@/services/date'
 import { i18n, useInitLanguage } from '@/services/i18n'
+import { storage } from '@/services/storage'
 
 export const useInit = () => {
-  console.log(config)
   if (Constants.executionEnvironment !== ExecutionEnvironment.StoreClient) {
     const googleSigninModule = require('@react-native-google-signin/google-signin')
     googleSigninModule.GoogleSignin.configure({
@@ -60,5 +61,20 @@ export const useInit = () => {
     }
   }, [langLoaded])
 
-  return { isLoading: !loaded || !langLoaded }
+  const [colorScheme, setColorScheme] = useState<
+    DeviceColorScheme | undefined
+  >()
+  const [isLoadingColorScheme, setIsLoadingColorScheme] = useState(true)
+
+  useEffect(() => {
+    storage
+      .getItem(COLOR_SCHEME_PERSISTENCE_KEY)
+      .then((color) => setColorScheme(color as DeviceColorScheme | undefined))
+      .finally(() => setIsLoadingColorScheme(false))
+  }, [])
+
+  return {
+    isLoading: !loaded || !langLoaded || isLoadingColorScheme,
+    colorScheme,
+  }
 }

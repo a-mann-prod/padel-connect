@@ -506,7 +506,7 @@ export const Button = createStyle({
     },
 
     variant: {
-      headerIcon: {
+      header: {
         bg: 'transparent',
         bgColor: '$none',
         pt: 0,
@@ -515,13 +515,28 @@ export const Button = createStyle({
         pl: 0,
         w: 'auto',
         h: 'auto',
+
         ':hover': {
           bg: 'transparent',
-          bgColor: '$none',
+          bgColor: 'none',
         },
         ':active': {
           bg: 'transparent',
+          bgColor: 'none',
+        },
+
+        _dark: {
+          bg: 'transparent',
           bgColor: '$none',
+
+          ':hover': {
+            bg: 'transparent',
+            bgColor: 'none',
+          },
+          ':active': {
+            bg: 'transparent',
+            bgColor: 'none',
+          },
         },
       },
       link: {

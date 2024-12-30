@@ -74,6 +74,6 @@ export const registerForPushNotificationsAsync = async () => {
       handleRegistrationError(`${e}`)
     }
   } else {
-    handleRegistrationError('Must use physical device for push notifications')
+    // Must use physical device
   }
 }

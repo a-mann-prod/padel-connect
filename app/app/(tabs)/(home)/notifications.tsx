@@ -10,9 +10,10 @@ import {
   NotificationsResponse,
   useInfiniteNotifications,
   useReadAllNotifications,
-  useReadNotification,
+  useReadNotifications,
   useUnreadNotificationsCount,
 } from '@/services/api'
+import { NotificationType } from '@/services/api/types'
 
 export default () => {
   const { data: me } = useMe()
@@ -31,9 +32,48 @@ export default () => {
     NotificationsResponse['results']
   >((prev, acc) => [...prev, ...acc.results], [])
 
+  const groupedNotifications = notifications?.reduce<
+    (NotificationsResponse['results'][number] & {
+      unread_ids: number[]
+    })[]
+  >((acc, curr) => {
+    const lastGroup = acc[acc.length - 1]
+
+    if (
+      curr.type === NotificationType.NEW_MESSAGE &&
+      curr.associated_data?.url
+    ) {
+      // Si la notification est de type NEW_MESSAGE et qu'elle peut être regroupée
+      if (
+        lastGroup &&
+        lastGroup.type === NotificationType.NEW_MESSAGE &&
+        lastGroup.associated_data.url === curr.associated_data.url
+      ) {
+        // Ajoutez l'ID au tableau unread_ids uniquement si la notification n'a pas été lue
+        if (!curr.is_read) {
+          lastGroup.unread_ids = [...lastGroup.unread_ids, curr.id]
+        }
+      } else {
+        // Sinon, créez un nouveau groupe et ajoutez l'ID si elle n'a pas été lue
+        acc.push({
+          ...curr,
+          unread_ids: curr.is_read ? [] : [curr.id],
+        })
+      }
+    } else {
+      // Pour les autres types de notifications, ajoutez-les directement
+      acc.push({
+        ...curr,
+        unread_ids: curr.is_read ? [] : [curr.id],
+      })
+    }
+
+    return acc
+  }, [])
+
   const { mutate: readAllNotifications } = useReadAllNotifications()
 
-  const { mutate: readNotification } = useReadNotification()
+  const { mutate: readNotifications } = useReadNotifications()
 
   const { data: unreadNotificationsCount } = useUnreadNotificationsCount({
     options: { enabled: !!me?.id },
@@ -57,11 +97,9 @@ export default () => {
     <NotificationListItem
       {...item}
       onPress={() => {
-        const hasUnread = !item.is_read || !!item?.unread_ids?.length
+        const hasUnread = !!item.unread_ids.length
         if (hasUnread) {
-          // TODO: reflechir aux notifications imbriquées ?
-          // const ids = [item.id, ...(item?.unread_ids || [])]
-          readNotification({ id: item.id })
+          readNotifications({ ids: item.unread_ids })
         }
         if (item?.associated_data?.url)
           router.push(item.associated_data.url as Href)
@@ -72,7 +110,7 @@ export default () => {
   return (
     <VStack flex={1} gap="$3" m="$3">
       <VirtualizedList<NotificationListItemProps>
-        data={notifications}
+        data={groupedNotifications}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data?.length}
         keyExtractor={(item) => item.id.toString()}

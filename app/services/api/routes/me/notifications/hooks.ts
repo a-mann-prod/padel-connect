@@ -19,9 +19,9 @@ import {
   getInfiniteNotificationsFn,
   getUnreadNotificationsCount,
   readAllNotificationsFn,
-  readNotificationFn,
+  readNotificationsFn,
 } from './functions'
-import { ReadNotificationParams } from './params'
+import { ReadNotificationsParams } from './params'
 
 export const useInfiniteNotifications = ({
   options,
@@ -34,22 +34,25 @@ export const useInfiniteNotifications = ({
     initialPageParam: 1,
   })
 
-export const useReadNotification = ({
+export const useReadNotifications = ({
   options,
-}: UseMutationProps<void, ReadNotificationParams> = {}) => {
+}: UseMutationProps<number, ReadNotificationsParams> = {}) => {
   const querycache = useQueryCache()
   const queryClient = useQueryClient()
 
   return useMutation({
     ...options,
-    mutationFn: readNotificationFn,
+    mutationFn: readNotificationsFn,
     onSuccess: (data, variables, context) => {
-      querycache.updateItem(['notifications', 'infinite'], {
-        id: variables.id,
-        is_read: true,
-      })
+      variables.ids.forEach((id) =>
+        // voir pour opti
+        querycache.updateItem(['notifications', 'infinite'], {
+          id,
+          is_read: true,
+        })
+      )
       queryClient.setQueryData(['notifications', 'count'], (oldData: number) =>
-        oldData ? oldData - 1 : oldData
+        oldData ? oldData - data : oldData
       )
       options?.onSuccess?.(data, variables, context)
     },

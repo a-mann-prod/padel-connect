@@ -10,4 +10,7 @@ export const AvatarBadge = createStyle({
   bottom: 0,
   borderColor: 'white',
   borderWidth: 2,
+  _dark: {
+    borderColor: '$backgroundDark950',
+  },
 })

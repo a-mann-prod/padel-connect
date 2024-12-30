@@ -56,6 +56,8 @@ class MatchTeamModelViewSet(mixins.CustomModelViewSet, mixins.ExcludeDatesFields
         try:
             match = get_object_or_404(Match, pk=match_pk)
             team = get_team_request_current_user(request, match)
+            if team is None: 
+                return Response(status=status.HTTP_200_OK)
             serializer = MatchTeamRequestSerializer(team, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:

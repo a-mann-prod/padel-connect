@@ -92,6 +92,17 @@ services:
     networks:
       - local
 
+  nodejs:
+    container_name: redirection-server
+    image: node:18-alpine
+    working_dir: /usr/src/app
+    volumes:
+      - ./nodejs:/usr/src/app
+    ports:
+      - "3000:3000"
+    command: ["sh", "-c", "yarn install && node index.js"]
+    restart: always
+
 networks:
   local:
     driver: bridge

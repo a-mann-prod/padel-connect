@@ -1,6 +1,8 @@
 import { useHandleError } from '@/hooks/useHandleError'
+import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { useFindMatchQueryKey } from '@/services/api/utills'
+import { useTranslate } from '@/services/i18n'
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 import {
   UseInfiniteQueryProps,
@@ -15,6 +17,7 @@ import {
   getInfiniteMatchesFn,
   getInfiniteMatchesInvitationsFn,
   getMatchFn,
+  shareMatchFn,
   updateMatchFn,
 } from './functions'
 import {
@@ -24,6 +27,7 @@ import {
   GetInfiniteMatchesInvitationsParams,
   GetInfiniteMatchesParams,
   GetMatchParams,
+  ShareMatchParams,
   UpdateMatchParams,
 } from './params'
 
@@ -164,6 +168,22 @@ export const useDeleteMatch = ({
       if (querykey) {
         queryCache.removeItem(querykey, variables.id)
       }
+    },
+  })
+}
+
+export const useShareMatch = ({
+  options,
+}: UseMutationProps<void, ShareMatchParams> = {}) => {
+  const t = useTranslate('match')
+  const onSuccess = useHandleSuccess()
+  return useMutation({
+    ...options,
+    mutationFn: shareMatchFn,
+    onSuccess: (data, variables, context) => {
+      onSuccess({ title: t('matchShared') })
+
+      options?.onSuccess?.(data, variables, context)
     },
   })
 }

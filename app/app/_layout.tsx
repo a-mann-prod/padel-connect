@@ -14,6 +14,7 @@ import { DefaultAlert, SelfDeleteAlert, UpdateLoader } from '@/components'
 import {
   AuthProvider,
   ColorSchemeProvider,
+  DeviceColorScheme,
   FiltersProvider,
   ThemeProvider,
 } from '@/contexts'
@@ -49,7 +50,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync()
 
 export default Sentry.wrap(() => {
-  const { isLoading } = useInit()
+  const { isLoading, colorScheme } = useInit()
 
   useEffect(() => {
     if (!isLoading) {
@@ -61,10 +62,14 @@ export default Sentry.wrap(() => {
     return null
   }
 
-  return <RootProvider />
+  return <RootProvider colorScheme={colorScheme} />
 })
 
-const RootProvider = () => {
+type RootProviderProps = {
+  colorScheme: DeviceColorScheme | undefined
+}
+
+const RootProvider = ({ colorScheme }: RootProviderProps) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -79,7 +84,7 @@ const RootProvider = () => {
   })
 
   return (
-    <ColorSchemeProvider>
+    <ColorSchemeProvider preloadedColorScheme={colorScheme}>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>

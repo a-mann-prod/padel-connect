@@ -1,26 +1,26 @@
 import { Pressable as GPressable } from '@gluestack-ui/themed'
-import { PropsWithChildren } from 'react'
+import { ComponentProps, PropsWithChildren } from 'react'
 
-export type PressableProps = typeof GPressable.defaultProps & {
-  transparent?: boolean
+type GPressableProps = ComponentProps<typeof GPressable>
+
+export type PressableProps = Omit<GPressableProps, 'disabled'> & {
   displayDisabledOpacity?: boolean
+  isDisabled?: boolean
 }
 
 export const Pressable = ({
   children,
-  transparent = false,
-  displayDisabledOpacity = false,
+  displayDisabledOpacity = true,
+  isDisabled,
   ...props
 }: PropsWithChildren<PressableProps>) => {
-  const { onPress, onPressIn, onPressOut, onLongPress } = props
-  const active = !!onPress || !!onPressIn || !!onPressOut || !!onLongPress
-
   return (
     <GPressable
-      disabled={!active}
+      disabled={isDisabled}
       {...props}
+      // reduce opacity on click
       $active-opacity={0.5}
-      opacity={displayDisabledOpacity && !active ? 0.5 : 1}
+      opacity={displayDisabledOpacity && isDisabled ? 0.5 : 1}
     >
       {children}
     </GPressable>

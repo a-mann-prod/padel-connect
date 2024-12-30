@@ -39,6 +39,9 @@ class Match(models.Model):
             min_level = max(0, level - 1)
             max_level = min(10, level + 1)
 
+        min_level = round(min_level, 1)
+        max_level = round(max_level, 1)
+
         return [min_level, max_level]
 
     def __str__(self):

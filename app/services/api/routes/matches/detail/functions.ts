@@ -7,6 +7,7 @@ import {
   GetInfiniteMatchesInvitationsParams,
   GetInfiniteMatchesParams,
   GetMatchParams,
+  ShareMatchParams,
   UpdateMatchParams,
 } from './params'
 
@@ -68,6 +69,12 @@ export const updateMatchFn = async (params: UpdateMatchParams) => {
 
 export const deleteMatchFn = async (params: DeleteMatchParams) => {
   const { data } = await api.delete<MatchResponse>(`${ENDPOINT}/${params.id}/`)
+
+  return data
+}
+
+export const shareMatchFn = async ({ id, ...params }: ShareMatchParams) => {
+  const { data } = await api.post<void>(`${ENDPOINT}/${id}/share/`, params)
 
   return data
 }

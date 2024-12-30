@@ -2,7 +2,7 @@ import {
   NotificationsResponse,
   UnreadNotificationsCountResponse,
 } from './entities'
-import { ReadNotificationParams } from './params'
+import { ReadNotificationsParams } from './params'
 
 import api from '@/services/api/axiosConfig'
 
@@ -16,10 +16,10 @@ export const getInfiniteNotificationsFn = async (pageParam: number) => {
   return data
 }
 
-export const readNotificationFn = async (params: ReadNotificationParams) => {
-  const { data } = await api.post<void>(
-    `${ENDPOINT}/${params.id}/mark_as_read/`
-  )
+export const readNotificationsFn = async (params: ReadNotificationsParams) => {
+  const { data } = await api.post<number>(`${ENDPOINT}/mark_as_read/`, {
+    ...params,
+  })
   return data
 }
 

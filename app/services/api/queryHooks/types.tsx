@@ -1,11 +1,11 @@
 import {
-  DefaultError,
   InfiniteData,
   QueryKey,
   UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
 } from '@tanstack/react-query'
+import { BackendError } from '../types'
 
 export type UseQueryProps<TData, TParams = undefined> = {
   options?: Omit<UseQueryOptions<TData>, 'queryKey'>
@@ -15,7 +15,7 @@ export type UseInfiniteQueryProps<TData, TParams = undefined> = {
   options?: Omit<
     UseInfiniteQueryOptions<
       TData,
-      Error,
+      BackendError,
       InfiniteData<TData, number>,
       TData,
       QueryKey,
@@ -26,5 +26,5 @@ export type UseInfiniteQueryProps<TData, TParams = undefined> = {
 } & (TParams extends undefined ? object : { params: TParams })
 
 export type UseMutationProps<TData, TVariables = void> = {
-  options?: UseMutationOptions<TData, DefaultError, TVariables>
+  options?: UseMutationOptions<TData, BackendError, TVariables>
 }
