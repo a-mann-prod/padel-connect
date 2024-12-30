@@ -1,9 +1,12 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 
+import { useMe } from '@/hooks/useMe'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { config } from '@/services/config'
+import { date } from '@/services/date'
 import { ACCESS_TOKEN_KEY, storage } from '@/services/storage'
+import { uuid4 } from '@sentry/core'
 import { UseInfiniteQueryProps, UseQueryProps } from '../../../queryHooks'
 import {
   MatchConversationMessageResponse,
@@ -56,9 +59,12 @@ export const useMatchConversationMessagesWebSocket = (
   match: number,
   onMessageReceived?: (data: MatchConversationMessageResponse) => void
 ) => {
+  const { data: me } = useMe()
   const { data: conversation } = useMatchConversation({ params: { id: match } })
   const socketRef = useRef<WebSocket | null>(null)
   const queryCache = useQueryCache()
+
+  // const [optimisticIds, setOptimisticIds] = useState<string[]>([])
 
   useEffect(() => {
     const initializedWebSocket = async () => {
@@ -81,7 +87,20 @@ export const useMatchConversationMessagesWebSocket = (
       socket.onmessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data) as MatchConversationMessageResponse
 
-        queryCache.addItem(['matches', match, 'conversation', 'messages'], data)
+        if (data.user === me?.id) {
+          // const optimisticid = optimisticIds[0]
+          // replace
+          // queryCache.updateItem(
+          //   ['matches', match, 'conversation', 'messages'],
+          //   data
+          // )
+        } else {
+          queryCache.addItem(
+            ['matches', match, 'conversation', 'messages'],
+            data
+          )
+        }
+
         onMessageReceived?.(data)
       }
 
@@ -114,7 +133,20 @@ export const useMatchConversationMessagesWebSocket = (
         socketRef.current &&
         socketRef.current.readyState === WebSocket.OPEN
       ) {
+        const generatedId = uuid4()
+        const optimisicMessage: MatchConversationMessageResponse = {
+          content: message.message,
+          user: me?.id || -1,
+          id: generatedId as unknown as number,
+          created_at: date.now().toISOString(),
+          updated_at: date.now().toISOString(),
+        }
+        // setOptimisticIds((prev) => [...prev, generatedId])
         socketRef.current.send(JSON.stringify(message))
+        queryCache.addItem(
+          ['matches', match, 'conversation', 'messages'],
+          optimisicMessage
+        )
       }
     },
   }
