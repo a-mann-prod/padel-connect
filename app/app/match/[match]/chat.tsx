@@ -7,7 +7,7 @@ import { uniq } from 'remeda'
 import { KeyboardAvoidingView, WithMatch } from '@/components'
 import { Message, MessageInput, VirtualizedList } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
-import { useProfiles } from '@/services/api'
+import { useProfiles, useReadNotifications } from '@/services/api'
 import {
   MatchConversationMessagesResponse,
   useInfiniteMatchConversationMessages,
@@ -16,6 +16,7 @@ import {
 import { date } from '@/services/date'
 
 export default WithMatch(() => {
+  const { mutate: readNotifications } = useReadNotifications()
   // that's workin, but better to set it globaly ?
   const pathName = usePathname()
   Notifications.setNotificationHandler({
@@ -27,6 +28,10 @@ export default WithMatch(() => {
       // do not display notification alert
       if (notifData?.url === pathName) {
         shouldShowAlert = false
+      }
+
+      if (notifData?.id) {
+        readNotifications({ ids: [notifData?.id] })
       }
 
       return {

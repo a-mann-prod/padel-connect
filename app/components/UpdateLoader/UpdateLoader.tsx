@@ -3,12 +3,14 @@ import * as Updates from 'expo-updates'
 import { PropsWithChildren, useEffect } from 'react'
 
 import { Loader } from '@/designSystem'
+import { useAppState } from '@/hooks/useAppstate'
 import { useTranslate } from '@/services/i18n'
 
 export const UpdateLoader = ({ children }: PropsWithChildren) => {
   const t = useTranslate()
   const { isUpdateAvailable, isUpdatePending, checkError } =
     Updates.useUpdates()
+  const appState = useAppState()
 
   useEffect(() => {
     const checkForUpdates = async () => {
@@ -20,8 +22,8 @@ export const UpdateLoader = ({ children }: PropsWithChildren) => {
       }
     }
 
-    checkForUpdates()
-  }, [])
+    appState === 'active' && checkForUpdates()
+  }, [appState])
 
   const getTitle = () => {
     if (checkError) return t('updateError')

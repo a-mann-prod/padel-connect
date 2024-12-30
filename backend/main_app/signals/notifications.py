@@ -148,10 +148,12 @@ def handle_new_message(sender, instance, created, **kwargs):
     for invitation in invitations:
         user = invitation.user
         with translation.override(user.language):
-            Notification.objects.create(
+            notification = Notification.objects.create(
                 title=_(sender.profile.first_name),
                 message=_(instance.content),
                 type= enums.NotificationType.NEW_MESSAGE,
                 user=user,
                 associated_data={"url": f"/match/{match.pk}/chat"}
             )
+            notification.associated_data["id"] = notification.pk
+            notification.save(update_fields=["associated_data"])
