@@ -79,21 +79,21 @@ def previous_team(sender, instance, **kwargs):
         instance._previous_is_ready = None
 @receiver(post_save, sender=Team)
 def handle_team_ready(sender, instance, created, **kwargs):
-    print("debugggg")
-    match = instance.match
-    match_captain = match.user      
+    if not created:
+        match = instance.match
+        match_captain = match.user      
 
-    previous_is_ready = getattr(instance, '_previous_is_ready', None)
+        previous_is_ready = getattr(instance, '_previous_is_ready', None)
 
-    if previous_is_ready is False and instance.is_ready:
-        with translation.override(match_captain.language):
-            Notification.objects.create(
-                title=_("New players! 🎉"),
-                message=_("New players have joined your match 💪"),
-                type= enums.NotificationType.NEW_PLAYERS,
-                user=match_captain,
-                associated_data={"url": f"/match/{match.pk}"}
-            )
+        if previous_is_ready is False and instance.is_ready:
+            with translation.override(match_captain.language):
+                Notification.objects.create(
+                    title=_("New players! 🎉"),
+                    message=_("New players have joined your match 💪"),
+                    type= enums.NotificationType.NEW_PLAYERS,
+                    user=match_captain,
+                    associated_data={"url": f"/match/{match.pk}"}
+                )
 
 
 # Permet de récupérer l'état précédent de la TeamInvite
