@@ -6,7 +6,6 @@ import * as ExpoNotifications from 'expo-notifications'
 import { router, Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import * as TaskManager from 'expo-task-manager'
-import * as Updates from 'expo-updates'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
 
@@ -108,18 +107,12 @@ const RootProvider = ({ colorScheme }: RootProviderProps) => {
 const RootLayoutNav = () => {
   const { data: me } = useMe()
 
-  const { isUpdateAvailable } = Updates.useUpdates()
-
   useScreenCaptureCallback(
     !me ? () => router.navigate(routing.report.path()) : undefined
   )
 
-  if (isUpdateAvailable) {
-    return <UpdateLoader />
-  }
-
   return (
-    <>
+    <UpdateLoader>
       <Stack initialRouteName={unstable_settings.initialRouteName}>
         <Stack.Screen
           name={routing.modals.name}
@@ -148,6 +141,6 @@ const RootLayoutNav = () => {
           options={{ headerShown: false }}
         />
       </Stack>
-    </>
+    </UpdateLoader>
   )
 }

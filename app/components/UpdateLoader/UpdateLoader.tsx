@@ -1,11 +1,11 @@
 import { SafeAreaView } from '@gluestack-ui/themed'
 import * as Updates from 'expo-updates'
-import { useEffect } from 'react'
+import { PropsWithChildren, useEffect } from 'react'
 
 import { Loader } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 
-export const UpdateLoader = () => {
+export const UpdateLoader = ({ children }: PropsWithChildren) => {
   const t = useTranslate()
   const { isUpdateAvailable, isUpdatePending, checkError } =
     Updates.useUpdates()
@@ -28,9 +28,13 @@ export const UpdateLoader = () => {
     if (isUpdatePending || isUpdateAvailable) return t('updateDownloading')
   }
 
-  return (
-    <SafeAreaView flex={1} variant="colored">
-      <Loader title={getTitle()} />
-    </SafeAreaView>
-  )
+  if (isUpdateAvailable) {
+    return (
+      <SafeAreaView flex={1} variant="colored">
+        <Loader title={getTitle()} />
+      </SafeAreaView>
+    )
+  }
+
+  return children
 }
