@@ -14,33 +14,42 @@ import {
   useMatchConversationMessagesWebSocket,
 } from '@/services/api/routes/matches'
 import { date } from '@/services/date'
+import { defaultNotificationHandler } from '@/services/notifications'
+import { useEffect } from 'react'
 
 export default WithMatch(() => {
   const { mutate: readNotifications } = useReadNotifications()
   // that's workin, but better to set it globaly ?
   const pathName = usePathname()
-  Notifications.setNotificationHandler({
-    handleNotification: async (notification: Notifications.Notification) => {
-      let shouldShowAlert = true
-      const notifData = notification?.request.content.data
 
-      // if notification is same location as current location
-      // do not display notification alert
-      if (notifData?.url === pathName) {
-        shouldShowAlert = false
-      }
+  useEffect(() => {
+    Notifications.setNotificationHandler({
+      handleNotification: async (notification: Notifications.Notification) => {
+        let shouldShowAlert = true
+        const notifData = notification?.request.content.data
 
-      if (notifData?.id) {
-        readNotifications({ ids: [notifData?.id] })
-      }
+        // if notification is same location as current location
+        // do not display notification alert
+        if (notifData?.url === pathName) {
+          shouldShowAlert = false
+        }
 
-      return {
-        shouldShowAlert,
-        shouldPlaySound: true,
-        shouldSetBadge: true,
-      }
-    },
-  })
+        if (notifData?.id) {
+          readNotifications({ ids: [notifData?.id] })
+        }
+
+        return {
+          shouldShowAlert,
+          shouldPlaySound: true,
+          shouldSetBadge: true,
+        }
+      },
+    })
+
+    return () => {
+      Notifications.setNotificationHandler(defaultNotificationHandler)
+    }
+  }, [pathName, readNotifications])
 
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)

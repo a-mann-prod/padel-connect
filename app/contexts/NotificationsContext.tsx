@@ -54,6 +54,19 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
         setNotification(notification)
 
         invalidateQuery(['notifications'])
+
+        const url: string | undefined = notification.request.content.data?.url
+        const matchChat = url?.match(/\/match\/(\d+)\/chat/)
+
+        if (matchChat && matchChat[1]) {
+          console.log(matchChat)
+          invalidateQuery([
+            'matches',
+            Number(matchChat[1]),
+            'conversation',
+            'messages',
+          ])
+        }
       })
 
     // notification reponse listener on notification click

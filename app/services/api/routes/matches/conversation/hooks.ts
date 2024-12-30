@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 
+import { useAppState } from '@/hooks/useAppstate'
 import { useMe } from '@/hooks/useMe'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { config } from '@/services/config'
@@ -59,6 +60,7 @@ export const useMatchConversationMessagesWebSocket = (
   match: number,
   onMessageReceived?: (data: MatchConversationMessageResponse) => void
 ) => {
+  const appstate = useAppState()
   const { data: me } = useMe()
   const { data: conversation } = useMatchConversation({ params: { id: match } })
   const socketRef = useRef<WebSocket | null>(null)
@@ -116,7 +118,7 @@ export const useMatchConversationMessagesWebSocket = (
       }
     }
 
-    initializedWebSocket()
+    appstate === 'active' && initializedWebSocket()
 
     return () => {
       if (socketRef.current) {
@@ -125,7 +127,7 @@ export const useMatchConversationMessagesWebSocket = (
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conversation, match, onMessageReceived])
+  }, [conversation, match, onMessageReceived, appstate])
 
   return {
     send: (message: SendMatchMessage) => {
