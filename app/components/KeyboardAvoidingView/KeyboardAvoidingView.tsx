@@ -36,7 +36,7 @@ export const KeyboardAvoidingView = ({
       }}
     >
       <GKeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1, zIndex: 999 }}
         keyboardVerticalOffset={
           inModal ? dim.height - viewHeight - bottom : KEYBOARD_VERTICAL_OFFSET
