@@ -137,6 +137,7 @@ export default WithMatch(() => {
               isOpenToAll={match.is_open_to_all_level}
               levelRange={match.calculated_level_range}
               owner={participants?.find((p) => p.id === match.user)}
+              isBooked={match.is_reserved}
             />
             <MatchPlayers
               data={participants}

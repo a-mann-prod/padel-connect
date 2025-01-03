@@ -4,12 +4,14 @@ import { Section, SectionRow } from '@/designSystem'
 import { getMatchTimes } from '@/hooks/useManageMatch'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
+import { isNilOrEmpty } from '@/utils/global'
 
 export type MatchRecapProps = {
   complexName: string
   datetime: string
   duration: number | string
   fieldName: string
+  isBooked?: boolean
 }
 
 export const MatchRecap = ({
@@ -17,6 +19,7 @@ export const MatchRecap = ({
   datetime,
   duration,
   fieldName,
+  isBooked,
 }: MatchRecapProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
@@ -52,7 +55,12 @@ export const MatchRecap = ({
       <SectionRow
         title={t('field')}
         icon="FAR-square-minus"
-        rightComponent={() => <Text>{fieldName}</Text>}
+        rightComponent={() => (
+          <Text>
+            {fieldName}
+            {!isNilOrEmpty(isBooked) && !isBooked && ` ${t('notBooked')}`}
+          </Text>
+        )}
       />
     </Section>
   )

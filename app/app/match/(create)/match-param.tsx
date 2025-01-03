@@ -42,6 +42,7 @@ export default () => {
             datetime={bookingFieldFormValues.datetime}
             duration={bookingFieldFormValues.duration}
             fieldName={bookingFieldFormValues.four_padel_field_name}
+            isBooked={false}
           />
         )}
         <MatchForm
