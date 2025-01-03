@@ -10,7 +10,11 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_class = ProfileFilter
 
     def get_queryset(self):
-        queryset = Profile.objects.all()
+        queryset = Profile.objects.all().filter(
+            user__is_staff=False, 
+            user__is_active=True, 
+            user__is_onboarding_completed=True
+        )
         ids_param = self.request.query_params.get('ids')
 
         if ids_param:

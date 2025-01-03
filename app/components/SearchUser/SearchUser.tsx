@@ -56,8 +56,6 @@ export const SearchUser = ({
   const { isDebouncing, debouncedCallback: setSearchDebounced } =
     useDebounce(setSearch)
 
-  const enableSearch = !!search
-
   const {
     data: profilesPages,
     isLoading,
@@ -68,7 +66,7 @@ export const SearchUser = ({
     isFetchingNextPage,
   } = useInfiniteProfiles({
     params: { search },
-    options: { enabled: enableSearch && !isFavMode },
+    options: { enabled: !isFavMode },
   })
 
   const {
@@ -84,7 +82,7 @@ export const SearchUser = ({
     options: { enabled: isFavMode },
   })
 
-  const profiles = enableSearch
+  const profiles = !isFavMode
     ? profilesPages?.pages.reduce<ProfilesResponse['results']>(
         (prev, acc) => [...prev, ...acc.results],
         []

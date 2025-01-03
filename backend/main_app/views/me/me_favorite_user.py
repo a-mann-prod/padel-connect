@@ -8,14 +8,20 @@ from main_app.pagination import CustomPageNumberPagination
 from django.conf import settings
 from main_app.business.favorite_user import toggle_favorite_user
 from main_app.exceptions import handle_exception
+from main_app.filters import ProfileFilter
 
 
 class MeFavoriteUsersView(APIView):
     permission_classes = [IsAuthenticated]
 
+
     def get(self, request):
         """GET /me/favorite_users/ - Affiche les utilisateurs favoris de l'utilisateur connecté."""
         favorites = Profile.objects.filter(user__in=request.user.favorite_users.all())
+
+        # Appliquer les filtres définis dans ProfileFilter
+        profile_filter = ProfileFilter(request.query_params, queryset=favorites)
+        favorites = profile_filter.qs  # Obtenir les résultats filtrés
 
         paginator = CustomPageNumberPagination()
         paginator.page_size = settings.REST_FRAMEWORK.get('PAGE_SIZE', 10)
