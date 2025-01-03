@@ -1,9 +1,23 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
+
 const app = express();
 
+const htmlPath = path.join(__dirname, 'public', 'index.html');
+
 app.get('*', (req, res) => {
-    console.log(`a-mann-prod://${req.url}`)
-    res.redirect(`a-mann-prod://${req.url}`);
+    const redirectUrl = `a-mann-prod.padel-connect://${req.url}`
+
+    fs.readFile(htmlPath, 'utf8', (err, data) => {
+        if (err) {
+          console.error('Error reading HTML file:', err);
+          return res.status(500).send('Internal Server Error');
+        }
+    
+        const htmlWithRedirect = data.replace('{{REDIRECT_URL}}', redirectUrl);
+        res.send(htmlWithRedirect);
+      });
 });
 
 const PORT = process.env.PORT || 3000;

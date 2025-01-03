@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirection en cours...</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #004AAB, #00A9E0);
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #e0e0e0;
+    }
+
+    a {
+      color: #00A9E0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #006BB6;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    button:hover {
+      background-color: #00578A;
+    }
+
+    .fallback {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .fallback p {
+      margin-bottom: 10px;
+      color: #e0e0e0;
+    }
+
+    .copy-link {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #FF6666;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .copy-link:hover {
+      background-color: #FF4D4D;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Redirection en cours...</h1>
+    <p>Redirection vers l'application. Si rien ne se passe, clique sur le lien ci-dessous :</p>
+    <a id="app-link" href="">Ouvrir l'application</a>
+    <div class="fallback">
+      <p>Si cela ne fonctionne toujours pas, copie ce lien et colle-le dans ton navigateur :</p>
+      <button id="copy-link" class="copy-link">Copier le lien</button>
+    </div>
+  </div>
+
+  <script>
+    const appLink = "{{REDIRECT_URL}}"; // Remplacez cette variable par l'URL dynamique
+
+    // Injecter le lien dans le HTML
+    document.getElementById("app-link").setAttribute("href", appLink);
+
+    // Redirection automatique
+    window.onload = function () {
+      window.location.href = appLink;
+
+      // Afficher le message de fallback après 2 secondes
+      setTimeout(() => {
+        document.querySelector(".fallback").style.display = "block";
+      }, 2000);
+    };
+  </script>
+</body>
+</html>
