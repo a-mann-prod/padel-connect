@@ -3,7 +3,6 @@ import { Text, VStack } from '@gluestack-ui/themed'
 import { Section, SectionRow } from '@/designSystem'
 import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
-import { getUsername } from '@/utils/user'
 import { MatchRecap, MatchRecapProps } from '../MatchRecap/MatchRecap'
 
 type MatchInfoProps = MatchRecapProps & {
@@ -27,9 +26,7 @@ export const MatchInfo = ({
         <SectionRow
           title={tGlobal('captain')}
           icon="FAS-crown"
-          rightComponent={() => (
-            <Text>{getUsername(owner?.first_name, owner?.last_name)}</Text>
-          )}
+          rightComponent={() => <Text>{owner?.full_name}</Text>}
         />
         <SectionRow
           title={tGlobal('level')}

@@ -7,7 +7,6 @@ import { MatchConversationMessagesResponse } from '@/services/api/routes/matches
 import { DefaultProfileResponse } from '@/services/api/types'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
-import { getUsername } from '@/utils/user'
 import { when } from '@/utils/when'
 
 export type MessageProps = {
@@ -53,7 +52,12 @@ export const Message = ({
         alignItems="flex-end"
       >
         {!isMe && !isSameUser ? (
-          <Avatar size="xs" imageUrl={sender?.avatar_url} />
+          <Avatar
+            size="xs"
+            imageUrl={sender?.avatar_url}
+            firstname={sender?.first_name}
+            lastname={sender?.last_name}
+          />
         ) : (
           <Box w="$6" />
         )}
@@ -65,11 +69,7 @@ export const Message = ({
           p="$2"
           maxWidth="80%"
         >
-          <Text variant="subtitle">
-            {isMe
-              ? t('me')
-              : getUsername(sender?.first_name, sender?.last_name)}
-          </Text>
+          <Text variant="subtitle">{isMe ? t('me') : sender?.full_name}</Text>
           <Text>{content}</Text>
           <Text pt="$1" variant="subtitle" alignSelf="flex-end">
             {createdDate.format('HH:mm')}

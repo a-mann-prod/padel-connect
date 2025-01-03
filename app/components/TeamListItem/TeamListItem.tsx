@@ -87,8 +87,14 @@ export const TeamListItem = ({ invitations, request }: TeamListItemProps) => {
                     </Box>
                   )}
                   <AvatarGroup>
-                    {users.map(({ id, avatar_url }) => (
-                      <Avatar key={id} size="md" imageUrl={avatar_url} />
+                    {users.map(({ id, avatar_url, first_name, last_name }) => (
+                      <Avatar
+                        key={id}
+                        size="md"
+                        imageUrl={avatar_url}
+                        firstname={first_name}
+                        lastname={last_name}
+                      />
                     ))}
                   </AvatarGroup>
                   <HStack flex={1} gap="$2" justifyContent="center">

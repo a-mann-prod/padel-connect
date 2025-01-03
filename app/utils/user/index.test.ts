@@ -1,43 +1,13 @@
 import { describe, expect, it } from '@jest/globals'
 
-import { getInitials, getUsername } from './index'
-
-describe('getUsername', () => {
-  it('should return firstname and first letter of lastname with uppercase', () => {
-    // ARRANGE
-    const lastname = 'Réno'
-    const firstname = 'Jean'
-    const expected = 'Jean R.'
-
-    // ACT
-    const current = getUsername(firstname, lastname)
-
-    // ASSERT
-    expect(current).toEqual(expected)
-  })
-})
-
-describe('getUsername', () => {
-  it('should return firstName and first letter of lastname with uppercase with a composed firstname', () => {
-    // ARRANGE
-    const lastname = 'Goldman'
-    const firstname = 'Jean Jacques'
-    const expected = 'Jean Jacques G.'
-
-    // ACT
-    const current = getUsername(firstname, lastname)
-
-    // ASSERT
-    expect(current).toEqual(expected)
-  })
-})
+import { getInitials } from './index'
 
 describe('getInitials', () => {
   it('should return initials', () => {
     // ARRANGE
     const lastname = 'Réno'
     const firstname = 'Jean'
-    const expected = 'JR'
+    const expected = 'J R'
 
     // ACT
     const current = getInitials(firstname, lastname)
@@ -52,7 +22,7 @@ describe('getInitials', () => {
     // ARRANGE
     const lastname = 'réno'
     const firstname = 'jean'
-    const expected = 'JR'
+    const expected = 'J R'
 
     // ACT
     const current = getInitials(firstname, lastname)
@@ -67,7 +37,22 @@ describe('getInitials', () => {
     // ARRANGE
     const lastname = 'Goldman'
     const firstname = 'Jean Jacques'
-    const expected = 'JG'
+    const expected = 'J G'
+
+    // ACT
+    const current = getInitials(firstname, lastname)
+
+    // ASSERT
+    expect(current).toEqual(expected)
+  })
+})
+
+describe('getInitials', () => {
+  it('should return first initials (default case)', () => {
+    // ARRANGE
+    const lastname = 'R.'
+    const firstname = 'Jean'
+    const expected = 'J R'
 
     // ACT
     const current = getInitials(firstname, lastname)

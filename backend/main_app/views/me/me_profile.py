@@ -1,4 +1,4 @@
-from main_app.serializers import ProfileSerializer
+from main_app.serializers import MeProfileSerializer
 from main_app.models import Profile
 from main_app.views.generic_views import MeRelatedObjectView
 from rest_framework.response import Response
@@ -10,7 +10,7 @@ from main_app.exceptions import handle_exception
 
 class MeProfileView(MeRelatedObjectView):
     model = Profile
-    serializer_class = ProfileSerializer
+    serializer_class = MeProfileSerializer
     user_related_field = 'profile'
     
 

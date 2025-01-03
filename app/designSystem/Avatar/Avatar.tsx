@@ -8,7 +8,6 @@ import {
 } from '@gluestack-ui/themed'
 import { ComponentProps, useRef, useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
-import { isEmpty } from 'remeda'
 
 import { AvatarBadge, AvatarBadgeProps } from '../AvatarBadge/AvatarBadge'
 import { Icon, IconNameProp } from '../Icon/Icon'
@@ -18,7 +17,7 @@ import { Skeleton } from '../Skeleton/Skeleton'
 
 import { ColorsToken } from '@/services/theme/gluestack-ui/gluestack-ui.config'
 import { isNilOrEmpty } from '@/utils/global'
-import { getInitials, getUsername } from '@/utils/user'
+import { getInitials } from '@/utils/user'
 
 export type GAvatarProps = ComponentProps<typeof GAvatar>
 
@@ -26,6 +25,7 @@ export type AvatarProps = {
   imageUrl?: string
   firstname?: string | null
   lastname?: string | null
+  fullName?: string | null
   status?: 'online' | 'offline' | 'hidden'
   onPress?: TouchableOpacityProps['onPress']
   isLoading?: boolean
@@ -44,6 +44,7 @@ export const Avatar = ({
   onPress,
   firstname,
   lastname,
+  fullName,
   isLoading,
   fallBackIcon,
   containerProps,
@@ -58,10 +59,10 @@ export const Avatar = ({
   const imageViewerRef = useRef<any>(null)
 
   const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
-  const completeName = getUsername(firstname, lastname)
 
   const displayFallback = () => {
-    if (completeName && !isEmpty(completeName) && !fallBackIcon)
+    console.log(getInitials(firstname, lastname))
+    if (firstname && lastname && !fallBackIcon)
       return (
         <AvatarFallbackText>
           {getInitials(firstname, lastname)}
@@ -112,9 +113,7 @@ export const Avatar = ({
           </Skeleton>
         </TouchableOpacity>
 
-        {!isNilOrEmpty(completeName) && (
-          <Heading size="xs">{completeName}</Heading>
-        )}
+        {!isNilOrEmpty(fullName) && <Heading size="xs">{fullName}</Heading>}
       </VStack>
     </>
   )

@@ -39,6 +39,7 @@ export const Profile = ({ user, isLoading, external }: ProfileProps) => {
         <Avatar
           firstname={user.first_name}
           lastname={user.last_name}
+          fullName={user.full_name}
           imageUrl={user.avatar_url}
           viewerEnabled
         />

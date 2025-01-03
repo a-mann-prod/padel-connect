@@ -34,6 +34,7 @@ const AvatarItem = ({
   avatar_url,
   first_name,
   last_name,
+  full_name,
   ...props
 }: Partial<DefaultMinimalProfileResponse> &
   Omit<PlayersAvatarsProps, 'users'>) => {
@@ -49,5 +50,14 @@ const AvatarItem = ({
     )
   }
 
-  return <Avatar key={id} {...sharedProps} imageUrl={avatar_url} {...props} />
+  return (
+    <Avatar
+      key={id}
+      {...sharedProps}
+      imageUrl={avatar_url}
+      firstname={first_name}
+      lastname={last_name}
+      {...props}
+    />
+  )
 }

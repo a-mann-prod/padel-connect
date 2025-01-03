@@ -14,7 +14,6 @@ import {
 import { ProfileResponse } from '@/services/api'
 import { RequestStatus } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
-import { getUsername } from '@/utils/user'
 
 export type PlayerListItemProps = ProfileResponse & {
   onPress?: PressableProps['onPress']
@@ -32,6 +31,7 @@ export type PlayerListItemProps = ProfileResponse & {
 }
 
 export const PlayerListItem = ({
+  full_name,
   first_name,
   last_name,
   manual_preference,
@@ -87,10 +87,12 @@ export const PlayerListItem = ({
             badgeType={
               requestStatus ? mapRequestToBadge[requestStatus] : undefined
             }
+            firstname={first_name}
+            lastname={last_name}
           />
           <VStack flex={1} gap="$2">
             <HStack flex={1} alignItems="center" gap="$2">
-              <Text>{getUsername(first_name, last_name)}</Text>
+              <Text>{full_name}</Text>
               {displayStar && is_favorite && <SubItem icon="FAS-star" />}
             </HStack>
             <HStack gap="$3">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 18:27+0000\n"
+"POT-Creation-Date: 2025-01-03 12:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,8 @@ msgstr ""
 #: main_app/signals/notifications.py:60
 #, python-format
 msgid ""
-"%(team_captain_name)s has invited you to play 💪. Respond as soon as possible!"
+"%(team_captain_full_name)s has invited you to play 💪. Respond as soon as "
+"possible!"
 msgstr ""
 
 #: main_app/signals/notifications.py:91
@@ -58,14 +59,14 @@ msgstr ""
 
 #: main_app/signals/notifications.py:123
 #, python-format
-msgid "%(user_first_name)s has %(status)s your invitation"
+msgid "%(user_full_name)s has %(status)s your invitation"
 msgstr ""
 
-#: main_app/views/match.py:105
+#: main_app/views/match.py:126
 msgid "New share!"
 msgstr ""
 
-#: main_app/views/match.py:106
+#: main_app/views/match.py:127
 #, python-format
 msgid "%(sender)s has shared a match with you"
 msgstr ""

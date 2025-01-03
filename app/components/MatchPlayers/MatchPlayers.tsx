@@ -16,10 +16,7 @@ const mapIndexToTeam: Record<number, string> = {
 }
 
 export type MatchPlayersProps = {
-  data?: Pick<
-    DefaultProfileResponse,
-    'id' | 'avatar_url' | 'first_name' | 'last_name'
-  >[]
+  data?: Pick<DefaultProfileResponse, 'id' | 'avatar_url' | 'full_name'>[]
   onPress?: (userId: number) => void
   onEmptyPress?: () => void
   displayTeam?: boolean
@@ -78,6 +75,7 @@ export const MatchPlayers = ({
 
 const AvatarItem = ({
   id,
+  full_name,
   first_name,
   last_name,
   onPress,
@@ -118,7 +116,7 @@ const AvatarItem = ({
           color: colorMode === 'light' ? 'white' : 'backgroundDark950',
         }}
         onPress={onEmptyPress}
-        firstname=" "
+        fullName=" "
         {...props}
       />
     )
@@ -130,6 +128,7 @@ const AvatarItem = ({
       {...sharedProps}
       imageUrl={avatar_url}
       onPress={id && onPress ? () => onPress(id) : undefined}
+      fullName={full_name}
       firstname={first_name}
       lastname={last_name}
       {...props}

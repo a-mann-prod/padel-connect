@@ -34,8 +34,7 @@ export const MainSettings = () => {
     <ScrollView>
       <VStack p="$3" gap="$3">
         <FormAvatar
-          firstname={me.first_name}
-          lastname={me.last_name}
+          fullName={me.full_name}
           value={me.avatar_url ? { uri: me.avatar_url } : undefined}
           onChange={handleAvatarChange}
           badgeType="edit"

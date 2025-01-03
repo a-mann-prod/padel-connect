@@ -53,6 +53,7 @@ export type Params<T> = T &
 export type DefaultProfileResponse = Entity<{
   last_name: string
   first_name: string
+  full_name: string
   avatar_url?: string
   manual_preference: ManualPreference
   side_preference: SidePreference
@@ -66,6 +67,7 @@ export type DefaultProfileResponse = Entity<{
 export type DefaultMinimalProfileResponse = Entity<{
   last_name: string
   first_name: string
+  full_name: string
   avatar_url?: string
 }>
 

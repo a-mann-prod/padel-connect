@@ -57,7 +57,7 @@ def handle_team_creation(sender, instance, created, **kwargs):
             with translation.override(user_language):
                 Notification.objects.create(
                     title=_("New invitation! 🎉"),
-                    message=_("%(team_captain_name)s has invited you to play 💪. Respond as soon as possible!") % {'team_captain_name': team_captain.profile.first_name},
+                    message=_("%(team_captain_full_name)s has invited you to play 💪. Respond as soon as possible!") % {'team_captain_full_name': team_captain.profile.get_full_name()},
                     type= enums.NotificationType.NEW_MATCH_INVITATION,
                     user=user,
                     associated_data={"url": f"/match/{match.pk}"}
@@ -120,7 +120,7 @@ def handle_team_invite(sender, instance, created, **kwargs):
             with translation.override(team_captain.language):
                 Notification.objects.create(
                     title=_("New invitation response !"),
-                    message=_("%(user_first_name)s has %(status)s your invitation") % {'user_first_name': user.profile.first_name, 'status': status},
+                    message=_("%(user_full_name)s has %(status)s your invitation") % {'user_full_name': user.profile.get_full_name(), 'status': status},
                     type= enums.NotificationType.INVITATION_RESPONSE,
                     user=team_captain,
                     associated_data={"url": f"/match/{match.pk}"}
@@ -149,7 +149,7 @@ def handle_new_message(sender, instance, created, **kwargs):
         user = invitation.user
         with translation.override(user.language):
             notification = Notification.objects.create(
-                title=sender.profile.first_name,
+                title=sender.profile.get_full_name(),
                 message=instance.content,
                 type= enums.NotificationType.NEW_MESSAGE,
                 user=user,

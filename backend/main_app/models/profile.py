@@ -26,6 +26,19 @@ class Profile(models.Model):
         level_average = level_sum / len(valid_levels)
         
         return round(level_average, 1)
+    
+    def get_last_name(self, x=1):
+        last_name = self.last_name
+        formatted_last_name = '' if last_name is None else f"{last_name[:min(x, len(last_name))]}."
+        
+        return formatted_last_name
+    
+    def get_full_name(self, x=1):
+        first_name = self.first_name
+        formatted_last_name = self.get_last_name(x)
+        formatted_first_name = '' if first_name is None else first_name
+        
+        return f"{formatted_first_name} {formatted_last_name}"
 
     def save(self, *args, **kwargs):
         if self.pk:
