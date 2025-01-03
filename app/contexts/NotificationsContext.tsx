@@ -30,6 +30,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
   const { mutate } = useUpdateMe()
 
   const invalidateQuery = useInvalidateQuery()
+  const invalidateMessages = useInvalidateMessages()
 
   const { mutate: readNotifications } = useReadNotifications()
 
@@ -54,19 +55,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
         setNotification(notification)
 
         invalidateQuery(['notifications'])
-
-        const url: string | undefined = notification.request.content.data?.url
-        const matchChat = url?.match(/\/match\/(\d+)\/chat/)
-
-        if (matchChat && matchChat[1]) {
-          console.log(matchChat)
-          invalidateQuery([
-            'matches',
-            Number(matchChat[1]),
-            'conversation',
-            'messages',
-          ])
-        }
+        invalidateMessages(notification)
       })
 
     // notification reponse listener on notification click
@@ -74,6 +63,9 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
       ExpoNotifications.addNotificationResponseReceivedListener(
         ({ notification }) => {
           const data = notification.request.content.data
+
+          // invalidate match messages to get last message
+          invalidateMessages(notification)
 
           if (data?.id) readNotifications({ ids: [data.id] })
           if (data?.url) router.navigate(data.url)
@@ -90,7 +82,7 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
           responseListener.current
         )
     }
-  }, [invalidateQuery, readNotifications])
+  }, [invalidateMessages, invalidateQuery, readNotifications])
 
   // add push token and langage to backend
   useEffect(() => {
@@ -115,4 +107,23 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
       {children}
     </Provider>
   )
+}
+
+const useInvalidateMessages = () => {
+  const invalidateQuery = useInvalidateQuery()
+
+  return (notification: ExpoNotifications.Notification) => {
+    // invalidate match messages to get last message
+    const url: string | undefined = notification.request.content.data?.url
+    const matchChat = url?.match(/\/match\/(\d+)\/chat/)
+
+    if (matchChat && matchChat[1]) {
+      invalidateQuery([
+        'matches',
+        Number(matchChat[1]),
+        'conversation',
+        'messages',
+      ])
+    }
+  }
 }

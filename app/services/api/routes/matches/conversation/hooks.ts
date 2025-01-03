@@ -5,9 +5,7 @@ import { useAppState } from '@/hooks/useAppstate'
 import { useMe } from '@/hooks/useMe'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { config } from '@/services/config'
-import { date } from '@/services/date'
 import { ACCESS_TOKEN_KEY, storage } from '@/services/storage'
-import { uuid4 } from '@sentry/core'
 import { UseInfiniteQueryProps, UseQueryProps } from '../../../queryHooks'
 import {
   MatchConversationMessageResponse,
@@ -97,11 +95,9 @@ export const useMatchConversationMessagesWebSocket = (
           //   data
           // )
         } else {
-          queryCache.addItem(
-            ['matches', match, 'conversation', 'messages'],
-            data
-          )
         }
+
+        queryCache.addItem(['matches', match, 'conversation', 'messages'], data)
 
         onMessageReceived?.(data)
       }
@@ -135,20 +131,22 @@ export const useMatchConversationMessagesWebSocket = (
         socketRef.current &&
         socketRef.current.readyState === WebSocket.OPEN
       ) {
-        const generatedId = uuid4()
-        const optimisicMessage: MatchConversationMessageResponse = {
-          content: message.message,
-          user: me?.id || -1,
-          id: generatedId as unknown as number,
-          created_at: date.now().toISOString(),
-          updated_at: date.now().toISOString(),
-        }
+        // const generatedId = uuid4()
+        // const optimisicMessage: MatchConversationMessageResponse = {
+        //   content: message.message,
+        //   user: me?.id || -1,
+        //   id: generatedId as unknown as number,
+        //   created_at: date.now().toISOString(),
+        //   updated_at: date.now().toISOString(),
+        // }
         // setOptimisticIds((prev) => [...prev, generatedId])
         socketRef.current.send(JSON.stringify(message))
-        queryCache.addItem(
-          ['matches', match, 'conversation', 'messages'],
-          optimisicMessage
-        )
+        // queryCache.addItem(
+        //   ['matches', match, 'conversation', 'messages'],
+        //   optimisicMessage,
+        //   undefined,
+        //   true
+        // )
       }
     },
   }

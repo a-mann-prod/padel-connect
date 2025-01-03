@@ -19,7 +19,6 @@ import { useEffect } from 'react'
 
 export default WithMatch(() => {
   const { mutate: readNotifications } = useReadNotifications()
-  // that's workin, but better to set it globaly ?
   const pathName = usePathname()
 
   useEffect(() => {
@@ -49,7 +48,9 @@ export default WithMatch(() => {
     return () => {
       Notifications.setNotificationHandler(defaultNotificationHandler)
     }
-  }, [pathName, readNotifications])
+    // because readNotifications causes multiple rerenders
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathName])
 
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
@@ -80,12 +81,12 @@ export default WithMatch(() => {
       ).sort()
     : []
 
-  const { data: profiles, isLoading: isLoadingProfiles } = useProfiles({
+  const { data: profiles } = useProfiles({
     params: { ids: userIds },
     options: { enabled: !!userIds.length },
   })
 
-  const isLoading = isLoadingMessages || isLoadingProfiles
+  const isLoading = isLoadingMessages
 
   const { send } = useMatchConversationMessagesWebSocket(matchId)
 
@@ -97,6 +98,7 @@ export default WithMatch(() => {
   >) => {
     const sender = profiles?.results.find(({ id }) => id === user)
 
+    console.log(id)
     return (
       <Message
         key={id}

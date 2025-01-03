@@ -19,9 +19,8 @@ def handle_match_creation(sender, instance, created, **kwargs):
         for user in users:
             match_filter = user.match_filter
 
-            if match_filter.level_min != None and match_filter.level_max != None:
-                if not (match_filter.level_min <= instance.level <= match_filter.level_max) and not instance.is_open_to_all_level:
-                        continue
+            if not (match_filter.level_min <= instance.level <= match_filter.level_max) and not instance.is_open_to_all_level:
+                    continue
                 
 
             if match_filter.complex != None:

@@ -29,7 +29,8 @@ export const useQueryCache = () => {
   const addItem = <T,>(
     queryKey: QueryKey,
     data: Obj<T>,
-    sort?: (a: Obj<T>, b: Obj<T>) => number
+    sort?: (a: Obj<T>, b: Obj<T>) => number,
+    reversed?: boolean
   ) => {
     queryClient.setQueryData(queryKey, (oldData: OldData<T>) => {
       if (!oldData) return
@@ -38,7 +39,7 @@ export const useQueryCache = () => {
         const newData = {
           ...oldData,
           pages: oldData.pages.map((page, index) => {
-            if (index === oldData.pages.length - 1) {
+            if (reversed ? index === 0 : index === oldData.pages.length - 1) {
               return {
                 ...page,
                 results: [data, ...page.results].sort(sort),
