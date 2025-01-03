@@ -10,6 +10,7 @@ from django.utils import translation
 from django.utils.translation import gettext as _
 from main_app.exceptions import handle_exception
 from rest_framework.exceptions import ValidationError
+from django.contrib.auth.models import AnonymousUser
 
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -19,8 +20,26 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     filterset_class = MatchFilter
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, permissions.IsOwnerOrReadOnly]
 
+
     def get_queryset(self):
+        queryset =  Match.objects.all()
+        current_user = self.request.user
+
+        if self.action == 'retrieve':
+            return queryset
+        
+        # Si action different de retrieve
         return Match.objects.filter(is_private=False)
+
+        # if current_user == AnonymousUser():
+        #     return Match.objects.filter(is_private=False)
+        
+        # # Si l'utilisateur est authentifié
+        # return Match.objects.filter(
+        #     is_private=False
+        # ) | Match.objects.filter(
+        #     is_private=True, user=current_user
+        # )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -45,7 +64,9 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     def get_incoming_matches(self, request):
         user = request.user
         if not user.is_authenticated:
-            return handle_exception(ValidationError(detail="Authentication credentials were not provided"), default_status=401)        
+            return handle_exception(ValidationError(detail="Authentication credentials were not provided"), default_status=401)    
+
+        # matches = self.get_queryset()    
         
         incoming_matches = Match.objects.filter(
             teams__invitations__user=user,  # The current user has a team invite
