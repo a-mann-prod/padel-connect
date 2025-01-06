@@ -8,4 +8,4 @@ export const getDefaultNS = (ns: Namespace) => ns
 export const getDevicePreferenceLanguage = () =>
   getLocales()[0].languageCode as Language
 
-export const getFallbackLanguage = (): Language => 'en'
+export const getFallbackLanguage = (): Language => 'fr'

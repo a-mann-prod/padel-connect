@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react'
 import { initReactI18next } from 'react-i18next'
 
 import { resources } from '../resources'
-import { getDefaultNS, getDevicePreferenceLanguage } from '../utils'
+import {
+  getDefaultNS,
+  getDevicePreferenceLanguage,
+  getFallbackLanguage,
+} from '../utils'
 
 import { config } from '@/services/config'
 
@@ -16,7 +20,7 @@ export const useInitLanguage = () => {
       {
         compatibilityJSON: 'v3',
         resources,
-        fallbackLng: getDevicePreferenceLanguage(),
+        fallbackLng: getDevicePreferenceLanguage() || getFallbackLanguage(),
         defaultNS: getDefaultNS('global'),
         interpolation: {
           escapeValue: false,
