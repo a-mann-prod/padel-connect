@@ -7,6 +7,9 @@
       "ALREADY_INVITED": {
         "title": "You already have a team or you have been invited"
       },
+      "INVALID_CREDENTIALS": {
+        "title": "Invalid email or password"
+      },
       "LEVEL_NOT_MATCH": {
         "message": "Your level does not match the match's level",
         "title": "Inconsistent level"
