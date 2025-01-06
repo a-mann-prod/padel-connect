@@ -59,6 +59,7 @@ urlpatterns = [
 
     # External services
     path('fields/', FourPadelFieldView.as_view(), name='fields'),
+    
     path('tournaments/', FourPadelTournamentView.as_view(), name='tournaments'),
     path('tournaments/<int:pk>/', FourPadelTournamentDetailView.as_view(), name='tournaments-detail'),
 

@@ -139,7 +139,6 @@ class FourPadelAPIClient:
         # Lever une exception si la connexion échoue
         response.raise_for_status()
 
-
     def get_fields(self, complex_id, date):
         """
         Fetch booking rules with the token. Retry login if token is expired.
@@ -224,7 +223,6 @@ class FourPadelAPIClient:
             })
 
         return cleaned_data
-
 
     def book_field(self, match: Match):
         """
