@@ -2,6 +2,7 @@ import requests
 from django.conf import settings
 from django.core.cache import cache
 from rest_framework.exceptions import ValidationError
+from main_app.exceptions import ErrorCode
 
 class Four_padel_user:
     def __init__(self, id, email):
@@ -48,9 +49,17 @@ class FourPadelAPIClient:
             cache.set(f"four_padel_token_{user.id}", self.token, self.TOKEN_CACHE_TIMEOUT)
             
             return user
+    
 
-        # Lever une exception si la connexion échoue
-        response.raise_for_status()
+        data = response.json()
+        code = data.get('code') 
+        message = data.get('message')
+
+        # 9 -> User not found 1 -> Invalid credentials
+        if code in [1, 9]:
+            raise ValidationError(detail="Invalid credentials or user not found", code=ErrorCode.INVALID_CREDENTIALS.value)
+
+        raise ValidationError(detail=message)
 
     def google_login(self, google_token):
         headers = {

@@ -13,12 +13,12 @@ class FourPadelLoginView(APIView):
         email = request.data.get("email")
         password = request.data.get("password")
 
-        if not email or not password:
-            return handle_exception(ValidationError(detail="'email' and 'password' parameters are required") )
-
-        client = FourPadelAPIClient()
-
         try:
+            if not email or not password:
+                raise ValidationError(detail="'email' and 'password' parameters are required")
+
+            client = FourPadelAPIClient()
+
             # Connexion à 4Padel pour récupérer le token
             four_padel_user = client.login(username=email, password=password)
 

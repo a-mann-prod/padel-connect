@@ -11,6 +11,7 @@ class ErrorCode(Enum):
     ALREADY_INVITED = "ALREADY_INVITED"
     LEVEL_NOT_MATCH = "LEVEL_NOT_MATCH"
     MATCH_FULL = "MATCH_FULL"
+    INVALID_CREDENTIALS = "INVALID_CREDENTIALS"
 
 
 def handle_exception(e: ValidationError, default_status=status.HTTP_400_BAD_REQUEST):
