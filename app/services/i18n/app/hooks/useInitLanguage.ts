@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react-native'
 import i18next from 'i18next'
 import { useEffect, useState } from 'react'
 import { initReactI18next } from 'react-i18next'
@@ -24,7 +25,12 @@ export const useInitLanguage = () => {
         parseMissingKeyHandler: () => '',
         debug: config.env === 'local',
       },
-      () => setLoaded(true)
+      (e) => {
+        if (e) {
+          Sentry.captureException(e)
+        }
+        setLoaded(true)
+      }
     )
   }, [])
 
