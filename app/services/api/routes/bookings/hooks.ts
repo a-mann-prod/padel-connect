@@ -1,18 +1,25 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { UseQueryProps } from '../../queryHooks'
+import { UseMutationProps, UseQueryProps } from '../../queryHooks'
+import { BookingResponse, CreateBookingResponse } from './entities'
+import { createBookingFn, getBookingFn } from './functions'
+import { CreateBookingParams, GetBookingParams } from './params'
 
-import { BookingsResponses } from './entities'
-import { getBookingsFn } from './functions'
-import { GetBookingsParams } from './params'
-
-export const useBookings = ({
+export const useBooking = ({
   params,
   options,
-}: UseQueryProps<BookingsResponses, GetBookingsParams>) =>
-  useQuery<BookingsResponses>({
-    queryKey: ['bookings', params],
-    queryFn: () => getBookingsFn(params),
-    staleTime: 3600 * 1,
+}: UseQueryProps<BookingResponse, GetBookingParams>) =>
+  useQuery<BookingResponse>({
+    queryKey: ['booking', params.id],
+    queryFn: () => getBookingFn(params),
+    staleTime: 0,
+    ...options,
+  })
+
+export const useCreateBooking = ({
+  options,
+}: UseMutationProps<CreateBookingResponse, CreateBookingParams> = {}) =>
+  useMutation({
+    mutationFn: createBookingFn,
     ...options,
   })

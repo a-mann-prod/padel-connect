@@ -1,30 +1,31 @@
 import requests
 from django.conf import settings
-from django.core.cache import cache
+from main_app.models import CustomUser, Match
 from rest_framework.exceptions import ValidationError
 from main_app.exceptions import ErrorCode
+from datetime import timedelta
+import pytz
+
 
 class Four_padel_user:
-    def __init__(self, id, email):
+    def __init__(self, id, email, token):
         self.id = id
         self.email = email
+        self.token = token
 
 class FourPadelAPIClient:
-    def __init__(self, id=None):
-        self.id = id
+    def __init__(self, user: CustomUser = None):
+        self.user = user
         self.base_url = settings.FOUR_PADEL["BASE_URL"]
         self.login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}"
         self.google_login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}/google"
-        self.booking_url = f"{self.base_url}{settings.FOUR_PADEL['BOOKING_ENDPOINT']}"
-        self.token = None
+        self.field_url = f"{self.base_url}{settings.FOUR_PADEL['FIELD_ENDPOINT']}"
+        self.booking_url = settings.FOUR_PADEL['BOOKING_URL']
 
     SHARED_PARAMS = {
         "appId": 2
     }
     
-    TOKEN_CACHE_TIMEOUT = 3600 * 24 * 30  # Durée de vie du token dans le cache (30j)
-
-
 
     def login(self, username, password):
         headers = {
@@ -43,11 +44,8 @@ class FourPadelAPIClient:
 
         if response.status_code == 200:
             data = response.json()
-            user = Four_padel_user(id=data.get('id'), email=data.get('email'))
-            self.token = data.get("access_token")
-
-            cache.set(f"four_padel_token_{user.id}", self.token, self.TOKEN_CACHE_TIMEOUT)
-            
+            user = Four_padel_user(id=data.get('id'), email=data.get('email'), token=data.get('access_token'))       
+            self.user = user     
             return user
     
 
@@ -84,34 +82,20 @@ class FourPadelAPIClient:
             if data is None:
                 raise ValidationError(detail="No user found", code="USER_NOT_FOUND")
 
-            user = Four_padel_user(id=data.get('id'), email=data.get('email'))
-            self.token = data.get("access_token")
-
-            cache.set(f"four_padel_token_{user.id}", self.token, self.TOKEN_CACHE_TIMEOUT)
-            
+            user = Four_padel_user(id=data.get('id'), email=data.get('email'), token=data.get('access_token'))
+            self.user = user                      
             return user
 
         # Lever une exception si la connexion échoue
         response.raise_for_status()
-        
-    def get_token(self):
-        """
-        Récupère le token du cache ou lève une exception si non disponible.
-        """
-        token = cache.get(f"four_padel_token_{self.id}")
-        if not token:
-            return settings.FOUR_PADEL['DEFAULT_TOKEN']
-            raise ValueError("Four padel token not found")
-        return token
 
-    def get_booking_rules(self, complex_id, date):
+    def get_fields(self, complex_id, date):
         """
         Fetch booking rules with the token. Retry login if token is expired.
         """
-        token = self.get_token()  # Ensure we have a valid token
 
         headers = {
-            "Authorization": f"Bearer {token}",
+            "Authorization": f"Bearer {self.user.get_four_padel_token()}",
             "accept": "text/plain, */*",
             "content-type": "application/json"
         }
@@ -137,19 +121,18 @@ class FourPadelAPIClient:
                 self.login()  # Get a new token
                 headers = {
                     **headers,
-                    "Authorization": f"Bearer {self.token}",
+                    "Authorization": f"Bearer {self.user.get_four_padel_token()}",
                 }
                 response = requests.post(self.booking_url, headers=headers, params=params, json=json)
             
             response.raise_for_status()
             data = response.json()
 
-            return self.clean_booking_data(data)
+            return self.clean_fields_data(data)
         except requests.exceptions.RequestException as e:
             raise RuntimeError(f"Failed to fetch booking: {e}")
 
-
-    def clean_booking_data(self, data):
+    def clean_fields_data(self, data):
         """
         Clean the booking data to match the required format, grouping by startingDateZuluTime
         and merging fields with the same id. Fields are ordered by id.
@@ -177,7 +160,7 @@ class FourPadelAPIClient:
                         "id": field_id,
                         "name": field.get("name"),
                         "startingDateZuluTime": field.get("startingDateZuluTime"),
-                        "durations": []
+                        "durations": [],
                     }
 
                 # Ajouter la durée dans la liste des durations
@@ -196,3 +179,103 @@ class FourPadelAPIClient:
             })
 
         return cleaned_data
+
+    def book_field(self, match: Match):
+        """
+        Fetch booking rules with the token. Retry login if token is expired.
+        """
+
+        headers = {
+            "Authorization": f"Bearer {self.user.get_four_padel_token()}",
+            "accept": "text/plain, */*",
+            "content-type": "application/json"
+        }
+
+        params = {
+            **self.SHARED_PARAMS,
+        }
+
+        # Use french tz to get localtz
+        paris_tz = pytz.timezone('Europe/Paris')
+        start_datetime_local = match.datetime.astimezone(paris_tz)
+        end_datetime_local = start_datetime_local + timedelta(minutes=match.duration)
+
+        formatted_start = start_datetime_local.strftime('%Y-%m-%dT%H:%M')
+        formatted_end = end_datetime_local.strftime('%Y-%m-%dT%H:%M')
+
+        json = {
+            "startingDate": f"{formatted_start}:00.000+00:00",
+	        "localStartingDate": f"{formatted_start}:00.000Z",
+	        "endingDate": f"{formatted_end}:00.000+00:00",
+            "duration": match.duration,
+            "capacity": 4,
+            "price": 60 if match.duration == 90 else 80, # for now 90mn = 60e & 120mn = 80e
+            "deposit": 0,
+            "center": {
+                "id": match.complex.four_padel_id
+            },
+            "owner": {
+                "id": self.user.four_padel_id
+            },
+            "bookingType": {
+                "id": "1"
+            },
+            "sportType": {
+                "id": 3
+            },
+            "field": {
+                "id": match.four_padel_field_id
+            },
+            "paymentMethod": {
+                "id": "2"
+            },
+            "categoryBooking": {
+                "id": 1
+            },
+            "paidCredit": 0,
+            "isChannelWeb": True,
+            "channel": 1,
+            "promoCode": 'null',
+            "booking_status": "Pending"
+        }
+
+        try:
+            response = requests.put(self.book_url, headers=headers, params=params, json=json)
+            if response.status_code == 401:  # Token expired or invalid
+                self.login()  # Get a new token
+                headers = {
+                    **headers,
+                    "Authorization": f"Bearer {self.user.get_four_padel_token()}",
+                }
+                response = requests.post(self.booking_url, headers=headers, params=params, json=json)
+            
+            data = response.json()
+
+            cleaned_data = {
+                "id": data['id'],
+                "payment_link": data['paymentLink']
+            }
+            return cleaned_data
+
+        except requests.exceptions.RequestException as e:
+            raise RuntimeError(f"Failed to book: {e}")
+
+    
+    def get_book_detail(self, pk):
+        headers = {
+            "accept": "text/plain, */*",
+            "content-type": "application/json"
+        }
+
+        try:
+            response = requests.get(f"{self.booking_url}/{pk}", headers=headers)
+            data = response.json()
+
+            cleaned_data = {
+                "id": data['id'],
+                "is_booked": data['booking_status'] == 'Confirmed'
+            }
+            return cleaned_data
+
+        except requests.exceptions.RequestException as e:
+            raise RuntimeError(f"Failed to book: {e}")

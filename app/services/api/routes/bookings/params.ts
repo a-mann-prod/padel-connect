@@ -1,4 +1,7 @@
-export type GetBookingsParams = {
-  date: string
-  complex: number
+export type GetBookingParams = {
+  id: number
+}
+
+export type CreateBookingParams = {
+  match: number
 }

@@ -2,6 +2,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from . import enums
 from django.conf import settings
+from cryptography.fernet import Fernet
+
+cipher = Fernet(settings.ENCRYPTION_KEY)
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -42,12 +45,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     #four_padel
     four_padel_id = models.IntegerField(unique=True, null=True)
+    four_padel_token =models.TextField(null=True)
     four_padel_last_sync = models.DateTimeField(null=True, blank=True)
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def set_four_padel_token(self, raw_token: str):
+        """Chiffre le token avant de le stocker"""
+        self.four_padel_token = cipher.encrypt(raw_token.encode()).decode()
+
+    def get_four_padel_token(self) -> str:
+        """Déchiffre et retourne le token"""
+        return cipher.decrypt(self.four_padel_token.encode()).decode()
 
     def __str__(self):
         return self.email

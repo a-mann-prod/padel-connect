@@ -29,6 +29,9 @@ class FourPadelLoginView(APIView):
                     "email": four_padel_user.email
                 }
             )
+            user.set_four_padel_token(four_padel_user.token)
+            user.save()
+
 
             # Crée un RefreshToken (via Djoser) pour le local user
             refresh = RefreshToken.for_user(user)
@@ -61,6 +64,8 @@ class FourPadelGoogleLoginView(APIView):
                     "email": four_padel_user.email
                 }
             )
+            user.set_four_padel_token(four_padel_user.token)
+            user.save()
 
             # Crée un RefreshToken (via Djoser) pour le local user
             refresh = RefreshToken.for_user(user)

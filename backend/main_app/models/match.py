@@ -19,7 +19,6 @@ class Match(models.Model):
     four_padel_field_id = models.IntegerField(null=True)
     four_padel_field_name = models.CharField(null=True)
 
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

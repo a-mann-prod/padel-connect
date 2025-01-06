@@ -32,6 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret_file("SECRET_KEY_FILE")
+ENCRYPTION_KEY = get_secret_file("ENCRYPTION_KEY_FILE")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", default=False)
@@ -275,9 +276,9 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP= True
 
 FOUR_PADEL = {
     "BASE_URL": env('FOUR_PADEL_BASE_URL'),
-    "BOOKING_ENDPOINT": env('FOUR_PADEL_BOOKING_ENDPOINT'),
+    "BOOKING_URL": env('FOUR_PADEL_BOOKING_URL'),
+    "FIELD_ENDPOINT": env('FOUR_PADEL_FIELD_ENDPOINT'),
     "LOGIN_ENDPOINT": env('FOUR_PADEL_LOGIN_ENDPOINT'),
-    "DEFAULT_TOKEN": env('FOUR_PADEL_DEFAULT_TOKEN')
 }
 
 #LOGS

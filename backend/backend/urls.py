@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, BookingView, FourPadelLoginView, FourPadelGoogleLoginView
+from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, FourPadelBookingView, FourPadelLoginView, FourPadelGoogleLoginView, FourPadelFieldView
 from chat.views import MatchMessagesView, MatchConversationView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -59,7 +59,10 @@ urlpatterns = [
 
 
     # External services
-    path('bookings/', BookingView.as_view(), name='booking'),
+    path('fields/', FourPadelFieldView.as_view(), name='fields'),
+
+    path('bookings/', FourPadelBookingView.as_view(), name='book'),
+    path('bookings/<int:pk>/', FourPadelBookingView.as_view(), name='book-detail'),
 ]
 
 

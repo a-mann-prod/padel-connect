@@ -1,13 +1,9 @@
-export type BookingsField = {
+export type BookingResponse = {
   id: number
-  name: string
-  startingDateZuluTime: string
-  durations: number[]
+  is_booked: boolean
 }
 
-export type BookingsResponse = {
-  startingDateZuluTime: string
-  fields: BookingsField[]
+export type CreateBookingResponse = {
+  id: number
+  payment_link: boolean
 }
-
-export type BookingsResponses = BookingsResponse[]

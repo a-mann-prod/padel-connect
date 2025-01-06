@@ -1,16 +1,16 @@
 import { Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 
 import { Actionsheet, ActionsheetProps, Pressable } from '@/designSystem'
-import { BookingsField } from '@/services/api'
+import { Field } from '@/services/api'
 import { date } from '@/services/date'
 
-export type BookingsFieldData = Omit<BookingsField, 'durations'> & {
+export type FieldData = Omit<Field, 'durations'> & {
   duration: number
 }
 
 export type BookFieldActionsheetProps = Omit<ActionsheetProps, 'isOpen'> & {
-  fields: BookingsField[] | undefined
-  onButtonPress: (data: BookingsFieldData) => void
+  fields: Field[] | undefined
+  onButtonPress: (data: FieldData) => void
 }
 
 export const BookFieldActionsheet = ({
