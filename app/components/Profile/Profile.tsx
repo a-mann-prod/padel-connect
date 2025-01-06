@@ -10,13 +10,13 @@ import {
 } from '@/designSystem'
 import { useManageFavoriteUser } from '@/hooks/useManageFavoriteUser'
 import { useMe } from '@/hooks/useMe'
-import { ProfileResponse } from '@/services/api'
+import { DefaultProfileResponse } from '@/services/api/types'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
 
 export type ProfileProps = {
-  user?: ProfileResponse
+  user?: Omit<DefaultProfileResponse, 'is_favorite'> & { is_favorite?: boolean }
   isLoading?: boolean
   external?: boolean
 }
