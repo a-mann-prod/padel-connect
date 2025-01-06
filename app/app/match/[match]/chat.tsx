@@ -98,7 +98,6 @@ export default WithMatch(() => {
   >) => {
     const sender = profiles?.results.find(({ id }) => id === user)
 
-    console.log(id)
     return (
       <Message
         key={id}
