@@ -41,8 +41,8 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
     ExpoNotifications.Notification | undefined
   >(undefined)
 
-  const notificationListener = useRef<ExpoNotifications.Subscription>()
-  const responseListener = useRef<ExpoNotifications.Subscription>()
+  const notificationListener = useRef<ExpoNotifications.EventSubscription>()
+  const responseListener = useRef<ExpoNotifications.EventSubscription>()
 
   useEffect(() => {
     registerForPushNotificationsAsync()
@@ -64,6 +64,8 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
         ({ notification }) => {
           const data = notification.request.content.data
 
+          console.log('ici')
+
           // invalidate match messages to get last message
           invalidateMessages(notification)
 
@@ -82,7 +84,8 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
           responseListener.current
         )
     }
-  }, [invalidateMessages, invalidateQuery, readNotifications])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // add push token and langage to backend
   useEffect(() => {
