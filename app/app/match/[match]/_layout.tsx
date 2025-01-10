@@ -65,6 +65,13 @@ export default () => {
           headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
         }}
       />
+      <Stack.Screen
+        name={routing.matchPayMatch.name}
+        options={{
+          title: '',
+          headerLeft: (props) => <HeaderBackButton {...props} isInModal />,
+        }}
+      />
     </Stack>
   )
 }

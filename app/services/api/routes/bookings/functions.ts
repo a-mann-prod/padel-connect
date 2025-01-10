@@ -12,9 +12,7 @@ export const getBookingFn = async ({ id, ...params }: GetBookingParams) => {
 }
 
 export const createBookingFn = async (params: CreateBookingParams) => {
-  const { data } = await api.put<CreateBookingResponse>(`/bookings/`, {
-    params,
-  })
+  const { data } = await api.put<CreateBookingResponse>(`/bookings/`, params)
 
   return data
 }

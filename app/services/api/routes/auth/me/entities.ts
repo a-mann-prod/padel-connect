@@ -8,4 +8,5 @@ export type MeResponse = {
   is_onboarding_completed: boolean
   is_new_match_notification_enabled: boolean
   is_new_message_notification_enabled: boolean
+  four_padel_id: number
 }

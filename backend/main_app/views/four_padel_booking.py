@@ -41,6 +41,8 @@ class FourPadelBookingView(APIView):
 
         try:
             data = client.book_field(match)
+            match.four_padel_booking_id = data['id']
+            match.save()
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return handle_exception(e)

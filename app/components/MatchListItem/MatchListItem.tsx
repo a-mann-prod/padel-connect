@@ -22,7 +22,7 @@ export type MatchlistItemProps = {
   level: number
   calculated_level_range: [number, number]
   is_competitive: boolean
-  is_reserved?: boolean
+  is_booked?: boolean
   is_open_to_all_level: boolean
   four_padel_field_name: string
   is_request?: boolean
@@ -76,7 +76,7 @@ export const MatchListItem = ({
             <HStack gap="$3">
               <MatchTypeIcon isCompetitive={match.is_competitive} />
               <SlotStatusIcon
-                status={match.is_reserved ? 'BOOKED' : 'AVAILABLE'}
+                status={match.is_booked ? 'BOOKED' : 'AVAILABLE'}
               />
             </HStack>
           </HStack>

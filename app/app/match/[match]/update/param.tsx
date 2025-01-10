@@ -51,7 +51,7 @@ export default () => {
         isLoading={isPending}
       />
 
-      {match?.is_reserved ? (
+      {match?.is_booked ? (
         <Button
           title={t('callComplex')}
           action="negative"

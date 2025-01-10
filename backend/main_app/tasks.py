@@ -16,7 +16,7 @@ def archive_past_matches():
         is_competitive=False
     )
     for match in matches_to_archive:
-        if match.is_reserved:
+        if match.is_booked:
             print(f"Archiving match {match.id}")
             archive_match(match)
         else:

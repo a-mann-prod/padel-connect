@@ -5,13 +5,27 @@ from rest_framework.exceptions import ValidationError
 from main_app.exceptions import ErrorCode
 from datetime import timedelta
 import pytz
+from enum import Enum
+from django.db.models import Sum
 
 
-class Four_padel_user:
-    def __init__(self, id, email, token):
-        self.id = id
-        self.email = email
-        self.token = token
+class FourPadelBooking(Enum):
+    COMPLETE = "COMPLETE"
+    CANCELLED = "CANCELLED"
+    PAYABLE = "PAYABLE"
+    PRE_BOOKED = "PRE_BOOKED"
+
+def get_booking_status(status, participations):
+    print(status)
+    if status != 'Cancelled': 
+        total_slots_paid = sum(participation.get("nb_slot_paid") for participation in participations)
+        if total_slots_paid < 1:
+            return FourPadelBooking.PRE_BOOKED.value
+        if total_slots_paid < 4:
+            return FourPadelBooking.PAYABLE.value
+        return FourPadelBooking.COMPLETE.value
+    return FourPadelBooking.CANCELLED.value
+
 
 class FourPadelAPIClient:
     def __init__(self, user: CustomUser = None):
@@ -44,7 +58,17 @@ class FourPadelAPIClient:
 
         if response.status_code == 200:
             data = response.json()
-            user = Four_padel_user(id=data.get('id'), email=data.get('email'), token=data.get('access_token'))       
+
+            # Vérifie si l'utilisateur existe localement, sinon le crée
+            user, created = CustomUser.objects.get_or_create(
+                four_padel_id=data.get('id'),
+                defaults={
+                    "email": data.get('email')
+                }
+            )
+            user.set_four_padel_token(data.get('access_token'))
+            user.save() 
+
             self.user = user     
             return user
     
@@ -81,10 +105,18 @@ class FourPadelAPIClient:
 
             if data is None:
                 raise ValidationError(detail="No user found", code="USER_NOT_FOUND")
+            
+            user, created = CustomUser.objects.get_or_create(
+                four_padel_id=data.get('id'),
+                defaults={
+                    "email": data.get('email')
+                }
+            )
+            user.set_four_padel_token(data.get('access_token'))
+            user.save() 
 
-            user = Four_padel_user(id=data.get('id'), email=data.get('email'), token=data.get('access_token'))
-            self.user = user                      
-            return user
+            self.user = user     
+            return user                   
 
         # Lever une exception si la connexion échoue
         response.raise_for_status()
@@ -116,14 +148,14 @@ class FourPadelAPIClient:
         }
 
         try:
-            response = requests.post(self.booking_url, headers=headers, params=params, json=json)
+            response = requests.post(self.field_url, headers=headers, params=params, json=json)
             if response.status_code == 401:  # Token expired or invalid
                 self.login()  # Get a new token
                 headers = {
                     **headers,
                     "Authorization": f"Bearer {self.user.get_four_padel_token()}",
                 }
-                response = requests.post(self.booking_url, headers=headers, params=params, json=json)
+                response = requests.post(self.field_url, headers=headers, params=params, json=json)
             
             response.raise_for_status()
             data = response.json()
@@ -235,12 +267,12 @@ class FourPadelAPIClient:
             "paidCredit": 0,
             "isChannelWeb": True,
             "channel": 1,
-            "promoCode": 'null',
+            "promoCode": None,
             "booking_status": "Pending"
         }
 
         try:
-            response = requests.put(self.book_url, headers=headers, params=params, json=json)
+            response = requests.put(self.booking_url, headers=headers, params=params, json=json)
             if response.status_code == 401:  # Token expired or invalid
                 self.login()  # Get a new token
                 headers = {
@@ -251,16 +283,17 @@ class FourPadelAPIClient:
             
             data = response.json()
 
+            # code 15 already exists
+
             cleaned_data = {
-                "id": data['id'],
-                "payment_link": data['paymentLink']
+                "id": data.get('id'),
+                "payment_link": data.get('paymentLink')
             }
             return cleaned_data
 
         except requests.exceptions.RequestException as e:
             raise RuntimeError(f"Failed to book: {e}")
 
-    
     def get_book_detail(self, pk):
         headers = {
             "accept": "text/plain, */*",
@@ -271,11 +304,38 @@ class FourPadelAPIClient:
             response = requests.get(f"{self.booking_url}/{pk}", headers=headers)
             data = response.json()
 
-            cleaned_data = {
-                "id": data['id'],
-                "is_booked": data['booking_status'] == 'Confirmed'
-            }
+            cleaned_data = self.clean_book_detail_data(data)
             return cleaned_data
 
         except requests.exceptions.RequestException as e:
             raise RuntimeError(f"Failed to book: {e}")
+        
+    def clean_book_detail_data(self, data):
+        participations = []
+
+        # Regrouper les données par startingDateZuluTime
+        for participation in data.get("participations"):
+            if participation.get('paied') is False:
+                continue
+
+            participations.append({
+                "id": participation.get('id'),
+                "user": CustomUser.objects.filter(four_padel_id=participation.get('userId')).first(),
+                "nb_slot_paid": participation.get('nbSlotPaid')
+            })
+
+        booking_status = get_booking_status(data.get('booking_status'), participations)
+
+        # update match status if necessary
+        match = Match.objects.filter(four_padel_booking_id=data.get('id')).first()
+        if match and not match.is_booked and booking_status == FourPadelBooking.PAYABLE:
+            match.is_booked = True
+            match.save()
+
+
+        return {
+            "id": data.get('id'),
+            "participations": participations,
+            "booking_status": booking_status,
+            "payment_link": data.get('paymentLink')
+        }
