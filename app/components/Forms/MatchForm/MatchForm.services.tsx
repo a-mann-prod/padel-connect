@@ -13,6 +13,7 @@ const getDefaultValues = (
   complex_id: props?.complex_id || '',
   four_padel_field_id: props?.four_padel_field_id || '',
   four_padel_field_name: props?.four_padel_field_name || '',
+  four_padel_field_price: props?.four_padel_field_price || '',
   datetime: props?.datetime || '',
   duration: props?.duration || '',
   level: props?.level || '',
@@ -27,6 +28,7 @@ const schema = z.object({
   complex_id: validators.string.required(),
   four_padel_field_id: validators.string.required(),
   four_padel_field_name: validators.string.required(),
+  four_padel_field_price: validators.string.required(),
   datetime: validators.string.required(),
   duration: validators.string.required(),
   level: validators.string.required(),
@@ -40,6 +42,7 @@ const schema = z.object({
 const formatToParams = (props: MatchFormValues): CreateMatchParams => ({
   ...props,
   four_padel_field_id: Number(props.four_padel_field_id),
+  four_padel_field_price: Number(props.four_padel_field_price),
   complex_id: Number(props.complex_id),
   duration: Number(props.duration),
   level: Number(props.level),
@@ -49,6 +52,7 @@ const formatToFormValues = (props: MatchResponse): MatchFormValues => {
   return {
     ...props,
     four_padel_field_id: props.four_padel_field_id.toString(),
+    four_padel_field_price: props.four_padel_field_price.toString(),
     complex_id: props.complex.id.toString(),
     duration: props.duration.toString(),
     level: props.level.toString(),

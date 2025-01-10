@@ -9,6 +9,7 @@ export type MatchResponse = Entity<{
   four_padel_field_id: number
   four_padel_field_name: string
   four_padel_booking_id?: number
+  four_padel_field_price: number
   complex: ComplexResponse
   datetime: string
   duration: number

@@ -15,6 +15,7 @@ export type BookingFieldFormValues = Pick<
   | 'duration'
   | 'four_padel_field_id'
   | 'four_padel_field_name'
+  | 'four_padel_field_price'
 >
 
 type CreateMatchContextProps = {

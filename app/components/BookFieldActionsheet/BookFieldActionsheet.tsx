@@ -1,12 +1,10 @@
 import { Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 
 import { Actionsheet, ActionsheetProps, Pressable } from '@/designSystem'
-import { Field } from '@/services/api'
+import { Field, FieldExtra } from '@/services/api'
 import { date } from '@/services/date'
 
-export type FieldData = Omit<Field, 'durations'> & {
-  duration: number
-}
+export type FieldData = Omit<Field, 'durations'> & FieldExtra
 
 export type BookFieldActionsheetProps = Omit<ActionsheetProps, 'isOpen'> & {
   fields: Field[] | undefined
@@ -26,10 +24,10 @@ export const BookFieldActionsheet = ({
             <FieldItem
               key={field?.id}
               title={field?.name}
-              durations={field.durations}
-              onPress={(duration) => {
+              extras={field?.extras}
+              onPress={(extra) => {
                 props.onClose?.()
-                onButtonPress({ ...field, duration })
+                onButtonPress({ ...field, ...extra })
               }}
             />
           ))}
@@ -41,11 +39,11 @@ export const BookFieldActionsheet = ({
 
 type FieldItemProps = {
   title: string
-  durations: number[]
-  onPress: (duration: number) => void
+  extras: FieldExtra[]
+  onPress: (extra: FieldExtra) => void
 }
 
-const FieldItem = ({ title, durations, onPress }: FieldItemProps) => {
+const FieldItem = ({ title, extras, onPress }: FieldItemProps) => {
   const formatTime = (totalMinutes: number) => {
     const timeDuration = date.duration(totalMinutes, 'minutes')
     const hours = timeDuration.hours()
@@ -66,15 +64,15 @@ const FieldItem = ({ title, durations, onPress }: FieldItemProps) => {
       <VStack alignItems="center">
         <Text>{title}</Text>
         <HStack gap="$2">
-          {durations.map((duration) => (
-            <Pressable key={duration} onPress={() => onPress(duration)}>
+          {extras.map((extra) => (
+            <Pressable key={extra.duration} onPress={() => onPress(extra)}>
               <Box
                 variant="backgroundColored"
                 rounded="$lg"
                 alignItems="center"
                 justifyContent="center"
               >
-                <Text p="$2">{formatTime(duration)}</Text>
+                <Text p="$2">{formatTime(extra.duration)}</Text>
               </Box>
             </Pressable>
           ))}

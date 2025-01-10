@@ -16,7 +16,6 @@ class FourPadelBooking(Enum):
     PRE_BOOKED = "PRE_BOOKED"
 
 def get_booking_status(status, participations):
-    print(status)
     if status != 'Cancelled': 
         total_slots_paid = sum(participation.get("nb_slot_paid") for participation in participations)
         if total_slots_paid < 1:
@@ -192,13 +191,15 @@ class FourPadelAPIClient:
                         "id": field_id,
                         "name": field.get("name"),
                         "startingDateZuluTime": field.get("startingDateZuluTime"),
-                        "durations": [],
+                        "extras": [],   
                     }
 
                 # Ajouter la durée dans la liste des durations
-                duration = field.get("duration")
-                if duration:
-                    grouped_data[starting_date]["fields"][field_id]["durations"].append(duration)
+                extra = {
+                    "duration": field.get("duration"),
+                    "price": field.get("webPrice")
+                }
+                grouped_data[starting_date]["fields"][field_id]["extras"].append(extra)
 
         # Convertir les champs de dictionnaire en liste et structurer les données
         cleaned_data = []
@@ -241,7 +242,7 @@ class FourPadelAPIClient:
 	        "endingDate": f"{formatted_end}:00.000+00:00",
             "duration": match.duration,
             "capacity": 4,
-            "price": 60 if match.duration == 90 else 80, # for now 90mn = 60e & 120mn = 80e
+            "price": match.four_padel_field_price,
             "deposit": 0,
             "center": {
                 "id": match.complex.four_padel_id
@@ -283,6 +284,7 @@ class FourPadelAPIClient:
             
             data = response.json()
 
+            print(data)
             # code 15 already exists
 
             cleaned_data = {
@@ -313,14 +315,13 @@ class FourPadelAPIClient:
     def clean_book_detail_data(self, data):
         participations = []
 
-        # Regrouper les données par startingDateZuluTime
         for participation in data.get("participations"):
             if participation.get('paied') is False:
                 continue
 
             participations.append({
                 "id": participation.get('id'),
-                "user": CustomUser.objects.filter(four_padel_id=participation.get('userId')).first(),
+                "user": CustomUser.objects.filter(four_padel_id=participation.get('userId')).first().pk,
                 "nb_slot_paid": participation.get('nbSlotPaid')
             })
 

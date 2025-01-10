@@ -63,9 +63,7 @@ export const MatchActionButtons = ({
 
   const isParticipant = isOwner || isPlayer
   const isPayButtonLoading = isLoadingBooking || isPendingCreateBooking
-  const hasPayed = booking?.participations.some(
-    ({ user }) => user === me?.four_padel_id
-  )
+  const hasPayed = booking?.participations.some(({ user }) => user === me?.id)
 
   useEffect(() => {
     if (!booking) return

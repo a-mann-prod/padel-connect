@@ -3,10 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from main_app.external_services.four_padel_client import FourPadelAPIClient 
 from rest_framework.exceptions import ValidationError
-from datetime import datetime
 from main_app.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from main_app.models import Complex, Match
+from main_app.models import Match
 from main_app.exceptions import handle_exception
 
 

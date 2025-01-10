@@ -27,6 +27,7 @@ export default () => {
           complex_id: data.complex,
           four_padel_field_id: data.id.toString(),
           four_padel_field_name: data.name,
+          four_padel_field_price: data.price.toString(),
         })
         router.navigate(routing.matchParamMatch.path())
       }}

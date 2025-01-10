@@ -39,6 +39,7 @@ export type CreateMatchParams = {
   complex_id: number
   four_padel_field_id: number
   four_padel_field_name: string
+  four_padel_field_price: number
   datetime: string
   duration: number
   is_private: boolean
