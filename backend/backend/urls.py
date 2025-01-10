@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from main_app.views import ComplexViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, FourPadelBookingView, FourPadelLoginView, FourPadelGoogleLoginView, FourPadelFieldView, FourPadelTournamentView, FourPadelTournamentDetailView
+from main_app.views import ComplexViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, FourPadelBookingView, FourPadelLoginView, FourPadelGoogleLoginView, FourPadelFieldView, FourPadelTournamentView, FourPadelTournamentDetailView, MatchScoreView
 from chat.views import MatchMessagesView, MatchConversationView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -55,6 +55,8 @@ urlpatterns = [
 
     path('matches/<int:pk>/conversation/', MatchConversationView.as_view(), name='match-conversation'),
     path('matches/<int:pk>/conversation/messages/', MatchMessagesView.as_view(), name='match-messages'),
+    path('matches/<int:pk>/score/', MatchScoreView.as_view(), name='match-score'),
+
 
 
     # External services

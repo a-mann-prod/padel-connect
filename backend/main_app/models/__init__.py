@@ -7,3 +7,4 @@ from .notification import Notification
 from .match import Match
 from .team import Team, TeamInvite
 from .match_archive import MatchArchive
+from .score import Score
