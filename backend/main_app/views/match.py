@@ -22,12 +22,11 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset =  Match.objects.all()
-        current_user = self.request.user
 
-        if self.action == 'retrieve':
+        if self.action in ['retrieve', 'update', 'partial_update']:
             return queryset
         
-        # Si action different de retrieve
+        # Si action different de retrieve ou update
         return Match.objects.filter(is_private=False)
 
         # if current_user == AnonymousUser():
