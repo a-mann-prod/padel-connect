@@ -61,7 +61,6 @@ export const Avatar = ({
   const [isImageLoading, setIsImageLoading] = useState(!!imageUrl)
 
   const displayFallback = () => {
-    console.log(getInitials(firstname, lastname))
     if (firstname && lastname && !fallBackIcon)
       return (
         <AvatarFallbackText>

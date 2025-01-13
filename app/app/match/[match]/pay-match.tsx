@@ -10,10 +10,10 @@ export default () => {
 
   const invalidateQuery = useInvalidateQuery()
 
+  // pas sur que ca soit util
   useEffect(() => {
     return () => {
       invalidateQuery(['bookings', bookingId])
-      console.log('laaa', bookingId)
     }
   }, [bookingId, invalidateQuery])
 

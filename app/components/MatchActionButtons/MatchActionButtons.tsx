@@ -4,7 +4,6 @@ import { router } from 'expo-router'
 import { Button } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
 import { BookingResponse, useBooking, useCreateBooking } from '@/services/api'
-import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { BookingStatus } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -34,17 +33,12 @@ export const MatchActionButtons = ({
   const t = useTranslate('match')
   const { data: me } = useMe()
   const updateMatchCache = useUpdateMatchCache()
-  const queryCache = useQueryCache()
 
   const [previousBooking, setPreviousBooking] =
     useState<BookingResponse | null>(null)
   const [currentBooking, setCurrentBooking] = useState<BookingResponse | null>(
     null
   )
-
-  // a tester
-  console.log('terrible', previousBooking, currentBooking)
-  console.log('match', queryCache.getItem(['matches', matchId]))
 
   const { data: booking, isLoading: isLoadingBooking } = useBooking({
     params: { id: bookingId as number },

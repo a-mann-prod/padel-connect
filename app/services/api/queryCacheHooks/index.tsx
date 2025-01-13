@@ -92,7 +92,6 @@ export const useQueryCache = () => {
 
   const removeItem = <T,>(queryKey: QueryKey, id?: number) => {
     queryClient.setQueryData(queryKey, (oldData: OldData<T>) => {
-      console.log(queryKey, oldData)
       if (!oldData) return
 
       if (isInfiniteArray(oldData)) {

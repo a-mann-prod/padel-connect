@@ -6,8 +6,9 @@ from main_app.exceptions import ErrorCode
 from datetime import timedelta
 import pytz
 from enum import Enum
-from django.db.models import Sum
+import logging
 
+logger = logging.getLogger('django')
 
 class FourPadelBooking(Enum):
     COMPLETE = "COMPLETE"
@@ -282,10 +283,10 @@ class FourPadelAPIClient:
                 }
                 response = requests.post(self.booking_url, headers=headers, params=params, json=json)
             
-            data = response.json()
+            if response.status_code != 200:
+                logger.info(data)
 
-            print(data)
-            # code 15 already exists
+            data = response.json()
 
             cleaned_data = {
                 "id": data.get('id'),
