@@ -58,8 +58,8 @@ export default () => {
               onCancelPress={() => router.canGoBack() && router.back()}
               onSubmit={onSubmit}
               defaultValues={{
-                email: me?.email,
-                name: `${me?.first_name} ${me?.last_name}`,
+                email: me?.email || 'Anonymous',
+                name: me?.full_name || 'Anonymous',
               }}
             />
           </VStack>

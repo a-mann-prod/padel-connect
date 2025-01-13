@@ -19,7 +19,6 @@ import {
 } from '@/contexts'
 import { NotificationsProvider } from '@/contexts/NotificationsContext'
 import { useInit } from '@/hooks/useInit'
-import { useMe } from '@/hooks/useMe'
 import useScreenCaptureCallback from '@/hooks/useScreenCaptureCallback'
 import { routing } from '@/services/routing'
 import 'react-native-gesture-handler'
@@ -105,11 +104,7 @@ const RootProvider = ({ colorScheme }: RootProviderProps) => {
 }
 
 const RootLayoutNav = () => {
-  const { data: me } = useMe()
-
-  useScreenCaptureCallback(
-    !me ? () => router.navigate(routing.report.path()) : undefined
-  )
+  useScreenCaptureCallback(() => router.navigate(routing.report.path()))
 
   return (
     <UpdateLoader>
