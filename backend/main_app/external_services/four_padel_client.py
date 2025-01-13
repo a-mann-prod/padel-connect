@@ -284,7 +284,7 @@ class FourPadelAPIClient:
                 response = requests.post(self.booking_url, headers=headers, params=params, json=json)
             
             if response.status_code != 200:
-                logger.info(data)
+                logger.error(data)
 
             data = response.json()
 
