@@ -18,6 +18,7 @@ import { useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
 import {
   MatchInvitationsResponse,
+  useBookingFields,
   useDeleteMatchTeam,
   useInfiniteMatchInvitations,
   useMatchTeamRequest,
@@ -58,6 +59,22 @@ export default WithMatch(() => {
 
   const { mutate: deleteMatchTeam, isPending: isPendingDeleteMatchTeam } =
     useDeleteMatchTeam()
+
+  const { data: bookingFields, isLoading: isLoadingBookingFields } =
+    useBookingFields({
+      params: {
+        complex: match?.complex.id as number,
+        date: match?.datetime.substring(0, 10) as string,
+      },
+      options: { enabled: !!match },
+    })
+
+  const isBookingAvailable =
+    !isLoadingBookingFields &&
+    !!bookingFields &&
+    bookingFields.some(({ fields }) =>
+      fields.some(({ id }) => id === match?.four_padel_booking_id)
+    )
 
   // disabled if match_request (cannot get a team and being invited)
   const {
@@ -131,6 +148,7 @@ export default WithMatch(() => {
               levelRange={match.calculated_level_range}
               owner={participants?.find((p) => p.id === match.user)}
               isBooked={match.is_booked}
+              isBookingAvailable={isBookingAvailable}
             />
             <MatchPlayers
               data={participants}
@@ -146,6 +164,7 @@ export default WithMatch(() => {
                 bookingId={match.four_padel_booking_id}
                 isOwner={isOwner}
                 isPlayer={isPlayer}
+                isBookingAvailable={isBookingAvailable}
                 isLeaveButtonLoading={isPendingDeleteMatchTeam}
                 onLeaveButtonPress={() =>
                   matchTeamRequest &&

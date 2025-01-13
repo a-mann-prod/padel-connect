@@ -45,7 +45,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     #four_padel
     four_padel_id = models.IntegerField(unique=True, null=True)
-    four_padel_token =models.TextField(null=True)
+    four_padel_token = models.TextField(null=True)
     four_padel_last_sync = models.DateTimeField(null=True, blank=True)
 
     objects = CustomUserManager()

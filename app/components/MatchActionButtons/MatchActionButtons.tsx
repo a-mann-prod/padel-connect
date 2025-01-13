@@ -12,12 +12,13 @@ import { useUpdateMatchCache } from './MatchActionButtons.services'
 
 type MatchActionButtonsProps = {
   matchId: number
-  bookingId?: number
+  bookingId: number
   onLeaveButtonPress: () => void
   isLeaveButtonLoading: boolean
 
   isPlayer: boolean
   isOwner: boolean
+  isBookingAvailable: boolean
 }
 
 export const MatchActionButtons = ({
@@ -26,6 +27,7 @@ export const MatchActionButtons = ({
 
   isOwner,
   isPlayer,
+  isBookingAvailable,
 
   onLeaveButtonPress,
   isLeaveButtonLoading,
@@ -86,6 +88,7 @@ export const MatchActionButtons = ({
             action="positive"
             onPress={() => createBooking({ match: matchId })}
             isLoading={isPayButtonLoading}
+            isDisabled={!isBookingAvailable}
           />
         )}
       {isParticipant &&

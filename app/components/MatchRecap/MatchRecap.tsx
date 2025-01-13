@@ -6,12 +6,25 @@ import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 import { isNilOrEmpty } from '@/utils/global'
 
+enum BookingStatus {
+  NOT_AVAILABLE = 'NOT_AVAILABLE',
+  NOT_BOOKED = 'NOT_BOOKED',
+  BOOKED = 'BOOKED',
+}
+
+const mapBookingStatusToColor: Record<BookingStatus, string | undefined> = {
+  NOT_AVAILABLE: '$red500',
+  NOT_BOOKED: undefined,
+  BOOKED: '$green500',
+}
+
 export type MatchRecapProps = {
   complexName: string
   datetime: string
   duration: number | string
   fieldName: string
   isBooked?: boolean
+  isBookingAvailable?: boolean
 }
 
 export const MatchRecap = ({
@@ -20,9 +33,23 @@ export const MatchRecap = ({
   duration,
   fieldName,
   isBooked,
+  isBookingAvailable,
 }: MatchRecapProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
+
+  const mapBookingStatusToText: Record<BookingStatus, string | undefined> = {
+    NOT_AVAILABLE: ` ${t('notAvailable')}`,
+    NOT_BOOKED: ` ${t('notBooked')}`,
+    BOOKED: undefined,
+  }
+
+  const getBookingStatus = () => {
+    if (!isBookingAvailable) return BookingStatus.NOT_AVAILABLE
+    if (!isNilOrEmpty(isBooked) && !isBooked) return BookingStatus.NOT_BOOKED
+
+    return BookingStatus.BOOKED
+  }
 
   const duration_nb = typeof duration === 'string' ? Number(duration) : duration
 
@@ -56,9 +83,9 @@ export const MatchRecap = ({
         title={t('field')}
         icon="FAR-square-minus"
         rightComponent={() => (
-          <Text>
+          <Text color={mapBookingStatusToColor[getBookingStatus()]}>
             {fieldName}
-            {!isNilOrEmpty(isBooked) && !isBooked && ` ${t('notBooked')}`}
+            {mapBookingStatusToText[getBookingStatus()]}
           </Text>
         )}
       />

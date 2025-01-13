@@ -307,13 +307,16 @@ class FourPadelAPIClient:
             response = requests.get(f"{self.booking_url}/{pk}", headers=headers)
             data = response.json()
 
-            cleaned_data = self.clean_book_detail_data(data)
+            logger.info("booking details")
+            logger.info(data)
+
+            cleaned_data = self.clean_book_detail_data(data, pk)
             return cleaned_data
 
         except requests.exceptions.RequestException as e:
             raise RuntimeError(f"Failed to book: {e}")
         
-    def clean_book_detail_data(self, data):
+    def clean_book_detail_data(self, data, pk):
         participations = []
 
         for participation in data.get("participations"):
@@ -329,7 +332,7 @@ class FourPadelAPIClient:
         booking_status = get_booking_status(data.get('booking_status'), participations)
 
         # update match status if necessary
-        match = Match.objects.filter(four_padel_booking_id=data.get('id')).first()
+        match = Match.objects.filter(four_padel_booking_id=pk).first()
         if match and not match.is_booked and booking_status == FourPadelBooking.PAYABLE:
             match.is_booked = True
             match.save()
