@@ -117,19 +117,14 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
         
         invited_users = CustomUser.objects.filter(pk__in=user_ids)
         
-        notifications = []
         for invited_user in invited_users:
             with translation.override(user.language):
-                notification = Notification(
+                Notification.objects.create(
                     user=invited_user,
                     title=_("New share!"),
                     message=_("%(sender)s has shared a match with you") % {'sender': user.profile.first_name},
                     type=enums.NotificationType.MATCH_SHARE, 
                     associated_data={"url": f"/match/{pk}"}
                 )
-                notifications.append(notification)
-
-        # Bulk create notifications
-        Notification.objects.bulk_create(notifications)
 
         return Response({"detail": "Match shared successfully."}, status=status.HTTP_200_OK)
