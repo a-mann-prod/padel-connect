@@ -20,15 +20,7 @@ class FourPadelLoginView(APIView):
             client = FourPadelAPIClient()
 
             # Connexion à 4Padel pour récupérer le token
-            four_padel_user = client.login(username=email, password=password)
-
-            # Vérifie si l'utilisateur existe localement, sinon le crée
-            user, created = CustomUser.objects.get_or_create(
-                four_padel_id=four_padel_user.id,
-                defaults={
-                    "email": four_padel_user.email
-                }
-            )
+            user = client.login(username=email, password=password)
 
             # Crée un RefreshToken (via Djoser) pour le local user
             refresh = RefreshToken.for_user(user)
@@ -52,15 +44,7 @@ class FourPadelGoogleLoginView(APIView):
 
         try:
             # Connexion à 4Padel pour récupérer le token
-            four_padel_user = client.google_login(google_token=google_token)
-
-            # Vérifie si l'utilisateur existe localement, sinon le crée
-            user, created = CustomUser.objects.get_or_create(
-                four_padel_id=four_padel_user.id,
-                defaults={
-                    "email": four_padel_user.email
-                }
-            )
+            user = client.google_login(google_token=google_token)
 
             # Crée un RefreshToken (via Djoser) pour le local user
             refresh = RefreshToken.for_user(user)

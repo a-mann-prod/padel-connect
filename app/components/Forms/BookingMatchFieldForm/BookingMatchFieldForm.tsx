@@ -3,17 +3,17 @@ import { useState } from 'react'
 
 import {
   BookFieldActionsheet,
-  BookingsFieldData,
+  FieldData,
 } from '@/components/BookFieldActionsheet/BookFieldActionsheet'
 import { DateCarouselFilter } from '@/components/DateCarouselFilter/DateCarouselFilter'
 import { TimeTable } from '@/components/TimeTable/TimeTable'
 import { FormSelect } from '@/designSystem/Forms/FormSelect/FormSelect'
 import { useComplexItems } from '@/hooks/useComplexItems'
-import { BookingsField } from '@/services/api'
+import { Field } from '@/services/api'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
 
-export type BookingMatchFieldFormValues = BookingsFieldData & {
+export type BookingMatchFieldFormValues = FieldData & {
   complex: string
 }
 
@@ -31,7 +31,7 @@ export const BookingMatchFieldForm = ({
   const tGlobal = useTranslate()
 
   const [dateFilter, setDateFilter] = useState(date.dayjs(datetime))
-  const [fields, setFields] = useState<BookingsField[] | undefined>(undefined)
+  const [fields, setFields] = useState<Field[] | undefined>(undefined)
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
     undefined
   )

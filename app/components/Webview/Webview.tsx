@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Platform } from 'react-native'
 import { WebView as EWebView } from 'react-native-webview'
 
-import { Loader } from '@/designSystem'
+import { ErrorView, Loader } from '@/designSystem'
+import { isNilOrEmpty } from '@/utils/global'
 
 export type WebviewProps = {
   url: string
@@ -10,6 +11,7 @@ export type WebviewProps = {
 
 export const Webview = ({ url }: WebviewProps) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(isNilOrEmpty(url))
 
   return (
     <>
@@ -22,9 +24,20 @@ export const Webview = ({ url }: WebviewProps) => {
           style={{ border: 0 }}
         />
       ) : (
-        <EWebView source={{ uri: url }} onLoad={() => setIsLoading(false)} />
+        <EWebView
+          source={{ uri: url }}
+          onLoad={() => {
+            setIsLoading(false)
+            setHasError(false)
+          }}
+          onError={() => {
+            setIsLoading(false)
+            setHasError(true)
+          }}
+        />
       )}
       {isLoading && <Loader flex={0} h="$full" />}
+      {hasError && <ErrorView />}
     </>
   )
 }

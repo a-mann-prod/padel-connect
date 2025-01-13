@@ -64,8 +64,6 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
         ({ notification }) => {
           const data = notification.request.content.data
 
-          console.log('ici')
-
           // invalidate match messages to get last message
           invalidateMessages(notification)
 

@@ -10,7 +10,6 @@ from django.utils import translation
 from django.utils.translation import gettext as _
 from main_app.exceptions import handle_exception
 from rest_framework.exceptions import ValidationError
-from django.contrib.auth.models import AnonymousUser
 
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     queryset = Match.objects.all()

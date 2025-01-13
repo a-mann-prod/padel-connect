@@ -83,7 +83,7 @@ export default WithMatch(() => {
       {
         icon: 'FAS-pencil',
         onPress: () =>
-          match?.is_reserved
+          match?.is_booked
             ? match?.id &&
               router.navigate(routing.matchUpdateParam.path(match.id))
             : setShowUpdateActionsheet(true),
@@ -96,13 +96,6 @@ export default WithMatch(() => {
   if (isLoading) return <Loader />
 
   if (!match) return
-
-  // TODO A revoir
-  const hasPayed = false
-  const hasPayedUserIds = [] as number[]
-  // match.match_requests
-  //   .filter(({ has_payed }) => !!has_payed)
-  //   .map(({ user_id }) => user_id) || []
 
   const inadaptedLevel =
     !match.is_open_to_all_level &&
@@ -137,7 +130,7 @@ export default WithMatch(() => {
               isOpenToAll={match.is_open_to_all_level}
               levelRange={match.calculated_level_range}
               owner={participants?.find((p) => p.id === match.user)}
-              isBooked={match.is_reserved}
+              isBooked={match.is_booked}
             />
             <MatchPlayers
               data={participants}
@@ -145,18 +138,14 @@ export default WithMatch(() => {
                 router.navigate(routing.matchUser.path(match.id, id))
               }
               displayTeam={match.is_competitive}
-              hasPayedUserIds={hasPayedUserIds}
               isMatchPast={isMatchPassed}
             />
             {!isMatchPassed && (
               <MatchActionButtons
-                onPayButtonPress={() => console.log('pay')}
-                isPayButtonLoading={false}
                 matchId={matchId}
+                bookingId={match.four_padel_booking_id}
                 isOwner={isOwner}
                 isPlayer={isPlayer}
-                isReserved={match.is_reserved}
-                hasPayed={hasPayed}
                 isLeaveButtonLoading={isPendingDeleteMatchTeam}
                 onLeaveButtonPress={() =>
                   matchTeamRequest &&

@@ -56,6 +56,10 @@ const modalsRoot = {
     name: 'report',
     path: () => `${root.modals.path()}/report` as Href,
   },
+  browser: {
+    name: 'browser',
+    path: (url: string) => `${root.modals.path()}/browser?url=${url}` as Href,
+  },
 }
 
 const tabsRoot = {
@@ -303,5 +307,10 @@ export const routing = {
     name: 'share-match',
     path: (matchId: string | number) =>
       `${root.match.path(matchId)}/share-match` as Href,
+  },
+  matchPayMatch: {
+    name: 'pay-match',
+    path: (matchId: string | number, url: string, bookingId: number) =>
+      `${root.match.path(matchId)}/pay-match?url=${url}&bookingid=${bookingId}` as Href,
   },
 }

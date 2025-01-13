@@ -27,6 +27,7 @@ services:
       - api_email_host_password
       - api_secret_key
       - push_notif_token
+      - api_encryption_key
 
   db:
     extends:
@@ -84,6 +85,8 @@ secrets:
     file: ./secrets/api_secret_key.txt
   push_notif_token:
     file: ./secrets/push_notif_token.txt
+  api_encryption_key:
+    file: ./secrets/api_encryption_key.txt
 
 volumes:
   db_data:

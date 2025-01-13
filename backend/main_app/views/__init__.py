@@ -11,5 +11,6 @@ from .notification import MeNotificationViewSet
 from .match_team import MatchTeamModelViewSet
 from .match_team_invite import MatchTeamInviteModelViewSet
 from .match_invite import MatchInviteModelViewSet
-from .booking import BookingView
+from .four_padel_booking import FourPadelBookingView
+from .four_padel_field import FourPadelFieldView
 from .four_padel_login import FourPadelLoginView, FourPadelGoogleLoginView

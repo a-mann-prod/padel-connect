@@ -1,13 +1,19 @@
-export type BookingsField = {
+import { BookingStatus } from '../../types'
+
+export type Participation = {
   id: number
-  name: string
-  startingDateZuluTime: string
-  durations: number[]
+  user: number
+  nb_slot_paid: number
 }
 
-export type BookingsResponse = {
-  startingDateZuluTime: string
-  fields: BookingsField[]
+export type BookingResponse = {
+  id: number
+  booking_status: BookingStatus
+  payment_link: string
+  participations: Participation[]
 }
 
-export type BookingsResponses = BookingsResponse[]
+export type CreateBookingResponse = {
+  id: number
+  payment_link: string
+}

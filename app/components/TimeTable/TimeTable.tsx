@@ -2,7 +2,7 @@ import { Badge, Box, HStack, Text, VStack } from '@gluestack-ui/themed'
 import { Dayjs } from 'dayjs'
 
 import { Loader, Pressable } from '@/designSystem'
-import { BookingsResponse, useBookings } from '@/services/api'
+import { BookingFieldsResponse, useBookingFields } from '@/services/api'
 import { date as dateService } from '@/services/date'
 
 const ITEMS_PER_ROW = 5
@@ -11,7 +11,7 @@ export type TimeTableProps = {
   date: Dayjs
   complex: number
   onButtonPress: (
-    fields: BookingsResponse['fields'],
+    fields: BookingFieldsResponse['fields'],
     selectedItem: string
   ) => void
   selectedItem?: string
@@ -23,28 +23,27 @@ export const TimeTable = ({
   onButtonPress,
   selectedItem,
 }: TimeTableProps) => {
-  const { data: bookingFields, isLoading } = useBookings({
+  const { data: bookingFields, isLoading } = useBookingFields({
     params: { date: date.format('YYYY-MM-DD'), complex },
   })
 
-  const bookingsTable = bookingFields?.reduce<(BookingsResponse | null)[][]>(
-    (acc, curr, index) => {
-      const groupIndex = Math.floor(index / ITEMS_PER_ROW)
-      if (!acc[groupIndex]) {
-        acc[groupIndex] = []
-      }
-      acc[groupIndex].push(curr)
+  const bookingsTable = bookingFields?.reduce<
+    (BookingFieldsResponse | null)[][]
+  >((acc, curr, index) => {
+    const groupIndex = Math.floor(index / ITEMS_PER_ROW)
+    if (!acc[groupIndex]) {
+      acc[groupIndex] = []
+    }
+    acc[groupIndex].push(curr)
 
-      if (index === bookingFields.length - 1) {
-        while (acc[groupIndex].length < ITEMS_PER_ROW) {
-          acc[groupIndex].push(null)
-        }
+    if (index === bookingFields.length - 1) {
+      while (acc[groupIndex].length < ITEMS_PER_ROW) {
+        acc[groupIndex].push(null)
       }
+    }
 
-      return acc
-    },
-    []
-  )
+    return acc
+  }, [])
 
   if (isLoading) return <Loader />
 

@@ -31,6 +31,7 @@ export default () => {
           duration: data.duration,
           four_padel_field_id: data.id,
           four_padel_field_name: data.name,
+          four_padel_field_price: data.price,
           complex_id: Number(data.complex),
         })
       }}

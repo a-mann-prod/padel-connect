@@ -45,6 +45,13 @@ export enum Language {
   FR = 'FR',
 }
 
+export enum BookingStatus {
+  COMPLETE = 'COMPLETE',
+  CANCELLED = 'CANCELLED',
+  PAYABLE = 'PAYABLE',
+  PRE_BOOKED = 'PRE_BOOKED',
+}
+
 export type Params<T> = T &
   Partial<{
     orderBy: Partial<Record<keyof T, 'ASC' | 'DESC'>>

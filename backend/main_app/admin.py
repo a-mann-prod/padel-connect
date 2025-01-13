@@ -60,13 +60,13 @@ admin.site.register(Tournament, TournamentAdmin)
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('id', 'email', 'first_name', 'last_name', 'four_padel_id')
+        fields = ('id', 'email', 'first_name', 'last_name')
 
 # Formulaire pour modifier un utilisateur
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'four_padel_id')
+        fields = ('email', 'first_name', 'last_name')
 
 # Admin pour gérer les utilisateurs dans l'interface d'administration
 class CustomUserAdmin(UserAdmin):

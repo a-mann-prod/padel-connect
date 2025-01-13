@@ -13,7 +13,7 @@ class CustomUserCreateSerializer(mixins.ExcludeDatesFieldsMixin, UserCreateSeria
 class CustomCurrentUserSerializer(mixins.ExcludeDatesFieldsMixin, UserSerializer):
     class Meta(UserSerializer.Meta):
         model = CustomUser
-        fields = ['id', 'email', 'push_token', 'language', 'is_onboarding_completed', 'is_new_match_notification_enabled', 'is_new_message_notification_enabled']
+        fields = ['id', 'email', 'push_token', 'language', 'is_onboarding_completed', 'is_new_match_notification_enabled', 'is_new_message_notification_enabled', 'four_padel_id']
 
 class CustomUserSerializer(mixins.ExcludeDatesFieldsMixin, UserSerializer):
     profile = ProfileSerializer(read_only=True)

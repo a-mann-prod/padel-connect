@@ -1,18 +1,39 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { UseQueryProps } from '../../queryHooks'
+import { useHandleError } from '@/hooks/useHandleError'
+import { useQueryCache } from '../../queryCacheHooks'
+import { UseMutationProps, UseQueryProps } from '../../queryHooks'
+import { BookingResponse, CreateBookingResponse } from './entities'
+import { createBookingFn, getBookingFn } from './functions'
+import { CreateBookingParams, GetBookingParams } from './params'
 
-import { BookingsResponses } from './entities'
-import { getBookingsFn } from './functions'
-import { GetBookingsParams } from './params'
-
-export const useBookings = ({
+export const useBooking = ({
   params,
   options,
-}: UseQueryProps<BookingsResponses, GetBookingsParams>) =>
-  useQuery<BookingsResponses>({
-    queryKey: ['bookings', params],
-    queryFn: () => getBookingsFn(params),
-    staleTime: 3600 * 1,
+}: UseQueryProps<BookingResponse, GetBookingParams>) =>
+  useQuery<BookingResponse>({
+    queryKey: ['bookings', params.id],
+    queryFn: () => getBookingFn(params),
     ...options,
   })
+
+export const useCreateBooking = ({
+  options,
+}: UseMutationProps<CreateBookingResponse, CreateBookingParams> = {}) => {
+  const queryCache = useQueryCache()
+  const onError = useHandleError()
+
+  return useMutation({
+    ...options,
+    mutationFn: createBookingFn,
+    onError,
+    onSuccess: (data, variables, context) => {
+      options?.onSuccess?.(data, variables, context)
+
+      queryCache.updateItem(['matches', variables.match], {
+        id: variables.match,
+        four_padel_booking_id: data.id,
+      })
+    },
+  })
+}
