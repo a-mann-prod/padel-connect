@@ -63,12 +63,12 @@ export default ({ config }: ConfigContext) => ({
         project: process.env.SENTRY_PROJECT,
       },
     ],
-    [
-      '@react-native-google-signin/google-signin',
-      {
-        iosUrlScheme: process.env.EXPO_PUBLIC_REVERSED_CLIENT_ID,
-      },
-    ],
+    // [
+    //   '@react-native-google-signin/google-signin',
+    //   {
+    //     iosUrlScheme: process.env.EXPO_PUBLIC_REVERSED_CLIENT_ID,
+    //   },
+    // ],
   ],
   locales: {
     en: './services/i18n/metadata/en.json',
