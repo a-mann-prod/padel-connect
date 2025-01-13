@@ -1,12 +1,11 @@
 import { Center, Text, VStack } from '@gluestack-ui/themed'
-import { Link, usePathname } from 'expo-router'
+import { Link, router, usePathname } from 'expo-router'
 import { FC } from 'react'
 
 import { useAuthContext } from '@/contexts'
 import { Button, Divider } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
-import { router } from 'expo-router'
 
 // TODO: find props type name
 const WithAuthWrapper: FC<{ Component: FC; segment: any }> = ({
