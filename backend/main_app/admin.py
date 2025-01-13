@@ -76,7 +76,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('id', 'four_padel_id', 'email', 'is_staff', 'is_active', 'is_onboarding_completed', 'language')
     list_filter = ('is_staff', 'is_active')
     fieldsets = (
-        ('General', {'fields': ('email', 'password', 'push_token', 'is_onboarding_completed', 'language')}),
+        ('General', {'fields': ('email', 'password', 'push_token', 'is_onboarding_completed', 'language', 'four_padel_token')}),
         ('Notifications', {'fields': ('is_new_match_notification_enabled', 'is_new_message_notification_enabled')}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
         ('Permissions', {'fields': ('favorite_users',)}),

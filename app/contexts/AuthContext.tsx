@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from 'react'
 
 import { useInvalidateQuery } from '@/hooks/useInvalidateQuery'
 import { LoginResponse, MeResponse, useMe } from '@/services/api'
+import { useIsTokenExpired } from '@/services/api/axiosConfig'
 import { useQueryCache } from '@/services/api/queryCacheHooks'
 import { buildContext } from '@/services/buildContext'
 import {
@@ -30,6 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [signedIn, setSignedIn] = useState(false)
   const queryCache = useQueryCache()
   const invalidateQuery = useInvalidateQuery()
+  const isTokenExpired = useIsTokenExpired()
 
   const [me, setMe] = useState<MeResponse>()
 
@@ -82,6 +84,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoadingSignIn(false)
     }
   }, [data, isFetching, isRefetching])
+
+  useEffect(() => {
+    if (isTokenExpired) {
+      console.log('laaa', isTokenExpired)
+      signOut()
+    }
+  }, [isTokenExpired])
 
   return (
     <Provider

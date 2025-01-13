@@ -1,11 +1,12 @@
 import { Center, Text, VStack } from '@gluestack-ui/themed'
-import { Link } from 'expo-router'
+import { Link, usePathname } from 'expo-router'
 import { FC } from 'react'
 
 import { useAuthContext } from '@/contexts'
 import { Button, Divider } from '@/designSystem'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
+import { router } from 'expo-router'
 
 // TODO: find props type name
 const WithAuthWrapper: FC<{ Component: FC; segment: any }> = ({
@@ -32,7 +33,11 @@ type LoginMenuProps = {
 const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('auth')
+  const pathname = usePathname()
+  console.log(pathname)
   // const googleSignin = useGoogleSignin()
+
+  const noNeedBackButtonPaths = ['/profile', '/my-matches', '/auth/login']
 
   const params = redirectTo ? { redirectTo } : undefined
 
@@ -68,6 +73,13 @@ const LoginMenu = ({ redirectTo }: LoginMenuProps) => {
         >
           <Button title={t('register')} variant="outline" isDisabled />
         </Link>
+        {!noNeedBackButtonPaths.includes(pathname) && (
+          <Button
+            title={tGlobal('back')}
+            action="secondary"
+            onPress={() => router.canGoBack() && router.back()}
+          />
+        )}
       </VStack>
     </Center>
   )

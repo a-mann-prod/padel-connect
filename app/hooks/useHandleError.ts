@@ -15,6 +15,8 @@ export const useHandleError = () => {
 
     const title = t(`${code}.title`)
 
+    console.error(e)
+
     // Unhandled error
     if (!title) {
       Sentry.captureException(e, { extra: { code, detail } })

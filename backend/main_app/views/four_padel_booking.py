@@ -7,6 +7,7 @@ from main_app.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from main_app.models import Match
 from main_app.exceptions import handle_exception
+from rest_framework.exceptions import AuthenticationFailed
 
 
 class FourPadelBookingView(APIView):
@@ -43,5 +44,7 @@ class FourPadelBookingView(APIView):
             match.four_padel_booking_id = data['id']
             match.save()
             return Response(data, status=status.HTTP_200_OK)
+        except AuthenticationFailed as e:
+            return Response({"detail": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             return handle_exception(e)

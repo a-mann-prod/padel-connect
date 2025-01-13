@@ -45,7 +45,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     #four_padel
     four_padel_id = models.IntegerField(unique=True, null=True)
-    four_padel_token = models.TextField(null=True)
+    four_padel_token = models.TextField(null=True, blank=True)
     four_padel_last_sync = models.DateTimeField(null=True, blank=True)
 
     objects = CustomUserManager()
@@ -57,8 +57,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """Chiffre le token avant de le stocker"""
         self.four_padel_token = cipher.encrypt(raw_token.encode()).decode()
 
-    def get_four_padel_token(self) -> str:
+    def get_four_padel_token(self) -> str | None:
         """Déchiffre et retourne le token"""
+        if not self.four_padel_token: return
         return cipher.decrypt(self.four_padel_token.encode()).decode()
 
     def __str__(self):

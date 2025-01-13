@@ -7,6 +7,7 @@ from datetime import timedelta
 import pytz
 from enum import Enum
 import logging
+from rest_framework.exceptions import AuthenticationFailed
 
 logger = logging.getLogger('django')
 
@@ -147,22 +148,15 @@ class FourPadelAPIClient:
             "isChannelWeb": True,
         }
 
-        try:
-            response = requests.post(self.field_url, headers=headers, params=params, json=json)
-            if response.status_code == 401:  # Token expired or invalid
-                self.login()  # Get a new token
-                headers = {
-                    **headers,
-                    "Authorization": f"Bearer {self.user.get_four_padel_token()}",
-                }
-                response = requests.post(self.field_url, headers=headers, params=params, json=json)
-            
-            response.raise_for_status()
-            data = response.json()
+        response = requests.post(self.field_url, headers=headers, params=params, json=json)
+        if response.status_code == 401:  # Token expired or invalid
+            raise AuthenticationFailed("Token expired or invalid") 
+        
+        response.raise_for_status()
+        data = response.json()
 
-            return self.clean_fields_data(data)
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Failed to fetch booking: {e}")
+        return self.clean_fields_data(data)
+        
 
     def clean_fields_data(self, data):
         """
@@ -273,29 +267,21 @@ class FourPadelAPIClient:
             "booking_status": "Pending"
         }
 
-        try:
-            response = requests.put(self.booking_url, headers=headers, params=params, json=json)
-            if response.status_code == 401:  # Token expired or invalid
-                self.login()  # Get a new token
-                headers = {
-                    **headers,
-                    "Authorization": f"Bearer {self.user.get_four_padel_token()}",
-                }
-                response = requests.post(self.booking_url, headers=headers, params=params, json=json)
-            
-            if response.status_code != 200:
-                logger.error(data)
+        response = requests.put(self.booking_url, headers=headers, params=params, json=json)
+        if response.status_code == 401:  # Token expired or invalid
+            raise AuthenticationFailed("Token expired or invalid") 
+        
+        if response.status_code != 200:
+            logger.error(data)
 
-            data = response.json()
+        data = response.json()
 
-            cleaned_data = {
-                "id": data.get('id'),
-                "payment_link": data.get('paymentLink')
-            }
-            return cleaned_data
+        cleaned_data = {
+            "id": data.get('id'),
+            "payment_link": data.get('paymentLink')
+        }
+        return cleaned_data
 
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Failed to book: {e}")
 
     def get_book_detail(self, pk):
         headers = {
@@ -303,18 +289,14 @@ class FourPadelAPIClient:
             "content-type": "application/json"
         }
 
-        try:
-            response = requests.get(f"{self.booking_url}/{pk}", headers=headers)
-            data = response.json()
+        response = requests.get(f"{self.booking_url}/{pk}", headers=headers)
+        data = response.json()
 
-            logger.info("booking details")
-            logger.info(data)
+        logger.info("booking details")
+        logger.info(data)
 
-            cleaned_data = self.clean_book_detail_data(data, pk)
-            return cleaned_data
-
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Failed to book: {e}")
+        cleaned_data = self.clean_book_detail_data(data, pk)
+        return cleaned_data
         
     def clean_book_detail_data(self, data, pk):
         participations = []
