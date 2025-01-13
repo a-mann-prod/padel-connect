@@ -49,6 +49,6 @@ class Match(models.Model):
         return str(self.id)
 
     class Meta:
-        ordering = ['id']
+        ordering = ['datetime']
         verbose_name = 'Match' 
         verbose_name_plural = 'Matches'
