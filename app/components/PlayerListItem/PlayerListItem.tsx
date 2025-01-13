@@ -26,7 +26,6 @@ export type PlayerListItemProps = ProfileResponse & {
   }
   isSelected?: boolean
   isDisabled?: boolean
-  isSelectDisabled?: boolean
   requestStatus?: RequestStatus
 }
 
@@ -48,7 +47,6 @@ export const PlayerListItem = ({
   onSelectButtonPress,
   isSelected,
   isDisabled,
-  isSelectDisabled,
   requestStatus,
 }: PlayerListItemProps) => {
   const t = useTranslate()
@@ -78,7 +76,7 @@ export const PlayerListItem = ({
               //@ts-ignore:next-line
               height="$full"
               variant="header"
-              isDisabled={isSelectDisabled}
+              isDisabled={isDisabled}
             />
           )}
           <Avatar

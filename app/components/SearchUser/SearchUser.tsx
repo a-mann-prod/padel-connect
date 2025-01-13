@@ -1,5 +1,5 @@
 import { VStack } from '@gluestack-ui/themed'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ListRenderItemInfo } from 'react-native'
 
 import { PlayerListItem } from '../PlayerListItem/PlayerListItem'
@@ -82,17 +82,30 @@ export const SearchUser = ({
     options: { enabled: isFavMode },
   })
 
-  const profiles = !isFavMode
-    ? profilesPages?.pages.reduce<ProfilesResponse['results']>(
-        (prev, acc) => [...prev, ...acc.results],
-        []
-      )
-    : undefined
-
-  const favUsers = favUsersPages?.pages.reduce<ProfilesResponse['results']>(
-    (prev, acc) => [...prev, ...acc.results],
-    []
+  const profiles = useMemo(
+    () =>
+      !isFavMode
+        ? profilesPages?.pages.reduce<ProfilesResponse['results']>(
+            (prev, acc) => [...prev, ...acc.results],
+            []
+          )
+        : favUsersPages?.pages.reduce<ProfilesResponse['results']>(
+            (prev, acc) => [...prev, ...acc.results],
+            []
+          ),
+    [isFavMode, profilesPages?.pages, favUsersPages?.pages]
   )
+
+  // Création de la variable orderedProfiles
+  const orderedProfiles = useMemo(() => {
+    if (!profiles) return []
+    if (!disableUser) return profiles
+
+    return [
+      ...profiles.filter((user) => !disableUser(user)),
+      ...profiles.filter((user) => disableUser(user)),
+    ]
+  }, [profiles, disableUser])
 
   const isSelectDisabled = (currentId: number) => {
     if (maxSelectedUserIds === null || maxSelectedUserIds === undefined) {
@@ -116,7 +129,6 @@ export const SearchUser = ({
       }
       onPress={onPress ? () => onPress(item.id) : undefined}
       isSelected={selectedUserIds?.includes(item.id)}
-      isSelectDisabled={disableUser?.(item) || isSelectDisabled(item.id)}
       isDisabled={disableUser?.(item) || isSelectDisabled(item.id)}
     />
   )
@@ -126,7 +138,7 @@ export const SearchUser = ({
       {displaySearchBar && <SearchInput onChangeText={setSearchDebounced} />}
 
       <VirtualizedList<ProfilesResponse['results'][number]>
-        data={isFavMode ? favUsers : profiles}
+        data={orderedProfiles}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}
