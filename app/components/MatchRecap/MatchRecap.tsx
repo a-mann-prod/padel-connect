@@ -4,7 +4,6 @@ import { Section, SectionRow } from '@/designSystem'
 import { getMatchTimes } from '@/hooks/useManageMatch'
 import { date } from '@/services/date'
 import { useTranslate } from '@/services/i18n'
-import { isNilOrEmpty } from '@/utils/global'
 
 enum BookingStatus {
   NOT_AVAILABLE = 'NOT_AVAILABLE',
@@ -24,7 +23,7 @@ export type MatchRecapProps = {
   duration: number | string
   fieldName: string
   isBooked?: boolean
-  isBookingAvailable?: boolean
+  isFieldAvailable?: boolean
 }
 
 export const MatchRecap = ({
@@ -33,7 +32,7 @@ export const MatchRecap = ({
   duration,
   fieldName,
   isBooked,
-  isBookingAvailable,
+  isFieldAvailable,
 }: MatchRecapProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
@@ -45,10 +44,9 @@ export const MatchRecap = ({
   }
 
   const getBookingStatus = () => {
-    if (!isBookingAvailable) return BookingStatus.NOT_AVAILABLE
-    if (!isNilOrEmpty(isBooked) && !isBooked) return BookingStatus.NOT_BOOKED
-
-    return BookingStatus.BOOKED
+    if (isBooked) return BookingStatus.BOOKED
+    if (!isFieldAvailable) return BookingStatus.NOT_AVAILABLE
+    return BookingStatus.NOT_BOOKED
   }
 
   const duration_nb = typeof duration === 'string' ? Number(duration) : duration

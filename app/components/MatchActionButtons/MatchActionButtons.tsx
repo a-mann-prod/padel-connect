@@ -20,7 +20,7 @@ type MatchActionButtonsProps = {
 
   isPlayer: boolean
   isOwner: boolean
-  isBookingAvailable: boolean
+  isFieldAvailable: boolean
 }
 
 export const MatchActionButtons = ({
@@ -28,7 +28,7 @@ export const MatchActionButtons = ({
 
   isOwner,
   isPlayer,
-  isBookingAvailable,
+  isFieldAvailable,
 
   booking,
   isLoadingBooking,
@@ -87,7 +87,7 @@ export const MatchActionButtons = ({
             action="positive"
             onPress={() => createBooking({ match: matchId })}
             isLoading={isPayButtonLoading}
-            isDisabled={!isBookingAvailable}
+            isDisabled={!isFieldAvailable}
           />
         )}
       {isParticipant &&

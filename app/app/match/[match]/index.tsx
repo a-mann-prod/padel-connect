@@ -75,11 +75,11 @@ export default WithMatch(() => {
     options: { enabled: !!match?.four_padel_booking_id },
   })
 
-  const isBookingAvailable =
+  const isFieldAvailable =
     !isLoadingBookingFields &&
     !!bookingFields &&
     bookingFields.some(({ fields }) =>
-      fields.some(({ id }) => id === match?.four_padel_booking_id)
+      fields.some(({ id }) => id === match?.four_padel_field_id)
     )
 
   // disabled if match_request (cannot get a team and being invited)
@@ -154,7 +154,7 @@ export default WithMatch(() => {
               levelRange={match.calculated_level_range}
               owner={participants?.find((p) => p.id === match.user)}
               isBooked={match.is_booked}
-              isBookingAvailable={isBookingAvailable}
+              isFieldAvailable={isFieldAvailable}
             />
             <MatchPlayers
               data={participants}
@@ -172,7 +172,7 @@ export default WithMatch(() => {
                 isLoadingBooking={isLoadingBooking}
                 isOwner={isOwner}
                 isPlayer={isPlayer}
-                isBookingAvailable={isBookingAvailable}
+                isFieldAvailable={isFieldAvailable}
                 isLeaveButtonLoading={isPendingDeleteMatchTeam}
                 onLeaveButtonPress={() =>
                   matchTeamRequest &&

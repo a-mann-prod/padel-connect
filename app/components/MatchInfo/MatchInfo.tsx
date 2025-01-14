@@ -9,7 +9,7 @@ type MatchInfoProps = MatchRecapProps & {
   levelRange: [number, number]
   isOpenToAll: boolean
   owner?: DefaultMinimalProfileResponse
-  isBookingAvailable?: boolean
+  isFieldAvailable?: boolean
 }
 export const MatchInfo = ({
   owner,
