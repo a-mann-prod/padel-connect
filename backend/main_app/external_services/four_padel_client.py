@@ -315,7 +315,10 @@ class FourPadelAPIClient:
 
         # update match status if necessary
         match = Match.objects.filter(four_padel_booking_id=pk).first()
-        if match and not match.is_booked and booking_status == FourPadelBooking.PAYABLE:
+        logger.info("match", match)
+        logger.info("booking status", booking_status)
+        if match and not match.is_booked and booking_status in [FourPadelBooking.PAYABLE, FourPadelBooking.COMPLETE]:
+            logger.info("boook")
             match.is_booked = True
             match.save()
 
