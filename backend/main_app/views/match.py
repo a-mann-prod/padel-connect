@@ -28,11 +28,16 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
             return Match.objects.filter(is_private=False)
         
         # Si l'utilisateur est authentifié
-        return Match.objects.filter(
-            is_private=False
-        ) | Match.objects.filter(
-            is_private=True, user=current_user
-        )
+
+        # pour le listing
+        if self.action == 'list':
+            return Match.objects.filter(
+            teams__invitations__user=current_user,  # The current user has a team invite
+            teams__invitations__status=enums.RequestStatus.ACCEPTED,
+            ).distinct()
+        
+        # pour les actions d'edit
+        return Match.objects.filter(user=current_user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
