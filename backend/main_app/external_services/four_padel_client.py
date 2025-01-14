@@ -382,6 +382,9 @@ class FourPadelAPIClient:
         cleaned_data = []
 
         for tournament in data:
+            if tournament.get("centers")[0].get("center").get("id") is not complex.four_padel_id:
+                continue
+
             competition_level = tournament.get("competitionLevel")
             tournament_data = {
                 "id": tournament.get("id"),
