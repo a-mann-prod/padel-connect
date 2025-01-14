@@ -6,7 +6,7 @@ import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 import { PlayersAvatars } from '../PlayersAvatars/PlayersAvatars'
 import { SlotStatusIcon } from '../SlotStatusIcon/SlotStatusIcon'
 
-import { Pressable, PressableProps } from '@/designSystem'
+import { Icon, Pressable, PressableProps } from '@/designSystem'
 import { ComplexesResponse } from '@/services/api'
 import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
@@ -26,6 +26,7 @@ export type MatchlistItemProps = {
   is_open_to_all_level: boolean
   four_padel_field_name: string
   is_request?: boolean
+  is_private: boolean
   participants: DefaultMinimalProfileResponse[]
   type?: MatchListItemType
   id: number
@@ -74,6 +75,7 @@ export const MatchListItem = ({
               </VStack>
             </HStack>
             <HStack gap="$3">
+              {match.is_private && <Icon name="FAS-lock" />}
               <MatchTypeIcon isCompetitive={match.is_competitive} />
               <SlotStatusIcon
                 status={match.is_booked ? 'BOOKED' : 'AVAILABLE'}

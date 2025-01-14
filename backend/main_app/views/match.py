@@ -10,6 +10,7 @@ from django.utils import translation
 from django.utils.translation import gettext as _
 from main_app.exceptions import handle_exception
 from rest_framework.exceptions import ValidationError
+from django.contrib.auth.models import AnonymousUser
 
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -21,23 +22,17 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        queryset =  Match.objects.all()
+        current_user = self.request.user
 
-        if self.action in ['retrieve', 'update', 'partial_update']:
-            return queryset
+        if current_user == AnonymousUser():
+            return Match.objects.filter(is_private=False)
         
-        # Si action different de retrieve ou update
-        return Match.objects.filter(is_private=False)
-
-        # if current_user == AnonymousUser():
-        #     return Match.objects.filter(is_private=False)
-        
-        # # Si l'utilisateur est authentifié
-        # return Match.objects.filter(
-        #     is_private=False
-        # ) | Match.objects.filter(
-        #     is_private=True, user=current_user
-        # )
+        # Si l'utilisateur est authentifié
+        return Match.objects.filter(
+            is_private=False
+        ) | Match.objects.filter(
+            is_private=True, user=current_user
+        )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

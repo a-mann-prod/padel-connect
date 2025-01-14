@@ -18,6 +18,7 @@ import { useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
 import {
   MatchInvitationsResponse,
+  useBooking,
   useBookingFields,
   useDeleteMatchTeam,
   useInfiniteMatchInvitations,
@@ -68,6 +69,11 @@ export default WithMatch(() => {
       },
       options: { enabled: !!match },
     })
+
+  const { data: booking, isLoading: isLoadingBooking } = useBooking({
+    params: { id: match?.four_padel_booking_id as number },
+    options: { enabled: !!match?.four_padel_booking_id },
+  })
 
   const isBookingAvailable =
     !isLoadingBookingFields &&
@@ -152,6 +158,7 @@ export default WithMatch(() => {
             />
             <MatchPlayers
               data={participants}
+              hasPayedUserIds={booking?.participations.map(({ user }) => user)}
               onPress={(id) =>
                 router.navigate(routing.matchUser.path(match.id, id))
               }
@@ -161,7 +168,8 @@ export default WithMatch(() => {
             {!isMatchPassed && (
               <MatchActionButtons
                 matchId={matchId}
-                bookingId={match.four_padel_booking_id}
+                booking={booking}
+                isLoadingBooking={isLoadingBooking}
                 isOwner={isOwner}
                 isPlayer={isPlayer}
                 isBookingAvailable={isBookingAvailable}

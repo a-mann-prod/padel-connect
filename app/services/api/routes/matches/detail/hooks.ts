@@ -112,9 +112,6 @@ export const useCreateMatch = ({
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
 
-      // Do not add match to match listing
-      if (variables.is_private) return
-
       const querykey = findMatchQK(data.datetime)
 
       if (querykey) {

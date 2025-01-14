@@ -3,7 +3,7 @@ import { router } from 'expo-router'
 
 import { Button } from '@/designSystem'
 import { useMe } from '@/hooks/useMe'
-import { BookingResponse, useBooking, useCreateBooking } from '@/services/api'
+import { BookingResponse, useCreateBooking } from '@/services/api'
 import { BookingStatus } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
@@ -12,9 +12,11 @@ import { useUpdateMatchCache } from './MatchActionButtons.services'
 
 type MatchActionButtonsProps = {
   matchId: number
-  bookingId: number
   onLeaveButtonPress: () => void
   isLeaveButtonLoading: boolean
+
+  booking: BookingResponse | undefined
+  isLoadingBooking: boolean
 
   isPlayer: boolean
   isOwner: boolean
@@ -23,11 +25,13 @@ type MatchActionButtonsProps = {
 
 export const MatchActionButtons = ({
   matchId,
-  bookingId,
 
   isOwner,
   isPlayer,
   isBookingAvailable,
+
+  booking,
+  isLoadingBooking,
 
   onLeaveButtonPress,
   isLeaveButtonLoading,
@@ -41,11 +45,6 @@ export const MatchActionButtons = ({
   const [currentBooking, setCurrentBooking] = useState<BookingResponse | null>(
     null
   )
-
-  const { data: booking, isLoading: isLoadingBooking } = useBooking({
-    params: { id: bookingId as number },
-    options: { enabled: !!bookingId },
-  })
 
   const { mutate: createBooking, isPending: isPendingCreateBooking } =
     useCreateBooking({
