@@ -323,6 +323,7 @@ class FourPadelAPIClient:
             match.save()
 
 
+        logger.info("participations", participations)
         return {
             "id": data.get('id'),
             "participations": participations,
