@@ -1,6 +1,6 @@
 import requests
 from django.conf import settings
-from main_app.models import CustomUser, Match
+from main_app.models import CustomUser, Match, Complex
 from rest_framework.exceptions import ValidationError
 from main_app.exceptions import ErrorCode
 from datetime import timedelta
@@ -11,11 +11,20 @@ from rest_framework.exceptions import AuthenticationFailed
 
 logger = logging.getLogger('django')
 
+BASE_URL = settings.FOUR_PADEL["BASE_URL"]
+BASE_URL_V1 = settings.FOUR_PADEL["BASE_URL_V1"]
+
 class FourPadelBooking(Enum):
     COMPLETE = "COMPLETE"
     CANCELLED = "CANCELLED"
     PAYABLE = "PAYABLE"
     PRE_BOOKED = "PRE_BOOKED"
+
+class FourPadelSex(Enum):
+    ALL = "ALL"
+    FEMALE = "FEMALE"
+    MALE = "MALE"
+    MIXED = "MIXED"
 
 def get_booking_status(status, participations):
     if status != 'Cancelled': 
@@ -27,20 +36,27 @@ def get_booking_status(status, participations):
         return FourPadelBooking.COMPLETE.value
     return FourPadelBooking.CANCELLED.value
 
+def get_sex(sex: str):
+    if sex == 'All': return FourPadelSex.ALL.value
+    if sex == 'Female': return FourPadelSex.FEMALE.value
+    if sex == 'Male': return FourPadelSex.MALE.value
+    if sex == 'Mixed': return FourPadelSex.MIXED.value
+
 
 class FourPadelAPIClient:
     def __init__(self, user: CustomUser = None):
         self.user = user
-        self.base_url = settings.FOUR_PADEL["BASE_URL"]
-        self.login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}"
-        self.google_login_url = f"{self.base_url}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}/google"
-        self.field_url = f"{self.base_url}{settings.FOUR_PADEL['FIELD_ENDPOINT']}"
-        self.booking_url = settings.FOUR_PADEL['BOOKING_URL']
+        self.login_url = f"{BASE_URL}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}"
+        self.google_login_url = f"{BASE_URL}{settings.FOUR_PADEL['LOGIN_ENDPOINT']}/google"
+        self.field_url = f"{BASE_URL}{settings.FOUR_PADEL['FIELD_ENDPOINT']}"
+        self.booking_url = f"{BASE_URL_V1}{settings.FOUR_PADEL['BOOKING_ENDPOINT']}"
+        self.tournament_url = f"{BASE_URL}{settings.FOUR_PADEL['TOURNAMENT_ENDPOINT']}"
+        self.tournament_url_v1 = f"{BASE_URL_V1}{settings.FOUR_PADEL['TOURNAMENT_ENDPOINT']}"
+
 
     SHARED_PARAMS = {
         "appId": 2
     }
-    
 
     def login(self, username, password):
         headers = {
@@ -84,6 +100,7 @@ class FourPadelAPIClient:
 
         raise ValidationError(detail=message)
 
+
     def google_login(self, google_token):
         headers = {
             "accept": "text/plain, */*",
@@ -122,6 +139,7 @@ class FourPadelAPIClient:
         # Lever une exception si la connexion échoue
         response.raise_for_status()
 
+
     def get_fields(self, complex_id, date):
         """
         Fetch booking rules with the token. Retry login if token is expired.
@@ -156,7 +174,6 @@ class FourPadelAPIClient:
         data = response.json()
 
         return self.clean_fields_data(data)
-        
 
     def clean_fields_data(self, data):
         """
@@ -207,6 +224,7 @@ class FourPadelAPIClient:
             })
 
         return cleaned_data
+
 
     def book_field(self, match: Match):
         """
@@ -330,3 +348,89 @@ class FourPadelAPIClient:
             "booking_status": booking_status,
             "payment_link": data.get('paymentLink')
         }
+    
+    def get_tournaments(self, complex: Complex, date):
+        headers = {
+            "accept": "text/plain, */*",
+            "content-type": "application/json"
+        }
+
+        params = {
+            **self.SHARED_PARAMS,
+            "isChannelWeb": True,
+            "active": True,
+            "startingDateFrom": f"{date}T00:00:00.000Z",
+            "type": "2,3",
+            "isLazy": False,
+            "sport": 3,
+            "userLatitude": complex.four_padel_latitude,
+            "userLongitude": complex.four_padel_longitude,
+            "distance": 50,
+            "sortField": "startingDate",
+            "sortOrder": "asc"
+        }
+
+        response = requests.get(self.tournament_url, headers=headers, params=params)
+        
+        response.raise_for_status()
+        data = response.json()
+
+        return self.clean_tournaments_data(data, complex)
+    
+
+    def clean_tournaments_data(self, data, complex: Complex):
+        cleaned_data = []
+
+        for tournament in data:
+            competition_level = tournament.get("competitionLevel")
+            tournament_data = {
+                "id": tournament.get("id"),
+                "name": tournament.get("name"),
+                "startingDate": tournament.get("startingDate"),
+                "endingDate": tournament.get("endingDate"),
+                "competitionLevel": competition_level,
+                "isCompetitive": competition_level.startswith("P"),
+                "sex": get_sex(tournament.get("sex")),
+                "complexName": complex.name
+            }
+            cleaned_data.append(tournament_data)
+
+        return cleaned_data
+    
+    def get_tournament(self, pk):
+        headers = {
+            "accept": "text/plain, */*",
+            "content-type": "application/json"
+        }
+
+        params = {
+            **self.SHARED_PARAMS,
+            "isChannelWeb": True,
+            "include": "all",
+            "isLazy": False,
+        }
+
+        response = requests.get(f"{self.tournament_url_v1}/{pk}", headers=headers, params=params)
+        
+        response.raise_for_status()
+        data = response.json()
+
+        return self.clean_tournament_data(data)
+    
+
+    def clean_tournament_data(self, data):
+        competition_level = data.get("competitionLevel")
+        four_padel_complex_id = data.get("center").get("id")
+        complex = Complex.objects.filter(four_padel_id=four_padel_complex_id).first()
+        
+        cleaned_data = {
+            "id": data.get("id"),
+            "name": data.get("name"),
+            "startingDate": data.get("startingDate"),
+            "endingDate": data.get("endingDate"),
+            "competitionLevel": competition_level,
+            "isCompetitive": competition_level.startswith("P"),
+            "sex": get_sex(data.get("sex")),
+            "complexName": complex.name
+        }
+        return cleaned_data

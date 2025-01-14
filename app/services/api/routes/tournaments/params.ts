@@ -1,11 +1,8 @@
-import { MatchType } from '../../types'
-
 export type GetTournamentParams = {
   id: number
 }
 
-export type GetInfiniteTournamentsParams = {
-  type?: MatchType
+export type GetTournamentsParams = {
   complex?: number
-  month?: string
+  date?: string
 }

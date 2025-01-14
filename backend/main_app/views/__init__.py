@@ -1,5 +1,4 @@
 from .complex import ComplexViewSet
-from .tournament import TournamentViewSet
 from .profile import ProfileViewSet
 from .me.me_profile import MeProfileView
 from .custom_user import CustomUserViewSet
@@ -14,3 +13,4 @@ from .match_invite import MatchInviteModelViewSet
 from .four_padel_booking import FourPadelBookingView
 from .four_padel_field import FourPadelFieldView
 from .four_padel_login import FourPadelLoginView, FourPadelGoogleLoginView
+from .four_padel_tournament import FourPadelTournamentView, FourPadelTournamentDetailView

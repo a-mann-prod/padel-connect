@@ -2,11 +2,12 @@ import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react'
 
 import { useMe } from '@/hooks/useMe'
 import {
-  GetInfiniteTournamentsParams,
+  GetTournamentsParams,
   UpdateMatchFiltersParams,
   useMatchFilters,
   useUpdateMatchFilters,
 } from '@/services/api'
+import { MatchType } from '@/services/api/types'
 import { buildContext } from '@/services/buildContext'
 
 export type MatchFilters = UpdateMatchFiltersParams
@@ -16,8 +17,10 @@ type FiltersContextProps = {
   saveFilters: (value: MatchFilters) => void
   isServerFiltersLoading: boolean
 
-  tournamentsFilters: GetInfiniteTournamentsParams
-  setTournamentsFilters: Dispatch<SetStateAction<GetInfiniteTournamentsParams>>
+  tournamentsFilters: GetTournamentsParams & { type?: MatchType }
+  setTournamentsFilters: Dispatch<
+    SetStateAction<GetTournamentsParams & { type?: MatchType }>
+  >
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

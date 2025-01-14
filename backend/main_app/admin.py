@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main_app.models import Complex, Match, MatchFilter, Profile, Tournament, CustomUser, Notification, Team, TeamInvite, MatchArchive
+from main_app.models import Complex, Match, MatchFilter, Profile, CustomUser, Notification, Team, TeamInvite, MatchArchive
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -47,13 +47,6 @@ class TeamInviteAdmin(admin.ModelAdmin):
     list_display = ('id', 'team', 'user', 'status')
 
 admin.site.register(TeamInvite, TeamInviteAdmin)
-
-
-class TournamentAdmin(admin.ModelAdmin):
-    model = Tournament
-    list_display = ('id', 'title', 'complex', 'datetime')
-
-admin.site.register(Tournament, TournamentAdmin)
 
 
 # Formulaire pour créer un utilisateur

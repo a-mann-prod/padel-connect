@@ -47,6 +47,13 @@
   "edit": "Edit",
   "email": "Email",
   "firstname": "Firstname",
+  "gender": {
+    "all": "All",
+    "female": "Female",
+    "male": "Male",
+    "mixed": "Mixed",
+    "title": "Gender"
+  },
   "lastname": "Lastname",
   "lastnameHelpMessage": "By default, only the first letter of your last name will be displayed",
   "letsGo": "Let's go! 🚀",

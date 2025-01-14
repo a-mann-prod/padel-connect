@@ -52,6 +52,13 @@ export enum BookingStatus {
   PRE_BOOKED = 'PRE_BOOKED',
 }
 
+export enum Sex {
+  ALL = 'ALL',
+  FEMALE = 'FEMALE',
+  MALE = 'MALE',
+  MIXED = 'MIXED',
+}
+
 export type Params<T> = T &
   Partial<{
     orderBy: Partial<Record<keyof T, 'ASC' | 'DESC'>>

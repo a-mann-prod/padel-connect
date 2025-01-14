@@ -7,6 +7,8 @@ class Complex(models.Model):
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     four_padel_id = models.IntegerField()
+    four_padel_latitude = models.FloatField()
+    four_padel_longitude = models.FloatField()
 
     def __str__(self):
         return self.name

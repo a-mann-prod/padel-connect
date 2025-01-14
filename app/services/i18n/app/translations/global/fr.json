@@ -47,6 +47,13 @@
   "edit": "Modifier",
   "email": "Email",
   "firstname": "Prénom",
+  "gender": {
+    "all": "Tous(tes)",
+    "female": "Femme",
+    "male": "Homme",
+    "mixed": "Mixte",
+    "title": "Genre"
+  },
   "lastname": "Nom",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée",
   "letsGo": "C'est parti ! 🚀",

@@ -1,5 +1,4 @@
 from .complex import ComplexSerializer
-from .tournament import TournamentSerializer
 from .custom_user import CustomUserCreateSerializer, CustomUserSerializer, CustomCurrentUserSerializer
 from .profile import ProfileSerializer, MinimalProfileSerializer
 from .match_filter import MatchFilterSerializer

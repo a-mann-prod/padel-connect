@@ -1,8 +1,8 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { UseInfiniteQueryProps, UseQueryProps } from '../../queryHooks/types'
+import { useQuery } from '@tanstack/react-query'
+import { UseQueryProps } from '../../queryHooks/types'
 import { TournamentResponse, TournamentsResponse } from './entities'
-import { getInfiniteTournamentsFn, getTournamentFn } from './functions'
-import { GetInfiniteTournamentsParams, GetTournamentParams } from './params'
+import { getTournamentFn, getTournamentsFn } from './functions'
+import { GetTournamentParams, GetTournamentsParams } from './params'
 
 export const useTournament = ({
   params,
@@ -14,19 +14,12 @@ export const useTournament = ({
     ...options,
   })
 
-export const useInfiniteTournaments = (
-  {
-    params,
-    options,
-  }: UseInfiniteQueryProps<
-    TournamentsResponse,
-    GetInfiniteTournamentsParams
-  > = { params: {}, options: {} }
-) =>
-  useInfiniteQuery({
+export const useTournaments = ({
+  params,
+  options,
+}: UseQueryProps<TournamentsResponse, GetTournamentsParams>) =>
+  useQuery<TournamentsResponse>({
+    queryKey: ['tournaments', params],
+    queryFn: () => getTournamentsFn(params),
     ...options,
-    queryKey: ['tournaments', 'infinite', params],
-    queryFn: ({ pageParam }) => getInfiniteTournamentsFn(params, pageParam),
-    getNextPageParam: (lastPage) => lastPage.next_page,
-    initialPageParam: 1,
   })

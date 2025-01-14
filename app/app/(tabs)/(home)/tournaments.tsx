@@ -5,27 +5,47 @@ import { ListRenderItemInfo } from 'react-native'
 import { TournamentListItem } from '@/components'
 import { useFiltersContext } from '@/contexts'
 import { VirtualizedList } from '@/designSystem'
-import { TournamentsResponse, useInfiniteTournaments } from '@/services/api'
+import {
+  TournamentsResponse,
+  useMatchFilters,
+  useTournaments,
+} from '@/services/api'
+import { MatchType } from '@/services/api/types'
+import { date } from '@/services/date'
 import { routing } from '@/services/routing'
+import { useEffect } from 'react'
 
 export default () => {
-  const { tournamentsFilters } = useFiltersContext()
+  const { tournamentsFilters, setTournamentsFilters } = useFiltersContext()
 
-  const {
-    data: tournamentsPages,
-    isLoading,
-    refetch,
-    isRefetching,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useInfiniteTournaments({
-    params: tournamentsFilters,
+  const { data: matchFilters } = useMatchFilters()
+
+  useEffect(() => {
+    if (matchFilters) {
+      setTournamentsFilters({ complex: matchFilters.complex })
+    }
+  }, [matchFilters, setTournamentsFilters])
+
+  const { data, isLoading, refetch, isRefetching } = useTournaments({
+    params: {
+      date: date.now().format('YYYY-MM-DD'),
+      complex: tournamentsFilters.complex,
+    },
   })
+
+  console.log(tournamentsFilters)
+
+  const filteredData = !tournamentsFilters.type
+    ? data
+    : data?.filter(({ isCompetitive }) =>
+        tournamentsFilters.type === MatchType.COMPETITION
+          ? isCompetitive
+          : !isCompetitive
+      )
 
   const renderItem = ({
     item,
-  }: ListRenderItemInfo<TournamentsResponse['results'][number]>) => (
+  }: ListRenderItemInfo<TournamentsResponse[number]>) => (
     <TournamentListItem
       {...item}
       onPress={() =>
@@ -34,15 +54,10 @@ export default () => {
     />
   )
 
-  const data = tournamentsPages?.pages.reduce<TournamentsResponse['results']>(
-    (prev, acc) => [...prev, ...acc.results],
-    []
-  )
-
   return (
     <VStack flex={1} gap="$3" m="$3">
-      <VirtualizedList<TournamentsResponse['results'][number]>
-        data={data}
+      <VirtualizedList<TournamentsResponse[number]>
+        data={filteredData}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}
@@ -50,8 +65,6 @@ export default () => {
         isLoading={isLoading}
         refreshing={isRefetching}
         onRefresh={refetch}
-        onEndReached={() => hasNextPage && fetchNextPage()}
-        isLoadingNext={isFetchingNextPage}
       />
     </VStack>
   )

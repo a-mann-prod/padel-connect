@@ -53,15 +53,15 @@ export const TournamentsFiltersForm = ({
     <>
       <FormProvider {...methods}>
         <VStack gap="$2">
-          <FormSelectControlled
+          {/* <FormSelectControlled
             formControlProps={{ title: tGlobal('date') }}
             name="month"
             items={[{ label: tGlobal('all'), value: '' }, ...monthItems]}
-          />
+          /> */}
           <FormSelectControlled
             formControlProps={{ title: tGlobal('complex') }}
             name="complex"
-            items={[{ label: tGlobal('all'), value: '' }, ...complexItems]}
+            items={complexItems}
           />
           <FormSelectControlled
             formControlProps={{ title: tGlobal('tournamentType') }}

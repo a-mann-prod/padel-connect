@@ -5,19 +5,23 @@ import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 import { Pressable, PressableProps } from '@/designSystem'
 import { TournamentsResponse } from '@/services/api'
 import { date } from '@/services/date'
+import { useTranslate } from '@/services/i18n'
 
-export type TournamentListItemProps = TournamentsResponse['results'][number] & {
+export type TournamentListItemProps = TournamentsResponse[number] & {
   onPress: PressableProps['onPress']
 }
 
 export const TournamentListItem = ({
   id,
-  complex,
-  datetime,
-  title,
-  is_competitive,
+  name,
+  isCompetitive,
+  competitionLevel,
   onPress,
+  startingDate,
+  sex,
+  complexName,
 }: TournamentListItemProps) => {
+  const t = useTranslate()
   return (
     <Pressable onPress={onPress}>
       <HStack
@@ -28,21 +32,17 @@ export const TournamentListItem = ({
         alignItems="center"
       >
         <MatchTypeIcon
-          isCompetitive={is_competitive}
+          isCompetitive={isCompetitive}
           size="xl"
           color="$primary500"
         />
 
-        <VStack flex={1} gap="$2">
-          <HStack alignItems="center">
-            <Text flex={1}>{title}</Text>
-            <HStack alignItems="center" gap="$2">
-              <Text variant="subtitle">
-                {date.dayjs(datetime).format('L HH:MM')}
-              </Text>
-            </HStack>
-          </HStack>
-          <Text variant="subtitle">{complex?.name}</Text>
+        <VStack flex={1} gap="$1">
+          <Text flex={1}>{name}</Text>
+          <Text flex={1}>{complexName}</Text>
+          <Text variant="subtitle">
+            {date.dayjs(startingDate).format('LLL')}
+          </Text>
         </VStack>
       </HStack>
     </Pressable>

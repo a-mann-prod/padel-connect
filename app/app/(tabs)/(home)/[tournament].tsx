@@ -41,21 +41,28 @@ export default () => {
   return (
     <ScrollView>
       <VStack p="$3" gap="$3">
-        <MatchTiles isCompetitive={tournament.is_competitive} />
-        <Section title={tournament.title}>
-          <Text>{tournament.description}</Text>
+        <MatchTiles isCompetitive={tournament.isCompetitive} />
+        <Section title={tournament.name}>
+          {/* <Text>{tournament.description}</Text> */}
         </Section>
         <Section>
-          <SectionRow
-            title={tGlobal('location')}
-            icon="FAS-location-dot"
-            rightComponent={() => <Text>{tournament.complex?.name}</Text>}
-          />
           <SectionRow
             title={tGlobal('date')}
             icon="FAR-calendar"
             rightComponent={() => (
-              <Text>{date.dayjs(tournament.datetime).format('LLL')}</Text>
+              <Text>{date.dayjs(tournament.startingDate).format('LLL')}</Text>
+            )}
+          />
+          <SectionRow
+            title={tGlobal('complex')}
+            icon="FAS-location-dot"
+            rightComponent={() => <Text>{tournament.complexName}</Text>}
+          />
+          <SectionRow
+            title={tGlobal('gender.title')}
+            icon="FAS-venus-mars"
+            rightComponent={() => (
+              <Text>{tGlobal(`gender.${tournament.sex.toLowerCase()}`)}</Text>
             )}
           />
         </Section>

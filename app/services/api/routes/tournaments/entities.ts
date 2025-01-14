@@ -1,12 +1,14 @@
-import { Entity, PaginatedResponse } from '../../types'
-import { ComplexResponse } from '../complexes'
+import { Sex } from '../../types'
 
-export type TournamentResponse = Entity<{
-  complex: ComplexResponse
-  datetime: string
-  title: string
-  description: string
-  is_competitive: boolean
-}>
+export type TournamentResponse = {
+  id: number
+  name: string
+  startingDate: string
+  endingDate: string
+  competitionLevel: string
+  isCompetitive: boolean
+  sex: Sex
+  complexName: string
+}
 
-export type TournamentsResponse = PaginatedResponse<TournamentResponse>
+export type TournamentsResponse = TournamentResponse[]

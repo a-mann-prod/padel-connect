@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from main_app.views import ComplexViewSet, TournamentViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, FourPadelBookingView, FourPadelLoginView, FourPadelGoogleLoginView, FourPadelFieldView
+from main_app.views import ComplexViewSet, ProfileViewSet, CustomUserViewSet, MeFavoriteUsersView, MatchViewSet, MeMatchFilterView, MeProfileView, MeNotificationViewSet, MatchTeamInviteModelViewSet, MatchTeamModelViewSet, MeMatchArchiveModelViewSet, MatchInviteModelViewSet, FourPadelBookingView, FourPadelLoginView, FourPadelGoogleLoginView, FourPadelFieldView, FourPadelTournamentView, FourPadelTournamentDetailView
 from chat.views import MatchMessagesView, MatchConversationView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,7 +25,6 @@ from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r'complexes', ComplexViewSet)
-router.register(r'tournaments', TournamentViewSet)
 router.register(r'profiles', ProfileViewSet)
 router.register(r'users', CustomUserViewSet, basename='customuser')
 router.register(r'matches', MatchViewSet)
@@ -60,6 +59,8 @@ urlpatterns = [
 
     # External services
     path('fields/', FourPadelFieldView.as_view(), name='fields'),
+    path('tournaments/', FourPadelTournamentView.as_view(), name='tournaments'),
+    path('tournaments/<int:pk>/', FourPadelTournamentDetailView.as_view(), name='tournaments-detail'),
 
     path('bookings/', FourPadelBookingView.as_view(), name='book'),
     path('bookings/<int:pk>/', FourPadelBookingView.as_view(), name='book-detail'),

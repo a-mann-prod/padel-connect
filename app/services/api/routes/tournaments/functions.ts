@@ -1,22 +1,17 @@
 import api from '../../axiosConfig'
-import { TournamentsResponse } from './entities'
-import { GetInfiniteTournamentsParams, GetTournamentParams } from './params'
+import { TournamentResponse, TournamentsResponse } from './entities'
+import { GetTournamentParams, GetTournamentsParams } from './params'
 
 export const getTournamentFn = async (params: GetTournamentParams) => {
-  const { data } = await api.get(`/tournaments/${params.id}/`)
+  const { data } = await api.get<TournamentResponse>(
+    `/tournaments/${params.id}/`
+  )
   return data
 }
 
-export const getInfiniteTournamentsFn = async (
-  params: GetInfiniteTournamentsParams,
-  pageParam: number
-) => {
-  const { data } = await api.get<TournamentsResponse>('/tournaments/', {
-    params: {
-      ...params,
-      page: pageParam,
-    },
+export const getTournamentsFn = async (params: GetTournamentsParams) => {
+  const { data } = await api.get<TournamentsResponse>(`/tournaments/`, {
+    params,
   })
-
   return data
 }
