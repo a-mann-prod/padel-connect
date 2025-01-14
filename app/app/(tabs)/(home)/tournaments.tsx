@@ -7,6 +7,7 @@ import { useFiltersContext } from '@/contexts'
 import { VirtualizedList } from '@/designSystem'
 import {
   TournamentsResponse,
+  useComplexes,
   useMatchFilters,
   useTournaments,
 } from '@/services/api'
@@ -19,12 +20,15 @@ export default () => {
   const { tournamentsFilters, setTournamentsFilters } = useFiltersContext()
 
   const { data: matchFilters } = useMatchFilters()
+  const { data: complexes } = useComplexes()
 
   useEffect(() => {
-    if (matchFilters) {
-      setTournamentsFilters({ complex: matchFilters.complex })
+    if (matchFilters && complexes) {
+      setTournamentsFilters({
+        complex: matchFilters.complex || complexes.results[0].id,
+      })
     }
-  }, [matchFilters, setTournamentsFilters])
+  }, [complexes, matchFilters, setTournamentsFilters])
 
   const { data, isLoading, refetch, isRefetching } = useTournaments({
     params: {
@@ -32,8 +36,6 @@ export default () => {
       complex: tournamentsFilters.complex,
     },
   })
-
-  console.log(tournamentsFilters)
 
   const filteredData = !tournamentsFilters.type
     ? data
