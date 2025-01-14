@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
-import { GetInfiniteTournamentsParams } from '@/services/api'
-import { MatchType } from '@/services/api/types'
+import { GetTournamentsParams } from '@/services/api'
 import { validators } from '@/services/formValidator'
 import { isNilOrEmpty } from '@/utils/global'
 
@@ -23,15 +22,15 @@ const schema = z.object({
 
 const formatToParams = (
   props: TournamentsFiltersFormValues
-): GetInfiniteTournamentsParams => ({
+): GetTournamentsParams => ({
   ...props,
-  month: props?.month || undefined,
-  type: props?.type as MatchType,
+  // month: props?.month || undefined,
+  // type: props?.type as MatchType,
   complex: !isNilOrEmpty(props.complex) ? Number(props.complex) : undefined,
 })
 
 const formatToFormValues = (
-  props: GetInfiniteTournamentsParams
+  props: GetTournamentsParams
 ): TournamentsFiltersFormValues => {
   if (!props) return {}
 

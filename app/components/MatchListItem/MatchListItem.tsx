@@ -26,7 +26,7 @@ export type MatchlistItemProps = {
   is_open_to_all_level: boolean
   four_padel_field_name: string
   is_request?: boolean
-  is_private: boolean
+  is_private?: boolean
   participants: DefaultMinimalProfileResponse[]
   type?: MatchListItemType
   id: number
