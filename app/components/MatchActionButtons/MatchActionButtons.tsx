@@ -20,7 +20,7 @@ type MatchActionButtonsProps = {
 
   isPlayer: boolean
   isOwner: boolean
-  isFieldAvailable: boolean
+  isFieldAvailable: boolean | undefined
 }
 
 export const MatchActionButtons = ({

@@ -9,12 +9,14 @@ enum BookingStatus {
   NOT_AVAILABLE = 'NOT_AVAILABLE',
   NOT_BOOKED = 'NOT_BOOKED',
   BOOKED = 'BOOKED',
+  NONE = 'NONE',
 }
 
 const mapBookingStatusToColor: Record<BookingStatus, string | undefined> = {
   NOT_AVAILABLE: '$red500',
   NOT_BOOKED: undefined,
   BOOKED: '$green500',
+  NONE: undefined,
 }
 
 export type MatchRecapProps = {
@@ -41,9 +43,11 @@ export const MatchRecap = ({
     NOT_AVAILABLE: ` ${t('notAvailable')}`,
     NOT_BOOKED: ` ${t('notBooked')}`,
     BOOKED: undefined,
+    NONE: undefined,
   }
 
   const getBookingStatus = () => {
+    if (isFieldAvailable === undefined) return BookingStatus.NONE
     if (isBooked) return BookingStatus.BOOKED
     if (!isFieldAvailable) return BookingStatus.NOT_AVAILABLE
     return BookingStatus.NOT_BOOKED

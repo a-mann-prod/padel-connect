@@ -67,20 +67,20 @@ export default WithMatch(() => {
         complex: match?.complex.id as number,
         date: match?.datetime.substring(0, 10) as string,
       },
-      options: { enabled: !!match },
+      options: { enabled: !!match && !!me },
     })
 
   const { data: booking, isLoading: isLoadingBooking } = useBooking({
     params: { id: match?.four_padel_booking_id as number },
-    options: { enabled: !!match?.four_padel_booking_id },
+    options: { enabled: !!match?.four_padel_booking_id && !!me },
   })
 
   const isFieldAvailable =
-    !isLoadingBookingFields &&
-    !!bookingFields &&
-    bookingFields.some(({ fields }) =>
-      fields.some(({ id }) => id === match?.four_padel_field_id)
-    )
+    !isLoadingBookingFields && bookingFields
+      ? bookingFields.some(({ fields }) =>
+          fields.some(({ id }) => id === match?.four_padel_field_id)
+        )
+      : undefined
 
   // disabled if match_request (cannot get a team and being invited)
   const {
@@ -120,9 +120,10 @@ export default WithMatch(() => {
 
   if (!match) return
 
-  const inadaptedLevel =
-    !match.is_open_to_all_level &&
-    !hasAdaptedLevel(me?.calculated_level, match.calculated_level_range)
+  const inadaptedLevel = me
+    ? !match.is_open_to_all_level &&
+      !hasAdaptedLevel(me.calculated_level, match.calculated_level_range)
+    : undefined
 
   return (
     <>

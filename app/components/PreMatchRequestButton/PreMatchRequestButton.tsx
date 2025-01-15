@@ -8,7 +8,7 @@ export type PreMatchRequestButtonProps = {
   isRequesting: boolean
   hasMatchInvitations: boolean
   matchId: number
-  inadaptedLevel: boolean
+  inadaptedLevel: boolean | undefined
 } & Pick<ButtonProps, 'isLoading' | 'isDisabled'>
 
 export const PreMatchRequestButton = ({
@@ -36,7 +36,7 @@ export const PreMatchRequestButton = ({
 
     if (isRequesting) title = t('seeRequest')
 
-    if (inadaptedLevel && !hasSomething)
+    if (inadaptedLevel !== undefined && !hasSomething)
       return `${title} ${t('inadaptedLevel')}`
 
     return title
@@ -55,7 +55,9 @@ export const PreMatchRequestButton = ({
       title={getTitle()}
       icon={getIcon()}
       iconRight={isRequesting}
-      isDisabled={inadaptedLevel && !hasSomething}
+      isDisabled={
+        inadaptedLevel !== undefined && inadaptedLevel && !hasSomething
+      }
       onPress={() => router.navigate(getPath())}
       action="primary"
       {...props}

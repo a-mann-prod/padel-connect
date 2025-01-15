@@ -25,6 +25,7 @@
   "matchFinished": "Match finished",
   "matchNotFound": "Match not found",
   "matchShared": "Match shared",
+  "notAvailable": "(not available)",
   "notBooked": "(not booked)",
   "openToAllLevel": "Open to all level",
   "openToAllLevelHelpMessage": "By default, your match will be open to level range: {{level_min}} - {{level_max}} (your level +1 / -1).",
