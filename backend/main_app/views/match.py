@@ -23,21 +23,25 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
 
     def get_queryset(self):
         current_user = self.request.user
+        queryset = Match.objects.all()
+
+        if self.action == 'retrieve':
+            return queryset
 
         if current_user == AnonymousUser():
-            return Match.objects.filter(is_private=False)
+            return queryset.filter(is_private=False)
         
         # Si l'utilisateur est authentifié
 
         # pour le listing
         if self.action == 'list':
-            return Match.objects.filter(
+            return queryset.filter(
             teams__invitations__user=current_user,  # The current user has a team invite
             teams__invitations__status=enums.RequestStatus.ACCEPTED,
             ).distinct()
         
         # pour les actions d'edit
-        return Match.objects.filter(user=current_user)
+        return queryset.filter(user=current_user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
