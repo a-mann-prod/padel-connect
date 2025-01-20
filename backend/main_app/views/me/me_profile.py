@@ -1,5 +1,5 @@
 from main_app.serializers import MeProfileSerializer
-from main_app.models import Profile
+from main_app.models.profile import Profile
 from main_app.views.generic_views import MeRelatedObjectView
 from rest_framework.response import Response
 from rest_framework import status

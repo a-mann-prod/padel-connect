@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from main_app.models import Team, TeamInvite
+from main_app.models.team import Team, TeamInvite
 from main_app.serializers import MatchTeamInviteSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins

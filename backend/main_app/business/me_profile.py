@@ -1,6 +1,4 @@
-from rest_framework.exceptions import PermissionDenied, ValidationError
-from main_app.models import Team, enums
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.exceptions import ValidationError
 
 
 def delete_avatar(profile):

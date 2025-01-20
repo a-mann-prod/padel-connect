@@ -6,7 +6,7 @@ from main_app.external_services.four_padel_client import FourPadelAPIClient
 from main_app.exceptions import handle_exception
 from django.shortcuts import get_object_or_404
 from datetime import datetime
-from main_app.models import Complex
+from main_app.models.complex import Complex
 
 
 class FourPadelTournamentView(APIView):

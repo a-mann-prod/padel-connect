@@ -1,5 +1,8 @@
 from rest_framework import viewsets, status
-from main_app.models import Match, TeamInvite, enums
+from main_app.models.team import TeamInvite
+from main_app.models.match import Match
+from main_app.models import  enums
+
 from main_app.serializers import MatchTeamInviteSerializer, MatchInviteSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins

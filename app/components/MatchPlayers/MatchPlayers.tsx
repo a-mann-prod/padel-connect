@@ -1,39 +1,51 @@
-import { HStack, Heading, VStack, useColorMode } from '@gluestack-ui/themed'
+import { HStack, VStack, useColorMode } from '@gluestack-ui/themed'
 import { Fragment } from 'react'
 import { chunk } from 'remeda'
 
-import { Avatar, AvatarProps, Section } from '@/designSystem'
+import { Avatar, AvatarProps, FormInput, Icon, Section } from '@/designSystem'
 import { ProfileResponse } from '@/services/api'
 import { DefaultProfileResponse } from '@/services/api/types'
-import { useTranslate } from '@/services/i18n'
 import { iterate } from '@/utils/array'
 
 const MAX_PLAYER_NB = 4
 
-const mapIndexToTeam: Record<number, string> = {
-  0: 'A',
-  1: 'B',
-}
-
 export type MatchPlayersProps = {
-  data?: Pick<DefaultProfileResponse, 'id' | 'avatar_url' | 'full_name'>[]
+  team_1_users?: Pick<
+    DefaultProfileResponse,
+    'id' | 'avatar_url' | 'full_name'
+  >[]
+  team_2_users?: Pick<
+    DefaultProfileResponse,
+    'id' | 'avatar_url' | 'full_name'
+  >[]
+  participants?: Pick<
+    DefaultProfileResponse,
+    'id' | 'avatar_url' | 'full_name'
+  >[]
   onPress?: (userId: number) => void
   onEmptyPress?: () => void
-  displayTeam?: boolean
   hasPayedUserIds?: number[]
   isMatchPast: boolean
+  score?: any
+  isCompetitive?: boolean
 } & Pick<AvatarProps, 'size'>
 
 export const MatchPlayers = ({
-  data,
-  displayTeam = false,
+  team_1_users,
+  team_2_users,
+  participants,
+  score,
+  isCompetitive = false,
   ...props
 }: MatchPlayersProps) => {
-  const t = useTranslate('match')
-  const emptySlots = MAX_PLAYER_NB - (data?.length || 0)
+  const players = participants || [
+    ...(team_1_users || []),
+    ...(team_2_users || []),
+  ]
+  const emptySlots = MAX_PLAYER_NB - (players.length || 0)
 
   const avatarItems = [
-    ...(data || []),
+    ...players,
     ...iterate(emptySlots).map<Partial<ProfileResponse>>((i) => ({
       id: -1 + -i,
     })),
@@ -41,17 +53,21 @@ export const MatchPlayers = ({
 
   const avatarColumns = chunk(avatarItems, 2)
 
+  // return (
+  //   <Section>
+  //     <VStack gap="$5">
+  //       {<CompetitiveRow isWinner />}
+  //       {<CompetitiveRow />}
+  //     </VStack>
+  //   </Section>
+  // )
+
   return (
     <Section>
       <HStack>
         {avatarColumns.map((col, index) => (
           <Fragment key={index}>
             <VStack flex={1} gap="$3" alignItems="center">
-              {displayTeam && (
-                <Heading size="sm">
-                  {t('team')} {mapIndexToTeam[index]}
-                </Heading>
-              )}
               <VStack flex={1} gap="$3">
                 {col.map((avatar) => (
                   <AvatarItem
@@ -63,13 +79,37 @@ export const MatchPlayers = ({
                 ))}
               </VStack>
             </VStack>
-            {/* {index % 2 === 0 && index !== avatarColumns.length && (
-             <Divider orientation="vertical" />
-          )} */}
           </Fragment>
         ))}
       </HStack>
     </Section>
+  )
+}
+
+type CompetitiveRowProps = {
+  isWinner?: boolean
+}
+
+const CompetitiveRow = ({ isWinner }: CompetitiveRowProps) => {
+  const avatarProps = {
+    isMatchPast: false,
+    full_name: 'Jean M.',
+    id: 1,
+  }
+
+  return (
+    <HStack gap="$2" alignItems="center">
+      <Icon name="FAS-trophy" opacity={isWinner ? 1 : 0} />
+      <HStack gap="$6">
+        <AvatarItem {...avatarProps} />
+        <AvatarItem {...avatarProps} />
+      </HStack>
+      <HStack gap="$2">
+        <FormInput formControlProps={{ w: '$8' }} />
+        <FormInput formControlProps={{ w: '$8' }} />
+        <FormInput formControlProps={{ w: '$8' }} />
+      </HStack>
+    </HStack>
   )
 }
 

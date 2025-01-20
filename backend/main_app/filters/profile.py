@@ -1,5 +1,5 @@
 import django_filters
-from main_app.models import Profile
+from main_app.models.profile import Profile
 from django_filters import rest_framework as filters
 from django.db.models import Q, Func, Value
 

@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from main_app.serializers import ProfileSerializer
-from main_app.models import Profile
+from main_app.models.profile import Profile
 
 from main_app.filters import ProfileFilter
 

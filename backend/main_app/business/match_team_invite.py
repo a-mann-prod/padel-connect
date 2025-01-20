@@ -1,5 +1,7 @@
 from rest_framework.exceptions import PermissionDenied, ValidationError
-from main_app.models import TeamInvite, enums
+from main_app.models.team import TeamInvite, enums
+from main_app.models import enums
+
 from django.db.models import Q
 
 

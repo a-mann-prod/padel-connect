@@ -158,12 +158,12 @@ export default WithMatch(() => {
               isFieldAvailable={isFieldAvailable}
             />
             <MatchPlayers
-              data={participants}
+              participants={participants}
               hasPayedUserIds={booking?.participations.map(({ user }) => user)}
               onPress={(id) =>
                 router.navigate(routing.matchUser.path(match.id, id))
               }
-              displayTeam={match.is_competitive}
+              isCompetitive={match.is_competitive}
               isMatchPast={isMatchPassed}
             />
             {!isMatchPassed && (

@@ -1,6 +1,9 @@
 import requests
 from django.conf import settings
-from main_app.models import CustomUser, Match, Complex
+from main_app.models.custom_user import CustomUser
+from main_app.models.match import Match
+from main_app.models.complex import Complex
+
 from rest_framework.exceptions import ValidationError
 from main_app.exceptions import ErrorCode
 from datetime import timedelta

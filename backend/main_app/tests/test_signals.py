@@ -1,5 +1,9 @@
 from unittest.mock import patch
-from main_app.models import Match, Complex, CustomUser, enums
+from main_app.models.match import Match
+from main_app.models.complex import Complex
+from main_app.models.custom_user import CustomUser
+from main_app.models import enums
+
 from main_app.signals import handle_match_creation
 from django.db.models.signals import post_save
 
@@ -39,7 +43,7 @@ def test_handle_match_creation(mock_conversation_create, mock_match_request_crea
     profile_owner.save()
 
     # Act
-    match = Match.objects.create(complex_id=1, datetime="2024-10-25T10:00:00Z", duration=60, level=5, is_private=False, type="competitive", user=match_owner)    
+    match = Match.objects.create(complex_id=1, datetime="2024-10-25T10:00:00Z", duration=60, elo=5, is_private=False, type="competitive", user=match_owner)    
     handle_match_creation(Match, match, created=True)
 
     # Check

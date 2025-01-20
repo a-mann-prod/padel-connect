@@ -1,6 +1,7 @@
 from django.db import models
 from . import enums
 from django.conf import settings
+from main_app.services.elo import get_level_from_elo
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
@@ -12,20 +13,12 @@ class Profile(models.Model):
     defense_level = models.FloatField(null=True, blank=True)
     offense_level = models.FloatField(null=True, blank=True)
     service_level = models.FloatField(null=True, blank=True)
+    elo = models.FloatField(default=1)
     side_preference = models.CharField(max_length=10, choices=enums.SidePreference.choices, null=True, blank=True)
     manual_preference = models.CharField(max_length=20, choices=enums.ManualPreference.choices, null=True, blank=True)
 
     def calculate_level(self):
-        levels = [self.defense_level, self.offense_level, self.service_level]
-        valid_levels = [level for level in levels if level is not None]
-        
-        if not valid_levels:
-            return None
-
-        level_sum = sum(valid_levels)
-        level_average = level_sum / len(valid_levels)
-        
-        return round(level_average, 1)
+        return get_level_from_elo(self.elo)
     
     def get_last_name(self, x=1):
         last_name = self.last_name

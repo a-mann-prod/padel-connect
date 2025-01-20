@@ -1,16 +1,16 @@
 from django.db import models
 from django.conf import settings
-from . import Complex
+from main_app.services.elo import get_level_from_elo
 
 class Match(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    complex = models.ForeignKey(Complex, on_delete=models.CASCADE)
+    complex = models.ForeignKey("main_app.complex", on_delete=models.CASCADE)
     datetime = models.DateTimeField()
     duration = models.IntegerField()
     is_private = models.BooleanField(default=False)
     is_competitive = models.BooleanField(default=False)
     is_open_to_all_level = models.BooleanField(default=False)
-    level = models.FloatField()
+    elo = models.FloatField()
 
     is_booked = models.BooleanField(default=False)
 
@@ -24,9 +24,12 @@ class Match(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_level(self):
+        return get_level_from_elo(self.elo)
 
     def calculate_level_range(self):
-        level = self.level
+        level = self.get_level()
+        
         if level < 1:
             # Cas pour les niveaux entre 0 et 1 (1 non inclus)
             min_level = 0

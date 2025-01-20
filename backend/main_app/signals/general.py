@@ -1,6 +1,13 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from main_app.models import Profile, MatchFilter, CustomUser, Match, Notification, enums, Team, TeamInvite, Score
+from main_app.models.profile import Profile
+from main_app.models.match_filter import MatchFilter
+from main_app.models.custom_user import CustomUser
+from main_app.models.match import Match
+from main_app.models.notification import Notification
+from main_app.models.team import Team, TeamInvite
+from main_app.models import enums
+
 from chat.models import Conversation
 from main_app.tasks import async_send_notification
 

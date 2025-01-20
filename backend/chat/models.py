@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from main_app.models import Match
+from main_app.models.match import Match
 
 
 class Conversation(models.Model):

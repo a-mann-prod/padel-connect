@@ -1,7 +1,10 @@
 # main_app/utils.py
 
 from django.conf import settings
-from main_app.models import Match, MatchArchive, TeamInvite, enums
+from main_app.models.match import Match 
+from main_app.models.match_archive import MatchArchive, MatchArchiveTeam
+from django.db import transaction
+
 import requests
 
 
@@ -24,34 +27,99 @@ def send_push_notification(push_token, notification):
     response = requests.post(settings.PUSH_NOTIF_URL, json=payload, headers=headers)
     return response.json()
 
+
+def get_teams(match: Match):
+    team_1_archive = None
+    team_2_archive = None
+
+    team_1_user_1 = None
+    team_1_user_2 = None
+    
+    team_2_user_1 = None
+    team_2_user_2 = None
+    
+    teams = match.teams.all()
+
+    if (match.is_competitive):
+        team_1_users = teams[0].get_users() if len(teams) > 0 else []
+        team_2_users = teams[1].get_users() if len(teams) > 1 else []
+
+        team_1_user_1 = team_1_users[0] if len(team_1_users) > 0 else None
+        team_1_user_2 = team_1_users[1] if len(team_1_users) > 1 else None
+
+        team_2_user_1 = team_2_users[0] if len(team_2_users) > 0 else None
+        team_2_user_2 = team_2_users[1] if len(team_2_users) > 1 else None
+    else:
+        all_users = [user for team in teams for user in team.get_users()]
+        middle_index = len(all_users) // 2
+
+        team_1_user_1 = all_users[0] if len(all_users) > 0 else None
+        team_1_user_2 = all_users[1] if len(all_users) > 1 else None
+        team_2_user_1 = all_users[middle_index] if len(all_users) > middle_index else None
+        team_2_user_2 = all_users[middle_index + 1] if len(all_users) > middle_index + 1 else None
+        
+    if team_1_user_1 or team_1_user_2: 
+        team_1_archive = MatchArchiveTeam(
+            user_1=team_1_user_1,
+            user_2=team_1_user_2    
+        )
+
+    if team_2_user_1 or team_2_user_2: 
+        team_2_archive = MatchArchiveTeam(
+            user_1=team_2_user_1,
+            user_2=team_2_user_2
+        )
+
+    return team_1_archive, team_2_archive
+
+def get_score(match: Match):
+    if not match.is_competitive: 
+        return None
+    
+    team = match.teams.first()
+
+    if not team:
+        return None
+    
+    score = getattr(team, 'score_team_1', None) or getattr(team, 'score_team_2', None)
+
+    if not score: return None
+
+    return score.sets
+    
+
+@transaction.atomic
 def archive_match(match: Match):
     """
     Archive a single match by transferring its data to the MatchArchive model.
     """
 
+    team_1, team_2 = get_teams(match)
+    score = get_score(match)
+
     # Create a MatchArchive instance
-    archived_match = MatchArchive.objects.create(
+    archived_match = MatchArchive(
+        user=match.user,
         duration=match.duration,
         datetime=match.datetime,
         complex=match.complex,
-        level=match.level,
+        elo=match.elo,
         is_competitive=match.is_competitive,
         is_open_to_all_level=match.is_open_to_all_level,
         four_padel_field_id = match.four_padel_field_id,
-        four_padel_field_name = match.four_padel_field_name
+        four_padel_field_name = match.four_padel_field_name,
+        team_1=team_1,
+        team_2=team_2,
+        score=score
     )
 
-    # Add users to the archived match
-    team_invites = TeamInvite.objects.filter(
-        team__match=match, 
-        status=enums.RequestStatus.ACCEPTED
-    )
-    users = [invite.user for invite in team_invites]
-    archived_match.user.set(users)
+    # Save teams
+    team_1.save()
+    team_2.save()
 
     # Save the archived match
     archived_match.save()
 
     # Delete the original match
-    match.delete()
+    # match.delete()
     print(f"Match {match.id} has been archived successfully.")

@@ -5,7 +5,7 @@ from main_app.external_services.four_padel_client import FourPadelAPIClient
 from rest_framework.exceptions import ValidationError
 from main_app.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from main_app.models import Match
+from main_app.models.match import Match
 from main_app.exceptions import handle_exception
 from rest_framework.exceptions import AuthenticationFailed
 

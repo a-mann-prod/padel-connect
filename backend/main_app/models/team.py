@@ -1,10 +1,11 @@
 from django.db import models
-from . import enums, Match
+from main_app.models import enums 
 from django.conf import settings
+from main_app.services.elo import get_level_from_elo
 
 
 class Team(models.Model):    
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='teams')
+    match = models.ForeignKey("main_app.match", on_delete=models.CASCADE, related_name='teams')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     is_ready = models.BooleanField(default=False)
 
@@ -12,21 +13,31 @@ class Team(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    def calculate_level(self):
+    def get_users(self):
+        return [
+            invite.user
+            for invite in self.invitations.filter(status=enums.RequestStatus.ACCEPTED)
+        ]
+
+    def calculate_elo_average(self):
         accepted_invitations = self.invitations.filter(status=enums.RequestStatus.ACCEPTED)
 
-        player_levels = [
-            invite.user.profile.calculate_level()
+        player_elos = [
+            invite.user.profile.elo
             for invite in accepted_invitations
-            if invite.user.profile.calculate_level() is not None
+            if invite.user.profile.elo is not None
         ]
-        
-        if not player_levels:
+
+        if not player_elos:
             return None
 
-        level_average = sum(player_levels) / len(player_levels)
+        elo_average = sum(player_elos) / len(player_elos)
 
-        return round(level_average, 1)
+        return elo_average
+
+
+    def calculate_level(self):
+        return round(get_level_from_elo(self.calculate_elo_average()), 1)
     
 
     def __str__(self):

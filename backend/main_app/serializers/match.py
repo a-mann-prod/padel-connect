@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from main_app.models import Match, Complex, Team, TeamInvite
+from main_app.models.match import Match
+from main_app.models.complex import Complex
+from main_app.models.team import Team, TeamInvite
 from main_app import mixins
 from main_app.serializers import ComplexSerializer
 from main_app.serializers.match_team import MatchTeamSerializer
@@ -24,7 +26,7 @@ class MatchSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerialize
 
     class Meta:
         model = Match
-        fields = '__all__'
+        exclude = ['elo']
 
     def get_teams(self, obj):
         return get_teams(self, obj)
@@ -58,7 +60,8 @@ class MatchDetailSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSer
 
     class Meta:
         model = Match
-        fields = '__all__'
+        exclude = ['elo']
+
 
     def get_teams(self, obj):
         return get_teams(self, obj)

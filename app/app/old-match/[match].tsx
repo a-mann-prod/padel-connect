@@ -37,9 +37,13 @@ export default () => {
               fieldName={match.four_padel_field_name}
               isOpenToAll={match.is_open_to_all_level}
               levelRange={match.calculated_level_range}
-              owner={match.participants[0]}
+              owner={match.user}
             />
-            <MatchPlayers isMatchPast data={match.participants} />
+            <MatchPlayers
+              isMatchPast
+              team_1_users={match.team_1_users}
+              team_2_users={match.team_2_users}
+            />
           </VStack>
         </ScrollView>
       </SafeAreaView>

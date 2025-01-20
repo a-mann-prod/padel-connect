@@ -1,5 +1,14 @@
 from django.contrib import admin
-from main_app.models import Complex, Match, MatchFilter, Profile, CustomUser, Notification, Team, TeamInvite, MatchArchive
+from main_app.models.complex import Complex
+from main_app.models.match import Match
+from main_app.models.match_filter import MatchFilter
+from main_app.models.profile import Profile
+from main_app.models.custom_user import CustomUser
+from main_app.models.notification import Notification
+from main_app.models.team import Team, TeamInvite
+from main_app.models.match_archive import MatchArchive, MatchArchiveTeam
+from main_app.models.score import  Score
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -27,6 +36,18 @@ class MatchAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'complex', 'is_private', 'is_competitive', 'datetime')
 
 admin.site.register(Match, MatchAdmin)
+
+class ScoreAdmin(admin.ModelAdmin):
+    model = Match
+    list_display = ('id', 'team_1', 'team_2')
+
+admin.site.register(Score, ScoreAdmin)
+
+class MatchArchiveTeamAdmin(admin.ModelAdmin):
+    model = MatchArchiveTeam
+    list_display = ('id', 'user_1', 'user_2')
+
+admin.site.register(MatchArchiveTeam, MatchArchiveTeamAdmin)
 
 class MatchArchiveAdmin(admin.ModelAdmin):
     model = MatchArchive
