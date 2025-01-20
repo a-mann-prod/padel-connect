@@ -1,6 +1,10 @@
 from rest_framework import viewsets, status
 from main_app.serializers import MatchSerializer, MatchDetailSerializer
-from main_app.models import Match, enums, Notification, CustomUser
+from main_app.models.match import Match
+from main_app.models.notification import Notification
+from main_app.models.custom_user import CustomUser
+from main_app.models import enums
+
 from main_app import permissions, mixins
 from main_app.filters import MatchFilter
 from rest_framework.decorators import action
@@ -11,6 +15,7 @@ from django.utils.translation import gettext as _
 from main_app.exceptions import handle_exception
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth.models import AnonymousUser
+from django.db.models import Q
 
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -36,8 +41,11 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
         # pour le listing
         if self.action == 'list':
             return queryset.filter(
-            teams__invitations__user=current_user,  # The current user has a team invite
-            teams__invitations__status=enums.RequestStatus.ACCEPTED,
+                Q(is_private=False) | 
+                Q(
+                    teams__invitations__user=current_user,
+                    teams__invitations__status=enums.RequestStatus.ACCEPTED
+                )
             ).distinct()
         
         # pour les actions d'edit
