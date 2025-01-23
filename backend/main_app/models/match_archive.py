@@ -5,12 +5,12 @@ from main_app.services.elo import get_level_from_elo
 def default_score_data():
     return {
         "sets": {
-            "team_1": [], 
-            "team_2": []
+            "team_1": [None, None, None], 
+            "team_2": [None, None, None]
         },
         "tie_breaks": {
-            "team_1": [], 
-            "team_2": []
+            "team_1": [None, None, None], 
+            "team_2": [None, None, None]
         }
     }
 

@@ -5,7 +5,7 @@ import { validators } from '@/services/formValidator'
 import { Nillable } from '@/types'
 
 export type MatchFormValues = z.infer<typeof schema> &
-  Pick<CreateMatchParams, 'players'>
+  Pick<CreateMatchParams, 'players' | 'send_invitations'>
 
 const getDefaultValues = (
   props?: Nillable<MatchFormValues>
@@ -16,7 +16,6 @@ const getDefaultValues = (
   four_padel_field_price: props?.four_padel_field_price || '',
   datetime: props?.datetime || '',
   duration: props?.duration || '',
-  level: props?.level || '',
   is_private: props?.is_private || false,
   is_competitive: props?.is_competitive || false,
   is_open_to_all_level: props?.is_open_to_all_level || false,
@@ -31,7 +30,6 @@ const schema = z.object({
   four_padel_field_price: validators.string.required(),
   datetime: validators.string.required(),
   duration: validators.string.required(),
-  level: validators.string.required(),
   is_private: validators.boolean.required(),
   is_competitive: validators.boolean.required(),
   is_open_to_all_level: validators.boolean.required(),
@@ -45,7 +43,6 @@ const formatToParams = (props: MatchFormValues): CreateMatchParams => ({
   four_padel_field_price: Number(props.four_padel_field_price),
   complex_id: Number(props.complex_id),
   duration: Number(props.duration),
-  level: Number(props.level),
 })
 
 const formatToFormValues = (props: MatchResponse): MatchFormValues => {
@@ -55,7 +52,6 @@ const formatToFormValues = (props: MatchResponse): MatchFormValues => {
     four_padel_field_price: props.four_padel_field_price.toString(),
     complex_id: props.complex.id.toString(),
     duration: props.duration.toString(),
-    level: props.level.toString(),
   }
 }
 

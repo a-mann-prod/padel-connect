@@ -1,7 +1,7 @@
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from main_app.models.team import TeamInvite, enums
 from main_app.models import enums
-
+from main_app.exceptions import ErrorCode
 from django.db.models import Q
 
 
@@ -34,6 +34,9 @@ def team_invite_request_answer(request, match, team_invite, next_status):
     
     if (team_invite.status != enums.RequestStatus.PENDING):
         raise ValidationError(detail="Team invitation has already been accepted/refused")
+    
+    if match.is_competitive and team_invite.team.get_users() > 1:
+        raise ValidationError(detail="There are not enough places left in this match.", code=ErrorCode.MATCH_FULL.value)
 
     team_invite.status = next_status
     team_invite.save()
@@ -51,3 +54,7 @@ def validate_team_invite_destruction(request, team_invite):
 
     if team_invite.user != current_user and team_invite.team.user != current_user:
         raise PermissionDenied()
+    
+
+def validate_team_invite_match_creation():
+    return True

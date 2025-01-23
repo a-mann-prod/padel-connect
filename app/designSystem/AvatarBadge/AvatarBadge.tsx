@@ -64,7 +64,7 @@ const badgeTypeToIconName: Record<BadgeType, IconNameProp> = {
 
 export const AvatarBadge = ({ type, ...props }: AvatarBadgeProps) => {
   return (
-    <GAvatarBadge {...props} {...badgeTypeToProps[type]}>
+    <GAvatarBadge {...props} {...badgeTypeToProps[type]} borderWidth={0}>
       <Center flex={1}>
         <Icon
           {...badgeTypeToIconProps[type]}

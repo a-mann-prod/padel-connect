@@ -9,4 +9,3 @@ from .match_team_invite import MatchTeamInviteSerializer
 from .me.me_match_archive import MeMatchArchiveSerializer, MeMatchArchiveDetailSerializer
 from .match_invite import MatchInviteSerializer
 from .me.me_profile import MeProfileSerializer
-from .match_score import MatchScoreSerializer

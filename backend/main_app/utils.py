@@ -38,7 +38,7 @@ def get_teams(match: Match):
     team_2_user_1 = None
     team_2_user_2 = None
     
-    teams = match.teams.all()
+    teams = match.get_teams()
 
     if (match.is_competitive):
         team_1_users = teams[0].get_users() if len(teams) > 0 else []
@@ -71,23 +71,7 @@ def get_teams(match: Match):
         )
 
     return team_1_archive, team_2_archive
-
-def get_score(match: Match):
-    if not match.is_competitive: 
-        return None
     
-    team = match.teams.first()
-
-    if not team:
-        return None
-    
-    score = getattr(team, 'score_team_1', None) or getattr(team, 'score_team_2', None)
-
-    if not score: return None
-
-    return score.sets
-    
-
 @transaction.atomic
 def archive_match(match: Match):
     """
@@ -95,7 +79,7 @@ def archive_match(match: Match):
     """
 
     team_1, team_2 = get_teams(match)
-    score = get_score(match)
+    score = match.score_data if match.is_competitive else None
 
     # Create a MatchArchive instance
     archived_match = MatchArchive(

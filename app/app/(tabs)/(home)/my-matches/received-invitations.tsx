@@ -9,7 +9,6 @@ import {
   useComplexes,
   useInfiniteMatchesInvitations,
 } from '@/services/api'
-import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { routing } from '@/services/routing'
 
 export default () => {
@@ -38,10 +37,7 @@ export default () => {
       type="invitation"
       complexes={complexes}
       onPress={() => router.push(routing.match.path(item.id))}
-      participants={item.teams.reduce<DefaultMinimalProfileResponse[]>(
-        (acc, curr) => [...acc, ...curr.participants],
-        []
-      )}
+      participants={[...item.team_1_users, ...item.team_2_users]}
     />
   )
 

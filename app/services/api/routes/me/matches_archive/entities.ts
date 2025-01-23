@@ -2,6 +2,7 @@ import {
   DefaultMinimalProfileResponse,
   Entity,
   PaginatedResponse,
+  ScoreData,
 } from '@/services/api/types'
 import { ComplexResponse } from '../../complexes'
 
@@ -17,6 +18,7 @@ export type MatchArchiveResponse = Entity<{
   team_1_users: DefaultMinimalProfileResponse[]
   team_2_users: DefaultMinimalProfileResponse[]
   four_padel_field_name: string
+  score_data: ScoreData
 }>
 
 export type MatchesArchiveResponse = PaginatedResponse<

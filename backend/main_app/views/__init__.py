@@ -14,4 +14,3 @@ from .four_padel_booking import FourPadelBookingView
 from .four_padel_field import FourPadelFieldView
 from .four_padel_login import FourPadelLoginView, FourPadelGoogleLoginView
 from .four_padel_tournament import FourPadelTournamentView, FourPadelTournamentDetailView
-from .match_score import MatchScoreView

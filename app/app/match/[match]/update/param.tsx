@@ -3,6 +3,7 @@ import { Linking } from 'react-native'
 
 import { MatchForm, matchFormServices } from '@/components'
 import { Button, Container } from '@/designSystem'
+import { useMe } from '@/hooks/useMe'
 import {
   MatchResponse,
   useDeleteMatch,
@@ -19,6 +20,7 @@ export default () => {
   const t = useTranslate('match')
   const local = useLocalSearchParams()
   const matchId = Number(local?.match)
+  const { data: me } = useMe()
 
   const { show } = useOverlayStore()
 
@@ -49,6 +51,10 @@ export default () => {
         onSubmit={(data) => mutate({ id: matchId, ...formatToParams(data) })}
         defaultValues={defaultValues}
         isLoading={isPending}
+        ownerLevel={me?.calculated_level}
+        hasPlayers={
+          match && [...match.team_1_users, ...match.team_2_users].length > 1
+        }
       />
 
       {match?.is_booked ? (

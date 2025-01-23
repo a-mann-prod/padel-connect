@@ -13,15 +13,13 @@ from main_app.pagination import CustomPageNumberPagination
 from django.conf import settings
 from main_app.exceptions import handle_exception
 
+
 class MatchInviteModelViewSet(mixins.CustomModelViewSet, mixins.ExcludeDatesFieldsMixin, mixins.BlockCRUDMixin, viewsets.ModelViewSet):
     queryset = TeamInvite.objects.all()
     serializer_class = MatchTeamInviteSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsOwner]
 
     block_destroy = False
-
-    # /matches/1/invitations pour toutes les invitations d'un match
-    # /matches/1/invitations/1/accept|refuse pour répondre
 
     # def get_queryset(self):
     #     queryset = TeamInvite.objects.all()
@@ -33,6 +31,7 @@ class MatchInviteModelViewSet(mixins.CustomModelViewSet, mixins.ExcludeDatesFiel
     #     return queryset
 
 
+    # Utilisé lorsque le user clique sur "voir mes invitations recues" depuis un match
     @action(detail=False, methods=['get'], url_path='received', permission_classes=[permissions.IsAuthenticated])
     def received(self, request, match_pk=None):
         """Récupere les invitations pour un match."""

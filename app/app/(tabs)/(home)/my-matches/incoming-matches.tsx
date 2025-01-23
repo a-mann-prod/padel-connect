@@ -9,7 +9,6 @@ import {
   useComplexes,
   useInfiniteIncomingMatches,
 } from '@/services/api'
-import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { routing } from '@/services/routing'
 
 export default WithAuth(() => {
@@ -37,10 +36,7 @@ export default WithAuth(() => {
       {...item}
       type="request"
       complexes={complexes}
-      participants={item.teams.reduce<DefaultMinimalProfileResponse[]>(
-        (acc, curr) => [...acc, ...curr.participants],
-        []
-      )}
+      participants={[...item.team_1_users, ...item.team_2_users]}
       onPress={() => router.push(routing.match.path(item.id))}
     />
   )

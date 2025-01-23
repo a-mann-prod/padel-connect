@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { SearchUser, WithAuth, WithMatch } from '@/components'
 import { Button, Container } from '@/designSystem'
 import { useCreateMatchTeam, useMatch } from '@/services/api'
-import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { hasAdaptedLevel } from '@/utils/user'
@@ -31,10 +30,7 @@ export default WithAuth(
 
     if (!match) return
 
-    const players = match.teams.reduce<DefaultMinimalProfileResponse[]>(
-      (acc, curr) => [...acc, ...curr.participants],
-      []
-    )
+    const players = [...match.team_1_users, ...match.team_2_users]
 
     const maxSelectedUserIds = match.is_competitive
       ? 1

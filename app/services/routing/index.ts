@@ -303,6 +303,11 @@ export const routing = {
     path: (matchId: string | number) =>
       `${root.match.path(matchId)}/manage-invitations` as Href,
   },
+  matchManageTeamMate: {
+    name: 'manage-team-mate',
+    path: (matchId: string | number) =>
+      `${root.match.path(matchId)}/manage-team-mate` as Href,
+  },
   matchShareMatch: {
     name: 'share-match',
     path: (matchId: string | number) =>

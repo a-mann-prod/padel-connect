@@ -1,5 +1,3 @@
-from main_app.models.score import Score
-
 EXPECTATION_SENSITIVITY_COEFF = 400
 
 MAX_K = 32
@@ -50,12 +48,11 @@ class Team:
             calculate_next_elo(user.profile, 0, user_expectation, self.is_winner)
 
 
-def main(score: Score):
-    team_1 = score.team_1
-    team_2 = score.team_2
+def main(match):
+    team_1, team_2 = match.get_teams()
 
     # Déterminer le gagnant
-    winner = score.calculate_winner()
+    winner = match.calculate_winner()
 
     # Initialiser les équipes avec leurs ELO et attentes
     team_1_obj = Team(team_1, winner == team_1, team_2.calculate_elo_average())

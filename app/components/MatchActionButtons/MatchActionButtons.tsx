@@ -115,20 +115,13 @@ export const MatchActionButtons = ({
         )}
 
       {isParticipant && (
-        <>
-          <Button
-            title={t('chat')}
-            icon="FAS-message"
-            iconRight
-            action="warning"
-            onPress={() => router.navigate(routing.matchChat.path(matchId))}
-          />
-          {/* <Button
-                title={t('enterScore')}
-                icon="FAS-award"
-                iconRight
-              /> */}
-        </>
+        <Button
+          title={t('chat')}
+          icon="FAS-message"
+          iconRight
+          action="warning"
+          onPress={() => router.navigate(routing.matchChat.path(matchId))}
+        />
       )}
       {isPlayer && (
         <Button

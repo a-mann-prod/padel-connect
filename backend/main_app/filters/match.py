@@ -13,7 +13,7 @@ class MatchFilter(django_filters.FilterSet):
 
     class Meta:
         model = Match
-        fields = '__all__'
+        exclude = ['score_data']
 
     def filter_level_min(self, queryset, name, value):
         """

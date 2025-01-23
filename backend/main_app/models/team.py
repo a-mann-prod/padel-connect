@@ -13,10 +13,15 @@ class Team(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    def get_users(self):
+    def get_users(self, append_pending = False):
+        statuses = [enums.RequestStatus.ACCEPTED]
+
+        if append_pending:
+            statuses.append(enums.RequestStatus.PENDING)
+
         return [
             invite.user
-            for invite in self.invitations.filter(status=enums.RequestStatus.ACCEPTED)
+            for invite in self.invitations.filter(status__in=statuses)
         ]
 
     def calculate_elo_average(self):

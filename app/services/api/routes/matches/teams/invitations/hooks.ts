@@ -1,8 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { MatchTeamRequestResponse } from '../detail'
-import { deleteMatchTeamInvitationFn } from './functions'
-import { DeleteMatchTeamInvitationParams } from './params'
+import {
+  createMatchTeamInvitationFn,
+  deleteMatchTeamInvitationFn,
+} from './functions'
+import {
+  CreateMatchTeamInvitationParams,
+  DeleteMatchTeamInvitationParams,
+} from './params'
 
 import { useHandleError } from '@/hooks/useHandleError'
 import { useHandleSuccess } from '@/hooks/useHandleSuccess'
@@ -39,5 +45,24 @@ export const useDeleteMatchTeamInvitation = (
     },
     onError,
     mutationFn: deleteMatchTeamInvitationFn,
+  })
+}
+
+export const useCreateMatchTeamInvitation = (
+  {
+    options,
+  }: UseMutationProps<
+    MatchTeamRequestResponse,
+    CreateMatchTeamInvitationParams
+  > = {
+    options: {},
+  }
+) => {
+  const onError = useHandleError()
+
+  return useMutation({
+    ...options,
+    onError,
+    mutationFn: createMatchTeamInvitationFn,
   })
 }

@@ -2,6 +2,7 @@ import {
   DefaultMinimalProfileResponse,
   Entity,
   PaginatedResponse,
+  ScoreData,
 } from '../../../types'
 import { ComplexResponse } from '../../complexes'
 
@@ -20,14 +21,14 @@ export type MatchResponse = Entity<{
   is_booked: boolean
   is_open_to_all_level: boolean
   user: number
-  teams: Entity<{
-    participants: DefaultMinimalProfileResponse[]
-    user: number
-  }>[]
+  team_1_users: DefaultMinimalProfileResponse[]
+  team_2_users: DefaultMinimalProfileResponse[]
+  score_data: ScoreData
+  pending_users: number[]
 }>
 
 export type MatchesResponse = PaginatedResponse<
-  Omit<MatchResponse, 'complex'> & {
+  Omit<MatchResponse, 'complex' | 'score_data' | 'pending_users'> & {
     is_request: boolean
     complex: number
   }

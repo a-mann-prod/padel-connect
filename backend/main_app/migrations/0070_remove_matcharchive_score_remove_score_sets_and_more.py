@@ -2,8 +2,6 @@
 
 from django.db import migrations, models
 import main_app.models.match_archive
-import main_app.models.score
-
 
 class Migration(migrations.Migration):
 
@@ -28,10 +26,5 @@ class Migration(migrations.Migration):
             model_name="matcharchive",
             name="score_data",
             field=models.JSONField(default=main_app.models.match_archive.default_score_data),
-        ),
-        migrations.AddField(
-            model_name="score",
-            name="score_data",
-            field=models.JSONField(default=main_app.models.score.default_score_data),
-        ),
+        )
     ]

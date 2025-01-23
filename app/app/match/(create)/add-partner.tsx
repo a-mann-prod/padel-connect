@@ -34,8 +34,7 @@ export default () => {
           title={t('sendInvitationAndCreateMatch')}
           isDisabled={userIds.length !== 1}
           onPress={() => {
-            // TODO: ADD INVITATION with userId
-            createMatch()
+            createMatch({ send_invitations: userIds })
           }}
           isLoading={isPendingCreateMatch}
         />

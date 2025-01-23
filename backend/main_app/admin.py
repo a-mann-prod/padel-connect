@@ -7,7 +7,6 @@ from main_app.models.custom_user import CustomUser
 from main_app.models.notification import Notification
 from main_app.models.team import Team, TeamInvite
 from main_app.models.match_archive import MatchArchive, MatchArchiveTeam
-from main_app.models.score import  Score
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -15,7 +14,12 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 # Register your models here.
 admin.site.register(Complex)
-admin.site.register(MatchFilter)
+
+class MatchFilterAdmin(admin.ModelAdmin):
+    model = MatchFilter
+    list_display = ('id', 'user')
+
+admin.site.register(MatchFilter, MatchFilterAdmin)
 
 class NotificationAdmin(admin.ModelAdmin):
     model = Notification
@@ -37,11 +41,6 @@ class MatchAdmin(admin.ModelAdmin):
 
 admin.site.register(Match, MatchAdmin)
 
-class ScoreAdmin(admin.ModelAdmin):
-    model = Match
-    list_display = ('id', 'team_1', 'team_2')
-
-admin.site.register(Score, ScoreAdmin)
 
 class MatchArchiveTeamAdmin(admin.ModelAdmin):
     model = MatchArchiveTeam

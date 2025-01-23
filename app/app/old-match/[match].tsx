@@ -43,6 +43,7 @@ export default () => {
               isMatchPast
               team_1_users={match.team_1_users}
               team_2_users={match.team_2_users}
+              score={match.score_data}
             />
           </VStack>
         </ScrollView>

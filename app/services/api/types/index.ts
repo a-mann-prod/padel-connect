@@ -95,3 +95,14 @@ export type PaginatedResponse<T> = {
 export type BackendError = AxiosError<{
   error: { code: [string]; detail: [string] }
 }>
+
+export type ScoreData = {
+  sets: {
+    team_1: (number | null)[]
+    team_2: (number | null)[]
+  }
+  tie_breaks: {
+    team_1: (number | null)[]
+    team_2: (number | null)[]
+  }
+}

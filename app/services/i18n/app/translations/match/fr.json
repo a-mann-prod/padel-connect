@@ -52,6 +52,7 @@
   "superTieBreak": "Super tie-break",
   "superTieBreakHelpMessage": "En cas d'égalité pour le 3ème set",
   "team": "Equipe",
+  "teamMateManage": "Gérer ma paire",
   "updateField": "Modifier le créneau / terrain",
   "updateMatchActionsheet": "Que souhaites tu modifier ?",
   "updateMatchParam": "Modifier les paramètres du match"
