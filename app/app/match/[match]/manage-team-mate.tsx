@@ -37,7 +37,13 @@ export default WithAuth(
       useDeleteMatchTeamInvitation()
 
     const { mutate: createTeamInvitation, isPending: isPendingCreation } =
-      useCreateMatchTeamInvitation()
+      useCreateMatchTeamInvitation({
+        options: {
+          onSuccess: () => {
+            refetch()
+          },
+        },
+      })
 
     if (isLoading) return <Loader />
 
@@ -47,6 +53,7 @@ export default WithAuth(
 
     const team = matchInvitations?.[0].team
     const item = team?.invitations?.[0]
+
     if (item) {
       const renderItem = ({
         item,
@@ -61,14 +68,16 @@ export default WithAuth(
             item.status === RequestStatus.PENDING
               ? {
                   isLoading: isPendingDeletion,
-                  onRefusePress: () =>
+                  onRefusePress: () => {
                     item.id &&
-                    team?.id &&
-                    deleteTeamInvitation({
-                      matchId,
-                      id: item.id,
-                      teamId: team.id,
-                    }),
+                      team?.id &&
+                      deleteTeamInvitation({
+                        matchId,
+                        id: item.id,
+                        teamId: team.id,
+                      })
+                    setUserId(null)
+                  },
                 }
               : undefined
           }

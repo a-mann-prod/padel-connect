@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 import { MatchTeamRequestResponse } from '../detail'
 import {
@@ -11,17 +15,14 @@ import {
 } from './params'
 
 import { useHandleError } from '@/hooks/useHandleError'
-import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { UseMutationProps } from '@/services/api/queryHooks'
-import { useTranslate } from '@/services/i18n'
+import { MatchInvitationsResponse } from '../../..'
 
 export const useDeleteMatchTeamInvitation = (
   { options }: UseMutationProps<void, DeleteMatchTeamInvitationParams> = {
     options: {},
   }
 ) => {
-  const t = useTranslate('match')
-  const onSuccess = useHandleSuccess()
   const onError = useHandleError()
   const queryClient = useQueryClient()
 
@@ -39,9 +40,36 @@ export const useDeleteMatchTeamInvitation = (
           return { ...oldData, invitations: updatedInvitations }
         }
       )
-      onSuccess({
-        title: t('requestDeleted'),
-      })
+      queryClient.setQueryData(
+        ['matches', variables.matchId, 'invitations', 'infinite'],
+        (
+          oldData: InfiniteData<MatchInvitationsResponse>
+        ): InfiniteData<MatchInvitationsResponse> => {
+          const updatedPages = oldData.pages.map((page) => {
+            const updatedResults = page.results.map((data) => {
+              const filteredInvitations = data.team.invitations.filter(
+                ({ id }) => id !== variables.id
+              )
+              return {
+                ...data,
+                team: {
+                  ...data.team,
+                  invitations: filteredInvitations,
+                },
+              }
+            })
+            return {
+              ...page,
+              results: updatedResults,
+            }
+          })
+
+          return {
+            ...oldData,
+            pages: updatedPages,
+          }
+        }
+      )
     },
     onError,
     mutationFn: deleteMatchTeamInvitationFn,
@@ -64,5 +92,9 @@ export const useCreateMatchTeamInvitation = (
     ...options,
     onError,
     mutationFn: createMatchTeamInvitationFn,
+    onSuccess: (data, variables, context) => {
+      options?.onSuccess?.(data, variables, context)
+      // mettre à jour le match detail lié
+    },
   })
 }

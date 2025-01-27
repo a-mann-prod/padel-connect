@@ -4,12 +4,14 @@ import { ListRenderItemInfo } from 'react-native'
 import { PlayerListItem } from '../PlayerListItem/PlayerListItem'
 
 import { VirtualizedList, VirtualizedListProps } from '@/designSystem'
+import { useHandleSuccess } from '@/hooks/useHandleSuccess'
 import { useMe } from '@/hooks/useMe'
 import {
   MatchTeamInvitationResponse,
   useDeleteMatchTeamInvitation,
 } from '@/services/api'
 import { RequestStatus } from '@/services/api/types'
+import { useTranslate } from '@/services/i18n'
 
 export type PlayerListProps = {
   onPress?: (id: number) => void
@@ -29,9 +31,18 @@ export const InvitationList = ({
   ...props
 }: PlayerListProps) => {
   const { data: me } = useMe()
+  const onSuccess = useHandleSuccess()
+  const t = useTranslate('match')
 
   const { mutate: deleteTeamInvitation, isPending } =
-    useDeleteMatchTeamInvitation()
+    useDeleteMatchTeamInvitation({
+      options: {
+        onSuccess: () =>
+          onSuccess({
+            title: t('requestDeleted'),
+          }),
+      },
+    })
 
   const renderItem = ({
     item,
