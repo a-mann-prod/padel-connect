@@ -42,6 +42,7 @@
   "seeRequest": "See my request",
   "sendAloneRequest": "Join alone",
   "sendGroupRequest": "Send group request",
+  "sendInvitation": "Envoyer l'invitation",
   "sendInvitationAndCreateMatch": "Send invitation and create match",
   "share": "Share",
   "shareAndCreateMatch": "Share and create match",
@@ -53,6 +54,7 @@
   "superTieBreak": "Super tie-break",
   "superTieBreakHelpMessage": "In case of a tie in the 3rd set",
   "team": "Team",
+  "teamMateManage": "Manage team mate",
   "updateField": "Update slot / court",
   "updateMatchActionsheet": "What do you want to update?",
   "updateMatchParam": "Update match parameters"

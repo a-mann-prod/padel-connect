@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main_app.models import Profile
+from main_app.models.profile import Profile
 from main_app import mixins
 
 
@@ -12,7 +12,7 @@ class ProfileSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSeriali
 
     class Meta:
         model = Profile
-        exclude = ['user']
+        exclude = ['user', 'elo']
 
     def get_calculated_level(self, obj):
         return obj.calculate_level()

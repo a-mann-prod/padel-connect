@@ -4,7 +4,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from main_app.external_services.four_padel_client import FourPadelAPIClient
-from main_app.models import CustomUser
+from main_app.models.custom_user import CustomUser
 from main_app.exceptions import handle_exception
 
 class FourPadelLoginView(APIView):

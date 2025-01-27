@@ -29,8 +29,8 @@ export type TeamListItemProps = {
   onSelectButtonPress?: IconButtonProps['onPress']
   request?: {
     isLoading: boolean
-    onAcceptPress: () => void
-    onRefusePress: () => void
+    onAcceptPress?: () => void
+    onRefusePress?: () => void
   }
   invitations: MatchTeamInvitationResponse[]
 }
@@ -115,24 +115,28 @@ export const TeamListItem = ({ invitations, request }: TeamListItemProps) => {
                         <ActivityIndicator />
                       ) : (
                         <>
-                          <IconButton
-                            icon="FAR-circle-check"
-                            action="positive"
-                            onPress={() => request.onAcceptPress()}
-                            iconProps={{ size: '2xl' }}
-                            variant="link"
-                            //@ts-ignore:next-line
-                            h="none"
-                          />
-                          <IconButton
-                            icon="FAR-circle-xmark"
-                            action="negative"
-                            onPress={() => request.onRefusePress()}
-                            iconProps={{ size: '2xl' }}
-                            variant="link"
-                            //@ts-ignore:next-line
-                            h="none"
-                          />
+                          {request.onAcceptPress && (
+                            <IconButton
+                              icon="FAR-circle-check"
+                              action="positive"
+                              onPress={() => request.onAcceptPress?.()}
+                              iconProps={{ size: '2xl' }}
+                              variant="link"
+                              //@ts-ignore:next-line
+                              h="none"
+                            />
+                          )}
+                          {request.onRefusePress && (
+                            <IconButton
+                              icon="FAR-circle-xmark"
+                              action="negative"
+                              onPress={() => request.onRefusePress?.()}
+                              iconProps={{ size: '2xl' }}
+                              variant="link"
+                              //@ts-ignore:next-line
+                              h="none"
+                            />
+                          )}
                         </>
                       )}
                     </HStack>

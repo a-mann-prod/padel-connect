@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from main_app.models import Profile
+from main_app.models.profile import Profile
 from main_app.serializers import ProfileSerializer
 from main_app.pagination import CustomPageNumberPagination
 from django.conf import settings

@@ -1,4 +1,8 @@
-import { DeleteMatchTeamInvitationParams } from './params'
+import { MatchTeamRequestResponse } from '../detail'
+import {
+  CreateMatchTeamInvitationParams,
+  DeleteMatchTeamInvitationParams,
+} from './params'
 
 import api from '@/services/api/axiosConfig'
 
@@ -13,8 +17,21 @@ export const deleteMatchTeamInvitationFn = async ({
   const { data } = await api.delete<void>(
     `${ENDPOINT}/${matchId}/teams/${teamId}/invitations/${id}/`,
     {
-      params: { ...params },
+      params,
     }
+  )
+
+  return data
+}
+
+export const createMatchTeamInvitationFn = async ({
+  matchId,
+  teamId,
+  ...params
+}: CreateMatchTeamInvitationParams) => {
+  const { data } = await api.post<MatchTeamRequestResponse>(
+    `${ENDPOINT}/${matchId}/teams/${teamId}/invitations/`,
+    params
   )
 
   return data

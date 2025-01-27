@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main_app.models import Profile
+from main_app.models.profile import Profile
 from main_app import mixins
 
 class MeProfileSerializer(mixins.ExcludeDatesFieldsMixin, serializers.ModelSerializer):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main_app.models import TeamInvite, Team
+from main_app.models.team import TeamInvite, Team
 from main_app import mixins
 from .match_team import MatchTeamInviteSerializer
 

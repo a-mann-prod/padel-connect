@@ -1,6 +1,11 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-from main_app.models import CustomUser, Match, Notification, enums, Team, TeamInvite
+from main_app.models.custom_user import CustomUser
+from main_app.models.match import Match
+from main_app.models.notification import Notification
+from main_app.models.team import Team, TeamInvite
+from main_app.models import enums
+
 from chat.models import Message
 
 from django.utils import translation
@@ -19,7 +24,7 @@ def handle_match_creation(sender, instance, created, **kwargs):
         for user in users:
             match_filter = user.match_filter
 
-            if not (match_filter.level_min <= instance.level <= match_filter.level_max) and not instance.is_open_to_all_level:
+            if not (match_filter.level_min <= instance.get_level() <= match_filter.level_max) and not instance.is_open_to_all_level:
                     continue
                 
 

@@ -22,6 +22,8 @@ export type MatchFormProps = {
   isLoading?: boolean
   buttonTitle?: string
   onCompetitionChange?: (newValue: boolean) => void
+  ownerLevel?: number
+  hasPlayers?: boolean
 }
 
 export const MatchForm = ({
@@ -29,7 +31,9 @@ export const MatchForm = ({
   defaultValues,
   isLoading,
   buttonTitle,
+  ownerLevel,
   onCompetitionChange,
+  hasPlayers,
 }: MatchFormProps) => {
   const tGlobal = useTranslate()
   const t = useTranslate('match')
@@ -53,7 +57,7 @@ export const MatchForm = ({
     onCompetitionChange?.(isCompetitive)
   }, [onCompetitionChange, isCompetitive])
 
-  const [level_min, level_max] = getLevelRange(Number(defaultValues?.level))
+  const [level_min, level_max] = getLevelRange(Number(ownerLevel))
 
   return (
     <VStack flex={1}>
@@ -91,7 +95,7 @@ export const MatchForm = ({
               title: t('competitiveMatch'),
               helpMessage: t('competitiveMatchHelpMessage'),
             }}
-            isDisabled
+            isDisabled={!defaultValues?.is_competitive && hasPlayers}
           />
           {isCompetitive && (
             <>

@@ -1,5 +1,6 @@
 from django.db import models
-from . import enums, Complex
+from . import enums
+from .complex import Complex
 from django.conf import settings
 
 class MatchFilter(models.Model):

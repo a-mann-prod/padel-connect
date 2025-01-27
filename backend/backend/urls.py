@@ -56,9 +56,9 @@ urlpatterns = [
     path('matches/<int:pk>/conversation/', MatchConversationView.as_view(), name='match-conversation'),
     path('matches/<int:pk>/conversation/messages/', MatchMessagesView.as_view(), name='match-messages'),
 
-
     # External services
     path('fields/', FourPadelFieldView.as_view(), name='fields'),
+    
     path('tournaments/', FourPadelTournamentView.as_view(), name='tournaments'),
     path('tournaments/<int:pk>/', FourPadelTournamentDetailView.as_view(), name='tournaments-detail'),
 

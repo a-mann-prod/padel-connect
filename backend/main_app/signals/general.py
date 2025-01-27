@@ -1,6 +1,13 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from main_app.models import Profile, MatchFilter, CustomUser, Match, Notification, enums, Team, TeamInvite
+from main_app.models.profile import Profile
+from main_app.models.match_filter import MatchFilter
+from main_app.models.custom_user import CustomUser
+from main_app.models.match import Match
+from main_app.models.notification import Notification
+from main_app.models.team import Team, TeamInvite
+from main_app.models import enums
+
 from chat.models import Conversation
 from main_app.tasks import async_send_notification
 
@@ -57,8 +64,18 @@ def handle_team_creation(sender, instance, created, **kwargs):
 def handle_match_creation(sender, instance, created, **kwargs):
     if created:        
         Conversation.objects.create(match=instance)
-        Team.objects.create(match=instance, user=instance.user, is_ready=True)
-        
+        team = Team.objects.create(match=instance, user=instance.user, is_ready=True)
+
+        send_invitations = getattr(instance, "_send_invitations", [])
+
+        for user_id in send_invitations:
+            user = CustomUser.objects.get(pk=user_id)
+            TeamInvite.objects.create(
+                team=team,
+                user=user,
+                status=enums.RequestStatus.PENDING
+            )
+
 
 @receiver(post_save, sender=Notification)
 def handle_notification(sender, instance, created, **kwargs):

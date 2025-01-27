@@ -36,6 +36,7 @@ export type AvatarProps = {
   border?: Partial<{
     color: ColorsToken
   }>
+  headingProps?: typeof Heading.defaultProps
 } & GAvatarProps
 
 export const Avatar = ({
@@ -51,6 +52,7 @@ export const Avatar = ({
   badgeType,
   viewerEnabled,
   border,
+  headingProps,
   ...props
 }: AvatarProps) => {
   const borderColor = useToken('colors', border?.color || 'black')
@@ -112,7 +114,11 @@ export const Avatar = ({
           </Skeleton>
         </TouchableOpacity>
 
-        {!isNilOrEmpty(fullName) && <Heading size="xs">{fullName}</Heading>}
+        {!isNilOrEmpty(fullName) && (
+          <Heading size="xs" {...headingProps}>
+            {fullName}
+          </Heading>
+        )}
       </VStack>
     </>
   )

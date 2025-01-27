@@ -1,11 +1,12 @@
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from main_app.models import Team, TeamInvite
+from main_app.models.team import Team, TeamInvite
 from main_app.serializers import MatchTeamInviteSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins
 from main_app.business.match_team_invite import get_team_invite_requests, validate_team_invite_creation, validate_team_invite_destruction
 from main_app.exceptions import handle_exception
+from main_app.models.custom_user import CustomUser
 
 class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.ModelViewSet):
     queryset = TeamInvite.objects.all()
@@ -31,20 +32,24 @@ class MatchTeamInviteModelViewSet(mixins.ExcludeDatesFieldsMixin, viewsets.Model
         return super().get_permissions()
     
 
-    def create(self, request, team_pk=None):
+    def create(self, request, match_pk=None, team_pk=None):
             team = get_object_or_404(Team, pk=team_pk)
+            user = CustomUser.objects.get(pk=request.data['user'])
+
+            # permet d'ajouter team car obligatoire (passage de queryparams en querydata)
             request.data['team'] = team.id
+            request.data['user'] = user
 
             try:
                 validate_team_invite_creation(request, team)
             except Exception as e:
                 return handle_exception(e)
-
+            
             return super().create(request)
     
     
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.data['user'])
 
 
     def update(self, request, *args, **kwargs):

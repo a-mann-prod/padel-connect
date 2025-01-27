@@ -3,3 +3,9 @@ export type DeleteMatchTeamInvitationParams = {
   teamId: number
   id: number
 }
+
+export type CreateMatchTeamInvitationParams = {
+  matchId: number
+  teamId: number
+  user: number
+}

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { SearchUser } from '@/components'
 import { Button } from '@/designSystem'
 import { useMatch, useShareMatch } from '@/services/api'
-import { DefaultMinimalProfileResponse } from '@/services/api/types'
 import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { hasAdaptedLevel } from '@/utils/user'
@@ -19,10 +18,10 @@ export default () => {
     options: { enabled: !!matchId },
   })
 
-  const players = match?.teams.reduce<DefaultMinimalProfileResponse[]>(
-    (acc, curr) => [...acc, ...curr.participants],
-    []
-  )
+  const players = [
+    ...(match?.team_1_users || []),
+    ...(match?.team_2_users || []),
+  ]
 
   const t = useTranslate('match')
   const [userIds, setUserIds] = useState<number[]>([])

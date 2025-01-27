@@ -1,7 +1,7 @@
 import { date } from '@/services/date'
 import { useMe } from './useMe'
 
-import { MatchResponse, useMatch } from '@/services/api'
+import { useMatch } from '@/services/api'
 
 export const useManageMatch = (matchId: number) => {
   const { data: me } = useMe()
@@ -15,9 +15,10 @@ export const useManageMatch = (matchId: number) => {
     options: { enabled: !!matchId },
   })
 
-  const participants = match?.teams.reduce<
-    MatchResponse['teams'][number]['participants']
-  >((acc, curr) => [...acc, ...curr.participants], [])
+  const participants = [
+    ...(match?.team_1_users || []),
+    ...(match?.team_2_users || []),
+  ]
 
   const isOwner = match?.user === me?.id
   const isParticipant = !!participants?.some((p) => p.id === me?.id)
@@ -30,6 +31,11 @@ export const useManageMatch = (matchId: number) => {
     isMatchPassed: !!(
       match && getMatchTimes(match.datetime, match.duration).isMatchPassed
     ),
+    isMatchStarted: !!(
+      match && getMatchTimes(match.datetime, match.duration).isMatchStarted
+    ),
+    isMatchComplete:
+      !!match && [...match.team_1_users, ...match.team_2_users].length > 3,
 
     isOwner,
     isPlayer,
@@ -44,10 +50,12 @@ export const getMatchTimes = (datetime: string, duration: number) => {
   const matchStartTime = date.dayjs(datetime)
   const matchEndTime = matchStartTime.add(duration, 'm')
   const isMatchPassed = matchEndTime.isBefore(date.now())
+  const isMatchStarted = matchStartTime.isBefore(date.now())
 
   return {
     matchStartTime,
     matchEndTime,
     isMatchPassed,
+    isMatchStarted,
   }
 }

@@ -23,7 +23,6 @@ export default () => {
 
   const defaultValues: Nillable<MatchFormValues> = {
     ...bookingFieldFormValues,
-    level: me?.calculated_level?.toString(),
   }
 
   const [isCompetition, setIsCompetition] = useState(false)
@@ -43,6 +42,7 @@ export default () => {
             duration={bookingFieldFormValues.duration}
             fieldName={bookingFieldFormValues.four_padel_field_name}
             isBooked={false}
+            isFieldAvailable
           />
         )}
         <MatchForm
@@ -58,6 +58,7 @@ export default () => {
           defaultValues={defaultValues}
           buttonTitle={isCompetition ? t('chooseMyPartner') : tGlobal('create')}
           isLoading={isPendingCreateMatch}
+          ownerLevel={me?.calculated_level}
         />
       </Container>
     </>

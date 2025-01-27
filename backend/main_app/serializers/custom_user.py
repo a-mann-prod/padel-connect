@@ -1,6 +1,6 @@
 
 from djoser.serializers import UserCreateSerializer, UserSerializer
-from main_app.models import CustomUser
+from main_app.models.custom_user import CustomUser
 from main_app import mixins
 from .profile import ProfileSerializer
 

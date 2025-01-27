@@ -1,6 +1,9 @@
 import requests
 from django.conf import settings
-from main_app.models import CustomUser, Match, Complex
+from main_app.models.custom_user import CustomUser
+from main_app.models.match import Match
+from main_app.models.complex import Complex
+
 from rest_framework.exceptions import ValidationError
 from main_app.exceptions import ErrorCode
 from datetime import timedelta
@@ -139,7 +142,6 @@ class FourPadelAPIClient:
         # Lever une exception si la connexion échoue
         response.raise_for_status()
 
-
     def get_fields(self, complex_id, date):
         """
         Fetch booking rules with the token. Retry login if token is expired.
@@ -224,7 +226,6 @@ class FourPadelAPIClient:
             })
 
         return cleaned_data
-
 
     def book_field(self, match: Match):
         """

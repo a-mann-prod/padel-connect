@@ -1,4 +1,4 @@
-import { MatchType } from '../../../types'
+import { MatchType, ScoreData } from '../../../types'
 
 export type GetMatchParams = {
   id: number
@@ -43,14 +43,16 @@ export type CreateMatchParams = {
   datetime: string
   duration: number
   is_private: boolean
-  level: number
   is_competitive: boolean
   players?: number[]
   is_super_tie_break?: boolean
   is_decisive_point?: boolean
+  send_invitations?: number[]
 }
 
-export type UpdateMatchParams = Partial<CreateMatchParams> & {
+export type UpdateMatchParams = Partial<
+  CreateMatchParams & { score_data: ScoreData }
+> & {
   id: number
 }
 

@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from main_app.models import Notification
+from main_app.models.notification import Notification
 from main_app.serializers import NotificationSerializer
 from main_app import permissions
 from main_app import mixins

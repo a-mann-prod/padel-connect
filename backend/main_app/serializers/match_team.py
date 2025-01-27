@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from main_app.models import Team, TeamInvite, Match, enums
+from main_app.models.team import Team, TeamInvite
+from main_app.models.match import Match
+from main_app.models import enums
 from main_app import mixins
 from .match_team_invite import MatchTeamInviteSerializer
 from .profile import MinimalProfileSerializer

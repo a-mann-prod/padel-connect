@@ -6,13 +6,14 @@ import {
   MatchActionButtons,
   MatchInfo,
   MatchPlayers,
+  MatchScoreActionsheet,
   MatchTiles,
   PreMatchRequestButton,
   ShareMatchActionsheet,
   UpdateMatchActionsheet,
   WithMatch,
 } from '@/components'
-import { Loader, ScrollView } from '@/designSystem'
+import { Button, Loader, ScrollView } from '@/designSystem'
 import { useHeaderButton } from '@/hooks/useHeaderButton'
 import { useManageMatch } from '@/hooks/useManageMatch'
 import { useMe } from '@/hooks/useMe'
@@ -24,11 +25,13 @@ import {
   useInfiniteMatchInvitations,
   useMatchTeamRequest,
 } from '@/services/api'
+import { useTranslate } from '@/services/i18n'
 import { routing } from '@/services/routing'
 import { hasAdaptedLevel } from '@/utils/user'
 
 export default WithMatch(() => {
   const { data: me } = useMe()
+  const t = useTranslate('match')
 
   const pathname = usePathname()
   const local = useLocalSearchParams()
@@ -39,6 +42,8 @@ export default WithMatch(() => {
   const [showUpdateActionsheet, setShowUpdateActionsheet] = useState(false)
   const [showShareActionsheet, setShowShareActionsheet] =
     useState(!!isJustCreated)
+  const [showMatchScoreActionsheet, setShowMatchScoreActionsheet] =
+    useState(false)
 
   const {
     match,
@@ -50,6 +55,8 @@ export default WithMatch(() => {
     refetch,
     isRefetching,
     isMatchPassed,
+    isMatchStarted,
+    isMatchComplete,
   } = useManageMatch(matchId)
 
   const {
@@ -153,19 +160,39 @@ export default WithMatch(() => {
               fieldName={match.four_padel_field_name}
               isOpenToAll={match.is_open_to_all_level}
               levelRange={match.calculated_level_range}
-              owner={participants?.find((p) => p.id === match.user)}
+              owner={participants.find((p) => p.id === match.user)}
               isBooked={match.is_booked}
               isFieldAvailable={isFieldAvailable}
             />
             <MatchPlayers
-              data={participants}
+              score={match?.score_data}
+              team_1_users={match.team_1_users}
+              team_2_users={match.team_2_users}
               hasPayedUserIds={booking?.participations.map(({ user }) => user)}
               onPress={(id) =>
                 router.navigate(routing.matchUser.path(match.id, id))
               }
-              displayTeam={match.is_competitive}
+              isCompetitive={match.is_competitive}
               isMatchPast={isMatchPassed}
+              onScorePress={
+                isMatchStarted && isParticipant
+                  ? () => setShowMatchScoreActionsheet(true)
+                  : undefined
+              }
+              pendingUsers={match.pending_users}
             />
+
+            {isOwner &&
+              match.is_competitive &&
+              (match.team_1_users.length < 2 ||
+                !!match.pending_users.length) && (
+                <Button
+                  title={t('teamMateManage')}
+                  onPress={() =>
+                    router.navigate(routing.matchManageTeamMate.path(matchId))
+                  }
+                />
+              )}
             {!isMatchPassed && (
               <MatchActionButtons
                 matchId={matchId}
@@ -182,7 +209,7 @@ export default WithMatch(() => {
               />
             )}
 
-            {!isParticipant && (
+            {!isParticipant && !isMatchComplete && (
               <PreMatchRequestButton
                 isLoading={
                   isLoadingMatchTeamRequest || isLoadingMatchInvitations
@@ -209,6 +236,12 @@ export default WithMatch(() => {
         datetime={match.datetime}
         complexId={match.complex.id}
         onClose={() => setShowUpdateActionsheet(false)}
+      />
+      <MatchScoreActionsheet
+        matchId={matchId}
+        isOpen={showMatchScoreActionsheet}
+        match={match}
+        onClose={() => setShowMatchScoreActionsheet(false)}
       />
     </>
   )

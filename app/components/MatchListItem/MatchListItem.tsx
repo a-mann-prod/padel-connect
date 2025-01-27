@@ -27,7 +27,9 @@ export type MatchlistItemProps = {
   four_padel_field_name: string
   is_request?: boolean
   is_private?: boolean
-  participants: DefaultMinimalProfileResponse[]
+  team_1_users?: DefaultMinimalProfileResponse[]
+  team_2_users?: DefaultMinimalProfileResponse[]
+  participants?: DefaultMinimalProfileResponse[]
   type?: MatchListItemType
   id: number
 }
@@ -54,6 +56,11 @@ export const MatchListItem = ({
     : {
         rounded: '$lg',
       }
+
+  const players = match?.participants || [
+    ...(match?.team_1_users || []),
+    ...(match?.team_2_users || []),
+  ]
 
   return (
     <VStack flex={1}>
@@ -83,7 +90,7 @@ export const MatchListItem = ({
             </HStack>
           </HStack>
           <HStack>
-            <PlayersAvatars users={match.participants} />
+            <PlayersAvatars users={players} />
             <DurationFlag value={match.duration} isRequest={isRequest} />
           </HStack>
         </VStack>

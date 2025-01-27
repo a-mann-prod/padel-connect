@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from datetime import datetime
 from main_app.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from main_app.models import Complex
+from main_app.models.complex import Complex
 from main_app.exceptions import handle_exception
 from rest_framework.exceptions import AuthenticationFailed
 

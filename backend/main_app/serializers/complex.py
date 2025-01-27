@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main_app.models import Complex
+from main_app.models.complex import Complex
 from main_app import mixins
 
 

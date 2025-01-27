@@ -1,7 +1,9 @@
 
 from rest_framework.exceptions import ValidationError
-from main_app.models import Team, enums, TeamInvite, CustomUser
-from main_app.models import Team, TeamInvite, enums
+from main_app.models import enums
+from main_app.models.team import TeamInvite
+from main_app.models.custom_user import CustomUser
+
 from main_app.exceptions import ErrorCode
 
 

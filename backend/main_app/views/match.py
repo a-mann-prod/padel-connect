@@ -16,6 +16,9 @@ from main_app.exceptions import handle_exception
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
+from main_app.business.match_score import validate_score
+from main_app.business.match_team_invite import validate_team_invite_match_creation
+
 
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -50,25 +53,36 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
         
         # pour les actions d'edit
         return queryset.filter(user=current_user)
+    
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def create(self, request, *args, **kwargs):
+        current_user = request.user
+        send_invitations = request.data.get('send_invitations', [])
 
+        if 'send_invitations' in request.data:
+            del request.data['send_invitations']
 
-    # def update(self, request, *args, **kwargs):
-    #     # Cette méthode remplace la méthode `perform_update` pour effectuer la mise à jour
-    #     instance = self.get_object()  # Récupérer l'instance de l'objet à mettre à jour
-
-    #     # On met à jour l'objet avec les nouvelles données
-    #     serializer = self.get_serializer(instance, data=request.data, partial=True)
-    #     serializer.is_valid(raise_exception=True)
-
-    #     # Sauvegarder l'objet avec les nouvelles données
-    #     self.perform_update(serializer)
-
-    #     # Retourner la réponse avec le sérialiseur complet pour inclure le champ `complex` complet
-    #     return Response(MatchDetailSerializer(instance).data)
+        try:
+            validate_team_invite_match_creation()
+        except Exception as e:
+            return handle_exception(e)
         
+        match_instance = Match(**request.data, user=current_user, elo=current_user.profile.elo)
+        match_instance._send_invitations = send_invitations
+        match_instance.save()
+
+        return Response(MatchDetailSerializer(match_instance, context={'request': request}).data, status=status.HTTP_201_CREATED)
+
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        # Validate score if necessary
+        if request.data.get('score_data'):
+            validate_score(request.data['score_data'], instance)
+
+        return super().update(request, *args, **kwargs)
+    
 
     @action(detail=False, methods=['get'], url_path='incoming')
     def get_incoming_matches(self, request):
@@ -93,6 +107,7 @@ class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
         return Response(serializer.data)
     
 
+    # Utilisé pour afficher les invitations dans "Mes invitations recues"
     @action(detail=False, methods=['get'], url_path='invitations')
     def get_incoming_invitations(self, request):
         user = request.user

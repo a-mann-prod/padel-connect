@@ -36,7 +36,7 @@ export const PreMatchRequestButton = ({
 
     if (isRequesting) title = t('seeRequest')
 
-    if (inadaptedLevel !== undefined && !hasSomething)
+    if (inadaptedLevel !== undefined && inadaptedLevel && !hasSomething)
       return `${title} ${t('inadaptedLevel')}`
 
     return title

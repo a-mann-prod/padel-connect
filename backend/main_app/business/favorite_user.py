@@ -1,4 +1,4 @@
-from main_app.models import CustomUser
+from main_app.models.custom_user import CustomUser
 from rest_framework.exceptions import NotFound, ValidationError
 from django.shortcuts import get_object_or_404
 

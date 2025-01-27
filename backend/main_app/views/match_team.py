@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
-from main_app.models import Match, Team
+from main_app.models.match import Match
+from main_app.models.team import Team
 from main_app.serializers import MatchTeamSerializer, MatchTeamRequestSerializer
 from django.shortcuts import get_object_or_404
 from main_app import permissions, mixins
