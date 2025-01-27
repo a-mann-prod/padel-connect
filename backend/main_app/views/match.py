@@ -19,6 +19,7 @@ from django.db.models import Q
 from main_app.business.match_score import validate_score
 from main_app.business.match_team_invite import validate_team_invite_match_creation
 
+
 class MatchViewSet(mixins.CustomModelViewSet, viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
