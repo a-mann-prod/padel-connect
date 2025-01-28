@@ -435,6 +435,7 @@ class FourPadelAPIClient:
             "competitionLevel": competition_level,
             "isCompetitive": competition_level.startswith("P"),
             "sex": get_sex(data.get("sex")),
-            "complexName": complex.name
+            "complexName": complex.name,
+            "remainingPlaces": data.get("remainingPlaces")
         }
         return cleaned_data

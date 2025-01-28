@@ -12,6 +12,7 @@ import { FormProvider } from '@/components/FormProvider/FormProvider'
 import { FormSelectControlled } from '@/components/FormsControlled'
 import { Button } from '@/designSystem'
 import { useComplexItems } from '@/hooks/useComplexItems'
+import { useGenderItems } from '@/hooks/useGenderItems'
 import { useMatchTypeItems } from '@/hooks/useMatchTypeItems'
 import { useMonthItems } from '@/hooks/useMonthItems'
 import { useTranslate } from '@/services/i18n'
@@ -36,6 +37,7 @@ export const TournamentsFiltersForm = ({
   const complexItems = useComplexItems()
   const typeItems = useMatchTypeItems()
   const monthItems = useMonthItems()
+  const genderItems = useGenderItems()
 
   const defaultValuesMemo = useMemo(
     () => getDefaultValues(defaultValues),
@@ -67,6 +69,14 @@ export const TournamentsFiltersForm = ({
             formControlProps={{ title: tGlobal('tournamentType') }}
             name="type"
             items={[{ label: tGlobal('all'), value: '' }, ...typeItems]}
+          />
+          <FormSelectControlled
+            formControlProps={{ title: tGlobal('gender.title') }}
+            name="gender"
+            items={[
+              { label: tGlobal('gender.all'), value: '' },
+              ...genderItems,
+            ]}
           />
         </VStack>
       </FormProvider>

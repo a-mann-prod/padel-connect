@@ -45,6 +45,10 @@ export default () => {
           : !isCompetitive
       )
 
+  const filteredData2 = !tournamentsFilters.gender
+    ? filteredData
+    : filteredData?.filter(({ sex }) => tournamentsFilters.gender === sex)
+
   const renderItem = ({
     item,
   }: ListRenderItemInfo<TournamentsResponse[number]>) => (
@@ -59,7 +63,7 @@ export default () => {
   return (
     <VStack flex={1} gap="$3" m="$3">
       <VirtualizedList<TournamentsResponse[number]>
-        data={filteredData}
+        data={filteredData2}
         getItem={(data, index) => data[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item.id.toString()}

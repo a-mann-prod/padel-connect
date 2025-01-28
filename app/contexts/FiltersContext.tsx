@@ -7,7 +7,7 @@ import {
   useMatchFilters,
   useUpdateMatchFilters,
 } from '@/services/api'
-import { MatchType } from '@/services/api/types'
+import { MatchType, Sex } from '@/services/api/types'
 import { buildContext } from '@/services/buildContext'
 
 export type MatchFilters = UpdateMatchFiltersParams
@@ -17,9 +17,9 @@ type FiltersContextProps = {
   saveFilters: (value: MatchFilters) => void
   isServerFiltersLoading: boolean
 
-  tournamentsFilters: GetTournamentsParams & { type?: MatchType }
+  tournamentsFilters: GetTournamentsParams & { type?: MatchType; gender?: Sex }
   setTournamentsFilters: Dispatch<
-    SetStateAction<GetTournamentsParams & { type?: MatchType }>
+    SetStateAction<GetTournamentsParams & { type?: MatchType; gender?: Sex }>
   >
 }
 

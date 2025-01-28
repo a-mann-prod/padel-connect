@@ -128,6 +128,9 @@
   "password": "Password",
   "pendingRequest": "Pending request",
   "previous": "Previous",
+  "registerOnWaitingList": "Register on waiting list",
+  "remainingPlaces_one": "{{count}} remaining place",
+  "remainingPlaces_plural": "{{count}} remaining places",
   "reportBug": "Report a bug or a suggestion",
   "reportSent": "Bug report sent",
   "resend": "Resend",
@@ -143,6 +146,7 @@
     "title": "Preferred side"
   },
   "signinWithFourPadelAccount": "Sign in with your 4Padel account",
+  "time": "Time",
   "today": "Today",
   "tournamentNotFound": "Tournament not found",
   "tournamentType": "Tournament type",
@@ -150,5 +154,6 @@
   "updateDownloading": "Update is being downloaded",
   "updateError": "An error occurred while checking for updates",
   "updateRestarting": "Update downloaded, restarting the application",
+  "waitingListRegistration": "Waiting list registration",
   "warning": "Warning"
 }

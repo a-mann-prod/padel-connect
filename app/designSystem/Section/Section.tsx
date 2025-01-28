@@ -1,12 +1,15 @@
 import { Heading, Text, VStack } from '@gluestack-ui/themed'
-import { PropsWithChildren } from 'react'
+import { ComponentProps, PropsWithChildren } from 'react'
 
 import { isNilOrEmpty } from '@/utils/global'
+
+type VStackProps = ComponentProps<typeof VStack>
 
 export type SectionProps = {
   title?: string
   subtitle?: string | null
-}
+} & VStackProps
+
 export const Section = ({
   title,
   subtitle,

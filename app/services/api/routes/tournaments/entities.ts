@@ -9,6 +9,7 @@ export type TournamentResponse = {
   isCompetitive: boolean
   sex: Sex
   complexName: string
+  remainingPlaces: number
 }
 
 export type TournamentsResponse = TournamentResponse[]

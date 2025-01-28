@@ -12,12 +12,14 @@ const getDefaultValues = (
   complex: props?.complex || '',
   type: props?.type || '',
   month: props?.month || '',
+  gender: props?.gender || '',
 })
 
 const schema = z.object({
   complex: validators.string.optional(),
   type: validators.string.optional(),
   month: validators.string.optional(),
+  gender: validators.string.optional(),
 })
 
 const formatToParams = (

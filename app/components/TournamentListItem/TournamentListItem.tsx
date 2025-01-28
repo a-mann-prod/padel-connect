@@ -1,11 +1,10 @@
-import { HStack, Text, VStack } from '@gluestack-ui/themed'
+import { Heading, HStack, Text, VStack } from '@gluestack-ui/themed'
 
 import { MatchTypeIcon } from '../MatchTypeIcon/MatchTypeIcon'
 
 import { Pressable, PressableProps } from '@/designSystem'
 import { TournamentsResponse } from '@/services/api'
 import { date } from '@/services/date'
-import { useTranslate } from '@/services/i18n'
 
 export type TournamentListItemProps = TournamentsResponse[number] & {
   onPress: PressableProps['onPress']
@@ -21,7 +20,6 @@ export const TournamentListItem = ({
   sex,
   complexName,
 }: TournamentListItemProps) => {
-  const t = useTranslate()
   return (
     <Pressable onPress={onPress}>
       <HStack
@@ -38,11 +36,31 @@ export const TournamentListItem = ({
         />
 
         <VStack flex={1} gap="$1">
-          <Text flex={1}>{name}</Text>
-          <Text flex={1}>{complexName}</Text>
-          <Text variant="subtitle">
-            {date.dayjs(startingDate).format('LLL')}
+          <Text fontWeight="$semibold" flex={1}>
+            {competitionLevel}
           </Text>
+          <HStack alignItems="flex-end">
+            <Text flex={1}>{complexName}</Text>
+            <VStack
+              alignItems="center"
+              justifyContent="center"
+              bgColor="$primary500"
+              borderBottomRightRadius="$lg"
+              borderTopLeftRadius="$lg"
+              p="$2"
+              m="-$3"
+              gap="$0.5"
+            >
+              <VStack w="$24" justifyContent="center" alignItems="center">
+                <Heading size="xs" color="$white">
+                  {date.dayjs(startingDate).format('ll')}
+                </Heading>
+                <Text color="$white" size="sm" textAlign="center">
+                  {date.dayjs(startingDate).format('LT')}
+                </Text>
+              </VStack>
+            </VStack>
+          </HStack>
         </VStack>
       </HStack>
     </Pressable>

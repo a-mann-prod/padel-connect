@@ -52,7 +52,7 @@
     "female": "Femme",
     "male": "Homme",
     "mixed": "Mixte",
-    "title": "Genre"
+    "title": "Mixité"
   },
   "lastname": "Nom",
   "lastnameHelpMessage": "Par défaut, seule la 1ère lettre de ton nom de famille sera affichée",
@@ -128,6 +128,9 @@
   "password": "Mot de passe",
   "pendingRequest": "Demande en attente",
   "previous": "Précédent",
+  "registerOnWaitingList": "S'inscrire sur liste d'attente",
+  "remainingPlaces": "{{count}} place restante",
+  "remainingPlaces_plural": "{{count}} places restantes",
   "reportBug": "Reporter un problème ou une suggestion",
   "reportSent": "Rapport de bug envoyé",
   "resend": "Renvoyer",
@@ -143,6 +146,7 @@
     "title": "Côté favori"
   },
   "signinWithFourPadelAccount": "Connecte toi avec ton compte 4Padel",
+  "time": "Heure",
   "today": "Aujourd'hui",
   "tournamentNotFound": "Tournoi introuvable",
   "tournamentType": "Type de tournoi",
@@ -150,5 +154,6 @@
   "updateDownloading": "Mise à jour en cours de téléchargement",
   "updateError": "Une erreur est survenue lors de la recherche de mise à jour",
   "updateRestarting": "Mise à jour téléchargée, redémarrage de l'application",
+  "waitingListRegistration": "Inscription sur liste d'attente",
   "warning": "Attention"
 }
